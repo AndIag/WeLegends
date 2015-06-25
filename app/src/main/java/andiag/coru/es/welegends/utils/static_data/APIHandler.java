@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class APIHandler {
 
-    private static final String APIConf_FILE_NAME = "conf.properties";
+    private static final String APIConf_FILE_NAME = "api_conf.properties";
     private static APIHandler ourInstance;
 
     private String server;

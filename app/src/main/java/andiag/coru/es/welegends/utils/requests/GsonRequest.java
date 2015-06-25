@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.utils;
+package andiag.coru.es.welegends.utils.requests;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;

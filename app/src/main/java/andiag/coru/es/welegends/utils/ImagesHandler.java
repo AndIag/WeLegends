@@ -1,7 +1,6 @@
-package andiag.coru.es.welegends.utils.Data;
+package andiag.coru.es.welegends.utils;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.utils.DefaultHashMap;
 
 /**
  * Created by Iago on 25/06/2015.

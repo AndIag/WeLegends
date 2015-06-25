@@ -37,7 +37,7 @@ public class ActivitySplashScreen extends Activity {
             @Override
             public void run() {
                 //Iniciar actividad principal y finalizar splash
-                Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivityMain.class);
+                Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
                 startActivity(mainIntent);
                 finish();
             }

@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="andiag.coru.es.lolinfo.activities.ActivitySummoner">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default0" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|top"
+        android:src="@drawable/splash" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="right|bottom"
+        android:alpha="0.3"
+        android:src="@drawable/andiag" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imageButtonAndy"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imageView2"
+            android:layout_gravity="right|center_vertical"
+            android:background="@android:color/transparent"
+            android:onClick="onTwitterAndyClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/twitter" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/imageButtonAndy"
+            android:layout_alignLeft="@+id/imageButtonAndy"
+            android:layout_alignRight="@+id/imageButtonAndy"
+            android:layout_alignStart="@+id/imageButtonAndy"
+            android:layout_alignTop="@+id/textView"
+            android:layout_gravity="right|top"
+            android:gravity="center"
+            android:text="Andy Quintero Melo"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imageButtonIago"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView2"
+            android:layout_gravity="left|center_vertical"
+            android:background="@android:color/transparent"
+            android:onClick="onTwitterIagoClick"
+            android:scaleType="fitCenter"
+            android:src="@drawable/twitter" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageButtonIago"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_toStartOf="@+id/imageView"
+            android:gravity="center"
+            android:text="Iago Santos Domínguez"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</FrameLayout>

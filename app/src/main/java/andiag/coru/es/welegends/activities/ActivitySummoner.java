@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
@@ -76,10 +77,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     private void getSummonerId(String summonerName){
-        String server = ".api.pvp.net/api/lol/";
-        String clave = "f1b0db2a-9061-44e4-82f1-4632137837db";
+        APIHandler handler = APIHandler.getInstance(this);
 
-        String request = "https://" + region + server + region + "/v1.4/summoner/by-name/" + summonerName + "?api_key=" + clave;
+        String request = "https://" + region + handler.getServer() + region
+                + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

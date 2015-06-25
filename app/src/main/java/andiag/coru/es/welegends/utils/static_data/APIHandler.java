@@ -20,6 +20,7 @@ public class APIHandler {
     private String matchHistory;
     private String match;
     private String summonerByName;
+    private String key;
 
     private APIHandler(Activity activity) {
 
@@ -35,6 +36,7 @@ public class APIHandler {
             matchHistory = properties.getProperty("matchHistory");
             match = properties.getProperty("match");
             summonerByName = properties.getProperty("summonerByName");
+            key = properties.getProperty("key");
 
             inputStream.close();
         } catch (IOException e) {
@@ -49,6 +51,10 @@ public class APIHandler {
         }
         return ourInstance;
     }
+
+    public String getKey(){return key;};
+
+    public void setKey(String key){this.key=key;}
 
     public String getServer() {
         return server;

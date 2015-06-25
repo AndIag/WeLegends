@@ -22,7 +22,7 @@ public abstract class ImagesHandler {
         spells.put(2, R.drawable.clairvoyance);
         spells.put(3, R.drawable.exhaust);
         spells.put(4, R.drawable.flash);
-        spells.put(5, R.drawable.ghost);
+        spells.put(6, R.drawable.ghost);
         spells.put(7, R.drawable.heal);
         spells.put(10, R.drawable.revive);
         spells.put(11, R.drawable.smite);

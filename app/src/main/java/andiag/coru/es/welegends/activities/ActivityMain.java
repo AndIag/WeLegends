@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends;
+package andiag.coru.es.welegends.activities;
 
 import java.util.Locale;
 
@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import andiag.coru.es.welegends.R;
 
 
 public class ActivityMain extends ActionBarActivity implements ActionBar.TabListener {

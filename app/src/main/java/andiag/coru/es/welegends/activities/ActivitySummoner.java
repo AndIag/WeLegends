@@ -1,8 +1,8 @@
 package andiag.coru.es.welegends.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,7 +83,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     private void getSummonerId(final String summonerName){
 
-        APIHandler handler = APIHandler.getInstance(this);
+        APIHandler handler = APIHandler.getInstance();
+        if (handler == null) {
+            handler = APIHandler.getInstance(this);
+        }
 
         String request = "https://" + region + handler.getServer() + region
                 + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();

@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.utils.static_data;
 
+import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.DefaultHashMap;
 
 /**
@@ -11,6 +12,50 @@ public abstract class DataHandler {
 
     static {
         initializeChampionNames();
+    }
+
+    public static int getMapImage(long id) {
+        int name = 0;
+        switch ((int) id) {
+            case 1:
+                name = R.drawable.summoner_rift2;
+                break;
+            case 10:
+                name = R.drawable.twisted_treeline1;
+                break;
+            case 8:
+                name = R.drawable.crystal_scar;
+                break;
+            case 12:
+                name = R.drawable.howling_abyss1;
+                break;
+            default:
+                name = R.drawable.summoner_rift2;
+                break;
+        }
+        return name;
+    }
+
+    public static int getMapName(long id) {
+        int name = 0;
+        switch ((int) id) {
+            case 1:
+                name = R.string.rift;
+                break;
+            case 10:
+                name = R.string.tt;
+                break;
+            case 8:
+                name = R.string.cs;
+                break;
+            case 12:
+                name = R.string.ha;
+                break;
+            default:
+                name = R.string.rift;
+                break;
+        }
+        return name;
     }
 
     private static void initializeChampionNames() {

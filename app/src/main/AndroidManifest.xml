@@ -26,6 +26,10 @@
             android:name=".activities.ActivitySummoner"
             android:label="@string/title_activity_activity_summoner" >
         </activity>
+        <activity
+            android:name=".activities.ActivityMain2"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

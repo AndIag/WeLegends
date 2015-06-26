@@ -77,7 +77,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     private void startMainActivity(Summoner summoner) {
-        Intent i = new Intent(this, ActivityMain.class);
+        Intent i = new Intent(this, ActivityMain2.class);
         i.putExtra("summoner", summoner);
         i.putExtra("region", region.toLowerCase());
         startActivity(i);

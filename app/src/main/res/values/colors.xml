@@ -23,4 +23,5 @@
     <color name="posT1">#03A9F4</color>
     <color name="posT2">#8BC34A</color>
     <color name="posT3">#F44336</color>
+    <color name="tab_text_color">#FFFFFF</color>
 </resources>

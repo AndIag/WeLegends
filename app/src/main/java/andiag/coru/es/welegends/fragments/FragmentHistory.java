@@ -110,8 +110,7 @@ public class FragmentHistory extends Fragment {
             matchesHistoryList = new ArrayList<>();
             getSummonerHistory(BEGININDEX, ENDINDEX);
         }
-        //recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
-        recyclerAdapter = new AdapterHistory(getActivity());
+        recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
     }
 
     @Override

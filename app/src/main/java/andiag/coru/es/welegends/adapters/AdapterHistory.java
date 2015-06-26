@@ -20,6 +20,9 @@ import java.util.Locale;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.Match;
+import andiag.coru.es.welegends.entities.Participant;
+import andiag.coru.es.welegends.entities.ParticipantIdentities;
+import andiag.coru.es.welegends.entities.ParticipantStats;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -30,9 +33,11 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     private Context context;
     private DateFormat dateF;
     private int lastPosition = -1;
+    private long sum_id;
 
-    public AdapterHistory(Context context) {
+    public AdapterHistory(Context context,long sum_id) {
         this.context = context;
+        this.sum_id = sum_id;
         dateF = DateFormat.getDateInstance(DateFormat.SHORT,context.getResources().getConfiguration().locale);
     }
 
@@ -53,6 +58,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
 
         historyViewHolder.position = i;
+        getAllData(historyViewHolder,m);
         setAnimation(historyViewHolder.cardView, i);
 
     }
@@ -74,6 +80,50 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     public void clearHistory() {
         historyList.clear();
         notifyDataSetChanged();
+    }
+
+    // GET DATA
+
+    private void getAllData(HistoryViewHolder holder,Match m) {
+
+
+        long id = m.getMapId();
+        long creation = m.getMatchCreation();
+        long duration = m.getMatchDuration();
+        long champId,kills,assists,deaths,minions,lvl,gold;
+        boolean winner = false;
+
+        long participantId = -1;
+        for (ParticipantIdentities pi : m.getParticipantIdentities()) {
+            if (pi.getPlayer().getSummonerId() == sum_id) {
+                participantId = pi.getParticipantId();
+                break;
+            }
+        }
+
+        if (participantId < 0) return;
+
+        for (Participant p : m.getParticipants()) {
+            if (p.getParticipantId() == participantId) {
+                ParticipantStats stats = p.getStats();
+                champId=p.getChampionId();
+                kills=stats.getKills();
+                deaths=stats.getDeaths();
+                assists=stats.getAssists();
+                lvl=stats.getChampLevel();
+                minions=stats.getMinionsKilled();
+                winner=stats.isWinner();
+                gold=stats.getGoldEarned();
+                break;
+            }
+        }
+
+        if (winner) {
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        } else {
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+        }
+
     }
 
     // ANIMATION METHOD

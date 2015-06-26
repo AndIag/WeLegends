@@ -9,53 +9,19 @@ import andiag.coru.es.welegends.utils.DefaultHashMap;
 public abstract class DataHandler {
 
     private static DefaultHashMap<Integer, String> champNames;
+    private static DefaultHashMap<Integer, Integer> mapsNames;
 
     static {
         initializeChampionNames();
+        initializeMapsNames();
     }
 
-    public static int getMapImage(long id) {
-        int name = 0;
-        switch ((int) id) {
-            case 1:
-                name = R.drawable.summoner_rift2;
-                break;
-            case 10:
-                name = R.drawable.twisted_treeline1;
-                break;
-            case 8:
-                name = R.drawable.crystal_scar;
-                break;
-            case 12:
-                name = R.drawable.howling_abyss1;
-                break;
-            default:
-                name = R.drawable.summoner_rift2;
-                break;
-        }
-        return name;
-    }
-
-    public static int getMapName(long id) {
-        int name = 0;
-        switch ((int) id) {
-            case 1:
-                name = R.string.rift;
-                break;
-            case 10:
-                name = R.string.tt;
-                break;
-            case 8:
-                name = R.string.cs;
-                break;
-            case 12:
-                name = R.string.ha;
-                break;
-            default:
-                name = R.string.rift;
-                break;
-        }
-        return name;
+    public static void initializeMapsNames() {
+        mapsNames = new DefaultHashMap<>(R.string.notFoundError);
+        mapsNames.put(1, R.string.rift);
+        mapsNames.put(10, R.string.tt);
+        mapsNames.put(8, R.string.cs);
+        mapsNames.put(12, R.string.ha);
     }
 
     private static void initializeChampionNames() {
@@ -189,6 +155,10 @@ public abstract class DataHandler {
 
     public static String getChampName(int id) {
         return champNames.get(id);
+    }
+
+    public static Integer getMapsName(int id) {
+        return mapsNames.get(id);
     }
 
 }

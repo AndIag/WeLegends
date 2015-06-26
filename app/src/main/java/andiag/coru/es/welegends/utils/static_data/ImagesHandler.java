@@ -10,10 +10,20 @@ public abstract class ImagesHandler {
 
     private static DefaultHashMap<Integer, Integer> champions;
     private static DefaultHashMap<Integer, Integer> spells;
+    private static DefaultHashMap<Integer, Integer> maps;
 
     static {
         initializeChampions();
         initializeSpells();
+        initializeMaps();
+    }
+
+    private static void initializeMaps() {
+        maps = new DefaultHashMap<>(R.drawable.summoner_rift2);
+        maps.put(1, R.drawable.summoner_rift2);
+        maps.put(10, R.drawable.twisted_treeline1);
+        maps.put(8, R.drawable.crystal_scar);
+        maps.put(12, R.drawable.howling_abyss1);
     }
 
     private static void initializeSpells() {
@@ -166,12 +176,12 @@ public abstract class ImagesHandler {
         return champions.get(id);
     }
 
-    public static Integer getItem(long id) {
-        return null;
-    }
-
     public static Integer getSpell(int id) {
         return spells.get(id);
+    }
+
+    public static Integer getMap(int id) {
+        return maps.get(id);
     }
 }
 

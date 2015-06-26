@@ -5,8 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
+import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.requests.GsonRequest;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -47,6 +52,7 @@ public class FragmentHistory extends Fragment {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private AdapterHistory recyclerAdapter;
+    private GridLayoutManager layoutManager;
 
     private final int INCREMENT = 10;
     private int BEGININDEX;
@@ -90,6 +96,19 @@ public class FragmentHistory extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
 
+        recyclerView.setHasFixedSize(true);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float density = getResources().getDisplayMetrics().density;
+        float dpWidth = outMetrics.widthPixels / density;
+        int columns = Math.round(dpWidth / 300);
+
+        layoutManager = new GridLayoutManager(getActivity(), columns);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(recyclerAdapter);
 
         return view;
     }
@@ -156,6 +175,7 @@ public class FragmentHistory extends Fragment {
     }
 
     private void getSummonerHistory2(int beginIndex, int endIndex){
+        final Gson gson = new Gson();
         APIHandler handler = APIHandler.getInstance(getActivity());
 
         String request = "https://" + region + handler.getServer() + region
@@ -167,11 +187,16 @@ public class FragmentHistory extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.d("RESPUESTA", response.toString());
                         JSONArray arrayMatches = null;
+                        ArrayList<Match> list = new ArrayList<>();
                         try {
                             arrayMatches = response.getJSONArray("matches");
-                            for(int i=0;arrayMatches.length()>0;i++){
+                            for(int i=0;i<arrayMatches.length();i++){
                                 Log.d("MATCH i",arrayMatches.get(i).toString());
+                                Match match = (Match) gson.fromJson(arrayMatches.get(i).toString(), Match.class);
+                                list.add(match);
                             }
+                            Log.d("MATCHES ON LIST","N = "+list.size());
+                            recyclerAdapter.updateHistory(list);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -179,7 +204,7 @@ public class FragmentHistory extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("ERROR",error.toString());
             }
         });
 

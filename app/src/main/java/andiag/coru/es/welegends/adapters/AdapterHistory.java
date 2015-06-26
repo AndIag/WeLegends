@@ -15,14 +15,18 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.utils.static_data.DataHandler;
+import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -87,10 +91,10 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     private void getAllData(HistoryViewHolder holder,Match m) {
 
 
-        long id = m.getMapId();
+        int mapid = m.getMapId(),champId=0;
         long creation = m.getMatchCreation();
         long duration = m.getMatchDuration();
-        long champId,kills,assists,deaths,minions,lvl,gold;
+        long kills=0,assists=0,deaths=0,minions=0,lvl=0,gold=0;
         boolean winner = false;
 
         long participantId = -1;
@@ -118,11 +122,34 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             }
         }
 
+        holder.vCS.setText(Long.toString(minions));
+        holder.vGold.setText(String.format("%.1f",(float) gold/1000)+"k");
+        holder.vLVL.setText(Long.toString(lvl));
+        holder.vKDA.setText(kills + "/" + deaths + "/" + assists);
+
+        String d = String.format("%d ' %d ''",
+                TimeUnit.SECONDS.toMinutes(duration),
+                duration -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
+        );
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(creation);
+        String date_s = dateF.format(date.getTime());
+
+        holder.vDuration.setText(date_s + "   " + d);
+
+        holder.vMap.setText(DataHandler.getMapName(mapid));
+        holder.mapImage.setImageResource(ImagesHandler.getMap(mapid));
+        holder.vChampName.setText(DataHandler.getChampName(champId));
+        holder.vImageChamp.setImageResource(ImagesHandler.getChamp(champId));
+
+
         if (winner) {
             holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
         } else {
             holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
         }
+
 
     }
 

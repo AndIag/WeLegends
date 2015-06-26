@@ -13,12 +13,12 @@ public abstract class DataHandler {
 
     static {
         initializeChampionNames();
-        initializeMapsNames();
+        initializeMapNames();
     }
 
-    public static void initializeMapsNames() {
+    public static void initializeMapNames() {
         mapsNames = new DefaultHashMap<>(R.string.notFoundError);
-        mapsNames.put(1, R.string.rift);
+        mapsNames.put(11, R.string.rift);
         mapsNames.put(10, R.string.tt);
         mapsNames.put(8, R.string.cs);
         mapsNames.put(12, R.string.ha);
@@ -157,7 +157,7 @@ public abstract class DataHandler {
         return champNames.get(id);
     }
 
-    public static Integer getMapsName(int id) {
+    public static Integer getMapName(int id) {
         return mapsNames.get(id);
     }
 

@@ -17,23 +17,19 @@ import android.view.ViewGroup;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
-import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.requests.GsonRequest;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -46,7 +42,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
  * create an instance of this fragment.
  */
 public class FragmentHistory extends Fragment {
-
+    private final int INCREMENT = 10;
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
@@ -54,13 +50,17 @@ public class FragmentHistory extends Fragment {
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
 
-    private final int INCREMENT = 10;
+
     private int BEGININDEX;
     private int ENDINDEX;
 
     private String region;
     private long summoner_id;
+    private ArrayList<Match> matchesHistoryList;
 
+    public FragmentHistory() {
+        // Required empty public constructor
+    }
 
     // TODO: Rename and change types and number of parameters
     public static FragmentHistory newInstance(String region,long id) {
@@ -72,19 +72,46 @@ public class FragmentHistory extends Fragment {
         return fragment;
     }
 
-    public FragmentHistory() {
-        // Required empty public constructor
+    //GETTERS, SETTERS && ADDS
+    private void incrementIndexes() {
+        BEGININDEX += INCREMENT;
+        ENDINDEX += INCREMENT;
+    }
+
+    private void startIndex() {
+        BEGININDEX = 0;
+        ENDINDEX = INCREMENT;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("beginIndex", BEGININDEX);
+        outState.putInt("endIndex", ENDINDEX);
+        outState.putLong("summoner_id", summoner_id);
+        outState.putString("region", region);
+        outState.putSerializable("matchesHistory", matchesHistoryList);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+
+        if (savedInstanceState != null) {
+            BEGININDEX = savedInstanceState.getInt("beginIndex");
+            ENDINDEX = savedInstanceState.getInt("endIndex");
+            summoner_id = savedInstanceState.getLong("summoner_id");
+            region = savedInstanceState.getString("region");
+            matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
+        } else if (getArguments() != null) {
             region = getArguments().getString("region");
             summoner_id = getArguments().getLong("id");
+            startIndex();
+            matchesHistoryList = new ArrayList<>();
+            getSummonerHistory(BEGININDEX, ENDINDEX);
         }
+        //recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
         recyclerAdapter = new AdapterHistory(getActivity());
-        getSummonerHistory2(0, INCREMENT);
     }
 
     @Override
@@ -137,49 +164,15 @@ public class FragmentHistory extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
-
-
     // GET DATA CODE PART
-
-    private void getSummonerHistory(int beginIndex, int endIndex){
-        APIHandler handler = APIHandler.getInstance(getActivity());
-
-        String request = "https://" + region + handler.getServer() + region
-                + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" +  handler.getKey();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("RESPUESTA", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
-    }
-
-    private void getSummonerHistory2(int beginIndex, int endIndex){
+    private void getSummonerHistory(int beginIndex, int endIndex) {
         final Gson gson = new Gson();
         APIHandler handler = APIHandler.getInstance(getActivity());
 
+        incrementIndexes();
+
         String request = "https://" + region + handler.getServer() + region
-                + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" +  handler.getKey();
+                + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" + handler.getKey();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
@@ -190,12 +183,14 @@ public class FragmentHistory extends Fragment {
                         ArrayList<Match> list = new ArrayList<>();
                         try {
                             arrayMatches = response.getJSONArray("matches");
-                            for(int i=0;i<arrayMatches.length();i++){
-                                Log.d("MATCH i",arrayMatches.get(i).toString());
+                            for (int i = 0; i < arrayMatches.length(); i++) {
+                                Log.d("MATCH i", arrayMatches.get(i).toString());
                                 Match match = (Match) gson.fromJson(arrayMatches.get(i).toString(), Match.class);
                                 list.add(match);
                             }
-                            Log.d("MATCHES ON LIST","N = "+list.size());
+                            Log.d("MATCHES ON LIST", "N = " + list.size());
+                            Collections.reverse(list);
+                            matchesHistoryList.addAll(list);
                             recyclerAdapter.updateHistory(list);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -204,11 +199,24 @@ public class FragmentHistory extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR",error.toString());
+                Log.d("ERROR", error.toString());
             }
         });
 
         VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
+    }
+
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
     }
 
 }

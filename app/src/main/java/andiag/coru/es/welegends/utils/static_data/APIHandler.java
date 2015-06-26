@@ -45,6 +45,13 @@ public class APIHandler {
 
     }
 
+    public static APIHandler getInstance() {
+        if (ourInstance == null) {
+            return null;
+        }
+        return ourInstance;
+    }
+
     public static APIHandler getInstance(Activity activity) {
         if (ourInstance == null) {
             return new APIHandler(activity);

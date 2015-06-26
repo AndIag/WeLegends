@@ -14,12 +14,21 @@ import android.view.ViewGroup;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
+import andiag.coru.es.welegends.entities.Match;
+import andiag.coru.es.welegends.utils.requests.GsonRequest;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -69,7 +78,7 @@ public class FragmentHistory extends Fragment {
             summoner_id = getArguments().getLong("id");
         }
         recyclerAdapter = new AdapterHistory(getActivity());
-        getSummonerHistory(0,INCREMENT);
+        getSummonerHistory2(0, INCREMENT);
     }
 
     @Override
@@ -135,6 +144,37 @@ public class FragmentHistory extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("RESPUESTA", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void getSummonerHistory2(int beginIndex, int endIndex){
+        APIHandler handler = APIHandler.getInstance(getActivity());
+
+        String request = "https://" + region + handler.getServer() + region
+                + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" +  handler.getKey();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("RESPUESTA", response.toString());
+                        JSONArray arrayMatches = null;
+                        try {
+                            arrayMatches = response.getJSONArray("matches");
+                            for(int i=0;arrayMatches.length()>0;i++){
+                                Log.d("MATCH i",arrayMatches.get(i).toString());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -27,6 +28,8 @@ public class ActivitySplashScreen extends Activity {
         long t = Calendar.getInstance().getTimeInMillis();
 
         super.onCreate(savedInstanceState);
+
+        APIHandler.getInstance(this);
 
         //Poner pantalla vertical
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

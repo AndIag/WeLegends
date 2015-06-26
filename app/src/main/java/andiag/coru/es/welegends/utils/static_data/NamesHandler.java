@@ -6,7 +6,7 @@ import andiag.coru.es.welegends.utils.DefaultHashMap;
 /**
  * Created by Iago on 25/06/2015.
  */
-public abstract class DataHandler {
+public abstract class NamesHandler {
 
     private static DefaultHashMap<Integer, String> champNames;
     private static DefaultHashMap<Integer, Integer> mapsNames;

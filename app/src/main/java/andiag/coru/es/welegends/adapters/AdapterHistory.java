@@ -13,11 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
@@ -25,8 +23,8 @@ import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
-import andiag.coru.es.welegends.utils.static_data.DataHandler;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
+import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -138,9 +136,9 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
         holder.vDuration.setText(date_s + "   " + d);
 
-        holder.vMap.setText(DataHandler.getMapName(mapid));
+        holder.vMap.setText(NamesHandler.getMapName(mapid));
         holder.mapImage.setImageResource(ImagesHandler.getMap(mapid));
-        holder.vChampName.setText(DataHandler.getChampName(champId));
+        holder.vChampName.setText(NamesHandler.getChampName(champId));
         holder.vImageChamp.setImageResource(ImagesHandler.getChamp(champId));
 
 

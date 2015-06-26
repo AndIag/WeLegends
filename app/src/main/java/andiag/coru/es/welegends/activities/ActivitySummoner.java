@@ -29,6 +29,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
     private String region;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     private void getSummonerId(final String summonerName){
+        if (isLoading) return;
+
+        isLoading = true;
+
         final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
@@ -103,6 +108,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                             Summoner summoner = (Summoner) gson.fromJson(summonerJSON.toString(), Summoner.class);
                             Log.d("RESPUESTA", summoner.getId() + "---" + summoner.getName());
                             startMainActivity(summoner);
+                            isLoading = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,7 +116,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                isLoading = false;
             }
         });
 

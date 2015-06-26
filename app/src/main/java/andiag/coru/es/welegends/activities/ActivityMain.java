@@ -28,10 +28,9 @@ import com.nineoldandroids.view.ViewHelper;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
-import andiag.coru.es.welegends.fragments.TabFragment;
 import andiag.coru.es.welegends.utils.SlidingTabLayout;
 
-public class ActivityMain2 extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public class ActivityMain extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
@@ -40,7 +39,7 @@ public class ActivityMain2 extends ActionBarActivity implements ObservableScroll
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
-    private TabFragment fragmentHistory;
+    private FragmentHistory fragmentHistory;
 
     // Passed variables
     private Summoner summoner;
@@ -73,7 +72,7 @@ public class ActivityMain2 extends ActionBarActivity implements ObservableScroll
             summoner = (Summoner) getIntent().getSerializableExtra("summoner");
             region = getIntent().getStringExtra("region");
         }
-        fragmentHistory = TabFragment.newInstance(region, summoner.getId());
+        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
 
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));

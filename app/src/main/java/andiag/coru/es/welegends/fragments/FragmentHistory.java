@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -38,7 +36,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 /**
  * Created by Andy on 26/06/2015.
  */
-public class TabFragment extends Fragment {
+public class FragmentHistory extends Fragment {
 
     private final int INCREMENT = 10;
 
@@ -55,11 +53,11 @@ public class TabFragment extends Fragment {
     private long summoner_id;
     private ArrayList<Match> matchesHistoryList;
 
-    public TabFragment() {
+    public FragmentHistory() {
     }
 
-    public static TabFragment newInstance(String region,long id) {
-        TabFragment fragment = new TabFragment();
+    public static FragmentHistory newInstance(String region,long id) {
+        FragmentHistory fragment = new FragmentHistory();
         Bundle args = new Bundle();
         args.putString("region",region);
         args.putLong("id",id);

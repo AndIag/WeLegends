@@ -114,6 +114,7 @@ public class TabFragment extends Fragment {
 
         Activity parentActivity = getActivity();
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
 
         recyclerView.setHasFixedSize(true);
         Display display = getActivity().getWindowManager().getDefaultDisplay();

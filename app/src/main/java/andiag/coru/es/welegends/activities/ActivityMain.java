@@ -1,25 +1,24 @@
 package andiag.coru.es.welegends.activities;
 
-import java.util.Locale;
-
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.Locale;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 
 
@@ -46,24 +45,21 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
 
 
     // Passed variables
-    private String summonerName;
+    private Summoner summoner;
     private String region;
-    private long sum_id;
 
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("name", summonerName);
+        outState.putSerializable("summoner", summoner);
         outState.putString("region", region);
-        outState.putLong("id",sum_id);
     }
 
     //RetrieveData
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
-        summonerName = savedInstanceState.getString("name");
+        summoner = (Summoner) savedInstanceState.getSerializable("summoner");
         region = savedInstanceState.getString("region");
-        sum_id = savedInstanceState.getLong("id");
     }
 
     @Override
@@ -74,11 +70,10 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
-            summonerName = getIntent().getStringExtra("name");
+            summoner = (Summoner) getIntent().getSerializableExtra("summoner");
             region = getIntent().getStringExtra("region");
-            sum_id = getIntent().getLongExtra("id",0);
         }
-        fragmentHistory = FragmentHistory.newInstance(region,sum_id);
+        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -158,6 +153,39 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
     }
 
     /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_activity_main, container, false);
+            return rootView;
+        }
+    }
+
+    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -204,39 +232,6 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_activity_main, container, false);
-            return rootView;
         }
     }
 

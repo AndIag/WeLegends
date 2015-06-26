@@ -15,12 +15,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
+import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -73,31 +75,34 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         getSummonerId(summoner);
     }
 
-    private void startMainActivity(long id,String summoner){
+    private void startMainActivity(Summoner summoner) {
         Intent i = new Intent(this, ActivityMain.class);
-        i.putExtra("name", summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", ""));
+        i.putExtra("summoner", summoner);
         i.putExtra("region", region.toLowerCase());
-        i.putExtra("id",id);
         startActivity(i);
     }
 
     private void getSummonerId(final String summonerName){
+        final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
             handler = APIHandler.getInstance(this);
         }
 
-        String request = "https://" + region + handler.getServer() + region
+        String url = "https://" + region + handler.getServer() + region
                 + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("RESPUESTA",response.toString());
                         try {
-                            startMainActivity(response.getJSONObject(summonerName).getLong("id"), summonerName);
+                            JSONObject summonerJSON = response.getJSONObject(summonerName);
+                            Summoner summoner = (Summoner) gson.fromJson(summonerJSON.toString(), Summoner.class);
+                            Log.d("RESPUESTA", summoner.getId() + "---" + summoner.getName());
+                            startMainActivity(summoner);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,6 +115,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         });
 
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+
     }
 
     @Override

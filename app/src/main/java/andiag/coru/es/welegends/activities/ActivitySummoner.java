@@ -1,7 +1,8 @@
 package andiag.coru.es.welegends.activities;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
@@ -69,19 +71,19 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         String summoner = editText.getText().toString();
         summoner = summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
         getSummonerId(summoner);
-
-        //Intent i = new Intent(this, ActivityMain.class);
-        //i.putExtra("SummonerName", summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", ""));
-        //i.putExtra("Region", region.toLowerCase());
-        //startActivity(i);
     }
 
-    private void getSummonerId(String summonerName){
-        APIHandler handler = APIHandler.getInstance();
+    private void startMainActivity(long id,String summoner){
+        Intent i = new Intent(this, ActivityMain.class);
+        i.putExtra("name", summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", ""));
+        i.putExtra("region", region.toLowerCase());
+        i.putExtra("id",id);
+        startActivity(i);
+    }
 
-        if (handler == null) {
-            handler = APIHandler.getInstance(this);
-        }
+    private void getSummonerId(final String summonerName){
+
+        APIHandler handler = APIHandler.getInstance(this);
 
         String request = "https://" + region + handler.getServer() + region
                 + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();
@@ -91,6 +93,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("RESPUESTA",response.toString());
+                        try {
+                            startMainActivity(response.getJSONObject(summonerName).getLong("id"), summonerName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

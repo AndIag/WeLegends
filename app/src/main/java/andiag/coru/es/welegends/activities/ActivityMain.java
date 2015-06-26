@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.activities;
 
 import java.util.Locale;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -19,9 +20,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.fragments.FragmentHistory;
 
 
-public class ActivityMain extends ActionBarActivity implements ActionBar.TabListener {
+public class ActivityMain extends ActionBarActivity implements ActionBar.TabListener, FragmentHistory.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -38,11 +40,45 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+    // Fragments of the tabbed activity
+
+    private FragmentHistory fragmentHistory;
+
+
+    // Passed variables
+    private String summonerName;
+    private String region;
+    private long sum_id;
+
+    //SaveData
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("name", summonerName);
+        outState.putString("region", region);
+        outState.putLong("id",sum_id);
+    }
+
+    //RetrieveData
+    protected void onRetrieveInstanceState(Bundle savedInstanceState) {
+        summonerName = savedInstanceState.getString("name");
+        region = savedInstanceState.getString("region");
+        sum_id = savedInstanceState.getLong("id");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null) {
+            onRetrieveInstanceState(savedInstanceState);
+        } else {
+            summonerName = getIntent().getStringExtra("name");
+            region = getIntent().getStringExtra("region");
+            sum_id = getIntent().getLongExtra("id",0);
+        }
+        fragmentHistory = FragmentHistory.newInstance(region,sum_id);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -116,6 +152,11 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -130,7 +171,19 @@ public class ActivityMain extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Fragment f = null;
+            switch (position) {
+                case 0:
+                    f = fragmentHistory;
+                    break;
+                case 1:
+                    f = PlaceholderFragment.newInstance(position + 1);
+                    break;
+                case 2:
+                    f = PlaceholderFragment.newInstance(position + 1);
+                    break;
+            }
+            return f;
         }
 
         @Override

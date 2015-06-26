@@ -1,12 +1,16 @@
 package andiag.coru.es.welegends.activities;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -40,6 +44,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     private boolean mScrolled;
     private ScrollState mLastScrollState;
     private FragmentHistory fragmentHistory;
+    private ActionBar actionBar;
 
     // Passed variables
     private Summoner summoner;
@@ -66,6 +71,13 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        final ColorDrawable actionBarBackground = new ColorDrawable();
+        final ColorDrawable actionBarTabsColor = new ColorDrawable();
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(actionBarBackground);
+        
+
+
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
@@ -77,6 +89,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
+        //mToolbarView.setBackground(actionBarBackground);
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -86,16 +99,62 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         findViewById(R.id.pager_wrapper).setPadding(0, getActionBarSize() + tabHeight, 0, 0);
 
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setBackground(actionBarTabsColor);
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.accent));
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(mPager);
+        slidingTabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                //actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (position >= mPagerAdapter.getCount() - 1) {
+                    // Guard against ArrayIndexOutOfBoundsException
+                    return;
+                }
+                // Retrieve the current and next ColorFragment
+                //final ColorFragment from = (ColorFragment) pagerAdapter.getItem(position);
+                //final ColorFragment to = (ColorFragment) pagerAdapter.getItem(position + 1);
+                // Blend the colors and adjust the ActionBar
+                int from = mPagerAdapter.getColorActionBar(position);
+                int to = mPagerAdapter.getColorActionBar(position + 1);
+
+                int fromT = mPagerAdapter.getColorToolBar(position);
+                int toT = mPagerAdapter.getColorToolBar(position + 1);
+
+                //ColorDrawable[] color = {new ColorDrawable(from), new ColorDrawable(to)};
+                //TransitionDrawable trans = new TransitionDrawable(color);
+                final int blended = blendColors(to, from, positionOffset);
+                final int blendedT = blendColors(toT, fromT, positionOffset);
+                actionBarBackground.setColor(blended);
+                actionBarTabsColor.setColor(blended);
+                //actionBar.setBackgroundDrawable(trans);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setStatusBarColor(blendedT);
+                }
+                //trans.startTransition(500);
+            }
+        });
 
         ViewConfiguration vc = ViewConfiguration.get(this);
         mSlop = vc.getScaledTouchSlop();
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.container);
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
     }
+
+    static int blendColors(int from, int to, float ratio) {
+        final float inverseRation = 1f - ratio;
+        final float r = Color.red(from) * ratio + Color.red(to) * inverseRation;
+        final float g = Color.green(from) * ratio + Color.green(to) * inverseRation;
+        final float b = Color.blue(from) * ratio + Color.blue(to) * inverseRation;
+        return Color.rgb((int) r, (int) g, (int) b);
+    }
+
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
@@ -317,6 +376,32 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             return f;
         }
 
+        public int getColorActionBar(int position) {
+
+            switch (position) {
+                case 0:
+                    return getResources().getColor(R.color.posT0);
+                case 1:
+                    return getResources().getColor(R.color.posT1);
+                case 2:
+                    return getResources().getColor(R.color.posT2);
+            }
+            return 0;
+        }
+
+        public int getColorToolBar(int position) {
+
+            switch (position) {
+                case 0:
+                    return getResources().getColor(R.color.pos0);
+                case 1:
+                    return getResources().getColor(R.color.pos1);
+                case 2:
+                    return getResources().getColor(R.color.pos2);
+            }
+            return 0;
+        }
+
         @Override
         public int getCount() {
             // Show 3 total pages.
@@ -327,7 +412,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase();
+                    return summoner.getName().toUpperCase();
                 case 1:
                     return getString(R.string.title_section2).toUpperCase();
                 case 2:

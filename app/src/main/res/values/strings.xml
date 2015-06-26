@@ -12,9 +12,9 @@
     <string name="cs">The Crystal Scar</string>
     <string name="ha">Howling Abyss</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Summoner</string>
+    <string name="title_section2">Profile</string>
+    <string name="title_section3">Stats</string>
     <string name="summoner">Summoner:</string>
     <string name="go">Search</string>
     <string name="hint_summoner">Summoner\'s name</string>

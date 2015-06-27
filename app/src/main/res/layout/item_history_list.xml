@@ -10,7 +10,9 @@
     android:stateListAnimator="@anim/lift_up"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="1dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="3dp"
+    android:clickable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

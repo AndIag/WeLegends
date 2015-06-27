@@ -63,7 +63,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
         historyViewHolder.position = i;
         getAllData(historyViewHolder,m);
-        setAnimation(historyViewHolder.cardView, i);
+        //setAnimation(historyViewHolder.cardView, i);
         //new RetrieveDataTask(m,historyViewHolder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }

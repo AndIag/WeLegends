@@ -1,6 +1,9 @@
 package andiag.coru.es.welegends.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,10 +42,9 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         getWindow().setBackgroundDrawable(null);
 
-
-
         Spinner spinner = (Spinner) findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
+
     }
 
 
@@ -69,11 +72,31 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+
+        return isAvailable;
+    }
+
     public void onClickSummonerHistory(View v) {
-        EditText editText = (EditText) findViewById(R.id.editTextSummoner);
-        String summoner = editText.getText().toString();
-        summoner = summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
-        getSummonerId(summoner);
+
+        if (isNetworkAvailable()) {
+            EditText editText = (EditText) findViewById(R.id.editTextSummoner);
+            String summoner = editText.getText().toString();
+            summoner = summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
+            getSummonerId(summoner);
+        } else {
+            Toast.makeText(this, "Network is unavailable!", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     private void startMainActivity(Summoner summoner) {

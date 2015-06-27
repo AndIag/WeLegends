@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.fragments;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -86,6 +87,13 @@ public class FragmentHistory extends Fragment {
         outState.putSerializable("matchesHistory", matchesHistoryList);
     }
 
+    //Used to activate the refreshing indicator
+    public void changeRefreshingValue(boolean bool) {
+        if (refreshLayout != null) {
+            refreshLayout.setRefreshing(bool);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,11 +112,12 @@ public class FragmentHistory extends Fragment {
             getSummonerHistory(BEGININDEX, ENDINDEX);
         }
         recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
+        changeRefreshingValue(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         Activity parentActivity = getActivity();
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
@@ -136,6 +145,7 @@ public class FragmentHistory extends Fragment {
     }
 
     private void getSummonerHistory(int beginIndex, int endIndex) {
+        changeRefreshingValue(true);
         final Gson gson = new Gson();
         APIHandler handler = APIHandler.getInstance(getActivity());
 
@@ -150,18 +160,9 @@ public class FragmentHistory extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.d("RESPUESTA", response.toString());
                         JSONArray arrayMatches = null;
-                        ArrayList<Match> list = new ArrayList<>();
                         try {
                             arrayMatches = response.getJSONArray("matches");
-                            for (int i = 0; i < arrayMatches.length(); i++) {
-                                Log.d("MATCH i", arrayMatches.get(i).toString());
-                                Match match = (Match) gson.fromJson(arrayMatches.get(i).toString(), Match.class);
-                                list.add(match);
-                            }
-                            Log.d("MATCHES ON LIST", "N = " + list.size());
-                            Collections.reverse(list);
-                            matchesHistoryList.addAll(list);
-                            recyclerAdapter.updateHistory(list);
+                            new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -174,5 +175,47 @@ public class FragmentHistory extends Fragment {
         });
 
         VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private class ParseDataTask extends AsyncTask<Void,Void,ArrayList<Match>>{
+
+        private JSONArray array;
+        private final Gson gson = new Gson();
+
+        public ParseDataTask(JSONArray array) {
+            this.array = array;
+        }
+
+        @Override
+        protected ArrayList<Match> doInBackground(Void... voids) {
+
+            ArrayList<Match> list = new ArrayList<>();
+            try {
+
+                for (int i = 0; i < array.length(); i++) {
+                    Log.d("MATCH i", array.get(i).toString());
+                    Match match = (Match) gson.fromJson(array.get(i).toString(), Match.class);
+                    list.add(match);
+                }
+                Log.d("MATCHES ON LIST", "N = " + list.size());
+                Collections.reverse(list);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Match> matches) {
+            super.onPostExecute(matches);
+            matchesHistoryList.addAll(matches);
+            recyclerAdapter.updateHistory(matches);
+            changeRefreshingValue(false);
+
+        }
+
+
     }
 }

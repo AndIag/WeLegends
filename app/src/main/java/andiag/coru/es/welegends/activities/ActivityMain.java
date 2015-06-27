@@ -75,7 +75,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         final ColorDrawable actionBarTabsColor = new ColorDrawable();
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
-        
+
 
 
         if (savedInstanceState != null) {

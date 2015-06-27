@@ -1,6 +1,8 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,6 +64,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         historyViewHolder.position = i;
         getAllData(historyViewHolder,m);
         setAnimation(historyViewHolder.cardView, i);
+        //new RetrieveDataTask(m,historyViewHolder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -199,5 +202,98 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             linearLayout = (LinearLayout) v.findViewById(R.id.layoutVD);
             mapImage = (ImageView) v.findViewById(R.id.card_background);
         }
+    }
+
+    // AsyncTask CLASS
+
+    private class RetrieveDataTask extends AsyncTask<Void,Void,Bundle>{
+
+        private HistoryViewHolder holder;
+        private Match m;
+
+        public RetrieveDataTask(Match m, HistoryViewHolder holder) {
+            this.m = m;
+            this.holder = holder;
+        }
+
+        @Override
+        protected Bundle doInBackground(Void... voids) {
+
+            int mapid = m.getMapId(),champId=0;
+            long creation = m.getMatchCreation();
+            long duration = m.getMatchDuration();
+            long kills=0,assists=0,deaths=0,minions=0,lvl=0,gold=0;
+            boolean winner = false;
+
+            long participantId = -1;
+            for (ParticipantIdentities pi : m.getParticipantIdentities()) {
+                if (pi.getPlayer().getSummonerId() == sum_id) {
+                    participantId = pi.getParticipantId();
+                    break;
+                }
+            }
+            //if (participantId < 0) return null;
+
+            for (Participant p : m.getParticipants()) {
+                if (p.getParticipantId() == participantId) {
+                    ParticipantStats stats = p.getStats();
+                    champId=p.getChampionId();
+                    kills=stats.getKills();
+                    deaths=stats.getDeaths();
+                    assists=stats.getAssists();
+                    lvl=stats.getChampLevel();
+                    minions=stats.getMinionsKilled();
+                    winner=stats.isWinner();
+                    gold=stats.getGoldEarned();
+                    break;
+                }
+            }
+
+            String d = String.format("%d ' %d ''",
+                    TimeUnit.SECONDS.toMinutes(duration),
+                    duration -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
+            );
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(creation);
+            String date_s = dateF.format(date.getTime());
+
+            Bundle data = new Bundle();
+            data.putString("champName", NamesHandler.getChampName(champId));
+            data.putInt("champImage", ImagesHandler.getChamp(champId));
+            data.putInt("mapName", NamesHandler.getMapName(mapid));
+            data.putInt("mapImage", ImagesHandler.getMap(mapid));
+            data.putString("kda", kills + "/" + deaths + "/" + assists);
+            data.putString("lvl", Long.toString(lvl));
+            data.putString("cs", Long.toString(minions));
+            data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
+            data.putBoolean("winner", winner);
+            data.putString("duration", date_s + "   " + d);
+
+
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(Bundle bundle) {
+            super.onPostExecute(bundle);
+            holder.vCS.setText(bundle.getString("cs"));
+            holder.vGold.setText(bundle.getString("gold"));
+            holder.vLVL.setText(bundle.getString("lvl"));
+            holder.vKDA.setText(bundle.getString("kda"));
+            holder.vDuration.setText(bundle.getString("duration"));
+            holder.vMap.setText(bundle.getInt("mapName"));
+            holder.mapImage.setImageResource(bundle.getInt("mapImage"));
+            holder.vChampName.setText(bundle.getString("champName"));
+            holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
+            if (bundle.getBoolean("winner")) {
+                holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            } else {
+                holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            }
+
+        }
+
+
     }
 }

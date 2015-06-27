@@ -111,9 +111,8 @@ public class FragmentHistory extends Fragment {
             summoner_id = getArguments().getLong("id");
             startIndex();
             matchesHistoryList = new ArrayList<>();
-            getSummonerHistory(BEGININDEX, ENDINDEX);
         }
-
+        getSummonerHistory(BEGININDEX, ENDINDEX);
 
     }
 

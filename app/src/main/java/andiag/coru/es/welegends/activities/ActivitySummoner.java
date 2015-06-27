@@ -95,8 +95,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         } else {
             Toast.makeText(this, "Network is unavailable!", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     private void startMainActivity(Summoner summoner) {

@@ -49,6 +49,72 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     // Passed variables
     private Summoner summoner;
     private String region;
+    private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
+        @Override
+        public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
+            if (!mScrolled && mSlop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
+                // Horizontal scroll is maybe handled by ViewPager
+                return false;
+            }
+
+            Scrollable scrollable = getCurrentScrollable();
+            if (scrollable == null) {
+                mScrolled = false;
+                return false;
+            }
+
+            // If interceptionLayout can move, it should intercept.
+            // And once it begins to move, horizontal scroll shouldn't work any longer.
+            int toolbarHeight = mToolbarView.getHeight();
+            int translationY = (int) ViewHelper.getTranslationY(mInterceptionLayout);
+            boolean scrollingUp = 0 < diffY;
+            boolean scrollingDown = diffY < 0;
+            if (scrollingUp) {
+                if (translationY < 0) {
+                    mScrolled = true;
+                    mLastScrollState = ScrollState.UP;
+                    return true;
+                }
+            } else if (scrollingDown) {
+                if (-toolbarHeight < translationY) {
+                    mScrolled = true;
+                    mLastScrollState = ScrollState.DOWN;
+                    return true;
+                }
+            }
+            mScrolled = false;
+            return false;
+        }
+
+        @Override
+        public void onDownMotionEvent(MotionEvent ev) {
+        }
+
+        @Override
+        public void onMoveMotionEvent(MotionEvent ev, float diffX, float diffY) {
+            float translationY = ScrollUtils.getFloat(ViewHelper.getTranslationY(mInterceptionLayout) + diffY, -mToolbarView.getHeight(), 0);
+            ViewHelper.setTranslationY(mInterceptionLayout, translationY);
+            if (translationY < 0) {
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mInterceptionLayout.getLayoutParams();
+                lp.height = (int) (-translationY + getScreenHeight());
+                mInterceptionLayout.requestLayout();
+            }
+        }
+
+        @Override
+        public void onUpOrCancelMotionEvent(MotionEvent ev) {
+            mScrolled = false;
+            adjustToolbar(mLastScrollState);
+        }
+    };
+
+    static int blendColors(int from, int to, float ratio) {
+        final float inverseRation = 1f - ratio;
+        final float r = Color.red(from) * ratio + Color.red(to) * inverseRation;
+        final float g = Color.green(from) * ratio + Color.green(to) * inverseRation;
+        final float b = Color.blue(from) * ratio + Color.blue(to) * inverseRation;
+        return Color.rgb((int) r, (int) g, (int) b);
+    }
 
     //SaveData
     @Override
@@ -56,12 +122,17 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         super.onSaveInstanceState(outState);
         outState.putSerializable("summoner", summoner);
         outState.putString("region", region);
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "fragmentHistory", fragmentHistory);
     }
 
     //RetrieveData
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
         summoner = (Summoner) savedInstanceState.getSerializable("summoner");
         region = savedInstanceState.getString("region");
+        //Restore the fragment's instance
+        fragmentHistory = (FragmentHistory) getSupportFragmentManager().getFragment(
+                savedInstanceState, "fragmentHistory");
     }
 
     @Override
@@ -76,8 +147,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
 
-
-
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
@@ -85,7 +154,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             region = getIntent().getStringExtra("region");
         }
         fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
-
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
@@ -147,15 +215,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
     }
 
-    static int blendColors(int from, int to, float ratio) {
-        final float inverseRation = 1f - ratio;
-        final float r = Color.red(from) * ratio + Color.red(to) * inverseRation;
-        final float g = Color.green(from) * ratio + Color.green(to) * inverseRation;
-        final float b = Color.blue(from) * ratio + Color.blue(to) * inverseRation;
-        return Color.rgb((int) r, (int) g, (int) b);
-    }
-
-
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
     }
@@ -186,65 +245,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     protected int getScreenHeight() {
         return findViewById(android.R.id.content).getHeight();
     }
-
-    private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
-        @Override
-        public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
-            if (!mScrolled && mSlop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-                // Horizontal scroll is maybe handled by ViewPager
-                return false;
-            }
-
-            Scrollable scrollable = getCurrentScrollable();
-            if (scrollable == null) {
-                mScrolled = false;
-                return false;
-            }
-
-            // If interceptionLayout can move, it should intercept.
-            // And once it begins to move, horizontal scroll shouldn't work any longer.
-            int toolbarHeight = mToolbarView.getHeight();
-            int translationY = (int) ViewHelper.getTranslationY(mInterceptionLayout);
-            boolean scrollingUp = 0 < diffY;
-            boolean scrollingDown = diffY < 0;
-            if (scrollingUp) {
-                if (translationY < 0) {
-                    mScrolled = true;
-                    mLastScrollState = ScrollState.UP;
-                    return true;
-                }
-            } else if (scrollingDown) {
-                if (-toolbarHeight < translationY) {
-                    mScrolled = true;
-                    mLastScrollState = ScrollState.DOWN;
-                    return true;
-                }
-            }
-            mScrolled = false;
-            return false;
-        }
-
-        @Override
-        public void onDownMotionEvent(MotionEvent ev) {
-        }
-
-        @Override
-        public void onMoveMotionEvent(MotionEvent ev, float diffX, float diffY) {
-            float translationY = ScrollUtils.getFloat(ViewHelper.getTranslationY(mInterceptionLayout) + diffY, -mToolbarView.getHeight(), 0);
-            ViewHelper.setTranslationY(mInterceptionLayout, translationY);
-            if (translationY < 0) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mInterceptionLayout.getLayoutParams();
-                lp.height = (int) (-translationY + getScreenHeight());
-                mInterceptionLayout.requestLayout();
-            }
-        }
-
-        @Override
-        public void onUpOrCancelMotionEvent(MotionEvent ev) {
-            mScrolled = false;
-            adjustToolbar(mLastScrollState);
-        }
-    };
 
     private Scrollable getCurrentScrollable() {
         Fragment fragment = getCurrentFragment();

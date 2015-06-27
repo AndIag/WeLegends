@@ -123,6 +123,19 @@ public class FragmentHistory extends Fragment {
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
 
+        refreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        //Clear our adapter
+                        recyclerAdapter.clearHistory();
+                        //Load new values
+                        startIndex();
+                        getSummonerHistory(BEGININDEX,ENDINDEX);
+                    }
+                }
+        );
+
         recyclerView.setHasFixedSize(true);
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -146,7 +159,6 @@ public class FragmentHistory extends Fragment {
 
     private void getSummonerHistory(int beginIndex, int endIndex) {
         changeRefreshingValue(true);
-        final Gson gson = new Gson();
         APIHandler handler = APIHandler.getInstance(getActivity());
 
         incrementIndexes();

@@ -33,6 +33,7 @@ import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.adapters.ScaleInAnimationAdapter;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -45,6 +46,7 @@ public class FragmentHistory extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
+    ScaleInAnimationAdapter scaleAdapter;
 
 
     private int BEGININDEX;
@@ -111,8 +113,8 @@ public class FragmentHistory extends Fragment {
             matchesHistoryList = new ArrayList<>();
             getSummonerHistory(BEGININDEX, ENDINDEX);
         }
-        recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
-        changeRefreshingValue(true);
+
+
     }
 
     @Override
@@ -129,13 +131,13 @@ public class FragmentHistory extends Fragment {
                     public void onRefresh() {
                         //Clear our adapter
                         recyclerAdapter.clearHistory();
+                        scaleAdapter.notifyDataSetChanged();
                         //Load new values
                         startIndex();
                         getSummonerHistory(BEGININDEX,ENDINDEX);
                     }
                 }
         );
-
         recyclerView.setHasFixedSize(true);
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -147,7 +149,14 @@ public class FragmentHistory extends Fragment {
 
         layoutManager = new GridLayoutManager(getActivity(), columns);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(recyclerAdapter);
+
+        recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
+        scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
+        scaleAdapter.setFirstOnly(false);
+
+        //scaleAdapter.setDuration(1000);
+        recyclerView.setAdapter(scaleAdapter);
+
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) parentActivity.findViewById(R.id.container));
 
@@ -224,6 +233,7 @@ public class FragmentHistory extends Fragment {
             super.onPostExecute(matches);
             matchesHistoryList.addAll(matches);
             recyclerAdapter.updateHistory(matches);
+            scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
 
         }

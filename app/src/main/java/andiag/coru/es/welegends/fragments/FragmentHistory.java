@@ -13,7 +13,9 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +24,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.google.gson.Gson;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -243,6 +246,18 @@ public class FragmentHistory extends Fragment {
                 isLoading = false;
                 changeRefreshingValue(false);
                 decrementIndexes();
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null) {
+                    String message = getString(R.string.errorDefault);
+                    switch (networkResponse.statusCode) {
+                        case HttpStatus.SC_INTERNAL_SERVER_ERROR : message = getString(R.string.error500);
+                            break;
+                        case HttpStatus.SC_SERVICE_UNAVAILABLE : message = getString(R.string.error503);
+                            break;
+                    }
+                    Toast.makeText(getActivity(),message
+                            , Toast.LENGTH_LONG).show();
+                }
             }
         });
 

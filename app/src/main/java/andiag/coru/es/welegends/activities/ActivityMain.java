@@ -42,6 +42,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
+import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
@@ -155,6 +156,21 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         mSlop = vc.getScaledTouchSlop();
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.container);
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
+
+
+        ViewServer.get(this).addWindow(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewServer.get(this).setFocusedWindow(this);
     }
 
 

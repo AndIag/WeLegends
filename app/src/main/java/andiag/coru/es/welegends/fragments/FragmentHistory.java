@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -56,6 +57,7 @@ public class FragmentHistory extends Fragment {
     private GridLayoutManager layoutManager;
     private int BEGININDEX;
     private int ENDINDEX;
+    private boolean isLoading = false;
 
     private String region;
     private long summoner_id;
@@ -77,6 +79,13 @@ public class FragmentHistory extends Fragment {
     private void incrementIndexes() {
         BEGININDEX += INCREMENT;
         ENDINDEX += INCREMENT;
+    }
+
+    private void decrementIndexes() {
+        if (BEGININDEX - INCREMENT >= 0) {
+            BEGININDEX -= INCREMENT;
+            ENDINDEX -= INCREMENT;
+        }
     }
 
     private void startIndex() {
@@ -110,7 +119,6 @@ public class FragmentHistory extends Fragment {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
-            //recyclerAdapter.updateHistory(matchesHistoryList);
             new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (getArguments() != null) {
             region = getArguments().getString("region");
@@ -167,15 +175,30 @@ public class FragmentHistory extends Fragment {
         int columns = Math.round(dpWidth / 300);
 
         layoutManager = new GridLayoutManager(getActivity(), columns);
+
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+                //When we reach our limit we load mote matches
+                if (!isLoading) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount - 1) {
+                        getSummonerHistory(BEGININDEX, ENDINDEX);
+                    }
+                }
+            }
+        });
 
         recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
         scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
         scaleAdapter.setFirstOnly(false);
 
-        //scaleAdapter.setDuration(1000);
         recyclerView.setAdapter(scaleAdapter);
-
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) parentActivity.findViewById(R.id.container));
 
@@ -186,6 +209,10 @@ public class FragmentHistory extends Fragment {
     }
 
     private void getSummonerHistory(int beginIndex, int endIndex) {
+        if (isLoading) return;
+
+        isLoading = true;
+
         changeRefreshingValue(true);
         APIHandler handler = APIHandler.getInstance(getActivity());
 
@@ -205,12 +232,15 @@ public class FragmentHistory extends Fragment {
                             new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            isLoading = false;
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.toString());
+                isLoading = false;
+                decrementIndexes();
             }
         });
 
@@ -243,6 +273,7 @@ public class FragmentHistory extends Fragment {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                isLoading = false;
             }
 
             return list;
@@ -338,6 +369,7 @@ public class FragmentHistory extends Fragment {
             recyclerAdapter.updateHistory(bundles);
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
+            isLoading = false;
         }
 
 

@@ -1,5 +1,7 @@
 package andiag.coru.es.welegends.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,14 +14,20 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -28,11 +36,12 @@ import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
-import andiag.coru.es.welegends.utils.SlidingTabLayout;
 
 public class ActivityMain extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
@@ -67,7 +76,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_main2);
+        setContentView(R.layout.activity_activity_main);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -75,7 +84,8 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         final ColorDrawable actionBarTabsColor = new ColorDrawable();
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
-
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setHomeButtonEnabled(true);
 
 
         if (savedInstanceState != null) {
@@ -98,11 +108,11 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         findViewById(R.id.pager_wrapper).setPadding(0, getActionBarSize() + tabHeight, 0, 0);
 
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        SmartTabLayout slidingTabLayout = (SmartTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setBackground(actionBarTabsColor);
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
-        slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.accent));
-        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white_20));
+        //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(mPager);
         slidingTabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -145,6 +155,63 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         mSlop = vc.getScaledTouchSlop();
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.container);
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_activity_main, menu);
+
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String searchText;
+                searchText = searchView.getQuery().toString();
+                String summonerName = searchText.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
+                if (searchText.length() > 0) {
+                    //fragmentHistory.clearAll();
+                    //activity.summonerName = summonerName;
+                    //actionBar.getTabAt(0).setText(summonerName);
+                    //onInitialiceInstanceState(summonerName);
+                    Toast.makeText(ActivityMain.this,"Summoner: "+summonerName,Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(textChangeListener);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about) {
+            DialogAbout dialogAbout = DialogAbout.newInstance();
+            dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
+            return true;
+        }
+        if (id == android.R.id.home) {
+            Log.d("ACTIVITY MAIN", "action bar clicked");
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     static int blendColors(int from, int to, float ratio) {

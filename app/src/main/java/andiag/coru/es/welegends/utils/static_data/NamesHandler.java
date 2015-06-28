@@ -62,7 +62,7 @@ public abstract class NamesHandler {
         champNames.put(120, "Hecarim");
         champNames.put(74, "Heimerdinger");
         champNames.put(39, "Irelia");
-        champNames.put(40, "Diana");
+        champNames.put(40, "Janna");
         champNames.put(59, "Jarvan IV");
         champNames.put(24, "Jax");
         champNames.put(126, "Jayce");

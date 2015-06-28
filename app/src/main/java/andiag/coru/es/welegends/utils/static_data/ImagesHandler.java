@@ -81,7 +81,7 @@ public abstract class ImagesHandler {
         champions.put(120, R.drawable.hecarim);
         champions.put(74, R.drawable.heimerdinger);
         champions.put(39, R.drawable.irelia);
-        champions.put(40, R.drawable.diana);
+        champions.put(40, R.drawable.janna);
         champions.put(59, R.drawable.jarvaniv);
         champions.put(24, R.drawable.jax);
         champions.put(126, R.drawable.jayce);

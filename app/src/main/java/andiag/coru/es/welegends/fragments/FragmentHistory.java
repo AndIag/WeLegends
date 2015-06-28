@@ -233,6 +233,7 @@ public class FragmentHistory extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             isLoading = false;
+                            changeRefreshingValue(false);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -240,6 +241,7 @@ public class FragmentHistory extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.toString());
                 isLoading = false;
+                changeRefreshingValue(false);
                 decrementIndexes();
             }
         });
@@ -263,9 +265,10 @@ public class FragmentHistory extends Fragment {
 
             try {
 
+                Match match;
                 for (int i = 0; i < array.length(); i++) {
                     Log.d("MATCH i", array.get(i).toString());
-                    Match match = gson.fromJson(array.get(i).toString(), Match.class);
+                    match = gson.fromJson(array.get(i).toString(), Match.class);
                     list.add(match);
                 }
                 Log.d("MATCHES ON LIST", "N = " + list.size());
@@ -274,6 +277,7 @@ public class FragmentHistory extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
                 isLoading = false;
+                changeRefreshingValue(false);
             }
 
             return list;
@@ -321,7 +325,6 @@ public class FragmentHistory extends Fragment {
                         break;
                     }
                 }
-                //if (participantId < 0) return null;
 
                 for (Participant p : m.getParticipants()) {
                     if (p.getParticipantId() == participantId) {

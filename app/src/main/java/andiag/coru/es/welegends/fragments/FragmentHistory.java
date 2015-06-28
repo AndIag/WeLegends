@@ -30,10 +30,10 @@ import java.util.Collections;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
+import andiag.coru.es.welegends.adapters.ScaleInAnimationAdapter;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
-import andiag.coru.es.welegends.adapters.ScaleInAnimationAdapter;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -41,14 +41,11 @@ import andiag.coru.es.welegends.adapters.ScaleInAnimationAdapter;
 public class FragmentHistory extends Fragment {
 
     private final int INCREMENT = 10;
-
+    ScaleInAnimationAdapter scaleAdapter;
     private ObservableRecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
-    ScaleInAnimationAdapter scaleAdapter;
-
-
     private int BEGININDEX;
     private int ENDINDEX;
 
@@ -99,21 +96,33 @@ public class FragmentHistory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState != null) {
             BEGININDEX = savedInstanceState.getInt("beginIndex");
             ENDINDEX = savedInstanceState.getInt("endIndex");
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
+            recyclerAdapter.updateHistory(matchesHistoryList);
         } else if (getArguments() != null) {
             region = getArguments().getString("region");
             summoner_id = getArguments().getLong("id");
             startIndex();
             matchesHistoryList = new ArrayList<>();
+            getSummonerHistory(BEGININDEX, ENDINDEX);
         }
-        getSummonerHistory(BEGININDEX, ENDINDEX);
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            BEGININDEX = savedInstanceState.getInt("beginIndex");
+            ENDINDEX = savedInstanceState.getInt("endIndex");
+            summoner_id = savedInstanceState.getLong("summoner_id");
+            region = savedInstanceState.getString("region");
+            matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
+            recyclerAdapter.updateHistory(matchesHistoryList);
+        }
     }
 
     @Override
@@ -131,6 +140,8 @@ public class FragmentHistory extends Fragment {
                         //Clear our adapter
                         recyclerAdapter.clearHistory();
                         scaleAdapter.notifyDataSetChanged();
+                        //Clear Data
+                        matchesHistoryList = new ArrayList<>();
                         //Load new values
                         startIndex();
                         getSummonerHistory(BEGININDEX,ENDINDEX);
@@ -199,8 +210,8 @@ public class FragmentHistory extends Fragment {
 
     private class ParseDataTask extends AsyncTask<Void,Void,ArrayList<Match>>{
 
-        private JSONArray array;
         private final Gson gson = new Gson();
+        private JSONArray array;
 
         public ParseDataTask(JSONArray array) {
             this.array = array;

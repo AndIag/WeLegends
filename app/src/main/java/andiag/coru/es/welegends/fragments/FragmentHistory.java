@@ -25,15 +25,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.adapters.ScaleInAnimationAdapter;
 import andiag.coru.es.welegends.entities.Match;
+import andiag.coru.es.welegends.entities.Participant;
+import andiag.coru.es.welegends.entities.ParticipantIdentities;
+import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
+import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -102,7 +110,8 @@ public class FragmentHistory extends Fragment {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
-            recyclerAdapter.updateHistory(matchesHistoryList);
+            //recyclerAdapter.updateHistory(matchesHistoryList);
+            new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (getArguments() != null) {
             region = getArguments().getString("region");
             summoner_id = getArguments().getLong("id");
@@ -121,7 +130,7 @@ public class FragmentHistory extends Fragment {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
-            recyclerAdapter.updateHistory(matchesHistoryList);
+            new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -221,11 +230,12 @@ public class FragmentHistory extends Fragment {
         protected ArrayList<Match> doInBackground(Void... voids) {
 
             ArrayList<Match> list = new ArrayList<>();
+
             try {
 
                 for (int i = 0; i < array.length(); i++) {
                     Log.d("MATCH i", array.get(i).toString());
-                    Match match = (Match) gson.fromJson(array.get(i).toString(), Match.class);
+                    Match match = gson.fromJson(array.get(i).toString(), Match.class);
                     list.add(match);
                 }
                 Log.d("MATCHES ON LIST", "N = " + list.size());
@@ -242,10 +252,92 @@ public class FragmentHistory extends Fragment {
         protected void onPostExecute(ArrayList<Match> matches) {
             super.onPostExecute(matches);
             matchesHistoryList.addAll(matches);
-            recyclerAdapter.updateHistory(matches);
+            new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        }
+
+
+    }
+
+
+    private class RetrieveDataTask extends AsyncTask<Void,Void,ArrayList<Bundle>>{
+
+       private ArrayList<Match> matches;
+        private DateFormat dateF;
+
+        public RetrieveDataTask(ArrayList<Match> m) {
+            this.matches = m;
+            dateF = DateFormat.getDateInstance(DateFormat.SHORT,getResources().getConfiguration().locale);
+        }
+
+        @Override
+        protected ArrayList<Bundle> doInBackground(Void... voids) {
+            int mapid=11, champId = 0;
+            long creation=0,duration = 0;
+            long kills = 0, assists = 0, deaths = 0, minions = 0, lvl = 0, gold = 0;
+            boolean winner = false;
+            ArrayList<Bundle> bundles = new ArrayList<>();
+
+            for(Match m : matches) {
+                mapid = m.getMapId();
+                creation =  m.getMatchCreation();
+                duration =  m.getMatchDuration();
+
+                long participantId = -1;
+                for (ParticipantIdentities pi : m.getParticipantIdentities()) {
+                    if (pi.getPlayer().getSummonerId() == summoner_id) {
+                        participantId = pi.getParticipantId();
+                        break;
+                    }
+                }
+                //if (participantId < 0) return null;
+
+                for (Participant p : m.getParticipants()) {
+                    if (p.getParticipantId() == participantId) {
+                        ParticipantStats stats = p.getStats();
+                        champId = p.getChampionId();
+                        kills = stats.getKills();
+                        deaths = stats.getDeaths();
+                        assists = stats.getAssists();
+                        lvl = stats.getChampLevel();
+                        minions = stats.getMinionsKilled();
+                        winner = stats.isWinner();
+                        gold = stats.getGoldEarned();
+                        break;
+                    }
+                }
+
+                String d = String.format("%d ' %d ''",
+                        TimeUnit.SECONDS.toMinutes(duration),
+                        duration -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
+                );
+                Calendar date = Calendar.getInstance();
+                date.setTimeInMillis(creation);
+                String date_s = dateF.format(date.getTime());
+
+                Bundle data = new Bundle();
+                data.putString("champName", NamesHandler.getChampName(champId));
+                data.putInt("champImage", ImagesHandler.getChamp(champId));
+                data.putInt("mapName", NamesHandler.getMapName(mapid));
+                data.putInt("mapImage", ImagesHandler.getMap(mapid));
+                data.putString("kda", kills + "/" + deaths + "/" + assists);
+                data.putString("lvl", Long.toString(lvl));
+                data.putString("cs", Long.toString(minions));
+                data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
+                data.putBoolean("winner", winner);
+                data.putString("duration", date_s + "   " + d);
+                bundles.add(data);
+            }
+            return bundles;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bundle> bundles) {
+            super.onPostExecute(bundles);
+            recyclerAdapter.updateHistory(bundles);
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
-
         }
 
 

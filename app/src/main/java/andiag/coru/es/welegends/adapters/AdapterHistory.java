@@ -33,7 +33,7 @@ import andiag.coru.es.welegends.utils.static_data.NamesHandler;
  */
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryViewHolder> {
 
-    private List<Match> historyList = new ArrayList<>();
+    private List<Bundle> historyList = new ArrayList<>();
     private Context context;
     private DateFormat dateF;
     private int lastPosition = -1;
@@ -55,14 +55,25 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     }
 
     @Override
-    public void onBindViewHolder(HistoryViewHolder historyViewHolder, int i) {
-        Match m = historyList.get(i);
+    public void onBindViewHolder(HistoryViewHolder holder, int i) {
+        Bundle bundle = historyList.get(i);
 
-        historyViewHolder.vMap.setText("MatchID "+m.getMatchId());
-
-
-        historyViewHolder.position = i;
-        getAllData(historyViewHolder,m);
+                holder.position = i;
+        holder.vCS.setText(bundle.getString("cs"));
+        holder.vGold.setText(bundle.getString("gold"));
+        holder.vLVL.setText(bundle.getString("lvl"));
+        holder.vKDA.setText(bundle.getString("kda"));
+        holder.vDuration.setText(bundle.getString("duration"));
+        holder.vMap.setText(bundle.getInt("mapName"));
+        holder.mapImage.setImageResource(bundle.getInt("mapImage"));
+        holder.vChampName.setText(bundle.getString("champName"));
+        holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
+        if (bundle.getBoolean("winner")) {
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        } else {
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+        }
+        //getAllData(historyViewHolder,m);
         //setAnimation(historyViewHolder.cardView, i);
         //new RetrieveDataTask(m,historyViewHolder).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -75,7 +86,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
     // OUTSIDE METHODS
 
-    public void updateHistory(List<Match> hL) {
+    public void updateHistory(List<Bundle> hL) {
         if (hL != null) {
             historyList.addAll(hL);
             notifyDataSetChanged();

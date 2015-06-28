@@ -21,7 +21,7 @@ public abstract class ImagesHandler {
     private static void initializeMaps() {
         maps = new DefaultHashMap<>(R.drawable.summoner_rift2);
         maps.put(11, R.drawable.summoner_rift2);
-        maps.put(10, R.drawable.twisted_treeline1);
+        maps.put(10, R.drawable.summoner_rift2);
         maps.put(8, R.drawable.crystal_scar);
         maps.put(12, R.drawable.howling_abyss1);
     }

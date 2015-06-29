@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -65,13 +66,13 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vKDA.setText(bundle.getString("kda"));
         holder.vDuration.setText(bundle.getString("duration"));
         holder.vMap.setText(bundle.getInt("mapName"));
-        holder.mapImage.setImageResource(bundle.getInt("mapImage"));
+        holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
         holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
         if (bundle.getBoolean("winner")) {
-            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));
         } else {
-            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.lose));
         }
         //getAllData(historyViewHolder,m);
         //setAnimation(historyViewHolder.cardView, i);
@@ -151,15 +152,15 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vDuration.setText(date_s + "   " + d);
 
         holder.vMap.setText(NamesHandler.getMapName(mapid));
-        holder.mapImage.setImageResource(ImagesHandler.getMap(mapid));
+        holder.relativeImage.setBackgroundResource(ImagesHandler.getMap(mapid));
         holder.vChampName.setText(NamesHandler.getChampName(champId));
         holder.vImageChamp.setImageResource(ImagesHandler.getChamp(champId));
 
 
         if (winner) {
-            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));
         } else {
-            holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.lose));
         }
 
 
@@ -184,9 +185,9 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         protected TextView vChampName;
         protected TextView vMap, vDuration;
         protected TextView vKDA, vLVL, vCS, vGold;
-        protected ImageView vImageChamp, mapImage;
+        protected ImageView vImageChamp;
         protected View view;
-        protected LinearLayout linearLayout;
+        protected RelativeLayout relativeLayout,relativeImage;
         protected CardView cardView;
         protected int position;
 
@@ -210,101 +211,13 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             vGold = (TextView) v.findViewById(R.id.textGold);
             vDuration = (TextView) v.findViewById(R.id.textDuration);
             vImageChamp = (ImageView) v.findViewById(R.id.imgChamp);
-            linearLayout = (LinearLayout) v.findViewById(R.id.layoutVD);
-            mapImage = (ImageView) v.findViewById(R.id.card_background);
+            relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutText);
+            relativeImage = (RelativeLayout) v.findViewById(R.id.RelativeLayoutImage);
         }
     }
 
-    // AsyncTask CLASS
-
-    private class RetrieveDataTask extends AsyncTask<Void,Void,Bundle>{
-
-        private HistoryViewHolder holder;
-        private Match m;
-
-        public RetrieveDataTask(Match m, HistoryViewHolder holder) {
-            this.m = m;
-            this.holder = holder;
-        }
-
-        @Override
-        protected Bundle doInBackground(Void... voids) {
-
-            int mapid = m.getMapId(),champId=0;
-            long creation = m.getMatchCreation();
-            long duration = m.getMatchDuration();
-            long kills=0,assists=0,deaths=0,minions=0,lvl=0,gold=0;
-            boolean winner = false;
-
-            long participantId = -1;
-            for (ParticipantIdentities pi : m.getParticipantIdentities()) {
-                if (pi.getPlayer().getSummonerId() == sum_id) {
-                    participantId = pi.getParticipantId();
-                    break;
-                }
-            }
-            //if (participantId < 0) return null;
-
-            for (Participant p : m.getParticipants()) {
-                if (p.getParticipantId() == participantId) {
-                    ParticipantStats stats = p.getStats();
-                    champId=p.getChampionId();
-                    kills=stats.getKills();
-                    deaths=stats.getDeaths();
-                    assists=stats.getAssists();
-                    lvl=stats.getChampLevel();
-                    minions=stats.getMinionsKilled();
-                    winner=stats.isWinner();
-                    gold=stats.getGoldEarned();
-                    break;
-                }
-            }
-
-            String d = String.format("%d ' %d ''",
-                    TimeUnit.SECONDS.toMinutes(duration),
-                    duration -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
-            );
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(creation);
-            String date_s = dateF.format(date.getTime());
-
-            Bundle data = new Bundle();
-            data.putString("champName", NamesHandler.getChampName(champId));
-            data.putInt("champImage", ImagesHandler.getChamp(champId));
-            data.putInt("mapName", NamesHandler.getMapName(mapid));
-            data.putInt("mapImage", ImagesHandler.getMap(mapid));
-            data.putString("kda", kills + "/" + deaths + "/" + assists);
-            data.putString("lvl", Long.toString(lvl));
-            data.putString("cs", Long.toString(minions));
-            data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
-            data.putBoolean("winner", winner);
-            data.putString("duration", date_s + "   " + d);
 
 
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(Bundle bundle) {
-            super.onPostExecute(bundle);
-            holder.vCS.setText(bundle.getString("cs"));
-            holder.vGold.setText(bundle.getString("gold"));
-            holder.vLVL.setText(bundle.getString("lvl"));
-            holder.vKDA.setText(bundle.getString("kda"));
-            holder.vDuration.setText(bundle.getString("duration"));
-            holder.vMap.setText(bundle.getInt("mapName"));
-            holder.mapImage.setImageResource(bundle.getInt("mapImage"));
-            holder.vChampName.setText(bundle.getString("champName"));
-            holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
-            if (bundle.getBoolean("winner")) {
-                holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
-            } else {
-                holder.linearLayout.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
-            }
-
-        }
 
 
-    }
 }

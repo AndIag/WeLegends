@@ -102,6 +102,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         i.putExtra("summoner", summoner);
         i.putExtra("region", region.toLowerCase());
         startActivity(i);
+        isLoading = false;
     }
 
     private void getSummonerId(final String summonerName){
@@ -132,6 +133,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                             isLoading = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            isLoading = false;
                         }
                     }
                 }, new Response.ErrorListener() {

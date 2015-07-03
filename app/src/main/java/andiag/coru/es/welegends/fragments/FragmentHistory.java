@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.baoyz.widget.PullRefreshLayout;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.google.gson.Gson;
@@ -154,6 +155,9 @@ public class FragmentHistory extends Fragment {
         Activity parentActivity = getActivity();
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
+        int[ ] colors = { R.color.swype_1,R.color.swype_2,R.color.swype_3, R.color.swype_4};
+        //refreshLayout.setColorSchemeColors(colors);
+        refreshLayout.setColorSchemeResources(colors);
 
         refreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {

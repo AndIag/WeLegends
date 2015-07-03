@@ -43,7 +43,7 @@ public abstract class HistoryHandler {
         long timestamp;
         for (String s : keys) {
             sum = new Summoner();
-            mainObject = new JSONObject(s);
+            mainObject = new JSONObject(map.get(s));
 
             timestamp = mainObject.getLong("timestamp");
             summonerTimeStamp = Calendar.getInstance();
@@ -91,7 +91,7 @@ public abstract class HistoryHandler {
                 if (summonerTimeStamp == null) {
                     jo.put("timestamp", Calendar.getInstance().getTimeInMillis());
                 } else {
-                    jo.put("timestamp", summonerTimeStamp);
+                    jo.put("timestamp", summonerTimeStamp.getTimeInMillis());
                 }
                 editor.putString(sum.getName(), jo.toString());
 

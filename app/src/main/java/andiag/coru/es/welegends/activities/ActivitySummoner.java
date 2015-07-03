@@ -55,13 +55,27 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Cargar el valor del historial de summoners
+        try {
+            history = HistoryHandler.getHistory(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), getString(R.string.summonerHistoryError),
+                    Toast.LENGTH_LONG).show();
+            history = new ArrayList<>();
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
         //Guardar el valor del historial de summoners
         try {
             HistoryHandler.setHistory(this, history);
-            Log.d("SAVING SUMMONERS: ", String.valueOf(history.size()));
         } catch (JSONException e) {
             e.printStackTrace();
         }

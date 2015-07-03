@@ -33,4 +33,9 @@
 
     <color name="win">#8876FF03</color>
     <color name="lose">#88607D8B</color>
+
+    <color name="swype_1">#ff92ff2f</color>
+    <color name="swype_2">#ffffbc00</color>
+    <color name="swype_3">#ff12ffa0</color>
+    <color name="swype_4">#ffff6724</color>
 </resources>

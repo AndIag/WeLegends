@@ -231,6 +231,61 @@ public class FragmentHistory extends Fragment {
 
         incrementIndexes();
 
+        String request2 = "https://" + region + handler.getServer() + region
+                + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" + handler.getKey();
+
+        String request = "https://andiag-prod.apigee.net/v1/welegends"
+                + "/" +region.toLowerCase()+ "/matches/" +summoner_id+"/"+beginIndex+"/"+endIndex;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONArray arrayMatches = null;
+                        try {
+                            arrayMatches = response.getJSONArray("matches");
+                            new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            isLoading = false;
+                            changeRefreshingValue(false);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", error.toString());
+                isLoading = false;
+                changeRefreshingValue(false);
+                decrementIndexes();
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null) {
+                    String message = getString(R.string.errorDefault);
+                    switch (networkResponse.statusCode) {
+                        case HttpStatus.SC_INTERNAL_SERVER_ERROR : message = getString(R.string.error500);
+                            break;
+                        case HttpStatus.SC_SERVICE_UNAVAILABLE : message = getString(R.string.error503);
+                            break;
+                    }
+                    Toast.makeText(getActivity(),message
+                            , Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void getSummonerHistory2(int beginIndex, int endIndex) {
+        if (isLoading) return;
+
+        isLoading = true;
+
+        changeRefreshingValue(true);
+        APIHandler handler = APIHandler.getInstance(getActivity());
+
+        incrementIndexes();
+
         String request = "https://" + region + handler.getServer() + region
                 + handler.getMatchHistory() + summoner_id + "?beginIndex=" + beginIndex + "&endIndex=" + endIndex + "&api_key=" + handler.getKey();
 

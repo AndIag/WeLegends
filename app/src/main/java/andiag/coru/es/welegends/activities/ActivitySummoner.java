@@ -116,6 +116,49 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             handler = APIHandler.getInstance(this);
         }
 
+        String url2 = "https://" + region + handler.getServer() + region
+                + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();
+
+        String url = "https://andiag-prod.apigee.net/v1/welegends" + "/" +region.toLowerCase()+ "/summoner/" +summonerName;
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject summonerJSON = response.getJSONObject(summonerName);
+                            Summoner summoner = (Summoner) gson.fromJson(summonerJSON.toString(), Summoner.class);
+                            Log.d("RESPUESTA", summoner.getId() + "---" + summoner.getName());
+                            startMainActivity(summoner);
+                            isLoading = false;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                isLoading = false;
+            }
+        });
+
+        VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+    private void getSummonerId2(final String summonerName){
+        if (isLoading) return;
+
+        isLoading = true;
+
+        final Gson gson = new Gson();
+
+        APIHandler handler = APIHandler.getInstance();
+        if (handler == null) {
+            handler = APIHandler.getInstance(this);
+        }
+
         String url = "https://" + region + handler.getServer() + region
                 + handler.getSummonerByName() + summonerName + "?api_key=" + handler.getKey();
 

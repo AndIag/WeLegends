@@ -19,8 +19,7 @@ public class APIHandler {
     private String server;
     private String matchHistory;
     private String match;
-    private String summonerByName;
-    private String key;
+    private String summoner;
 
     private APIHandler(Activity activity) {
 
@@ -35,8 +34,7 @@ public class APIHandler {
             server = properties.getProperty("server");
             matchHistory = properties.getProperty("matchHistory");
             match = properties.getProperty("match");
-            summonerByName = properties.getProperty("summonerByName");
-            key = properties.getProperty("key");
+            summoner = properties.getProperty("summoner");
 
             inputStream.close();
         } catch (IOException e) {
@@ -58,10 +56,6 @@ public class APIHandler {
         }
         return ourInstance;
     }
-
-    public String getKey(){return key;};
-
-    public void setKey(String key){this.key=key;}
 
     public String getServer() {
         return server;
@@ -87,11 +81,11 @@ public class APIHandler {
         this.match = match;
     }
 
-    public String getSummonerByName() {
-        return summonerByName;
+    public String getSummoner() {
+        return summoner;
     }
 
-    public void setSummonerByName(String summonerByName) {
-        this.summonerByName = summonerByName;
+    public void setSummoner(String summoner) {
+        this.summoner = summoner;
     }
 }

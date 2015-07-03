@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.activities;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,7 +12,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -27,7 +24,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -179,7 +175,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         slidingTabLayout.setBackground(actionBarTabsColor);
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white_20));
-        //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(mPager);
         slidingTabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -223,7 +218,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.container);
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
 
-
         ViewServer.get(this).addWindow(this);
     }
 
@@ -243,7 +237,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_activity_main, menu);
-
+        /*
         final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
@@ -267,7 +261,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             }
         };
         searchView.setOnQueryTextListener(textChangeListener);
-
+        */
         return super.onCreateOptionsMenu(menu);
     }
 

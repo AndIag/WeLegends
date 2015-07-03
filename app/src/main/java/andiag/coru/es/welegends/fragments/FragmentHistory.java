@@ -238,7 +238,6 @@ public class FragmentHistory extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("RESPUESTA", response.toString());
                         JSONArray arrayMatches = null;
                         try {
                             arrayMatches = response.getJSONArray("matches");
@@ -296,9 +295,7 @@ public class FragmentHistory extends Fragment {
                     match = gson.fromJson(array.get(i).toString(), Match.class);
                     list.add(match);
                 }
-                Log.d("MATCHES ON LIST", "N = " + list.size());
                 Collections.reverse(list);
-
             } catch (JSONException e) {
                 e.printStackTrace();
                 isLoading = false;

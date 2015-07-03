@@ -24,9 +24,14 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import andiag.coru.es.welegends.DTOs.SummonerHistory;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
+import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -34,6 +39,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     private String region;
     private boolean isLoading = false;
+
+    private ArrayList<SummonerHistory> history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,19 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //Guardar el valor del historial de summoners
+        try {
+            HistoryHandler.setHistory(this, history);
+            Log.d("SAVING SUMMONERS: ", String.valueOf(history.size()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +118,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     private void startMainActivity(Summoner summoner) {
+        SummonerHistory summonerHistory = new SummonerHistory();
+        summonerHistory.setSummoner(summoner);
+        summonerHistory.setTimestamp(Calendar.getInstance());
+        history.add(summonerHistory);
+
         Intent i = new Intent(this, ActivityMain.class);
         i.putExtra("summoner", summoner);
         i.putExtra("region", region.toLowerCase());

@@ -31,7 +31,7 @@ public abstract class HistoryHandler {
         Map<String, String> map = (Map<String, String>) settings.getAll();
 
         if (map == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         Set<String> keys = map.keySet();

@@ -52,7 +52,7 @@ public class APIHandler {
 
     public static APIHandler getInstance(Activity activity) {
         if (ourInstance == null) {
-            return new APIHandler(activity);
+            ourInstance = new APIHandler(activity);
         }
         return ourInstance;
     }

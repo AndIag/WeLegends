@@ -118,13 +118,13 @@ public class FragmentHistory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Se ejecuta al girar la pantalla no al cambiar de tab
         if (savedInstanceState != null) {
             BEGININDEX = savedInstanceState.getInt("beginIndex");
             ENDINDEX = savedInstanceState.getInt("endIndex");
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
-            new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (getArguments() != null) {
             region = getArguments().getString("region");
             summoner_id = getArguments().getLong("id");
@@ -135,14 +135,9 @@ public class FragmentHistory extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            BEGININDEX = savedInstanceState.getInt("beginIndex");
-            ENDINDEX = savedInstanceState.getInt("endIndex");
-            summoner_id = savedInstanceState.getLong("summoner_id");
-            region = savedInstanceState.getString("region");
-            matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
+    public void onResume() {
+        super.onResume();
+        if (matchesHistoryList.size() > 0) {
             new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -331,6 +326,9 @@ public class FragmentHistory extends Fragment {
             long creation=0,duration = 0;
             long kills = 0, assists = 0, deaths = 0, minions = 0, lvl = 0, gold = 0;
             boolean winner = false;
+            ParticipantStats stats;
+            Calendar date = Calendar.getInstance();
+            Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
 
             for(Match m : matches) {
@@ -348,7 +346,7 @@ public class FragmentHistory extends Fragment {
 
                 for (Participant p : m.getParticipants()) {
                     if (p.getParticipantId() == participantId) {
-                        ParticipantStats stats = p.getStats();
+                        stats = p.getStats();
                         champId = p.getChampionId();
                         kills = stats.getKills();
                         deaths = stats.getDeaths();
@@ -366,11 +364,11 @@ public class FragmentHistory extends Fragment {
                         duration -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
                 );
-                Calendar date = Calendar.getInstance();
+
                 date.setTimeInMillis(creation);
                 String date_s = dateF.format(date.getTime());
 
-                Bundle data = new Bundle();
+                data = new Bundle();
                 data.putString("champName", NamesHandler.getChampName(champId));
                 data.putInt("champImage", ImagesHandler.getChamp(champId));
                 data.putInt("mapName", NamesHandler.getMapName(mapid));

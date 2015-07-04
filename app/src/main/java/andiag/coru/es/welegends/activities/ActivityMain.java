@@ -157,8 +157,9 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             summoner = (Summoner) getIntent().getSerializableExtra("summoner");
             region = getIntent().getStringExtra("region");
         }
-        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
-
+        if (fragmentHistory == null) {
+            fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
+        }
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
@@ -237,31 +238,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_activity_main, menu);
-        /*
-        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(true);
-        SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String searchText;
-                searchText = searchView.getQuery().toString();
-                String summonerName = searchText.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
-                if (searchText.length() > 0) {
-                    Toast.makeText(ActivityMain.this, "Summoner: " + summonerName, Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        };
-        searchView.setOnQueryTextListener(textChangeListener);
-        */
         return super.onCreateOptionsMenu(menu);
     }
 

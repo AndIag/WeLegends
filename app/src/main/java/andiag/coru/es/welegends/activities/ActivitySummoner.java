@@ -176,6 +176,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             @Override
             public void onErrorResponse(VolleyError error) {
                 isLoading = false;
+                Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerError),
+                        Toast.LENGTH_LONG).show();
             }
         });
 

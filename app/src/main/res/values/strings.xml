@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">WeLegends</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_activity_summoner">Find Summoner</string>
     <string name="title_activity_match_detail">Match Details</string>
@@ -59,4 +58,5 @@
     <string name="error503"/>
     <string name="errorDefault">Unknown Error</string>
     <string name="summonerHistoryError">Can`t Load Summoner History</string>
+    <string name="loadingSummonerError">ERROR: Loading Summoner</string>
 </resources>

@@ -37,10 +37,14 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
+    private static ActivityMain activityMain;
     private String region;
     private boolean isLoading = false;
-
     private ArrayList<SummonerHistory> history;
+
+    public static void setActivityMain(ActivityMain a) {
+        activityMain = a;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +141,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         summonerHistory.setTimestamp(Calendar.getInstance());
         history.add(summonerHistory);
 
-        Intent i = new Intent(this, ActivityMain.class);
-        i.putExtra("summoner", summoner);
-        i.putExtra("region", region.toLowerCase());
-        startActivity(i);
+        activityMain.setSummoner(summoner);
+
         isLoading = false;
     }
 
@@ -157,6 +159,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         }
 
         String url = handler.getServer() + region.toLowerCase() + handler.getSummoner() + summonerName;
+
+        //Iniciamos la ativity
+        Intent i = new Intent(this, ActivityMain.class);
+        i.putExtra("region", region.toLowerCase());
+        startActivity(i);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {
@@ -175,9 +182,12 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                isLoading = false;
                 Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerError),
                         Toast.LENGTH_LONG).show();
+                if (activityMain != null) {
+                    activityMain.finish();
+                }
+                isLoading = false;
             }
         });
 

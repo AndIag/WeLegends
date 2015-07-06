@@ -122,6 +122,11 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
+    public void setSummoner(Summoner summoner) {
+        this.summoner = summoner;
+        fragmentHistory.setSummoner_id(summoner.getId());
+    }
+
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -148,17 +153,15 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        //actionBar.setHomeButtonEnabled(true);
-
 
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
-            summoner = (Summoner) getIntent().getSerializableExtra("summoner");
             region = getIntent().getStringExtra("region");
+            ActivitySummoner.setActivityMain(this);
         }
         if (fragmentHistory == null) {
-            fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
+            fragmentHistory = FragmentHistory.newInstance(region);
         }
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
@@ -459,7 +462,10 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return summoner.getName().toUpperCase();
+                    if (summoner != null) {
+                        return summoner.getName().toUpperCase();
+                    }
+                    return getString(R.string.title_section1).toUpperCase();
                 case 1:
                     return getString(R.string.title_section2).toUpperCase();
                 case 2:

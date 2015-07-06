@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,13 +72,17 @@ public class FragmentHistory extends Fragment {
     public FragmentHistory() {
     }
 
-    public static FragmentHistory newInstance(String region,long id) {
+    public static FragmentHistory newInstance(String region/*,long id*/) {
         FragmentHistory fragment = new FragmentHistory();
         Bundle args = new Bundle();
         args.putString("region",region);
-        args.putLong("id",id);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSummoner_id(long summoner_id) {
+        this.summoner_id = summoner_id;
+        getSummonerHistory(BEGININDEX, ENDINDEX);
     }
 
     //GETTERS, SETTERS && ADDS
@@ -127,17 +132,15 @@ public class FragmentHistory extends Fragment {
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
         } else if (getArguments() != null) {
             region = getArguments().getString("region");
-            summoner_id = getArguments().getLong("id");
             startIndex();
             matchesHistoryList = new ArrayList<>();
-            getSummonerHistory(BEGININDEX, ENDINDEX);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (matchesHistoryList.size() > 0) {
+        if ((matchesHistoryList != null) && (matchesHistoryList.size() > 0)) {
             new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -165,10 +168,15 @@ public class FragmentHistory extends Fragment {
                         matchesHistoryList = new ArrayList<>();
                         //Load new values
                         startIndex();
-                        getSummonerHistory(BEGININDEX,ENDINDEX);
+                        getSummonerHistory(BEGININDEX, ENDINDEX);
                     }
                 }
         );
+
+        refreshLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        refreshLayout.setRefreshing(true);
+
         recyclerView.setHasFixedSize(true);
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -212,6 +220,7 @@ public class FragmentHistory extends Fragment {
         if (parentActivity instanceof ObservableScrollViewCallbacks) {
             recyclerView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
         }
+
         return view;
     }
 

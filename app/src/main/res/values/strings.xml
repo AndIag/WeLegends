@@ -55,7 +55,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_activity_main2">ActivityMain2</string>
     <string name="error500">Internal Server Error</string>
-    <string name="error503"/>
+    <string name="error503">Internal Server Error</string>
     <string name="errorDefault">Unknown Error</string>
     <string name="summonerHistoryError">Can`t Load Summoner History</string>
     <string name="loadingSummonerError">ERROR: Loading Summoner</string>

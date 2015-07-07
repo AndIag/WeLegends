@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private String region;
     private boolean isLoading = false;
     private ArrayList<SummonerHistory> history;
+    private TextView textSummoners;
 
     public static void setActivityMain(ActivityMain a) {
         activityMain = a;
@@ -55,6 +57,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         Spinner spinner = (Spinner) findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
+        textSummoners = (TextView) findViewById(R.id.textSummoner);
 
     }
 
@@ -71,6 +74,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                     Toast.LENGTH_LONG).show();
             history = new ArrayList<>();
         }
+        String text = "";
+        for( SummonerHistory s : history){
+            text += s.getSummoner().getName()+"\n";
+        }
+        textSummoners.setText(text);
     }
 
     @Override

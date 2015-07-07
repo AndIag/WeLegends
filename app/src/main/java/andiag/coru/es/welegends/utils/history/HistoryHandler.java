@@ -59,6 +59,7 @@ public abstract class HistoryHandler {
 
                 summonerHistory.setSummoner(sum);
                 summonerHistory.setTimestamp(summonerTimeStamp);
+                summonerHistory.setRegion(mainObject.getString("region"));
 
                 summoners.add(summonerHistory);
             }
@@ -92,6 +93,7 @@ public abstract class HistoryHandler {
                 } else {
                     jo.put("timestamp", summonerTimeStamp.getTimeInMillis());
                 }
+                jo.put("region", summonerHistory.getRegion());
                 editor.putString(sum.getName(), jo.toString());
 
                 count++;

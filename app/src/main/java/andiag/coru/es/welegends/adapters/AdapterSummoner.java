@@ -53,6 +53,7 @@ public class AdapterSummoner extends BaseAdapter {
         }
 
         CircleImageView img = (CircleImageView) view.findViewById(R.id.imageSumm);
+        img.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.aatrox));
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 
         text.setText(summoner.getSummoner().getName());

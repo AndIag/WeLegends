@@ -72,10 +72,19 @@ public class FragmentHistory extends Fragment {
     public FragmentHistory() {
     }
 
-    public static FragmentHistory newInstance(String region/*,long id*/) {
+    public static FragmentHistory newInstance(String region) {
         FragmentHistory fragment = new FragmentHistory();
         Bundle args = new Bundle();
         args.putString("region",region);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static FragmentHistory newInstance(String region, long id) {
+        FragmentHistory fragment = new FragmentHistory();
+        Bundle args = new Bundle();
+        args.putString("region", region);
+        args.putLong("summoner_id", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -124,7 +133,7 @@ public class FragmentHistory extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Se ejecuta al girar la pantalla no al cambiar de tab
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null) { //Load saved data in onPause
             BEGININDEX = savedInstanceState.getInt("beginIndex");
             ENDINDEX = savedInstanceState.getInt("endIndex");
             summoner_id = savedInstanceState.getLong("summoner_id");
@@ -134,6 +143,10 @@ public class FragmentHistory extends Fragment {
             region = getArguments().getString("region");
             startIndex();
             matchesHistoryList = new ArrayList<>();
+            if (getArguments().containsKey("summoner_id")) { //If we have the summoner_id (summoner history load) we can execute de request
+                summoner_id = getArguments().getLong("summoner_id");
+                getSummonerHistory(BEGININDEX, ENDINDEX);
+            }
         }
     }
 

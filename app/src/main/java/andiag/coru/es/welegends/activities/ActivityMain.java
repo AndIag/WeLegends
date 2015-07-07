@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.activities;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -155,11 +156,25 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        boolean historyLoad = false;
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
-            region = getIntent().getStringExtra("region");
-            summonerName = getIntent().getStringExtra("summonerName");
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                region = getIntent().getStringExtra("region");
+                if (extras.containsKey("summoner")) {
+                    summoner = (Summoner) intent.getSerializableExtra("summoner");
+                    summonerName = summoner.getName();
+                    if (fragmentHistory == null) {
+                        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
+                    }
+                } else {
+                    summonerName = getIntent().getStringExtra("summonerName");
+                }
+
+            }
             ActivitySummoner.setActivityMain(this);
         }
         if (fragmentHistory == null) {

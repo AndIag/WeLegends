@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -152,6 +151,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         SummonerHistory summonerHistory = new SummonerHistory();
         summonerHistory.setSummoner(summoner);
         summonerHistory.setTimestamp(Calendar.getInstance());
+        summonerHistory.setRegion(region.toLowerCase());
         history.add(summonerHistory);
 
         activityMain.setSummoner(summoner);
@@ -237,6 +237,12 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(this,"Pulsed "+i,Toast.LENGTH_SHORT).show();
+        SummonerHistory summonerHistory = history.get(i);
+
+        Intent in = new Intent(this, ActivityMain.class);
+        in.putExtra("region", summonerHistory.getRegion().toLowerCase());
+        in.putExtra("summoner", summonerHistory.getSummoner());
+        startActivity(in);
+
     }
 }

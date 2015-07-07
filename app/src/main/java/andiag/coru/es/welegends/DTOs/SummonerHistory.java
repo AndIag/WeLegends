@@ -11,6 +11,7 @@ public class SummonerHistory {
 
     private Summoner summoner;
     private Calendar timestamp;
+    private String region;
 
     public SummonerHistory() {
     }
@@ -29,5 +30,13 @@ public class SummonerHistory {
 
     public void setTimestamp(Calendar timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 }

@@ -131,7 +131,12 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             EditText editText = (EditText) findViewById(R.id.editTextSummoner);
             String summoner = editText.getText().toString();
             summoner = summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
-            getSummonerId(summoner);
+            if ((!(summoner == "")) && (!(summoner == null))) {
+                getSummonerId(summoner);
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.voidSummonerError),
+                        Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(this, "Network is unavailable!", Toast.LENGTH_LONG).show();
         }
@@ -160,6 +165,12 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         isLoading = true;
 
+        //Iniciamos la ativity
+        Intent i = new Intent(this, ActivityMain.class);
+        i.putExtra("region", region.toLowerCase());
+        i.putExtra("summonerName", summonerName);
+        startActivity(i);
+
         final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
@@ -168,12 +179,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         }
 
         String url = handler.getServer() + region.toLowerCase() + handler.getSummoner() + summonerName;
-
-        //Iniciamos la ativity
-        Intent i = new Intent(this, ActivityMain.class);
-        i.putExtra("region", region.toLowerCase());
-        i.putExtra("summonerName", summonerName);
-        startActivity(i);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {

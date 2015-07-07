@@ -59,4 +59,5 @@
     <string name="errorDefault">Unknown Error</string>
     <string name="summonerHistoryError">Can`t Load Summoner History</string>
     <string name="loadingSummonerError">ERROR: Loading Summoner</string>
+    <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
 </resources>

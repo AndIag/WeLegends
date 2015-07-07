@@ -1,11 +1,12 @@
 package andiag.coru.es.welegends.DTOs.statsDTOs;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Iago on 07/07/2015.
  */
-public class RankedStatsDto {
+public class RankedStatsDto implements Serializable {
 
     private ArrayList<ChampionStatsDto> champions;
     private long modifyDate;

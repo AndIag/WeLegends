@@ -1,9 +1,11 @@
 package andiag.coru.es.welegends.DTOs.statsDTOs;
 
+import java.io.Serializable;
+
 /**
  * Created by Iago on 07/07/2015.
  */
-public class AggregatedStatsDto {
+public class AggregatedStatsDto implements Serializable {
 
     private int averageAssists;    ////Dominion only.
     private int averageChampionsKilled;    //Dominion only.

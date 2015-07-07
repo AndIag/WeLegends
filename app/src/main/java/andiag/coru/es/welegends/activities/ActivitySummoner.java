@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 
 import andiag.coru.es.welegends.DTOs.SummonerHistory;
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.adapters.AdapterSummoner;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.history.HistoryHandler;
@@ -42,7 +44,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private String region;
     private boolean isLoading = false;
     private ArrayList<SummonerHistory> history;
-    private TextView textSummoners;
+    private ListView listSummoners;
+    private AdapterSummoner adapter;
 
     public static void setActivityMain(ActivityMain a) {
         activityMain = a;
@@ -58,6 +61,9 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         Spinner spinner = (Spinner) findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
 
+        listSummoners = (ListView) findViewById(R.id.listViewSummHistory);
+        adapter = new AdapterSummoner(this);
+        listSummoners.setAdapter(adapter);
 
     }
 
@@ -65,7 +71,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     protected void onResume() {
         super.onResume();
 
-        textSummoners = (TextView) findViewById(R.id.textSummoner);
 
         //Cargar el valor del historial de summoners
         try {
@@ -76,11 +81,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                     Toast.LENGTH_LONG).show();
             history = new ArrayList<>();
         }
-        String text = "";
-        for( SummonerHistory s : history){
-            text += s.getSummoner().getName()+"\n";
-        }
-        textSummoners.setText(text);
+
+        adapter.updateSummoners(history);
+
+
     }
 
     @Override

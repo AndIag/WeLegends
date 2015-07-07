@@ -58,17 +58,14 @@
         android:elevation="10dp"
         android:src="@drawable/icon3" />
 
-    <TextView
-        android:id="@+id/textSummoner"
+    <ListView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="15dp"
-        android:text="@string/summoner"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/primary_text"
+        android:id="@+id/listViewSummHistory"
         android:layout_below="@+id/buttonGo"
         android:layout_alignLeft="@+id/buttonGo"
-        android:layout_alignStart="@+id/buttonGo"/>
+        android:layout_alignStart="@+id/buttonGo"
+        android:divider="@color/transparent"
+        android:dividerHeight="2dp"/>
 
 </RelativeLayout>

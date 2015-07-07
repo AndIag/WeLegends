@@ -38,7 +38,7 @@ import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
-public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
     private static ActivityMain activityMain;
     private String region;
@@ -64,6 +64,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         listSummoners = (ListView) findViewById(R.id.listViewSummHistory);
         adapter = new AdapterSummoner(this);
         listSummoners.setAdapter(adapter);
+
+        listSummoners.setOnItemClickListener(this);
 
     }
 
@@ -233,4 +235,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         DialogAbout.onTwitterAndyClick(this);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Toast.makeText(this,"Pulsed "+i,Toast.LENGTH_SHORT).show();
+    }
 }

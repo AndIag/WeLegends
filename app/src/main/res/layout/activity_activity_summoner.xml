@@ -66,6 +66,7 @@
         android:layout_alignLeft="@+id/buttonGo"
         android:layout_alignStart="@+id/buttonGo"
         android:divider="@color/transparent"
-        android:dividerHeight="2dp"/>
+        android:dividerHeight="2dp"
+        android:layout_marginTop="16dp"/>
 
 </RelativeLayout>

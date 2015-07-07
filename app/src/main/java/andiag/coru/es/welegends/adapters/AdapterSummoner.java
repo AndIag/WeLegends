@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.SummonerHistory;
 import andiag.coru.es.welegends.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Andy on 07/07/2015.
@@ -52,7 +53,7 @@ public class AdapterSummoner extends BaseAdapter {
             view = inflater.inflate(R.layout.item_summoner,null);
         }
 
-        ImageView img = (ImageView) view.findViewById(R.id.imageSumm);
+        CircleImageView img = (CircleImageView) view.findViewById(R.id.imageSumm);
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 
         text.setText(summoner.getSummoner().getName());

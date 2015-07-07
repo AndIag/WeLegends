@@ -54,6 +54,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
 
     // Passed variables
     private Summoner summoner;
+    private String summonerName;
     private String region;
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
@@ -158,6 +159,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             onRetrieveInstanceState(savedInstanceState);
         } else {
             region = getIntent().getStringExtra("region");
+            summonerName = getIntent().getStringExtra("summonerName");
             ActivitySummoner.setActivityMain(this);
         }
         if (fragmentHistory == null) {
@@ -465,7 +467,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
                     if (summoner != null) {
                         return summoner.getName().toUpperCase();
                     }
-                    return getString(R.string.title_section1).toUpperCase();
+                    return summonerName.toUpperCase();
                 case 1:
                     return getString(R.string.title_section2).toUpperCase();
                 case 2:

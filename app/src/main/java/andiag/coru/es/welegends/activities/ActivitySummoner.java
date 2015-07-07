@@ -163,6 +163,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         //Iniciamos la ativity
         Intent i = new Intent(this, ActivityMain.class);
         i.putExtra("region", region.toLowerCase());
+        i.putExtra("summonerName", summonerName);
         startActivity(i);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,

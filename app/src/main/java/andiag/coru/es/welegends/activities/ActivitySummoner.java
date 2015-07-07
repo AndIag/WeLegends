@@ -57,13 +57,15 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         Spinner spinner = (Spinner) findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
-        textSummoners = (TextView) findViewById(R.id.textSummoner);
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        textSummoners = (TextView) findViewById(R.id.textSummoner);
 
         //Cargar el valor del historial de summoners
         try {
@@ -84,14 +86,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     @Override
     protected void onPause() {
         super.onPause();
-
-        //Guardar el valor del historial de summoners
-        try {
-            HistoryHandler.setHistory(this, history);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
@@ -150,6 +144,13 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         history.add(summonerHistory);
 
         activityMain.setSummoner(summoner);
+
+        //Guardar el valor del historial de summoners
+        try {
+            HistoryHandler.setHistory(this, history);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         isLoading = false;
     }

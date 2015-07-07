@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.utils.history;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,10 +61,11 @@ public abstract class HistoryHandler {
                 summonerHistory.setSummoner(sum);
                 summonerHistory.setTimestamp(summonerTimeStamp);
 
+                Log.d("SUMMONER", sum.getName());
+
                 summoners.add(summonerHistory);
             }
         }
-
         return summoners;
     }
 
@@ -94,6 +96,8 @@ public abstract class HistoryHandler {
                     jo.put("timestamp", summonerTimeStamp.getTimeInMillis());
                 }
                 editor.putString(sum.getName(), jo.toString());
+
+                Log.d("SUMMONER", sum.getName());
 
                 count++;
             } else {

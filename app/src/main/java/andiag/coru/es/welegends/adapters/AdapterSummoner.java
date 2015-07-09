@@ -8,12 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.SummonerHistory;
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,10 +62,10 @@ public class AdapterSummoner extends BaseAdapter {
             view = inflater.inflate(R.layout.item_summoner,null);
         }
 
-        CircleImageView img = (CircleImageView) view.findViewById(R.id.imageSumm);
-        img.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.aatrox));
+        //CircleImageView img = (CircleImageView) view.findViewById(R.id.imageSumm);
+        //img.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.aatrox));
 
-        NetworkImageView networkImg = (NetworkImageView) view.findViewById(R.id.networkSummImage);
+        CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);
         networkImg.setErrorImageResId(R.drawable.item_default);
         networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"+apiHandler.getServer_version()+"/img/profileicon/"+
                 summoner.getSummoner().getProfileIconId()+".png"

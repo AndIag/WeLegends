@@ -60,4 +60,10 @@
     <string name="summonerHistoryError">Can`t Load Summoner History</string>
     <string name="loadingSummonerError">ERROR: Loading Summoner</string>
     <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
+    <string name="title_activity_activity_details">ActivityDetails</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_section_details1">Champion</string>
+    <string name="title_section_details2">Victory Team</string>
+    <string name="title_section_details3">Defeat Team</string>
 </resources>

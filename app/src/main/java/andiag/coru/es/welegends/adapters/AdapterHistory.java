@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantIdentities;
@@ -199,7 +201,8 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent i = new Intent(context, ActivityDetails.class);
+                    context.startActivity(i);
                 }
             });
 

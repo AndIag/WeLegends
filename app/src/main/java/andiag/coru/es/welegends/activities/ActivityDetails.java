@@ -1,21 +1,25 @@
 package andiag.coru.es.welegends.activities;
 
+import java.util.Locale;
+
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewCompat;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +29,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -41,7 +46,7 @@ import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.utils.ViewServer;
 
-public class ActivityMain extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public class ActivityDetails extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
@@ -50,13 +55,8 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
-    private FragmentHistory fragmentHistory;
     private ActionBar actionBar;
 
-    // Passed variables
-    private Summoner summoner;
-    private String summonerName;
-    private String region;
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
         public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
@@ -124,29 +124,11 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
-    public void setSummoner(Summoner summoner) {
-        this.summoner = summoner;
-        fragmentHistory.setSummoner_id(summoner.getId());
-    }
-
-    //SaveData
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("summoner", summoner);
-        outState.putString("region", region);
-    }
-
-    //RetrieveData
-    protected void onRetrieveInstanceState(Bundle savedInstanceState) {
-        summoner = (Summoner) savedInstanceState.getSerializable("summoner");
-        region = savedInstanceState.getString("region");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_main);
+        setContentView(R.layout.activity_activity_details);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -155,31 +137,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        boolean historyLoad = false;
-        if (savedInstanceState != null) {
-            onRetrieveInstanceState(savedInstanceState);
-        } else {
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                region = getIntent().getStringExtra("region");
-                if (extras.containsKey("summoner")) {
-                    summoner = (Summoner) intent.getSerializableExtra("summoner");
-                    summonerName = summoner.getName();
-                    if (fragmentHistory == null) {
-                        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
-                    }
-                } else {
-                    summonerName = getIntent().getStringExtra("summonerName");
-                }
-
-            }
-            ActivitySummoner.setActivityMain(this);
-        }
-        if (fragmentHistory == null) {
-            fragmentHistory = FragmentHistory.newInstance(region);
-        }
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
@@ -257,7 +214,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_activity_main, menu);
+        inflater.inflate(R.menu.menu_activity_details, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -431,7 +388,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             Fragment f = null;
             switch (position) {
                 case 0:
-                    f = fragmentHistory;
+                    f = PlaceholderFragment.newInstance(position + 1);
                     break;
                 case 1:
                     f = PlaceholderFragment.newInstance(position + 1);
@@ -449,9 +406,9 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
                 case 0:
                     return getResources().getColor(R.color.posT0);
                 case 1:
-                    return getResources().getColor(R.color.posT1);
-                case 2:
                     return getResources().getColor(R.color.posT2);
+                case 2:
+                    return getResources().getColor(R.color.posT3);
             }
             return 0;
         }
@@ -462,9 +419,9 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
                 case 0:
                     return getResources().getColor(R.color.pos0);
                 case 1:
-                    return getResources().getColor(R.color.pos1);
-                case 2:
                     return getResources().getColor(R.color.pos2);
+                case 2:
+                    return getResources().getColor(R.color.pos3);
             }
             return 0;
         }
@@ -479,11 +436,11 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase();
+                    return getString(R.string.title_section_details1).toUpperCase();
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase();
+                    return getString(R.string.title_section_details2).toUpperCase();
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase();
+                    return getString(R.string.title_section_details3).toUpperCase();
             }
             return null;
         }

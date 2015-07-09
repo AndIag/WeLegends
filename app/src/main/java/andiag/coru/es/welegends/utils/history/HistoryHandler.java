@@ -42,7 +42,6 @@ public abstract class HistoryHandler {
         Summoner sum;
         SummonerHistory summonerHistory;
         JSONObject mainObject;
-        Calendar summonerTimeStamp;
         long timestamp;
         for (String s : keys) {
             sum = new Summoner();
@@ -88,7 +87,18 @@ public abstract class HistoryHandler {
         Calendar limitTime = Calendar.getInstance();
         limitTime.add(Calendar.DAY_OF_MONTH, -1);
 
-        Collections.reverse(summoners);
+        Collections.sort(summoners, new Comparator<SummonerHistory>() {
+            @Override
+            public int compare(SummonerHistory lhs, SummonerHistory rhs) {
+                if (lhs.getTimestamp() < rhs.getTimestamp()) {
+                    return 1;
+                }
+                if (lhs.getTimestamp() > rhs.getTimestamp()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
 
         int count = 0;
         JSONObject jo;
@@ -112,7 +122,7 @@ public abstract class HistoryHandler {
 
                 count++;
             } else {
-                break;
+                editor.remove(summonerHistory.getSummoner().getName());
             }
         }
         editor.apply();

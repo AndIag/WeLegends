@@ -152,6 +152,13 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         summonerHistory.setSummoner(summoner);
         summonerHistory.setTimestamp(Calendar.getInstance().getTimeInMillis());
         summonerHistory.setRegion(region.toLowerCase());
+
+        for (int i = 0; i < history.size(); i++) {
+            if (history.get(i).getSummoner().getId() == summoner.getId()) {
+                history.remove(i);
+                break;
+            }
+        }
         history.add(summonerHistory);
 
         activityMain.setSummoner(summoner);

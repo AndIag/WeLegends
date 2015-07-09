@@ -66,9 +66,11 @@ public class AdapterSummoner extends BaseAdapter {
         img.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.aatrox));
 
         NetworkImageView networkImg = (NetworkImageView) view.findViewById(R.id.networkSummImage);
+        networkImg.setErrorImageResId(R.drawable.item_default);
         networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"+apiHandler.getServer_version()+"/img/profileicon/"+
                 summoner.getSummoner().getProfileIconId()+".png"
                 ,imageLoader);
+
 
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 

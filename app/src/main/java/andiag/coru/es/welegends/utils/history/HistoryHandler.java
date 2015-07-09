@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,6 +65,20 @@ public abstract class HistoryHandler {
                 summoners.add(summonerHistory);
             }
         }
+
+        Collections.sort(summoners, new Comparator<SummonerHistory>() {
+            @Override
+            public int compare(SummonerHistory lhs, SummonerHistory rhs) {
+                if (lhs.getTimestamp() < rhs.getTimestamp()) {
+                    return 1;
+                }
+                if (lhs.getTimestamp() > rhs.getTimestamp()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
         return summoners;
     }
 
@@ -71,6 +87,8 @@ public abstract class HistoryHandler {
         SharedPreferences.Editor editor = settings.edit();
         Calendar limitTime = Calendar.getInstance();
         limitTime.add(Calendar.DAY_OF_MONTH, -1);
+
+        Collections.reverse(summoners);
 
         int count = 0;
         JSONObject jo;

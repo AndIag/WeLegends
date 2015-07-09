@@ -14,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -156,7 +155,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        boolean historyLoad = false;
         if (savedInstanceState != null) {
             onRetrieveInstanceState(savedInstanceState);
         } else {
@@ -276,7 +274,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             return true;
         }
         if (id == android.R.id.home) {
-            Log.d("ACTIVITY MAIN", "action bar clicked");
         }
 
         return super.onOptionsItemSelected(item);
@@ -479,6 +476,12 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
+                    if (summoner != null) {
+                        return summoner.getName().toUpperCase();
+                    }
+                    if (summonerName != null) {
+                        return summonerName.toUpperCase();
+                    }
                     return getString(R.string.title_section1).toUpperCase();
                 case 1:
                     return getString(R.string.title_section2).toUpperCase();

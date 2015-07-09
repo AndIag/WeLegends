@@ -54,6 +54,8 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
  */
 public class FragmentHistory extends Fragment {
 
+    private static FragmentHistory fragmentHistory;
+
     private final int INCREMENT = 10;
     private ScaleInAnimationAdapter scaleAdapter;
     private AlphaInAnimationAdapter alphaAdapter;
@@ -73,20 +75,26 @@ public class FragmentHistory extends Fragment {
     }
 
     public static FragmentHistory newInstance(String region) {
-        FragmentHistory fragment = new FragmentHistory();
+        if (fragmentHistory != null) {
+            return fragmentHistory;
+        }
+        fragmentHistory = new FragmentHistory();
         Bundle args = new Bundle();
         args.putString("region",region);
-        fragment.setArguments(args);
-        return fragment;
+        fragmentHistory.setArguments(args);
+        return fragmentHistory;
     }
 
     public static FragmentHistory newInstance(String region, long id) {
-        FragmentHistory fragment = new FragmentHistory();
+        if (fragmentHistory != null) {
+            return fragmentHistory;
+        }
+        fragmentHistory = new FragmentHistory();
         Bundle args = new Bundle();
         args.putString("region", region);
         args.putLong("summoner_id", id);
-        fragment.setArguments(args);
-        return fragment;
+        fragmentHistory.setArguments(args);
+        return fragmentHistory;
     }
 
     public void setSummoner_id(long summoner_id) {
@@ -306,7 +314,6 @@ public class FragmentHistory extends Fragment {
 
                 Match match;
                 for (int i = 0; i < array.length(); i++) {
-                    Log.d("MATCH i", array.get(i).toString());
                     match = gson.fromJson(array.get(i).toString(), Match.class);
                     list.add(match);
                 }

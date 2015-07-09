@@ -11,8 +11,8 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
 
-    <color name="left_row">@color/primary_dark</color>
-    <color name="right_row">@color/primary</color>
+    <color name="left_row">#727272</color>
+    <color name="right_row">#B6B6B6</color>
 
     <color name="pos0">@color/primary_dark</color>
     <color name="pos1">#0277BD</color>

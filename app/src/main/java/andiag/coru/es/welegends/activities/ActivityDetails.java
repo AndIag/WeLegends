@@ -44,6 +44,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
+import andiag.coru.es.welegends.fragments.FragmentPlayerInfo;
 import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityDetails extends ActionBarActivity implements ObservableScrollViewCallbacks {
@@ -56,6 +57,7 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
     private boolean mScrolled;
     private ScrollState mLastScrollState;
     private ActionBar actionBar;
+    private FragmentPlayerInfo fragment1;
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
@@ -131,6 +133,10 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
         setContentView(R.layout.activity_activity_details);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        if (fragment1 == null) {
+            fragment1 = FragmentPlayerInfo.newInstance();
+        }
 
         final ColorDrawable actionBarBackground = new ColorDrawable();
         final ColorDrawable actionBarTabsColor = new ColorDrawable();
@@ -388,7 +394,7 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
             Fragment f = null;
             switch (position) {
                 case 0:
-                    f = PlaceholderFragment.newInstance(position + 1);
+                    f = fragment1;
                     break;
                 case 1:
                     f = PlaceholderFragment.newInstance(position + 1);

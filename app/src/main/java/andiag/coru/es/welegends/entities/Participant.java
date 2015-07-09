@@ -17,8 +17,17 @@ public class Participant implements Serializable {
     private int spell2Id;
     private ParticipantStats stats;
     private int teamId;
+    private ParticipantTimeline timeline;
 
     public Participant() {
+    }
+
+    public ParticipantTimeline getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(ParticipantTimeline timeline) {
+        this.timeline = timeline;
     }
 
     public int getChampionId() {

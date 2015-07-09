@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.DTOs;
 
-import java.util.Calendar;
-
 import andiag.coru.es.welegends.entities.Summoner;
 
 /**
@@ -10,7 +8,7 @@ import andiag.coru.es.welegends.entities.Summoner;
 public class SummonerHistory {
 
     private Summoner summoner;
-    private Calendar timestamp;
+    private long timestamp;
     private String region;
 
     public SummonerHistory() {
@@ -24,11 +22,11 @@ public class SummonerHistory {
         this.summoner = summoner;
     }
 
-    public Calendar getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Calendar timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

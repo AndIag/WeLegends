@@ -17,6 +17,7 @@ public class APIHandler {
     private static APIHandler ourInstance;
 
     private String server;
+    private String server_version;
     private String matchHistory;
     private String match;
     private String summoner;
@@ -32,6 +33,7 @@ public class APIHandler {
             properties.load(inputStream);
 
             server = properties.getProperty("server");
+            server_version = properties.getProperty("server_version");
             matchHistory = properties.getProperty("matchHistory");
             match = properties.getProperty("match");
             summoner = properties.getProperty("summoner");
@@ -61,31 +63,19 @@ public class APIHandler {
         return server;
     }
 
-    public void setServer(String server) {
-        this.server = server;
-    }
-
     public String getMatchHistory() {
         return matchHistory;
-    }
-
-    public void setMatchHistory(String matchHistory) {
-        this.matchHistory = matchHistory;
     }
 
     public String getMatch() {
         return match;
     }
 
-    public void setMatch(String match) {
-        this.match = match;
-    }
-
     public String getSummoner() {
         return summoner;
     }
 
-    public void setSummoner(String summoner) {
-        this.summoner = summoner;
+    public String getServer_version() {
+        return server_version;
     }
 }

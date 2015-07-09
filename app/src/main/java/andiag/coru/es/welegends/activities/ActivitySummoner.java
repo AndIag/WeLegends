@@ -150,7 +150,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private void startMainActivity(Summoner summoner) {
         SummonerHistory summonerHistory = new SummonerHistory();
         summonerHistory.setSummoner(summoner);
-        summonerHistory.setTimestamp(Calendar.getInstance());
+        summonerHistory.setTimestamp(Calendar.getInstance().getTimeInMillis());
         summonerHistory.setRegion(region.toLowerCase());
         history.add(summonerHistory);
 

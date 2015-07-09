@@ -26,6 +26,7 @@ public abstract class HistoryHandler {
         ArrayList<SummonerHistory> summoners = new ArrayList<>();
         Calendar limitTime = Calendar.getInstance();
         limitTime.add(Calendar.DAY_OF_MONTH, -2);
+        long limit = limitTime.getTimeInMillis();
 
         SharedPreferences settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
         Map<String, String> map = (Map<String, String>) settings.getAll();
@@ -46,10 +47,8 @@ public abstract class HistoryHandler {
             mainObject = new JSONObject(map.get(s));
 
             timestamp = mainObject.getLong("timestamp");
-            summonerTimeStamp = Calendar.getInstance();
-            summonerTimeStamp.setTimeInMillis(timestamp);
 
-            if (summonerTimeStamp.after(limitTime)) {
+            if (timestamp > limit) {
                 summonerHistory = new SummonerHistory();
                 sum.setId(mainObject.getLong("id"));
                 sum.setName(mainObject.getString("name"));
@@ -58,7 +57,7 @@ public abstract class HistoryHandler {
                 sum.setSummonerLevel(mainObject.getInt("summonerLevel"));
 
                 summonerHistory.setSummoner(sum);
-                summonerHistory.setTimestamp(summonerTimeStamp);
+                summonerHistory.setTimestamp(timestamp);
                 summonerHistory.setRegion(mainObject.getString("region"));
 
                 summoners.add(summonerHistory);
@@ -76,7 +75,7 @@ public abstract class HistoryHandler {
         int count = 0;
         JSONObject jo;
         Summoner sum;
-        Calendar summonerTimeStamp;
+        long summonerTimeStamp;
         for (SummonerHistory summonerHistory : summoners) {
             if (count < MAX_SUMMONERS_IN_HISTORY) {
                 jo = new JSONObject();
@@ -88,11 +87,8 @@ public abstract class HistoryHandler {
                 jo.put("profileIconId", sum.getProfileIconId());
                 jo.put("revisionDate", sum.getRevisionDate());
                 jo.put("summonerLevel", sum.getSummonerLevel());
-                if (summonerTimeStamp == null) {
-                    jo.put("timestamp", Calendar.getInstance().getTimeInMillis());
-                } else {
-                    jo.put("timestamp", summonerTimeStamp.getTimeInMillis());
-                }
+                jo.put("timestamp", summonerTimeStamp);
+
                 jo.put("region", summonerHistory.getRegion());
                 editor.putString(sum.getName(), jo.toString());
 

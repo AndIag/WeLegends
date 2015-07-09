@@ -11,6 +11,14 @@
         app:border_color="#FF000000"
         app:border_width="2dp" />
 
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/networkSummImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@+id/textSumm"
+        android:layout_toRightOf="@+id/imageSumm"
+        android:layout_toEndOf="@+id/imageSumm" />
+
     <TextView
         android:id="@+id/textSumm"
         android:layout_width="wrap_content"
@@ -20,8 +28,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
-        android:layout_toRightOf="@+id/imageSumm"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/primary_dark"/>
+        android:textColor="@color/primary_dark"
+        android:layout_toRightOf="@+id/networkSummImage"
+        android:layout_toEndOf="@+id/networkSummImage" />
 </RelativeLayout>

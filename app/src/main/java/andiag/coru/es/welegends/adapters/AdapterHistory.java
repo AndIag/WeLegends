@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantIdentities;
@@ -196,6 +197,8 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context, ActivityDetails.class);
+                    i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
+                    i.putExtra("region", ((ActivityMain) context).getRegion());
                     context.startActivity(i);
                 }
             });

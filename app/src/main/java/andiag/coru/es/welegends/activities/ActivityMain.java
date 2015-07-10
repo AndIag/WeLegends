@@ -128,6 +128,10 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         fragmentHistory.setSummoner_id(summoner.getId());
     }
 
+    public String getRegion() {
+        return region;
+    }
+
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {

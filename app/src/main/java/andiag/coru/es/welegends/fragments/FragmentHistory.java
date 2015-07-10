@@ -337,10 +337,7 @@ public class FragmentHistory extends Fragment {
             new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         }
-
-
     }
-
 
     private class RetrieveDataTask extends AsyncTask<Void,Void,ArrayList<Bundle>>{
 
@@ -401,6 +398,7 @@ public class FragmentHistory extends Fragment {
                 String date_s = dateF.format(date.getTime());
 
                 data = new Bundle();
+                data.putLong("matchId", m.getMatchId());
                 data.putString("champName", NamesHandler.getChampName(champId));
                 data.putInt("champImage", ImagesHandler.getChamp(champId));
                 data.putInt("mapName", NamesHandler.getMapName(mapid));

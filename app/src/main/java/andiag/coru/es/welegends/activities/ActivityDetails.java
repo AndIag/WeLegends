@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.activities;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,20 +25,33 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
+import com.google.gson.Gson;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import org.apache.http.HttpStatus;
+import org.json.JSONObject;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
+import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerInfo;
 import andiag.coru.es.welegends.utils.ViewServer;
+import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
 public class ActivityDetails extends ActionBarActivity implements ObservableScrollViewCallbacks {
 
@@ -50,6 +64,11 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
     private ScrollState mLastScrollState;
     private ActionBar actionBar;
     private FragmentPlayerInfo fragmentPlayerInfo;
+    private boolean isLoading = false;
+
+    private String region;
+    private long matchId;
+    private Match match;
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
@@ -118,19 +137,41 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("matchId", matchId);
+        outState.putString("region", region);
+    }
+
+    //RetrieveData
+    protected void onRetrieveInstanceState(Bundle savedInstanceState) {
+        matchId = savedInstanceState.getLong("summoner");
+        region = savedInstanceState.getString("region");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_details);
 
-        //Necesito el matchId y la region aqui
+        if (savedInstanceState != null) {
+            onRetrieveInstanceState(savedInstanceState);
+        } else {
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                region = getIntent().getStringExtra("region");
+                matchId = getIntent().getLongExtra("matchId", 0);
+            }
+        }
+
+        getMatch();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         if (fragmentPlayerInfo == null) {
             fragmentPlayerInfo = FragmentPlayerInfo.newInstance();
-            //fragmentPlayerInfo = FragmentPlayerInfo.newInstance(region, matchId);
         }
 
         final ColorDrawable actionBarBackground = new ColorDrawable();
@@ -200,6 +241,51 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
         ViewServer.get(this).addWindow(this);
     }
 
+    private void getMatch() {
+        if (isLoading) return;
+
+        final Gson gson = new Gson();
+
+        isLoading = true;
+
+        APIHandler handler = APIHandler.getInstance();
+        if (handler == null) {
+            handler = APIHandler.getInstance(this);
+        }
+
+        String request = handler.getServer() + region + handler.getMatch() + matchId;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        match = gson.fromJson(response.toString(), Match.class);
+                        isLoading = false;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", error.toString());
+                isLoading = false;
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null) {
+                    String message = getString(R.string.errorDefault);
+                    switch (networkResponse.statusCode) {
+                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
+                            message = getString(R.string.error500);
+                            break;
+                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
+                            message = getString(R.string.error503);
+                            break;
+                    }
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -234,7 +320,6 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
             return true;
         }
         if (id == android.R.id.home) {
-            Log.d("ACTIVITY MAIN", "action bar clicked");
         }
 
         return super.onOptionsItemSelected(item);

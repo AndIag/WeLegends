@@ -260,6 +260,9 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
                     @Override
                     public void onResponse(JSONObject response) {
                         match = gson.fromJson(response.toString(), Match.class);
+                        if (fragmentPlayerInfo != null) {
+                            fragmentPlayerInfo.setMatch(match);
+                        }
                         isLoading = false;
                     }
                 }, new Response.ErrorListener() {

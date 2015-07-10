@@ -52,7 +52,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     private FragmentHistory fragmentHistory;
     private ActionBar actionBar;
 
-    // Passed variables
     private Summoner summoner;
     private String summonerName;
     private String region;
@@ -185,7 +184,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-        //mToolbarView.setBackground(actionBarBackground);
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -257,6 +255,14 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        FragmentHistory.deleteFragment();
+        ActivitySummoner.setActivityMain(null);
+        this.finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_activity_main, menu);
@@ -278,6 +284,7 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             return true;
         }
         if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -203,7 +202,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                         try {
                             JSONObject summonerJSON = response.getJSONObject(summonerName);
                             Summoner summoner = (Summoner) gson.fromJson(summonerJSON.toString(), Summoner.class);
-                            Log.d("RESPUESTA", summoner.getId() + "---" + summoner.getName());
                             startMainActivity(summoner);
                             isLoading = false;
                         } catch (JSONException e) {

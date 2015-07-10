@@ -74,6 +74,10 @@ public class FragmentHistory extends Fragment {
     public FragmentHistory() {
     }
 
+    public static void deleteFragment() {
+        fragmentHistory = null;
+    }
+
     public static FragmentHistory newInstance(String region) {
         if (fragmentHistory != null) {
             return fragmentHistory;

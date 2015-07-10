@@ -1,25 +1,20 @@
 package andiag.coru.es.welegends.activities;
 
-import java.util.Locale;
-
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +24,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -42,8 +36,6 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
-import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerInfo;
 import andiag.coru.es.welegends.utils.ViewServer;
 
@@ -57,7 +49,7 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
     private boolean mScrolled;
     private ScrollState mLastScrollState;
     private ActionBar actionBar;
-    private FragmentPlayerInfo fragment1;
+    private FragmentPlayerInfo fragmentPlayerInfo;
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
@@ -132,10 +124,13 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_details);
 
+        //Necesito el matchId y la region aqui
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        if (fragment1 == null) {
-            fragment1 = FragmentPlayerInfo.newInstance();
+        if (fragmentPlayerInfo == null) {
+            fragmentPlayerInfo = FragmentPlayerInfo.newInstance();
+            //fragmentPlayerInfo = FragmentPlayerInfo.newInstance(region, matchId);
         }
 
         final ColorDrawable actionBarBackground = new ColorDrawable();
@@ -394,7 +389,7 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
             Fragment f = null;
             switch (position) {
                 case 0:
-                    f = fragment1;
+                    f = fragmentPlayerInfo;
                     break;
                 case 1:
                     f = PlaceholderFragment.newInstance(position + 1);

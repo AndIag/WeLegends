@@ -251,7 +251,10 @@ public class FragmentHistory extends Fragment {
         isLoading = true;
 
         changeRefreshingValue(true);
-        APIHandler handler = APIHandler.getInstance(getActivity());
+        APIHandler handler = APIHandler.getInstance();
+        if (handler == null) {
+            handler = APIHandler.getInstance(getActivity());
+        }
 
         incrementIndexes();
 

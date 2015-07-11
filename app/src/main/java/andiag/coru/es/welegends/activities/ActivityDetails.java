@@ -7,23 +7,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -45,25 +40,27 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Match;
-import andiag.coru.es.welegends.fragments.FragmentPlayerInfo;
+import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
+import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
-public class ActivityDetails extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public class ActivityDetails extends TabbedActivity implements ObservableScrollViewCallbacks {
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
     private ViewPager mPager;
-    private SectionsPagerAdapter mPagerAdapter;
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
     private ActionBar actionBar;
-    private FragmentPlayerInfo fragmentPlayerInfo;
+    private FragmentPlayerMatchDetails fragmentPlayerMatchDetails;
     private boolean isLoading = false;
 
     private String region;
@@ -138,6 +135,23 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
     }
 
     @Override
+    protected void setmPagerAdapter() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(fragmentPlayerMatchDetails);
+        fragments.add(new FragmentVictoryDefeatDetails());
+        fragments.add(new FragmentVictoryDefeatDetails());
+
+        ArrayList<String> tabNames = new ArrayList<>();
+        tabNames.add(getString(R.string.title_section_details1).toUpperCase());
+        tabNames.add(getString(R.string.title_section_details2).toUpperCase());
+        tabNames.add(getString(R.string.title_section_details3).toUpperCase());
+
+        int[] actionBarColors = {getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT3)};
+
+        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments, tabNames, actionBarColors, actionBarColors);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong("matchId", matchId);
@@ -170,8 +184,8 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        if (fragmentPlayerInfo == null) {
-            fragmentPlayerInfo = FragmentPlayerInfo.newInstance();
+        if (fragmentPlayerMatchDetails == null) {
+            fragmentPlayerMatchDetails = FragmentPlayerMatchDetails.newInstance();
         }
 
         final ColorDrawable actionBarBackground = new ColorDrawable();
@@ -183,7 +197,7 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
         //mToolbarView.setBackground(actionBarBackground);
-        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        setmPagerAdapter();
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         // Padding for ViewPager must be set outside the ViewPager itself
@@ -260,8 +274,8 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
                     @Override
                     public void onResponse(JSONObject response) {
                         match = gson.fromJson(response.toString(), Match.class);
-                        if (fragmentPlayerInfo != null) {
-                            fragmentPlayerInfo.setMatch(match);
+                        if (fragmentPlayerMatchDetails != null) {
+                            fragmentPlayerMatchDetails.setMatch(match);
                         }
                         isLoading = false;
                     }
@@ -430,112 +444,6 @@ public class ActivityDetails extends ActionBarActivity implements ObservableScro
                 }
             });
             animator.start();
-        }
-    }
-
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_activity_main, container, false);
-            return rootView;
-        }
-    }
-
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            Fragment f = null;
-            switch (position) {
-                case 0:
-                    f = fragmentPlayerInfo;
-                    break;
-                case 1:
-                    f = PlaceholderFragment.newInstance(position + 1);
-                    break;
-                case 2:
-                    f = PlaceholderFragment.newInstance(position + 1);
-                    break;
-            }
-            return f;
-        }
-
-        public int getColorActionBar(int position) {
-
-            switch (position) {
-                case 0:
-                    return getResources().getColor(R.color.posT0);
-                case 1:
-                    return getResources().getColor(R.color.posT2);
-                case 2:
-                    return getResources().getColor(R.color.posT3);
-            }
-            return 0;
-        }
-
-        public int getColorToolBar(int position) {
-
-            switch (position) {
-                case 0:
-                    return getResources().getColor(R.color.pos0);
-                case 1:
-                    return getResources().getColor(R.color.pos2);
-                case 2:
-                    return getResources().getColor(R.color.pos3);
-            }
-            return 0;
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section_details1).toUpperCase();
-                case 1:
-                    return getString(R.string.title_section_details2).toUpperCase();
-                case 2:
-                    return getString(R.string.title_section_details3).toUpperCase();
-            }
-            return null;
-        }
-
-        public Fragment getItemAt(int currentItem) {
-            return getItem(currentItem);
         }
     }
 }

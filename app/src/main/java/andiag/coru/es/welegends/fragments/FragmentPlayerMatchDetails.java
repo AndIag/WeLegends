@@ -13,24 +13,25 @@ import andiag.coru.es.welegends.entities.Match;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPlayerInfo#newInstance} factory method to
+ * Use the {@link FragmentPlayerMatchDetails#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPlayerInfo extends SwipeRefreshLayoutFragment {
+public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
 
-    private static FragmentPlayerInfo fragmentPlayerInfo;
+    private static FragmentPlayerMatchDetails fragmentPlayerMatchDetails;
+
     private Match match;
 
-    public FragmentPlayerInfo() {
+    public FragmentPlayerMatchDetails() {
         // Required empty public constructor
     }
 
-    public static FragmentPlayerInfo newInstance() {
-        if (fragmentPlayerInfo != null) {
-            return fragmentPlayerInfo;
+    public static FragmentPlayerMatchDetails newInstance() {
+        if (fragmentPlayerMatchDetails != null) {
+            return fragmentPlayerMatchDetails;
         }
-        fragmentPlayerInfo = new FragmentPlayerInfo();
-        return fragmentPlayerInfo;
+        fragmentPlayerMatchDetails = new FragmentPlayerMatchDetails();
+        return fragmentPlayerMatchDetails;
     }
 
     public void setMatch(Match match) {

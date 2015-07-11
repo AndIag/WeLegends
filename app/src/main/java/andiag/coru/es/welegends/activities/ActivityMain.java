@@ -7,22 +7,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -34,18 +29,21 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
+import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
+import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
 import andiag.coru.es.welegends.utils.ViewServer;
 
-public class ActivityMain extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public class ActivityMain extends TabbedActivity implements ObservableScrollViewCallbacks {
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
     private ViewPager mPager;
-    private SectionsPagerAdapter mPagerAdapter;
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
@@ -131,6 +129,29 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
         return region;
     }
 
+    @Override
+    protected void setmPagerAdapter() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(fragmentHistory);
+        fragments.add(new FragmentPlayerStats());
+        fragments.add(new FragmentRankedChampStats());
+
+        ArrayList<String> tabNames = new ArrayList<>();
+        if (summoner != null) {
+            tabNames.add(summoner.getName().toUpperCase());
+        } else if (summonerName != null) {
+            tabNames.add(summonerName.toUpperCase());
+        } else {
+            tabNames.add(getString(R.string.title_section1).toUpperCase());
+        }
+        tabNames.add(getString(R.string.title_section2).toUpperCase());
+        tabNames.add(getString(R.string.title_section3).toUpperCase());
+
+        int[] actionBarColors = {getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT2)};
+
+        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments, tabNames, actionBarColors, actionBarColors);
+    }
+
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -141,25 +162,9 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
 
     //RetrieveData
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
-        summoner = (Summoner) savedInstanceState.getSerializable("summoner");
-        region = savedInstanceState.getString("region");
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_main);
-
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        final ColorDrawable actionBarBackground = new ColorDrawable();
-        final ColorDrawable actionBarTabsColor = new ColorDrawable();
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(actionBarBackground);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         if (savedInstanceState != null) {
-            onRetrieveInstanceState(savedInstanceState);
+            summoner = (Summoner) savedInstanceState.getSerializable("summoner");
+            region = savedInstanceState.getString("region");
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();
@@ -178,13 +183,30 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
             }
             ActivitySummoner.setActivityMain(this);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_activity_main);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        final ColorDrawable actionBarBackground = new ColorDrawable();
+        final ColorDrawable actionBarTabsColor = new ColorDrawable();
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(actionBarBackground);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        onRetrieveInstanceState(savedInstanceState);
+
         if (fragmentHistory == null) {
             fragmentHistory = FragmentHistory.newInstance(region);
         }
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        setmPagerAdapter();
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         // Padding for ViewPager must be set outside the ViewPager itself
@@ -392,118 +414,6 @@ public class ActivityMain extends ActionBarActivity implements ObservableScrollV
                 }
             });
             animator.start();
-        }
-    }
-
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_activity_main, container, false);
-            return rootView;
-        }
-    }
-
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            Fragment f = null;
-            switch (position) {
-                case 0:
-                    f = fragmentHistory;
-                    break;
-                case 1:
-                    f = PlaceholderFragment.newInstance(position + 1);
-                    break;
-                case 2:
-                    f = PlaceholderFragment.newInstance(position + 1);
-                    break;
-            }
-            return f;
-        }
-
-        public int getColorActionBar(int position) {
-
-            switch (position) {
-                case 0:
-                    return getResources().getColor(R.color.posT0);
-                case 1:
-                    return getResources().getColor(R.color.posT1);
-                case 2:
-                    return getResources().getColor(R.color.posT2);
-            }
-            return 0;
-        }
-
-        public int getColorToolBar(int position) {
-
-            switch (position) {
-                case 0:
-                    return getResources().getColor(R.color.pos0);
-                case 1:
-                    return getResources().getColor(R.color.pos1);
-                case 2:
-                    return getResources().getColor(R.color.pos2);
-            }
-            return 0;
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    if (summoner != null) {
-                        return summoner.getName().toUpperCase();
-                    }
-                    if (summonerName != null) {
-                        return summonerName.toUpperCase();
-                    }
-                    return getString(R.string.title_section1).toUpperCase();
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase();
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase();
-            }
-            return null;
-        }
-
-        public Fragment getItemAt(int currentItem) {
-            return getItem(currentItem);
         }
     }
 }

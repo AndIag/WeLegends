@@ -50,11 +50,12 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 /**
  * Created by Andy on 26/06/2015.
  */
-public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
+public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
     private static FragmentHistory fragmentHistory;
-
+    //AUXILIAR DATA
     private final int INCREMENT = 10;
+    //VIEW DATA
     private ScaleInAnimationAdapter scaleAdapter;
     private AlphaInAnimationAdapter alphaAdapter;
     private ObservableRecyclerView recyclerView;
@@ -64,10 +65,12 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
     private int ENDINDEX;
     private boolean isLoading = false;
 
+    //BASIC DATA
     private String region;
     private long summoner_id;
     private ArrayList<Match> matchesHistoryList;
 
+    //CONSTRUCTION AND DESTRUCTION
     public FragmentHistory() {
     }
 
@@ -98,11 +101,6 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
         return fragmentHistory;
     }
 
-    public void setSummoner_id(long summoner_id) {
-        this.summoner_id = summoner_id;
-        getSummonerHistory(BEGININDEX, ENDINDEX);
-    }
-
     //GETTERS, SETTERS && ADDS
     private void incrementIndexes() {
         BEGININDEX += INCREMENT;
@@ -121,6 +119,12 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
         ENDINDEX = INCREMENT;
     }
 
+    public void setSummoner_id(long summoner_id) {
+        this.summoner_id = summoner_id;
+        getSummonerHistory(BEGININDEX, ENDINDEX);
+    }
+
+    //SAVE AND RETRIEVE DATA
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -131,9 +135,7 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
         outState.putSerializable("matchesHistory", matchesHistoryList);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onRetrieveInstanceState(Bundle savedInstanceState) {
         //Se ejecuta al girar la pantalla no al cambiar de tab
         if (savedInstanceState != null) { //Load saved data in onPause
             BEGININDEX = savedInstanceState.getInt("beginIndex");
@@ -150,6 +152,13 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
                 getSummonerHistory(BEGININDEX, ENDINDEX);
             }
         }
+    }
+
+    //ACTIVITY SEQUENCE
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -237,6 +246,7 @@ public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
         return view;
     }
 
+    //NEEDED METHODS
     private void getSummonerHistory(int beginIndex, int endIndex) {
         if (isLoading) return;
 

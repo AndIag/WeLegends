@@ -3,13 +3,11 @@ package andiag.coru.es.welegends.fragments;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +50,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 /**
  * Created by Andy on 26/06/2015.
  */
-public class FragmentHistory extends Fragment {
+public class FragmentHistory extends /*Fragment*/ SwipeRefreshLayoutFragment {
 
     private static FragmentHistory fragmentHistory;
 
@@ -60,7 +58,6 @@ public class FragmentHistory extends Fragment {
     private ScaleInAnimationAdapter scaleAdapter;
     private AlphaInAnimationAdapter alphaAdapter;
     private ObservableRecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
     private int BEGININDEX;
@@ -134,13 +131,6 @@ public class FragmentHistory extends Fragment {
         outState.putSerializable("matchesHistory", matchesHistoryList);
     }
 
-    //Used to activate the refreshing indicator
-    public void changeRefreshingValue(boolean bool) {
-        if (refreshLayout != null) {
-            refreshLayout.setRefreshing(bool);
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,36 +161,34 @@ public class FragmentHistory extends Fragment {
     }
 
     @Override
+    protected void initializeRefresh(View view) {
+        setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
+        setColors(null); //NULL means default colors
+        setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Clear our adapter
+                recyclerAdapter.clearHistory();
+                scaleAdapter.notifyDataSetChanged();
+                alphaAdapter.notifyDataSetChanged();
+                //Clear Data
+                matchesHistoryList = new ArrayList<>();
+                //Load new values
+                startIndex();
+                getSummonerHistory(BEGININDEX, ENDINDEX);
+            }
+        });
+        changeRefreshingValue(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         Activity parentActivity = getActivity();
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
-        int[ ] colors = { R.color.swype_1,R.color.swype_2,R.color.swype_3, R.color.swype_4};
-        //refreshLayout.setColorSchemeColors(colors);
-        refreshLayout.setColorSchemeResources(colors);
 
-        refreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        //Clear our adapter
-                        recyclerAdapter.clearHistory();
-                        scaleAdapter.notifyDataSetChanged();
-                        alphaAdapter.notifyDataSetChanged();
-                        //Clear Data
-                        matchesHistoryList = new ArrayList<>();
-                        //Load new values
-                        startIndex();
-                        getSummonerHistory(BEGININDEX, ENDINDEX);
-                    }
-                }
-        );
-
-        refreshLayout.setProgressViewOffset(false, 0,
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-        refreshLayout.setRefreshing(true);
+        initializeRefresh(view);
 
         recyclerView.setHasFixedSize(true);
         Display display = getActivity().getWindowManager().getDefaultDisplay();

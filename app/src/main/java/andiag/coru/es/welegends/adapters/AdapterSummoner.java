@@ -16,7 +16,6 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Andy on 07/07/2015.
@@ -67,6 +66,7 @@ public class AdapterSummoner extends BaseAdapter {
 
         CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);
         networkImg.setErrorImageResId(R.drawable.item_default);
+        networkImg.setDefaultImageResId(R.drawable.item_default);
         networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"+apiHandler.getServer_version()+"/img/profileicon/"+
                 summoner.getSummoner().getProfileIconId()+".png"
                 ,imageLoader);

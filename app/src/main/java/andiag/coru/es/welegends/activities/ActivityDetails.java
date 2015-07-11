@@ -160,17 +160,9 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
 
     //RetrieveData
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
-        matchId = savedInstanceState.getLong("summoner");
-        region = savedInstanceState.getString("region");
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_details);
-
         if (savedInstanceState != null) {
-            onRetrieveInstanceState(savedInstanceState);
+            matchId = savedInstanceState.getLong("summoner");
+            region = savedInstanceState.getString("region");
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();
@@ -179,6 +171,14 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
                 matchId = getIntent().getLongExtra("matchId", 0);
             }
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_activity_details);
+
+        onRetrieveInstanceState(savedInstanceState);
 
         getMatch();
 

@@ -29,21 +29,17 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import java.util.ArrayList;
-
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
-import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
 import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends TabbedActivity implements ObservableScrollViewCallbacks {
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
-    private ViewPager mPager;
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
@@ -129,6 +125,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         return region;
     }
 
+    /*
     @Override
     protected void setmPagerAdapter() {
         ArrayList<Fragment> fragments = new ArrayList<>();
@@ -150,6 +147,23 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         int[] actionBarColors = {getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT2)};
 
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments, tabNames, actionBarColors, actionBarColors);
+    }*/
+    private void setFragments() {
+        String tabName;
+        if (summoner != null) {
+            tabName = summoner.getName().toUpperCase();
+        } else if (summonerName != null) {
+            tabName = summonerName.toUpperCase();
+        } else {
+            tabName = getString(R.string.title_section1).toUpperCase();
+        }
+        addFragment(fragmentHistory, tabName, getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT0));
+
+        tabName = getString(R.string.title_section2).toUpperCase();
+        addFragment(new FragmentPlayerStats(), tabName, getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT1));
+
+        tabName = getString(R.string.title_section3).toUpperCase();
+        addFragment(new FragmentPlayerStats(), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
     }
 
     //SaveData
@@ -206,9 +220,11 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-        setmPagerAdapter();
+        setFragments();
+
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
+
         // Padding for ViewPager must be set outside the ViewPager itself
         // because with padding, EdgeEffect of ViewPager become strange.
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);

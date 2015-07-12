@@ -40,8 +40,6 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Match;
@@ -55,7 +53,6 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
 
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
-    private ViewPager mPager;
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
@@ -134,21 +131,15 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
-    @Override
-    protected void setmPagerAdapter() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(fragmentPlayerMatchDetails);
-        fragments.add(new FragmentVictoryDefeatDetails());
-        fragments.add(new FragmentVictoryDefeatDetails());
+    private void setFragments() {
+        String tabName = getString(R.string.title_section_details1).toUpperCase();
+        addFragment(fragmentPlayerMatchDetails, tabName, getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT0));
 
-        ArrayList<String> tabNames = new ArrayList<>();
-        tabNames.add(getString(R.string.title_section_details1).toUpperCase());
-        tabNames.add(getString(R.string.title_section_details2).toUpperCase());
-        tabNames.add(getString(R.string.title_section_details3).toUpperCase());
+        tabName = getString(R.string.title_section_details2).toUpperCase();
+        addFragment(new FragmentVictoryDefeatDetails(), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
 
-        int[] actionBarColors = {getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT3)};
-
-        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments, tabNames, actionBarColors, actionBarColors);
+        tabName = getString(R.string.title_section_details3).toUpperCase();
+        addFragment(new FragmentVictoryDefeatDetails(), tabName, getResources().getColor(R.color.posT3), getResources().getColor(R.color.posT3));
     }
 
     @Override
@@ -196,10 +187,12 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-        //mToolbarView.setBackground(actionBarBackground);
-        setmPagerAdapter();
+
+        setFragments();
+
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
+
         // Padding for ViewPager must be set outside the ViewPager itself
         // because with padding, EdgeEffect of ViewPager become strange.
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);

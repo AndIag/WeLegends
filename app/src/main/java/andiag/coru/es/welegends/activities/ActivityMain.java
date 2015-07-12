@@ -160,10 +160,10 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         addFragment(fragmentHistory, tabName, getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT0));
 
         tabName = getString(R.string.title_section2).toUpperCase();
-        addFragment(new FragmentPlayerStats(), tabName, getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT1));
+        addFragment(FragmentPlayerStats.newInstance(summoner), tabName, getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT1));
 
-        tabName = getString(R.string.title_section3).toUpperCase();
-        addFragment(new FragmentPlayerStats(), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
+        //tabName = getString(R.string.title_section3).toUpperCase();
+        //addFragment(FragmentPlayerStats.newInstance(summoner), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
     }
 
     //SaveData

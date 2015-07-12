@@ -66,4 +66,7 @@
     <string name="title_section_details1">Champion</string>
     <string name="title_section_details2">Victory Team</string>
     <string name="title_section_details3">Defeat Team</string>
+    <string name="queue_solo">Solo/Duo</string>
+    <string name="queue_team5">Team 5vs5</string>
+    <string name="queue_team3">Team 3vs3</string>
 </resources>

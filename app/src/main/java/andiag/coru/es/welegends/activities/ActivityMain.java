@@ -30,28 +30,29 @@ public class ActivityMain extends AnimatedTabbedActivity {
         super.createTabs();
         Tab tab;
         String tabName;
-        //FRAGMENT HISTORY TAB
+
+        //FRAGMENT PLAYER STATS
         tab = new Tab();
         if (summoner != null) {
             tabName = summoner.getName().toUpperCase();
         } else if (summonerName != null) {
             tabName = summonerName.toUpperCase();
         } else {
-            tabName = getString(R.string.title_section1).toUpperCase();
+            tabName = getString(R.string.section_summoner).toUpperCase();
         }
-        tab.setFragment(FragmentHistory.getInstance(this));
-        tab.setName(tabName);
-        tab.setActionBarColors(getResources().getColor(R.color.posT0));
-        tab.setToolBarColors(getResources().getColor(R.color.posT0));
+        tab.setFragment(FragmentPlayerStats.getInstance(this));
+        tab.setName(tabName.toUpperCase());
+        tab.setActionBarColors(getResources().getColor(R.color.posT1));
+        tab.setToolBarColors(getResources().getColor(R.color.posT1));
 
         tabs.add(0, tab);
 
-        //FRAGMENT PLAYER STATS
+        //FRAGMENT HISTORY TAB
         tab = new Tab();
-        tab.setFragment(FragmentPlayerStats.getInstance(this));
-        tab.setName(getString(R.string.title_section2).toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT1));
-        tab.setToolBarColors(getResources().getColor(R.color.posT1));
+        tab.setFragment(FragmentHistory.getInstance(this));
+        tab.setName(getString(R.string.section_ranked).toUpperCase());
+        tab.setActionBarColors(getResources().getColor(R.color.posT0));
+        tab.setToolBarColors(getResources().getColor(R.color.posT0));
 
         tabs.add(1, tab);
 

@@ -11,9 +11,6 @@
     <string name="cs">The Crystal Scar</string>
     <string name="ha">Howling Abyss</string>
 
-    <string name="title_section1">Summoner</string>
-    <string name="title_section2">Profile</string>
-    <string name="title_section3">Stats</string>
     <string name="summoner">Summoner:</string>
     <string name="go">Search</string>
     <string name="hint_summoner">Summoner\'s name</string>
@@ -69,4 +66,6 @@
     <string name="queue_solo">Solo/Duo</string>
     <string name="queue_team5">Team 5vs5</string>
     <string name="queue_team3">Team 3vs3</string>
+    <string name="section_ranked">RANKEDS</string>
+    <string name="section_summoner">SUMMONER</string>
 </resources>

@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
@@ -53,6 +54,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
     private static FragmentHistory fragmentHistory;
+    private static ActivityMain activityMain;
     //AUXILIAR DATA
     private final int INCREMENT = 10;
     //VIEW DATA
@@ -78,7 +80,8 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         fragmentHistory = null;
     }
 
-    public static FragmentHistory getInstance() {
+    public static FragmentHistory getInstance(ActivityMain aM) {
+        activityMain = aM;
         if (fragmentHistory != null) {
             return fragmentHistory;
         }
@@ -181,7 +184,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
-        float density = getResources().getDisplayMetrics().density;
+        float density = activityMain.getResources().getDisplayMetrics().density;
         float dpWidth = outMetrics.widthPixels / density;
         int columns = Math.round(dpWidth / 300);
 
@@ -324,7 +327,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         public RetrieveDataTask(ArrayList<Match> m) {
             this.matches = m;
-            dateF = DateFormat.getDateInstance(DateFormat.SHORT,getResources().getConfiguration().locale);
+            dateF = DateFormat.getDateInstance(DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
         }
 
         @Override

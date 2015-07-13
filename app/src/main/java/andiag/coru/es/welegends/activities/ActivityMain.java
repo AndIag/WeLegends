@@ -133,7 +133,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         } else {
             tabName = getString(R.string.title_section1).toUpperCase();
         }
-        tab.setFragment(FragmentHistory.getInstance());
+        tab.setFragment(FragmentHistory.getInstance(this));
         tab.setName(tabName);
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
         tab.setToolBarColors(getResources().getColor(R.color.posT0));
@@ -142,11 +142,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
 
         //FRAGMENT PLAYER STATS
         tab = new Tab();
-        if (summoner != null) {
-            tab.setFragment(FragmentPlayerStats.getInstance(summoner));
-        } else {
-            tab.setFragment(FragmentPlayerStats.getInstance());
-        }
+        tab.setFragment(FragmentPlayerStats.getInstance());
         tab.setName(getString(R.string.title_section2).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT1));
         tab.setToolBarColors(getResources().getColor(R.color.posT1));
@@ -199,7 +195,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         createTabs();
 
         //SETTING DATA IN FRAGMENTS
-        FragmentHistory.getInstance().setSummoner_id(summoner.getId(), region);
+        FragmentHistory.getInstance(this).setSummoner_id(summoner.getId(), region);
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);

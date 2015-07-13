@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.activities;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,7 +17,7 @@ import andiag.coru.es.welegends.R;
  */
 public class TabbedActivity extends ActionBarActivity {
 
-    protected ArrayList<Tab> tabs = new ArrayList<>();
+    protected ArrayList<Tab> tabs;
     protected ViewPager mPager;
     protected SectionsPagerAdapter mPagerAdapter;
 
@@ -27,6 +28,12 @@ public class TabbedActivity extends ActionBarActivity {
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tabs = new ArrayList<>();
     }
 
     protected class Tab {

@@ -13,6 +13,7 @@ import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
+import andiag.coru.es.welegends.fragments.FragmentRankeds;
 import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends AnimatedTabbedActivity {
@@ -47,14 +48,23 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
         tabs.add(0, tab);
 
-        //FRAGMENT HISTORY TAB
+        //FRAGMENT RANKEDS TAB
         tab = new Tab();
-        tab.setFragment(FragmentHistory.getInstance(this));
+        tab.setFragment(FragmentRankeds.getInstance(this));
         tab.setName(getString(R.string.section_ranked).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
         tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
         tabs.add(1, tab);
+
+        //FRAGMENT HISTORY TAB
+        tab = new Tab();
+        tab.setFragment(FragmentHistory.getInstance(this));
+        tab.setName(getString(R.string.section_history).toUpperCase());
+        tab.setActionBarColors(getResources().getColor(R.color.posT2));
+        tab.setToolBarColors(getResources().getColor(R.color.pos2));
+
+        tabs.add(2, tab);
 
         setPager();
     }
@@ -97,7 +107,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         createTabs();
 
         //SETTING DATA IN FRAGMENTS
-        FragmentHistory.getInstance(this).setSummoner_id(summoner.getId(), region);
+        FragmentRankeds.getInstance(this).setSummoner_id(summoner.getId(), region);
         FragmentPlayerStats.getInstance(this).setSummoner(summoner);
 
         setAnimation();
@@ -119,8 +129,9 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        FragmentHistory.deleteFragment();
+        FragmentRankeds.deleteFragment();
         FragmentPlayerStats.deleteFragment();
+        FragmentHistory.deleteFragment();
         ActivitySummoner.setActivityMain(null);
         this.finish();
     }

@@ -142,7 +142,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
 
         //FRAGMENT PLAYER STATS
         tab = new Tab();
-        tab.setFragment(FragmentPlayerStats.getInstance());
+        tab.setFragment(FragmentPlayerStats.getInstance(this));
         tab.setName(getString(R.string.title_section2).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT1));
         tab.setToolBarColors(getResources().getColor(R.color.posT1));

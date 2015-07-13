@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.android.volley.toolbox.ImageLoader;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -20,6 +21,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private static FragmentPlayerStats fragmentPlayerStats;
+    private static ActivityMain activityMain;
 
     private View rootView;
 
@@ -36,7 +38,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         fragmentPlayerStats = null;
     }
 
-    public static FragmentPlayerStats getInstance() {
+    public static FragmentPlayerStats getInstance(ActivityMain aM) {
+        activityMain = aM;
         if (fragmentPlayerStats != null) {
             return fragmentPlayerStats;
         }

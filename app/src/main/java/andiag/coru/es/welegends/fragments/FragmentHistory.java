@@ -1,6 +1,5 @@
 package andiag.coru.es.welegends.fragments;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -174,13 +173,12 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        Activity parentActivity = getActivity();
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
 
         initializeRefresh(view);
 
         recyclerView.setHasFixedSize(true);
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = activityMain.getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
 
@@ -188,7 +186,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         float dpWidth = outMetrics.widthPixels / density;
         int columns = Math.round(dpWidth / 300);
 
-        layoutManager = new GridLayoutManager(getActivity(), columns);
+        layoutManager = new GridLayoutManager(activityMain, columns);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -208,19 +206,18 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             }
         });
 
-        recyclerAdapter = new AdapterHistory(getActivity(), summoner_id);
+        recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
         scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
         alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
 
-        //scaleAdapter.setFirstOnly(false);
         alphaAdapter.setFirstOnly(false);
 
         recyclerView.setAdapter(alphaAdapter);
 
-        recyclerView.setTouchInterceptionViewGroup((ViewGroup) parentActivity.findViewById(R.id.container));
+        recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
-        if (parentActivity instanceof ObservableScrollViewCallbacks) {
-            recyclerView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
+        if (activityMain instanceof ObservableScrollViewCallbacks) {
+            recyclerView.setScrollViewCallbacks((ObservableScrollViewCallbacks) activityMain);
         }
 
         return view;
@@ -235,7 +232,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         changeRefreshingValue(true);
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
-            handler = APIHandler.getInstance(getActivity());
+            handler = APIHandler.getInstance(activityMain);
         }
 
         incrementIndexes();
@@ -265,20 +262,22 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 decrementIndexes();
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
-                    String message = getString(R.string.errorDefault);
+                    String message = activityMain.getString(R.string.errorDefault);
                     switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR : message = getString(R.string.error500);
+                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
+                            message = activityMain.getString(R.string.error500);
                             break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE : message = getString(R.string.error503);
+                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
+                            message = activityMain.getString(R.string.error503);
                             break;
                     }
-                    Toast.makeText(getActivity(),message
+                    Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        VolleyHelper.getInstance(getActivity()).getRequestQueue().add(jsonObjectRequest);
+        VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
     }
 
     private class ParseDataTask extends AsyncTask<Void, Void, ArrayList<Match>> {

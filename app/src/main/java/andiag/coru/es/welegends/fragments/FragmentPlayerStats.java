@@ -50,13 +50,14 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     public void setSummoner(Summoner summoner) {
         this.summoner = summoner;
 
-        CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
-        networkImg.setErrorImageResId(R.drawable.item_default);
-        networkImg.setDefaultImageResId(R.drawable.item_default);
-        networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
-                summoner.getProfileIconId() + ".png"
-                , imageLoader);
-
+        if (rootView != null) {
+            CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
+            networkImg.setErrorImageResId(R.drawable.item_default);
+            networkImg.setDefaultImageResId(R.drawable.item_default);
+            networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
+                    summoner.getProfileIconId() + ".png"
+                    , imageLoader);
+        }
     }
 
     @Override
@@ -70,6 +71,15 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_playerstats, container, false);
+
+        if (summoner != null) {
+            CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
+            networkImg.setErrorImageResId(R.drawable.item_default);
+            networkImg.setDefaultImageResId(R.drawable.item_default);
+            networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
+                    summoner.getProfileIconId() + ".png"
+                    , imageLoader);
+        }
 
         return rootView;
     }

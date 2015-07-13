@@ -196,6 +196,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
 
         //SETTING DATA IN FRAGMENTS
         FragmentHistory.getInstance(this).setSummoner_id(summoner.getId(), region);
+        FragmentPlayerStats.getInstance(this).setSummoner(summoner);
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);

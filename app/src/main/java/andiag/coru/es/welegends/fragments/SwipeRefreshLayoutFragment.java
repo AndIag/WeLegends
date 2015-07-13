@@ -21,7 +21,7 @@ public abstract class SwipeRefreshLayoutFragment extends Fragment {
     protected abstract void initializeRefresh(View view);
 
     public void setColors(int[] colors) {
-        if ((colors != null) && (colors.length > 0)) {
+        if ((colors != null) && (colors.length == this.colors.length)) {
             this.colors = colors;
         }
     }

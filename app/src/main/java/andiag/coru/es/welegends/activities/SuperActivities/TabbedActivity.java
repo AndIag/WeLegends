@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.activities;
+package andiag.coru.es.welegends.activities.SuperActivities;
 
 import android.graphics.Color;
 import android.os.Bundle;

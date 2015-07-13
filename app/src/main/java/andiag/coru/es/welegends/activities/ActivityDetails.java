@@ -41,6 +41,7 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.SuperActivities.TabbedActivity;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;

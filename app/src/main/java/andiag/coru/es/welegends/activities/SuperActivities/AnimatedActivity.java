@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.activities;
+package andiag.coru.es.welegends.activities.SuperActivities;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;

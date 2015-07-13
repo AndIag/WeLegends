@@ -30,6 +30,7 @@ import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.SuperActivities.TabbedActivity;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;

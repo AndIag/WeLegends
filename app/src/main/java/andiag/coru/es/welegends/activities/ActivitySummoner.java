@@ -163,7 +163,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         }
         history.add(summonerHistory);
 
-        activityMain.setSummoner(summoner);
+        //Iniciamos la ativity
+        Intent i = new Intent(this, ActivityMain.class);
+        i.putExtra("region", region.toLowerCase());
+        i.putExtra("summoner", summoner);
+        startActivity(i);
 
         //Guardar el valor del historial de summoners
         try {
@@ -179,12 +183,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         if (isLoading) return;
 
         isLoading = true;
-
-        //Iniciamos la ativity
-        Intent i = new Intent(this, ActivityMain.class);
-        i.putExtra("region", region.toLowerCase());
-        i.putExtra("summonerName", summonerName);
-        startActivity(i);
 
         final Gson gson = new Gson();
 
@@ -251,6 +249,5 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         in.putExtra("region", summonerHistory.getRegion().toLowerCase());
         in.putExtra("summoner", summonerHistory.getSummoner());
         startActivity(in);
-
     }
 }

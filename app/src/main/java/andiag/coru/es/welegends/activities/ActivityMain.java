@@ -43,7 +43,6 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
     private int mSlop;
     private boolean mScrolled;
     private ScrollState mLastScrollState;
-    private FragmentHistory fragmentHistory;
     private ActionBar actionBar;
 
     private Summoner summoner;
@@ -116,40 +115,17 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
-    public void setSummoner(Summoner summoner) {
-        this.summoner = summoner;
-        fragmentHistory.setSummoner_id(summoner.getId());
-    }
-
     public String getRegion() {
         return region;
     }
 
-    /*
     @Override
-    protected void setmPagerAdapter() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(fragmentHistory);
-        fragments.add(new FragmentPlayerStats());
-        fragments.add(new FragmentRankedChampStats());
-
-        ArrayList<String> tabNames = new ArrayList<>();
-        if (summoner != null) {
-            tabNames.add(summoner.getName().toUpperCase());
-        } else if (summonerName != null) {
-            tabNames.add(summonerName.toUpperCase());
-        } else {
-            tabNames.add(getString(R.string.title_section1).toUpperCase());
-        }
-        tabNames.add(getString(R.string.title_section2).toUpperCase());
-        tabNames.add(getString(R.string.title_section3).toUpperCase());
-
-        int[] actionBarColors = {getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT2)};
-
-        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), fragments, tabNames, actionBarColors, actionBarColors);
-    }*/
-    private void setFragments() {
+    protected void createTabs() {
+        super.createTabs();
+        Tab tab;
         String tabName;
+        //FRAGMENT HISTORY TAB
+        tab = new Tab();
         if (summoner != null) {
             tabName = summoner.getName().toUpperCase();
         } else if (summonerName != null) {
@@ -157,13 +133,27 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         } else {
             tabName = getString(R.string.title_section1).toUpperCase();
         }
-        addFragment(fragmentHistory, tabName, getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT0));
+        tab.setFragment(FragmentHistory.getInstance());
+        tab.setName(tabName);
+        tab.setActionBarColors(getResources().getColor(R.color.posT0));
+        tab.setToolBarColors(getResources().getColor(R.color.posT0));
 
-        tabName = getString(R.string.title_section2).toUpperCase();
-        addFragment(FragmentPlayerStats.newInstance(summoner), tabName, getResources().getColor(R.color.posT1), getResources().getColor(R.color.posT1));
+        tabs.add(0, tab);
 
-        //tabName = getString(R.string.title_section3).toUpperCase();
-        //addFragment(FragmentPlayerStats.newInstance(summoner), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
+        //FRAGMENT PLAYER STATS
+        tab = new Tab();
+        if (summoner != null) {
+            tab.setFragment(FragmentPlayerStats.getInstance(summoner));
+        } else {
+            tab.setFragment(FragmentPlayerStats.getInstance());
+        }
+        tab.setName(getString(R.string.title_section2).toUpperCase());
+        tab.setActionBarColors(getResources().getColor(R.color.posT1));
+        tab.setToolBarColors(getResources().getColor(R.color.posT1));
+
+        tabs.add(1, tab);
+
+        setPager();
     }
 
     //SaveData
@@ -184,16 +174,8 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 region = getIntent().getStringExtra("region");
-                if (extras.containsKey("summoner")) {
-                    summoner = (Summoner) intent.getSerializableExtra("summoner");
-                    summonerName = summoner.getName();
-                    if (fragmentHistory == null) {
-                        fragmentHistory = FragmentHistory.newInstance(region, summoner.getId());
-                    }
-                } else {
-                    summonerName = getIntent().getStringExtra("summonerName");
-                }
-
+                summoner = (Summoner) intent.getSerializableExtra("summoner");
+                summonerName = summoner.getName();
             }
             ActivitySummoner.setActivityMain(this);
         }
@@ -212,18 +194,15 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //GETTING DATA AND SET TABS TO VIEW PAGER
         onRetrieveInstanceState(savedInstanceState);
+        createTabs();
 
-        if (fragmentHistory == null) {
-            fragmentHistory = FragmentHistory.newInstance(region);
-        }
+        //SETTING DATA IN FRAGMENTS
+        FragmentHistory.getInstance().setSummoner_id(summoner.getId(), region);
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-        setFragments();
-
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(mPagerAdapter);
 
         // Padding for ViewPager must be set outside the ViewPager itself
         // because with padding, EdgeEffect of ViewPager become strange.
@@ -243,32 +222,22 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //super.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 if (position >= mPagerAdapter.getCount() - 1) {
-                    // Guard against ArrayIndexOutOfBoundsException
                     return;
                 }
-                // Retrieve the current and next ColorFragment
-                //final ColorFragment from = (ColorFragment) pagerAdapter.getItem(position);
-                //final ColorFragment to = (ColorFragment) pagerAdapter.getItem(position + 1);
-                // Blend the colors and adjust the ActionBar
                 int from = mPagerAdapter.getColorActionBar(position);
                 int to = mPagerAdapter.getColorActionBar(position + 1);
 
                 int fromT = mPagerAdapter.getColorToolBar(position);
                 int toT = mPagerAdapter.getColorToolBar(position + 1);
 
-                //ColorDrawable[] color = {new ColorDrawable(from), new ColorDrawable(to)};
-                //TransitionDrawable trans = new TransitionDrawable(color);
                 final int blended = blendColors(to, from, positionOffset);
                 final int blendedT = blendColors(toT, fromT, positionOffset);
                 actionBarBackground.setColor(blended);
                 actionBarTabsColor.setColor(blended);
-                //actionBar.setBackgroundDrawable(trans);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     getWindow().setStatusBarColor(blendedT);
                 }
-                //trans.startTransition(500);
             }
         });
 
@@ -296,6 +265,7 @@ public class ActivityMain extends TabbedActivity implements ObservableScrollView
     public void onBackPressed() {
         super.onBackPressed();
         FragmentHistory.deleteFragment();
+        FragmentPlayerStats.deleteFragment();
         ActivitySummoner.setActivityMain(null);
         this.finish();
     }

@@ -21,6 +21,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private static FragmentPlayerStats fragmentPlayerStats;
 
+    private View rootView;
+
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
     private Summoner summoner;
@@ -30,15 +32,28 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         apiHandler = APIHandler.getInstance();
     }
 
-    public static FragmentPlayerStats newInstance(Summoner summoner){
+    public static void deleteFragment() {
+        fragmentPlayerStats = null;
+    }
+
+    public static FragmentPlayerStats getInstance() {
         if (fragmentPlayerStats != null) {
             return fragmentPlayerStats;
         }
         fragmentPlayerStats = new FragmentPlayerStats();
-        Bundle args = new Bundle();
-        args.putSerializable("summoner", summoner);
-        fragmentPlayerStats.setArguments(args);
         return fragmentPlayerStats;
+    }
+
+    public void setSummoner(Summoner summoner) {
+        this.summoner = summoner;
+
+        CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
+        networkImg.setErrorImageResId(R.drawable.item_default);
+        networkImg.setDefaultImageResId(R.drawable.item_default);
+        networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
+                summoner.getProfileIconId() + ".png"
+                , imageLoader);
+
     }
 
     @Override
@@ -51,15 +66,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_playerstats, container, false);
-        summoner = (Summoner) getArguments().getSerializable("summoner");
-
-        CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
-        networkImg.setErrorImageResId(R.drawable.item_default);
-        networkImg.setDefaultImageResId(R.drawable.item_default);
-        networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"+apiHandler.getServer_version()+"/img/profileicon/"+
-                summoner.getProfileIconId()+".png"
-                ,imageLoader);
+        rootView = inflater.inflate(R.layout.fragment_playerstats, container, false);
 
         return rootView;
     }

@@ -61,14 +61,14 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private ObservableRecyclerView recyclerView;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
-    private int BEGININDEX;
-    private int ENDINDEX;
+    private int BEGININDEX = 0;
+    private int ENDINDEX = 10;
     private boolean isLoading = false;
 
     //BASIC DATA
     private String region;
     private long summoner_id;
-    private ArrayList<Match> matchesHistoryList;
+    private ArrayList<Match> matchesHistoryList = new ArrayList<>();
 
     //CONSTRUCTION AND DESTRUCTION
     public FragmentHistory() {
@@ -78,26 +78,11 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         fragmentHistory = null;
     }
 
-    public static FragmentHistory newInstance(String region) {
+    public static FragmentHistory getInstance() {
         if (fragmentHistory != null) {
             return fragmentHistory;
         }
         fragmentHistory = new FragmentHistory();
-        Bundle args = new Bundle();
-        args.putString("region",region);
-        fragmentHistory.setArguments(args);
-        return fragmentHistory;
-    }
-
-    public static FragmentHistory newInstance(String region, long id) {
-        if (fragmentHistory != null) {
-            return fragmentHistory;
-        }
-        fragmentHistory = new FragmentHistory();
-        Bundle args = new Bundle();
-        args.putString("region", region);
-        args.putLong("summoner_id", id);
-        fragmentHistory.setArguments(args);
         return fragmentHistory;
     }
 
@@ -117,10 +102,12 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private void startIndex() {
         BEGININDEX = 0;
         ENDINDEX = INCREMENT;
+        matchesHistoryList = new ArrayList<>();
     }
 
-    public void setSummoner_id(long summoner_id) {
+    public void setSummoner_id(long summoner_id, String region) {
         this.summoner_id = summoner_id;
+        this.region = region;
         getSummonerHistory(BEGININDEX, ENDINDEX);
     }
 
@@ -143,14 +130,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
-        } else if (getArguments() != null) {
-            region = getArguments().getString("region");
-            startIndex();
-            matchesHistoryList = new ArrayList<>();
-            if (getArguments().containsKey("summoner_id")) { //If we have the summoner_id (summoner history load) we can execute de request
-                summoner_id = getArguments().getLong("summoner_id");
-                getSummonerHistory(BEGININDEX, ENDINDEX);
-            }
         }
     }
 
@@ -180,8 +159,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 recyclerAdapter.clearHistory();
                 scaleAdapter.notifyDataSetChanged();
                 alphaAdapter.notifyDataSetChanged();
-                //Clear Data
-                matchesHistoryList = new ArrayList<>();
                 //Load new values
                 startIndex();
                 getSummonerHistory(BEGININDEX, ENDINDEX);
@@ -337,7 +314,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             super.onPostExecute(matches);
             matchesHistoryList.addAll(matches);
             new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
         }
     }
 

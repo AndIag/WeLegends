@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -199,7 +200,9 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                     Intent i = new Intent(context, ActivityDetails.class);
                     i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
                     i.putExtra("region", ((ActivityMain) context).getRegion());
-                    context.startActivity(i);
+                    Toast.makeText(context, "CLICKED"
+                            , Toast.LENGTH_LONG).show();
+                    //context.startActivity(i);
                 }
             });
 

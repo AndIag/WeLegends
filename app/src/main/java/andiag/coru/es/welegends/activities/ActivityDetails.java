@@ -44,7 +44,6 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
-import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -131,17 +130,6 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
-    private void setFragments() {
-        String tabName = getString(R.string.title_section_details1).toUpperCase();
-        addFragment(fragmentPlayerMatchDetails, tabName, getResources().getColor(R.color.posT0), getResources().getColor(R.color.posT0));
-
-        tabName = getString(R.string.title_section_details2).toUpperCase();
-        addFragment(new FragmentVictoryDefeatDetails(), tabName, getResources().getColor(R.color.posT2), getResources().getColor(R.color.posT2));
-
-        tabName = getString(R.string.title_section_details3).toUpperCase();
-        addFragment(new FragmentVictoryDefeatDetails(), tabName, getResources().getColor(R.color.posT3), getResources().getColor(R.color.posT3));
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -175,10 +163,6 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        if (fragmentPlayerMatchDetails == null) {
-            fragmentPlayerMatchDetails = FragmentPlayerMatchDetails.newInstance();
-        }
-
         final ColorDrawable actionBarBackground = new ColorDrawable();
         final ColorDrawable actionBarTabsColor = new ColorDrawable();
         actionBar = getSupportActionBar();
@@ -187,8 +171,6 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
 
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
-
-        setFragments();
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);

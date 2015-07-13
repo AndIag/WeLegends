@@ -1,7 +1,6 @@
 package andiag.coru.es.welegends.activities;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,99 +9,126 @@ import android.support.v7.app.ActionBarActivity;
 
 import java.util.ArrayList;
 
+import andiag.coru.es.welegends.R;
+
 /**
- * Created by Iago on 11/07/2015.
+ * Created by Iago on 12/07/2015.
  */
 public class TabbedActivity extends ActionBarActivity {
 
+    protected ArrayList<Tab> tabs = new ArrayList<>();
     protected ViewPager mPager;
     protected SectionsPagerAdapter mPagerAdapter;
 
-    protected void addFragment(Fragment fragment, String name, Integer actionBarColor, Integer toolBarColor) {
-        if (mPagerAdapter != null) {
-            mPagerAdapter.addFragment(fragment, name, actionBarColor, toolBarColor);
+    protected void createTabs() {
+    }
+
+    protected void setPager() {
+        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tabs);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mPagerAdapter);
+    }
+
+    protected class Tab {
+
+        private Fragment fragment;
+        private String name = "DEFAULT";
+        private int actionBarColors = Color.CYAN;
+        private int toolBarColors = Color.CYAN;
+
+        public Tab() {
+        }
+
+        public Fragment getFragment() {
+            return fragment;
+        }
+
+        public void setFragment(Fragment fragment) {
+            if (fragment != null) {
+                this.fragment = fragment;
+            }
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            if (name != null) {
+                this.name = name;
+            }
+        }
+
+        public int getActionBarColors() {
+            return actionBarColors;
+        }
+
+        public void setActionBarColors(int actionBarColors) {
+            this.actionBarColors = actionBarColors;
+        }
+
+        public int getToolBarColors() {
+            return toolBarColors;
+        }
+
+        public void setToolBarColors(int toolBarColors) {
+            this.toolBarColors = toolBarColors;
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-    }
-
-    /*------------------------------------------------------------------*/
     protected class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private final int DEFAULT_COLOR = Color.CYAN;
         private final String DEFAULT_NAME = "DEFAULT";
-        private int position;
 
-        private ArrayList<Fragment> fragments = new ArrayList<>();
-        private ArrayList<String> tabNames = new ArrayList<>();
-        private ArrayList<Integer> actionBarColors = new ArrayList<>();
-        private ArrayList<Integer> toolBarColors = new ArrayList<>();
+        private ArrayList<Tab> tabs = new ArrayList<>();
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Tab> tabs) {
             super(fm);
-            position = 0;
-        }
-
-        private void addFragment(Fragment fragment, String name, Integer actionBarColor, Integer toolBarColor) {
-            if (fragment != null) {
-                fragments.add(position, fragment);
-                if (name != null) {
-                    tabNames.add(position, name);
-                } else {
-                    tabNames.add(position, DEFAULT_NAME);
-                }
-                if (actionBarColor != null) {
-                    actionBarColors.add(position, actionBarColor);
-                } else {
-                    actionBarColors.add(position, DEFAULT_COLOR);
-                }
-                if (toolBarColor != null) {
-                    toolBarColors.add(position, toolBarColor);
-                } else {
-                    toolBarColors.add(position, DEFAULT_COLOR);
-                }
-                position++;
-            }
+            this.tabs = tabs;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            try {
+                return tabs.get(position).getFragment();
+            } catch (IndexOutOfBoundsException e) {
+                return new Fragment();
+            }
         }
 
         public int getColorActionBar(int position) {
-            if ((actionBarColors != null)/* && (actionBarColors.length > position)*/) {
-                //return actionBarColors[position];
-                return actionBarColors.get(position);
+            try {
+                return tabs.get(position).getActionBarColors();
+            } catch (IndexOutOfBoundsException e) {
+                return DEFAULT_COLOR;
             }
-            return 0;
         }
 
         public int getColorToolBar(int position) {
-            if ((toolBarColors != null)/* && (toolBarColors.length > position)*/) {
-                //return toolBarColors[position];
-                return toolBarColors.get(position);
+            try {
+                return tabs.get(position).getToolBarColors();
+            } catch (IndexOutOfBoundsException e) {
+                return DEFAULT_COLOR;
             }
-            return 0;
         }
 
         @Override
         public int getCount() {
-            return fragments.size();
+            return tabs.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabNames.get(position);
+            try {
+                return tabs.get(position).getName();
+            } catch (IndexOutOfBoundsException e) {
+                return DEFAULT_NAME;
+            }
         }
 
         public Fragment getItemAt(int currentItem) {
             return getItem(currentItem);
         }
     }
-
 }

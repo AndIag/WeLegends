@@ -43,7 +43,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab.setFragment(FragmentPlayerStats.getInstance(this));
         tab.setName(tabName.toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT1));
-        tab.setToolBarColors(getResources().getColor(R.color.posT1));
+        tab.setToolBarColors(getResources().getColor(R.color.pos1));
 
         tabs.add(0, tab);
 
@@ -52,7 +52,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab.setFragment(FragmentHistory.getInstance(this));
         tab.setName(getString(R.string.section_ranked).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
-        tab.setToolBarColors(getResources().getColor(R.color.posT0));
+        tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
         tabs.add(1, tab);
 

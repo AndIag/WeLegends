@@ -42,7 +42,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
         @Override
         public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
             if (!mScrolled && mSlop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-                // Horizontal scroll is maybe handled by ViewPager
                 return false;
             }
 
@@ -52,8 +51,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
                 return false;
             }
 
-            // If interceptionLayout can move, it should intercept.
-            // And once it begins to move, horizontal scroll shouldn't work any longer.
             int toolbarHeight = mToolbarView.getHeight();
             int translationY = (int) ViewHelper.getTranslationY(mInterceptionLayout);
             boolean scrollingUp = 0 < diffY;
@@ -134,8 +131,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
         ViewCompat.setElevation(findViewById(R.id.header), getResources().getDimension(R.dimen.toolbar_elevation));
         mToolbarView = findViewById(R.id.toolbar);
 
-        // Padding for ViewPager must be set outside the ViewPager itself
-        // because with padding, EdgeEffect of ViewPager become strange.
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         findViewById(R.id.pager_wrapper).setPadding(0, getActionBarSize() + tabHeight, 0, 0);
 
@@ -220,8 +215,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
                 showToolbar();
             }
         } else if (!toolbarIsShown() && !toolbarIsHidden()) {
-            // Toolbar is moving but doesn't know which to move:
-            // you can change this to hideToolbar()
             showToolbar();
         }
     }

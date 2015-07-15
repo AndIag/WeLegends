@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.DTOs.statsDTOs;
+package andiag.coru.es.welegends.DTOs.rankedStatsDTOs;
 
 import java.io.Serializable;
 

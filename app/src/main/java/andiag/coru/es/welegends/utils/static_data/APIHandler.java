@@ -21,6 +21,9 @@ public class APIHandler {
     private String match;
     private String summoner;
     private String icon;
+    private String stats;
+    private String stats_ranked;
+    private String stats_global;
 
     private APIHandler(Activity activity) {
 
@@ -37,6 +40,9 @@ public class APIHandler {
             match = properties.getProperty("match");
             summoner = properties.getProperty("summoner");
             icon = properties.getProperty("icon");
+            stats = properties.getProperty("stats");
+            stats_global = properties.getProperty("stats_global");
+            stats_ranked = properties.getProperty("stats_ranked");
 
             inputStream.close();
         } catch (IOException e) {
@@ -77,5 +83,17 @@ public class APIHandler {
 
     public String getIcon() {
         return icon;
+    }
+
+    public String getStats() {
+        return stats;
+    }
+
+    public String getStats_ranked() {
+        return stats_ranked;
+    }
+
+    public String getStats_global() {
+        return stats_global;
     }
 }

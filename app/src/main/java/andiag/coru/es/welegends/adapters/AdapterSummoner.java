@@ -61,16 +61,10 @@ public class AdapterSummoner extends BaseAdapter {
             view = inflater.inflate(R.layout.item_summoner,null);
         }
 
-        //CircleImageView img = (CircleImageView) view.findViewById(R.id.imageSumm);
-        //img.setImageDrawable(view.getContext().getResources().getDrawable(R.drawable.aatrox));
-
         CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);
         networkImg.setErrorImageResId(R.drawable.item_default);
         networkImg.setDefaultImageResId(R.drawable.item_default);
-        networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"+apiHandler.getServer_version()+"/img/profileicon/"+
-                summoner.getSummoner().getProfileIconId()+".png"
-                ,imageLoader);
-
+        networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getSummoner().getProfileIconId(), imageLoader);
 
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 

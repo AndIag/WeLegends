@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
@@ -14,6 +15,18 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private static FragmentHistory fragmentHistory;
     private static ActivityMain activityMain;
 
+    public static void deleteFragment() {
+        fragmentHistory = null;
+    }
+
+    public static Fragment getInstance(ActivityMain aM) {
+        activityMain = aM;
+        if (fragmentHistory != null) {
+            return fragmentHistory;
+        }
+        fragmentHistory = new FragmentHistory();
+        return fragmentHistory;
+    }
 
     @Override
     protected void initializeRefresh(View view) {

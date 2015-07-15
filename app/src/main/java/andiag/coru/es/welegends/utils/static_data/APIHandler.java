@@ -17,10 +17,10 @@ public class APIHandler {
     private static APIHandler ourInstance;
 
     private String server;
-    private String server_version;
     private String matchHistory;
     private String match;
     private String summoner;
+    private String icon;
 
     private APIHandler(Activity activity) {
 
@@ -33,10 +33,10 @@ public class APIHandler {
             properties.load(inputStream);
 
             server = properties.getProperty("server");
-            server_version = properties.getProperty("server_version");
             matchHistory = properties.getProperty("matchHistory");
             match = properties.getProperty("match");
             summoner = properties.getProperty("summoner");
+            icon = properties.getProperty("icon");
 
             inputStream.close();
         } catch (IOException e) {
@@ -75,7 +75,7 @@ public class APIHandler {
         return summoner;
     }
 
-    public String getServer_version() {
-        return server_version;
+    public String getIcon() {
+        return icon;
     }
 }

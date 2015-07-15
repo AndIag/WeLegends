@@ -54,9 +54,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
             networkImg.setErrorImageResId(R.drawable.item_default);
             networkImg.setDefaultImageResId(R.drawable.item_default);
-            networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
-                    summoner.getProfileIconId() + ".png"
-                    , imageLoader);
+            networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
         }
     }
 
@@ -76,9 +74,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
             networkImg.setErrorImageResId(R.drawable.item_default);
             networkImg.setDefaultImageResId(R.drawable.item_default);
-            networkImg.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" + apiHandler.getServer_version() + "/img/profileicon/" +
-                    summoner.getProfileIconId() + ".png"
-                    , imageLoader);
+            networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
         }
 
         return rootView;

@@ -69,4 +69,5 @@
     <string name="section_ranked">RANKEDS</string>
     <string name="section_summoner">SUMMONER</string>
     <string name="section_history">HISTORY</string>
+    <string name="level">Level</string>
 </resources>

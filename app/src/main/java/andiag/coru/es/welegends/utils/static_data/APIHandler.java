@@ -24,6 +24,7 @@ public class APIHandler {
     private String stats;
     private String stats_ranked;
     private String stats_global;
+    private String leagues;
 
     private APIHandler(Activity activity) {
 
@@ -43,6 +44,7 @@ public class APIHandler {
             stats = properties.getProperty("stats");
             stats_global = properties.getProperty("stats_global");
             stats_ranked = properties.getProperty("stats_ranked");
+            leagues = properties.getProperty("leagues");
 
             inputStream.close();
         } catch (IOException e) {
@@ -95,5 +97,13 @@ public class APIHandler {
 
     public String getStats_global() {
         return stats_global;
+    }
+
+    public String getLeagues() {
+        return leagues;
+    }
+
+    public void setLeagues(String leagues) {
+        this.leagues = leagues;
     }
 }

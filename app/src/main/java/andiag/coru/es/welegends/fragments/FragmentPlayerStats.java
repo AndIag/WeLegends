@@ -1,16 +1,11 @@
 package andiag.coru.es.welegends.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +29,6 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterListHeader;
-import andiag.coru.es.welegends.entities.Group;
 import andiag.coru.es.welegends.entities.Item;
 import andiag.coru.es.welegends.entities.ItemLeague;
 import andiag.coru.es.welegends.entities.ItemSection;

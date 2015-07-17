@@ -9,11 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +33,11 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.adapters.AdapterLeagues;
+import andiag.coru.es.welegends.adapters.AdapterListHeader;
 import andiag.coru.es.welegends.entities.Group;
+import andiag.coru.es.welegends.entities.Item;
+import andiag.coru.es.welegends.entities.ItemLeague;
+import andiag.coru.es.welegends.entities.ItemSection;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
@@ -57,8 +59,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private Summoner summoner;
     private boolean isLoading;
     private ArrayList<League> leagues = new ArrayList<>();
-    private AdapterLeagues adapter;
-    private ExpandableListView exListView;
+    private AdapterListHeader adapter;
+    private ListView listView;
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -103,10 +105,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         TextView txtName = (TextView) rootView.findViewById(R.id.textSummonerName);
         TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
 
-        adapter = new AdapterLeagues(activityMain);
+        adapter = new AdapterListHeader(activityMain);
 
-        exListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
-        exListView.setAdapter(adapter);
+        listView = (ListView) rootView.findViewById(R.id.listViewLeagues);
+        listView.setAdapter(adapter);
 
         if (summoner != null) {
             networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
@@ -137,12 +139,22 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     break;
             }
         }
-        ArrayList<Group> groups = new ArrayList<>();
-        groups.add(new Group("Solo",solo));
-        groups.add(new Group("Team 5vs5",list5));
-        groups.add(new Group("Team 3vs3", list3));
-        adapter.updateGroups(groups);
-        setListViewHeightBasedOnItems(exListView);
+        ArrayList<Item> groups = new ArrayList<>();
+        groups.add(new ItemSection("Solo"));
+        groups.add(new ItemLeague(solo.get(0)));
+
+        if (!list5.isEmpty()) groups.add(new ItemSection("Team 5vs5"));
+        for (League l : list5){
+            groups.add(new ItemLeague(l));
+        }
+
+        if (!list3.isEmpty()) groups.add(new ItemSection("Team 3vs3"));
+        for (League l : list3){
+            groups.add(new ItemLeague(l));
+        }
+
+        adapter.updateItems(groups);
+        setListViewHeightBasedOnItems(listView);
 
     }
 
@@ -211,7 +223,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
     }
 
-    public static boolean setListViewHeightBasedOnItems(ExpandableListView listView) {
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter != null) {
@@ -242,55 +254,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             return false;
         }
 
-    }
-
-
-    //GENERIFICAR ESTO!!
-    public class MyAdapter extends ArrayAdapter<League> {
-
-        private ArrayList<League> leagues;
-        private Activity activity;
-
-        public MyAdapter(Activity activity, Context context, int textViewResourceId, ArrayList<League> objects) {
-            super(context, textViewResourceId, objects);
-            this.leagues = objects;
-            this.activity = activity;
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        public View getCustomView(int position, View convertView, ViewGroup parent) {
-
-            LayoutInflater inflater = activity.getLayoutInflater();
-            View row = inflater.inflate(R.layout.item_league, parent, false);
-
-            ImageView image = (ImageView) row.findViewById(R.id.imageRanked);
-            TextView text = (TextView) row.findViewById(R.id.textRanked);
-            TextView teamName = (TextView) row.findViewById(R.id.textTeamName);
-
-            League l = leagues.get(position);
-
-            if (l != null) {
-
-                String imres = l.getTier() + l.getEntries().get(0).getDivision();
-                String textt = l.getTier() + "-" + l.getEntries().get(0).getDivision();
-                int id = activity.getResources().getIdentifier(imres.toLowerCase(), "drawable", activity.getPackageName());
-
-                teamName.setText(l.getName().toUpperCase());
-                image.setImageResource(id);
-                text.setText(textt.toUpperCase());
-            }
-
-            return row;
-        }
     }
 
 }

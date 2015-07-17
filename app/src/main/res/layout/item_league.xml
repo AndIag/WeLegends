@@ -29,7 +29,6 @@
         android:id="@+id/textRanked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:typeface="serif"
         android:text="Text Default"
         android:layout_below="@+id/textTeamName"

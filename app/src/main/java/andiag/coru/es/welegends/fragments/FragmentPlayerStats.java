@@ -243,7 +243,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
                 String imres = l.getTier() + l.getEntries().get(0).getDivision();
                 String textt = l.getTier() + "-" + l.getEntries().get(0).getDivision();
-                int id = activity.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
+                int id = activity.getResources().getIdentifier(imres.toLowerCase(), "drawable", activity.getPackageName());
 
                 teamName.setText(l.getName().toUpperCase());
                 image.setImageResource(id);

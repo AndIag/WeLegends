@@ -16,9 +16,11 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.Item;
 import andiag.coru.es.welegends.entities.ItemLeague;
 import andiag.coru.es.welegends.entities.ItemSection;
+import andiag.coru.es.welegends.entities.League;
 
 public class AdapterListHeader extends BaseAdapter {
 
@@ -66,10 +68,22 @@ public class AdapterListHeader extends BaseAdapter {
                 ItemLeague ei = (ItemLeague)i;
                 v = vi.inflate(R.layout.item_league, null);
                 TextView textName = (TextView) v.findViewById(R.id.textTeamName);
-                TextView textRankeds = (TextView) v.findViewById(R.id.textRanked);
+                TextView textDiv = (TextView) v.findViewById(R.id.textDivision);
+                TextView textDivName = (TextView) v.findViewById(R.id.textDivName);
+                TextView textLP = (TextView) v.findViewById(R.id.textLP);
+                TextView textWins = (TextView) v.findViewById(R.id.textWins);
+                TextView textLosses = (TextView) v.findViewById(R.id.textLosses);
                 ImageView image = (ImageView) v.findViewById(R.id.imageRanked);
+                League l = ei.getLeague();
+                Entry entry = l.getEntries().get(0);
 
-                textName.setText(ei.getLeague().getEntries().get(0).getPlayerOrTeamName());
+                textName.setText(entry.getPlayerOrTeamName());
+                textDiv.setText(l.getTier()+" "+entry.getDivision());
+                textDivName.setText(l.getName());
+                textLP.setText(Integer.toString(entry.getLeaguePoints()));
+                textWins.setText(Integer.toString(entry.getWins()));
+                textLosses.setText(Integer.toString(entry.getLosses()));
+
 
                 String imres = ei.getLeague().getTier() + ei.getLeague().getEntries().get(0).getDivision();
                 int id = context.getResources().getIdentifier(imres.toLowerCase(),"drawable",context.getPackageName());

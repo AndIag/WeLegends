@@ -1,6 +1,5 @@
 package andiag.coru.es.welegends.fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -30,7 +29,6 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.entities.League;
-import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -96,8 +94,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
 
         if (summoner != null) {
-            Log.d("INITIALIZE", "ON CREATE VIEW");
-
             networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
             txtName.setText(summoner.getName());
             txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
@@ -110,17 +106,19 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private void setInfoInView(){
         TextView txtSolo = (TextView) rootView.findViewById(R.id.textSolo);
-        TextView txt5vs5 = (TextView) rootView.findViewById(R.id.text5vs5);
-        TextView txt3vs3 = (TextView) rootView.findViewById(R.id.text3vs3);
+        //TextView txt5vs5 = (TextView) rootView.findViewById(R.id.text5vs5);
+        //TextView txt3vs3 = (TextView) rootView.findViewById(R.id.text3vs3);
 
         for(League l : leagues){
             switch (l.getQueue()){
-                case "RANKED_SOLO_5x5" : setLeagueSolo(l);
+                case "RANKED_SOLO_5x5":
+                    setLeagueSolo(l);
+                    txtSolo.setText("RANKED SOLO");
                     break;
-                case "RANKED_TEAM_3x3" : txt3vs3.setText("3vs3");
+                /*case "RANKED_TEAM_3x3" : txt3vs3.setText("3vs3");
                     break;
                 case "RANKED_TEAM_5x5" : txt5vs5.setText("5vs5");
-                    break;
+                    break;*/
             }
         }
 

@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -129,8 +130,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             }
         }
 
-        spinner3.setAdapter(new MyAdapter(activityMain, R.layout.item_league, list3));
-        spinner5.setAdapter(new MyAdapter(activityMain, R.layout.item_league, list5));
+        spinner3.setAdapter(new MyAdapter(activityMain, activityMain, R.layout.item_league, list3));
+        spinner5.setAdapter(new MyAdapter(activityMain, activityMain, R.layout.item_league, list5));
 
     }
 
@@ -209,10 +210,12 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     public class MyAdapter extends ArrayAdapter<League> {
 
         private ArrayList<League> leagues;
+        private Activity activity;
 
-        public MyAdapter(Context context, int textViewResourceId, ArrayList<League> objects) {
+        public MyAdapter(Activity activity, Context context, int textViewResourceId, ArrayList<League> objects) {
             super(context, textViewResourceId, objects);
             this.leagues = objects;
+            this.activity = activity;
         }
 
         @Override
@@ -227,19 +230,25 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         public View getCustomView(int position, View convertView, ViewGroup parent) {
 
-            LayoutInflater inflater = activityMain.getLayoutInflater();
+            LayoutInflater inflater = activity.getLayoutInflater();
             View row = inflater.inflate(R.layout.item_league, parent, false);
 
             ImageView image = (ImageView) row.findViewById(R.id.imageRanked);
             TextView text = (TextView) row.findViewById(R.id.textRanked);
+            TextView teamName = (TextView) row.findViewById(R.id.textTeamName);
 
             League l = leagues.get(position);
 
-            String imres = l.getTier() + l.getEntries().get(0).getDivision();
-            int id = activityMain.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
+            if (l != null) {
 
-            image.setImageResource(id);
-            text.setText(imres.toUpperCase());
+                String imres = l.getTier() + l.getEntries().get(0).getDivision();
+                String textt = l.getTier() + "-" + l.getEntries().get(0).getDivision();
+                int id = activity.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
+
+                teamName.setText(l.getName().toUpperCase());
+                image.setImageResource(id);
+                text.setText(textt.toUpperCase());
+            }
 
             return row;
         }

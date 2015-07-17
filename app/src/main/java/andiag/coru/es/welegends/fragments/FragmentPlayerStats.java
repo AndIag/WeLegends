@@ -1,12 +1,15 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +28,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.entities.League;
@@ -106,8 +108,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private void setInfoInView(){
         TextView txtSolo = (TextView) rootView.findViewById(R.id.textSolo);
-        //TextView txt5vs5 = (TextView) rootView.findViewById(R.id.text5vs5);
-        //TextView txt3vs3 = (TextView) rootView.findViewById(R.id.text3vs3);
+        Spinner spinner3 = (Spinner) rootView.findViewById(R.id.image3v3);
+        Spinner spinner5 = (Spinner) rootView.findViewById(R.id.image5v5);
+
+        ArrayList<League> list3 = new ArrayList<>();
+        ArrayList<League> list5 = new ArrayList<>();
 
         for(League l : leagues){
             switch (l.getQueue()){
@@ -115,12 +120,17 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     setLeagueSolo(l);
                     txtSolo.setText("RANKED SOLO");
                     break;
-                /*case "RANKED_TEAM_3x3" : txt3vs3.setText("3vs3");
+                case "RANKED_TEAM_3x3":
+                    list3.add(l);
                     break;
-                case "RANKED_TEAM_5x5" : txt5vs5.setText("5vs5");
-                    break;*/
+                case "RANKED_TEAM_5x5":
+                    list5.add(l);
+                    break;
             }
         }
+
+        spinner3.setAdapter(new MyAdapter(activityMain, R.layout.item_league, list3));
+        spinner5.setAdapter(new MyAdapter(activityMain, R.layout.item_league, list5));
 
     }
 
@@ -130,55 +140,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         int id = activityMain.getResources().getIdentifier(imres.toLowerCase(),"drawable",activityMain.getPackageName());
         image.setImageResource(id);
     }
-
-    private void getStats() {
-        if (isLoading) return;
-
-        isLoading = true;
-
-        final Gson gson = new Gson();
-
-        changeRefreshingValue(true);
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(activityMain);
-        }
-
-        String request = handler.getServer() + handler.getStats() + summoner.getId() + handler.getStats_ranked();
-        //String request = handler.getServer() + handler.getStats() + summoner.getId() + handler.getStats_global();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        RankedStatsDto rankedStatsDto = gson.fromJson(String.valueOf(response), RankedStatsDto.class);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.toString());
-                isLoading = false;
-                changeRefreshingValue(false);
-                NetworkResponse networkResponse = error.networkResponse;
-                if (networkResponse != null) {
-                    String message = activityMain.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activityMain.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activityMain.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activityMain, message
-                            , Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
-    }
-
 
     //NEEDED METHODS
     private void getLeagues() {
@@ -241,6 +202,47 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         });
 
         VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
+    }
+
+
+    //GENERIFICAR ESTO!!
+    public class MyAdapter extends ArrayAdapter<League> {
+
+        private ArrayList<League> leagues;
+
+        public MyAdapter(Context context, int textViewResourceId, ArrayList<League> objects) {
+            super(context, textViewResourceId, objects);
+            this.leagues = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = activityMain.getLayoutInflater();
+            View row = inflater.inflate(R.layout.item_league, parent, false);
+
+            ImageView image = (ImageView) row.findViewById(R.id.imageRanked);
+            TextView text = (TextView) row.findViewById(R.id.textRanked);
+
+            League l = leagues.get(position);
+
+            String imres = l.getTier() + l.getEntries().get(0).getDivision();
+            int id = activityMain.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
+
+            image.setImageResource(id);
+            text.setText(imres.toUpperCase());
+
+            return row;
+        }
     }
 
 }

@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,8 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.adapters.AdapterLeagues;
+import andiag.coru.es.welegends.entities.Group;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
@@ -52,6 +57,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private Summoner summoner;
     private boolean isLoading;
     private ArrayList<League> leagues = new ArrayList<>();
+    private AdapterLeagues adapter;
+    private ExpandableListView exListView;
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -96,6 +103,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         TextView txtName = (TextView) rootView.findViewById(R.id.textSummonerName);
         TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
 
+        adapter = new AdapterLeagues(activityMain);
+
+        exListView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+        exListView.setAdapter(adapter);
+
         if (summoner != null) {
             networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
             txtName.setText(summoner.getName());
@@ -108,18 +120,14 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setInfoInView(){
-        TextView txtSolo = (TextView) rootView.findViewById(R.id.textSolo);
-        Spinner spinner3 = (Spinner) rootView.findViewById(R.id.image3v3);
-        Spinner spinner5 = (Spinner) rootView.findViewById(R.id.image5v5);
-
+        ArrayList<League> solo = new ArrayList<>();
         ArrayList<League> list3 = new ArrayList<>();
         ArrayList<League> list5 = new ArrayList<>();
 
         for(League l : leagues){
             switch (l.getQueue()){
                 case "RANKED_SOLO_5x5":
-                    setLeagueSolo(l);
-                    txtSolo.setText("RANKED SOLO");
+                    solo.add(l);
                     break;
                 case "RANKED_TEAM_3x3":
                     list3.add(l);
@@ -129,18 +137,16 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     break;
             }
         }
-
-        spinner3.setAdapter(new MyAdapter(activityMain, activityMain, R.layout.item_league, list3));
-        spinner5.setAdapter(new MyAdapter(activityMain, activityMain, R.layout.item_league, list5));
+        ArrayList<Group> groups = new ArrayList<>();
+        groups.add(new Group("Solo",solo));
+        groups.add(new Group("Team 5vs5",list5));
+        groups.add(new Group("Team 3vs3", list3));
+        adapter.updateGroups(groups);
+        setListViewHeightBasedOnItems(exListView);
 
     }
 
-    private void setLeagueSolo(League l){
-        ImageView image = (ImageView) rootView.findViewById(R.id.imageSolo);
-        String imres = l.getTier() + l.getEntries().get(0).getDivision();
-        int id = activityMain.getResources().getIdentifier(imres.toLowerCase(),"drawable",activityMain.getPackageName());
-        image.setImageResource(id);
-    }
+
 
     //NEEDED METHODS
     private void getLeagues() {
@@ -203,6 +209,39 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         });
 
         VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ExpandableListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 
 

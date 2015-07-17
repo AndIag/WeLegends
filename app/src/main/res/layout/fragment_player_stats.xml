@@ -14,6 +14,13 @@
         android:layout_margin="16dp"
         android:scrollbars="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/u"
         android:layout_width="match_parent"
@@ -72,42 +79,31 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:typeface="serif" />
 
-        <ImageView
-            android:id="@+id/imageSolo"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_below="@+id/textServer"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/unranked" />
-
         <TextView
-            android:id="@+id/textSolo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageSolo"
-            android:layout_centerHorizontal="true"
-            android:text="SOLO QUEUE"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:text="Ranked Stats"
+            android:id="@+id/textView9"
+            android:layout_below="@id/imageSummoner"
+            android:layout_alignLeft="@+id/imageSummoner"
+            android:layout_alignStart="@+id/imageSummoner"
+            android:layout_marginTop="10dp" />
 
-        <Spinner
-            android:id="@+id/image3v3"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_below="@+id/textServer"
-            android:layout_marginTop="60dp" />
 
-        <Spinner
-            android:id="@+id/image5v5"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/image3v3" />
 
 
     </RelativeLayout>
-</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+
+        <ExpandableListView
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:id="@+id/expandableListView"
+            android:layout_below="@id/textView9"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -47,14 +47,14 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private static ActivityMain activityMain;
 
     private View rootView;
-
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
-    private Summoner summoner;
     private boolean isLoading;
-    private ArrayList<League> leagues = new ArrayList<>();
     private AdapterListHeader adapter;
     private ListView listView;
+
+    private Summoner summoner;
+    private ArrayList<League> leagues = new ArrayList<>();
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -120,10 +120,27 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("summoner", summoner);
+        outState.putSerializable("leagues", leagues);
+    }
+
+    public void onRetrieveInstanceState(Bundle savedInstanceState) {
+        //Se ejecuta al girar la pantalla no al cambiar de tab
+        if (savedInstanceState != null) { //Load saved data in onPause
+            leagues = (ArrayList<League>) savedInstanceState.getSerializable("leagues");
+            summoner = (Summoner) savedInstanceState.getSerializable("summoner");
+        }
+    }
+
+    @Override //Si se ejecuta al cambiar 2 fragments para el lado
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
         initializeRefresh(rootView);
+
+        onRetrieveInstanceState(savedInstanceState);
 
         CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
         networkImg.setErrorImageResId(R.drawable.item_default);
@@ -142,10 +159,34 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             txtName.setText(summoner.getName());
             txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
 
-            getLeagues();
+            if (leagues != null && leagues.size() == 0) {
+                //Tenemos que cargar las ligas
+                getLeagues();
+            } else {
+                //Ya las teniamos cargadas
+                if (leagues == null) {
+                    leagues = new ArrayList<>();
+                }
+                changeRefreshingValue(false);
+                setInfoInView();
+            }
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (apiHandler == null) {
+            apiHandler = APIHandler.getInstance();
+            if (apiHandler == null) {
+                apiHandler = APIHandler.getInstance(activityMain);
+            }
+        }
+        if (imageLoader == null) {
+            imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
+        }
     }
 
     private void setInfoInView(){

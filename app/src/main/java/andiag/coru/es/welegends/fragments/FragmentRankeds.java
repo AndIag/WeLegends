@@ -108,6 +108,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     }
 
     public void setSummoner_id(long summoner_id, String region) {
+        if (matchesHistoryList != null && matchesHistoryList.size() > 0) {
+            return;
+        }
         this.summoner_id = summoner_id;
         this.region = region;
         getSummonerHistory(BEGININDEX, ENDINDEX);
@@ -133,13 +136,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             region = savedInstanceState.getString("region");
             matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
         }
-    }
-
-    //ACTIVITY SEQUENCE
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        onRetrieveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -176,6 +172,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
 
         initializeRefresh(view);
+        onRetrieveInstanceState(savedInstanceState);
 
         recyclerView.setHasFixedSize(true);
         Display display = activityMain.getWindowManager().getDefaultDisplay();

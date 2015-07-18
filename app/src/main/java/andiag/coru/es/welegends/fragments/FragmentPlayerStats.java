@@ -2,7 +2,6 @@ package andiag.coru.es.welegends.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,7 +265,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.toString());
                 isLoading = false;
                 changeRefreshingValue(false);
                 NetworkResponse networkResponse = error.networkResponse;

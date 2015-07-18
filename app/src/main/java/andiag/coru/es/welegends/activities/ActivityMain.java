@@ -108,6 +108,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
         //SETTING DATA IN FRAGMENTS
         FragmentRankeds.getInstance(this).setSummoner_id(summoner.getId(), region);
+        FragmentHistory.getInstance(this).setSummoner_id(summoner.getId(), region);
         FragmentPlayerStats.getInstance(this).setSummoner(summoner);
 
         setAnimation();

@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
-import andiag.coru.es.welegends.DTOs.SummonerHistory;
+import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.entities.Summoner;
 
 /**
@@ -24,8 +24,8 @@ public abstract class HistoryHandler {
     private static final String HISTORY_FILE_NAME = "History";
     private static final int MAX_SUMMONERS_IN_HISTORY = 5;
 
-    public static ArrayList<SummonerHistory> getHistory(Activity activity) throws JSONException {
-        ArrayList<SummonerHistory> summoners = new ArrayList<>();
+    public static ArrayList<SummonerHistoryDto> getHistory(Activity activity) throws JSONException {
+        ArrayList<SummonerHistoryDto> summoners = new ArrayList<>();
         Calendar limitTime = Calendar.getInstance();
         limitTime.add(Calendar.DAY_OF_MONTH, -2);
         long limit = limitTime.getTimeInMillis();
@@ -40,7 +40,7 @@ public abstract class HistoryHandler {
         Set<String> keys = map.keySet();
 
         Summoner sum;
-        SummonerHistory summonerHistory;
+        SummonerHistoryDto summonerHistoryDto;
         JSONObject mainObject;
         long timestamp;
         for (String s : keys) {
@@ -50,24 +50,24 @@ public abstract class HistoryHandler {
             timestamp = mainObject.getLong("timestamp");
 
             if (timestamp > limit) {
-                summonerHistory = new SummonerHistory();
+                summonerHistoryDto = new SummonerHistoryDto();
                 sum.setId(mainObject.getLong("id"));
                 sum.setName(mainObject.getString("name"));
                 sum.setProfileIconId(mainObject.getLong("profileIconId"));
                 sum.setRevisionDate(mainObject.getLong("revisionDate"));
                 sum.setSummonerLevel(mainObject.getInt("summonerLevel"));
 
-                summonerHistory.setSummoner(sum);
-                summonerHistory.setTimestamp(timestamp);
-                summonerHistory.setRegion(mainObject.getString("region"));
+                summonerHistoryDto.setSummoner(sum);
+                summonerHistoryDto.setTimestamp(timestamp);
+                summonerHistoryDto.setRegion(mainObject.getString("region"));
 
-                summoners.add(summonerHistory);
+                summoners.add(summonerHistoryDto);
             }
         }
 
-        Collections.sort(summoners, new Comparator<SummonerHistory>() {
+        Collections.sort(summoners, new Comparator<SummonerHistoryDto>() {
             @Override
-            public int compare(SummonerHistory lhs, SummonerHistory rhs) {
+            public int compare(SummonerHistoryDto lhs, SummonerHistoryDto rhs) {
                 if (lhs.getTimestamp() < rhs.getTimestamp()) {
                     return 1;
                 }
@@ -81,15 +81,15 @@ public abstract class HistoryHandler {
         return summoners;
     }
 
-    public static void setHistory(Activity activity, ArrayList<SummonerHistory> summoners) throws JSONException {
+    public static void setHistory(Activity activity, ArrayList<SummonerHistoryDto> summoners) throws JSONException {
         SharedPreferences settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         Calendar limitTime = Calendar.getInstance();
         limitTime.add(Calendar.DAY_OF_MONTH, -1);
 
-        Collections.sort(summoners, new Comparator<SummonerHistory>() {
+        Collections.sort(summoners, new Comparator<SummonerHistoryDto>() {
             @Override
-            public int compare(SummonerHistory lhs, SummonerHistory rhs) {
+            public int compare(SummonerHistoryDto lhs, SummonerHistoryDto rhs) {
                 if (lhs.getTimestamp() < rhs.getTimestamp()) {
                     return 1;
                 }
@@ -104,11 +104,11 @@ public abstract class HistoryHandler {
         JSONObject jo;
         Summoner sum;
         long summonerTimeStamp;
-        for (SummonerHistory summonerHistory : summoners) {
+        for (SummonerHistoryDto summonerHistoryDto : summoners) {
             if (count < MAX_SUMMONERS_IN_HISTORY) {
                 jo = new JSONObject();
-                sum = summonerHistory.getSummoner();
-                summonerTimeStamp = summonerHistory.getTimestamp();
+                sum = summonerHistoryDto.getSummoner();
+                summonerTimeStamp = summonerHistoryDto.getTimestamp();
 
                 jo.put("id", sum.getId());
                 jo.put("name", sum.getName());
@@ -117,12 +117,12 @@ public abstract class HistoryHandler {
                 jo.put("summonerLevel", sum.getSummonerLevel());
                 jo.put("timestamp", summonerTimeStamp);
 
-                jo.put("region", summonerHistory.getRegion());
+                jo.put("region", summonerHistoryDto.getRegion());
                 editor.putString(sum.getName(), jo.toString());
 
                 count++;
             } else {
-                editor.remove(summonerHistory.getSummoner().getName());
+                editor.remove(summonerHistoryDto.getSummoner().getName());
             }
         }
         editor.apply();

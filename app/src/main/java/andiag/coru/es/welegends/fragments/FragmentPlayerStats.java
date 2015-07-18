@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterListHeader;
-import andiag.coru.es.welegends.entities.Item;
 import andiag.coru.es.welegends.entities.ItemLeague;
 import andiag.coru.es.welegends.entities.ItemSection;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
+import andiag.coru.es.welegends.entities.utils.Item;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -72,6 +72,39 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         }
         fragmentPlayerStats = new FragmentPlayerStats();
         return fragmentPlayerStats;
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 
     public void setSummoner(Summoner summoner) {
@@ -152,8 +185,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     }
 
-
-
     //NEEDED METHODS
     private void getLeagues() {
         if (isLoading) return;
@@ -215,39 +246,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         });
 
         VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
-    }
-
-    public static boolean setListViewHeightBasedOnItems(ListView listView) {
-
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null) {
-
-            int numberOfItems = listAdapter.getCount();
-
-            // Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listAdapter.getView(itemPos, null, listView);
-                item.measure(0, 0);
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            // Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-
-            // Set list height.
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            return true;
-
-        } else {
-            return false;
-        }
-
     }
 
 }

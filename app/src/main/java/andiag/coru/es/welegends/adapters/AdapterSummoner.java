@@ -11,7 +11,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
-import andiag.coru.es.welegends.DTOs.SummonerHistory;
+import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -22,7 +22,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
  */
 public class AdapterSummoner extends BaseAdapter {
 
-    private ArrayList<SummonerHistory> summoners = new ArrayList<>();
+    private ArrayList<SummonerHistoryDto> summoners = new ArrayList<>();
     private LayoutInflater inflater;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
@@ -34,7 +34,7 @@ public class AdapterSummoner extends BaseAdapter {
         apiHandler = APIHandler.getInstance();
     }
 
-    public void updateSummoners(ArrayList<SummonerHistory> summoners){
+    public void updateSummoners(ArrayList<SummonerHistoryDto> summoners) {
         this.summoners = summoners;
         notifyDataSetChanged();
     }
@@ -56,7 +56,7 @@ public class AdapterSummoner extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        SummonerHistory summoner = summoners.get(i);
+        SummonerHistoryDto summoner = summoners.get(i);
         if(view == null){
             view = inflater.inflate(R.layout.item_summoner,null);
         }

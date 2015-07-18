@@ -5,13 +5,13 @@ import andiag.coru.es.welegends.entities.Summoner;
 /**
  * Created by Iago on 26/06/2015.
  */
-public class SummonerHistory {
+public class SummonerHistoryDto {
 
     private Summoner summoner;
     private long timestamp;
     private String region;
 
-    public SummonerHistory() {
+    public SummonerHistoryDto() {
     }
 
     public Summoner getSummoner() {

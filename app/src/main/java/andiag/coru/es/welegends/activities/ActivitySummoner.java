@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import andiag.coru.es.welegends.DTOs.SummonerHistory;
+import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
 import andiag.coru.es.welegends.dialogs.DialogAbout;
@@ -42,7 +42,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private static ActivityMain activityMain;
     private String region;
     private boolean isLoading = false;
-    private ArrayList<SummonerHistory> history;
+    private ArrayList<SummonerHistoryDto> history;
     private ListView listSummoners;
     private AdapterSummoner adapter;
 
@@ -150,10 +150,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     private void startMainActivity(Summoner summoner) {
-        SummonerHistory summonerHistory = new SummonerHistory();
-        summonerHistory.setSummoner(summoner);
-        summonerHistory.setTimestamp(Calendar.getInstance().getTimeInMillis());
-        summonerHistory.setRegion(region.toLowerCase());
+        SummonerHistoryDto summonerHistoryDto = new SummonerHistoryDto();
+        summonerHistoryDto.setSummoner(summoner);
+        summonerHistoryDto.setTimestamp(Calendar.getInstance().getTimeInMillis());
+        summonerHistoryDto.setRegion(region.toLowerCase());
 
         for (int i = 0; i < history.size(); i++) {
             if (history.get(i).getSummoner().getId() == summoner.getId()) {
@@ -161,7 +161,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                 break;
             }
         }
-        history.add(summonerHistory);
+        history.add(summonerHistoryDto);
 
         //Iniciamos la ativity
         Intent i = new Intent(this, ActivityMain.class);
@@ -243,11 +243,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        SummonerHistory summonerHistory = history.get(i);
+        SummonerHistoryDto summonerHistoryDto = history.get(i);
 
         Intent in = new Intent(this, ActivityMain.class);
-        in.putExtra("region", summonerHistory.getRegion().toLowerCase());
-        in.putExtra("summoner", summonerHistory.getSummoner());
+        in.putExtra("region", summonerHistoryDto.getRegion().toLowerCase());
+        in.putExtra("summoner", summonerHistoryDto.getSummoner());
         startActivity(in);
     }
 }

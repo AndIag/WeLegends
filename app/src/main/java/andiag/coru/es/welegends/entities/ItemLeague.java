@@ -1,5 +1,7 @@
 package andiag.coru.es.welegends.entities;
 
+import andiag.coru.es.welegends.entities.utils.Item;
+
 /**
  * Created by andyq on 17/07/2015.
  */

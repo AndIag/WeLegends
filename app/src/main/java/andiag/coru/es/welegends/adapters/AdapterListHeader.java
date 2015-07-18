@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.entities.Entry;
-import andiag.coru.es.welegends.entities.Item;
 import andiag.coru.es.welegends.entities.ItemLeague;
 import andiag.coru.es.welegends.entities.ItemSection;
 import andiag.coru.es.welegends.entities.League;
+import andiag.coru.es.welegends.entities.utils.Item;
 
 public class AdapterListHeader extends BaseAdapter {
 

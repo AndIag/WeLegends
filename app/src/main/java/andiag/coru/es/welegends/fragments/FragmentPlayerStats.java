@@ -133,13 +133,17 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         }
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+    }
+
     @Override //Si se ejecuta al cambiar 2 fragments para el lado
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_player_stats, container, false);
 
         initializeRefresh(rootView);
-
-        onRetrieveInstanceState(savedInstanceState);
 
         CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
         networkImg.setErrorImageResId(R.drawable.item_default);

@@ -129,13 +129,18 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
 
         initializeRefresh(view);
-        onRetrieveInstanceState(savedInstanceState);
 
         recyclerView.setHasFixedSize(true);
         Display display = activityMain.getWindowManager().getDefaultDisplay();

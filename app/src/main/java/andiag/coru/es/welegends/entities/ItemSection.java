@@ -1,11 +1,13 @@
 package andiag.coru.es.welegends.entities;
 
+import java.io.Serializable;
+
 import andiag.coru.es.welegends.entities.utils.Item;
 
 /**
  * Created by andyq on 17/07/2015.
  */
-public class ItemSection implements Item {
+public class ItemSection implements Item, Serializable {
 
     private String name;
 

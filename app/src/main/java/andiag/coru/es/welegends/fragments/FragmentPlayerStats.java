@@ -117,7 +117,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                changeRefreshingValue(false);
+                getLeagues();
             }
         });
 

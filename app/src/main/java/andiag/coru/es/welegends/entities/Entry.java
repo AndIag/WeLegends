@@ -1,9 +1,11 @@
 package andiag.coru.es.welegends.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by andyq on 16/07/2015.
  */
-public class Entry {
+public class Entry implements Serializable {
 
     private Integer leaguePoints;
     private Boolean isFreshBlood;

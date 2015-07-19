@@ -1,12 +1,13 @@
 package andiag.coru.es.welegends.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by andyq on 16/07/2015.
  */
-public class League {
+public class League implements Serializable {
 
     private String queue;
     private String name;

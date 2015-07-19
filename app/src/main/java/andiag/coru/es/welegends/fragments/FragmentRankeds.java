@@ -341,6 +341,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             Calendar date = Calendar.getInstance();
             Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
+            String d, date_s;
 
             for (Match m : matches) {
                 mapid = m.getMapId();
@@ -370,14 +371,14 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                     }
                 }
 
-                String d = String.format("%d ' %d ''",
+                d = String.format("%d ' %d ''",
                         TimeUnit.SECONDS.toMinutes(duration),
                         duration -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
                 );
 
                 date.setTimeInMillis(creation);
-                String date_s = dateF.format(date.getTime());
+                date_s = dateF.format(date.getTime());
 
                 data = new Bundle();
                 data.putLong("matchId", m.getMatchId());

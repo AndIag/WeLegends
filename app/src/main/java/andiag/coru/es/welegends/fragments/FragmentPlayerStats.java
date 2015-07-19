@@ -114,6 +114,12 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     protected void initializeRefresh(View view) {
         setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
         setColors(null); //NULL means default colors
+        setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                changeRefreshingValue(false);
+            }
+        });
 
         changeRefreshingValue(true);
     }

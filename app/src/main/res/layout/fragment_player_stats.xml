@@ -36,7 +36,6 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_toRightOf="@+id/imageSummoner"
             android:gravity="center"
-            android:text="Greenstorm21"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -52,7 +51,6 @@
             android:layout_alignStart="@+id/textSummonerName"
             android:layout_below="@+id/textSummonerName"
             android:gravity="center"
-            android:text="EUROPA WEST"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:typeface="serif" />
 
@@ -66,29 +64,27 @@
             android:layout_alignStart="@+id/textServer"
             android:layout_below="@+id/textServer"
             android:gravity="center"
-            android:text="Level 30"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:typeface="serif" />
 
         <TextView
+            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ranked Stats"
-            android:id="@+id/textView9"
-            android:layout_below="@id/imageSummoner"
             android:layout_alignLeft="@+id/imageSummoner"
             android:layout_alignStart="@+id/imageSummoner"
+            android:layout_below="@id/imageSummoner"
             android:layout_marginTop="10dp"
             android:textColor="@color/black" />
 
 
         <ListView
+            android:id="@+id/listViewLeagues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listViewLeagues"
-            android:layout_below="@id/textView9"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_below="@id/textView9"
             android:layout_marginTop="10dp"
             android:divider="@color/transparent" />
 

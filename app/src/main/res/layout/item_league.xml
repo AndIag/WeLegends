@@ -8,84 +8,78 @@
         android:id="@+id/textTeamName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageRanked"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:typeface="serif"
-        android:text="Team"
-        android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center_horizontal" />
+        android:typeface="serif" />
 
     <ImageView
         android:id="@+id/imageRanked"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/textDivision"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Text Default"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textTeamName"
         android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/textDivName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Text Default"
-        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textDivision"
         android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:gravity="center_horizontal"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/textLP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Text Default"
-        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textDivName"
         android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:gravity="center_horizontal"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/textWins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Text Default"
-        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textLP"
         android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/win" />
+        android:gravity="center_horizontal"
+        android:textColor="@color/win"
+        android:typeface="serif" />
 
     <TextView
         android:id="@+id/textLosses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:typeface="serif"
-        android:text="Text Default"
-        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textWins"
         android:layout_toRightOf="@+id/imageRanked"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/lose" />
+        android:gravity="center_horizontal"
+        android:textColor="@color/lose"
+        android:typeface="serif" />
 
 </RelativeLayout>

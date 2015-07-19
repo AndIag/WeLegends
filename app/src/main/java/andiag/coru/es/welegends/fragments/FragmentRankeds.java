@@ -394,9 +394,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         @Override
         protected void onPostExecute(ArrayList<Bundle> bundles) {
             super.onPostExecute(bundles);
-            recyclerAdapter.updateHistory(bundles);
-            scaleAdapter.notifyDataSetChanged();
-            alphaAdapter.notifyDataSetChanged();
+            if (recyclerAdapter != null) {
+                recyclerAdapter.updateHistory(bundles);
+                scaleAdapter.notifyDataSetChanged();
+                alphaAdapter.notifyDataSetChanged();
+            }
             changeRefreshingValue(false);
             isLoading = false;
         }

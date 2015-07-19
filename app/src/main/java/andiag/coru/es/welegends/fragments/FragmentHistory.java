@@ -34,7 +34,6 @@ import andiag.coru.es.welegends.DTOs.recentGamesDTOs.RecentGamesDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
-import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
@@ -232,14 +231,14 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         @Override
         protected ArrayList<Bundle> doInBackground(Void... voids) {
-            int mapid = 11, champId = 0;
-            long creation = 0, duration = 0;
-            long kills = 0, assists = 0, deaths = 0, minions = 0, lvl = 0, gold = 0;
-            boolean winner = false;
-            ParticipantStats stats;
+            int mapid, champId;
+            long creation, duration;
+            long kills, assists, deaths, minions, lvl, gold;
+            boolean winner;
             Calendar date = Calendar.getInstance();
             Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
+            String d, date_s;
 
             for (GameDto g : recentGames.getGames()) {
                 champId = g.getChampionId();
@@ -254,14 +253,14 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 creation = g.getCreateDate();
                 duration = g.getStats().getTimePlayed();
 
-                String d = String.format("%d ' %d ''",
+                d = String.format("%d ' %d ''",
                         TimeUnit.SECONDS.toMinutes(duration),
                         duration -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
                 );
 
                 date.setTimeInMillis(creation);
-                String date_s = dateF.format(date.getTime());
+                date_s = dateF.format(date.getTime());
 
                 data = new Bundle();
                 data.putLong("matchId", g.getGameId());

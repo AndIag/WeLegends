@@ -148,7 +148,9 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         TextView txtName = (TextView) rootView.findViewById(R.id.textSummonerName);
         TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
 
-        adapter = new AdapterListHeader(activityMain);
+        if (adapter == null) {
+            adapter = new AdapterListHeader(activityMain);
+        }
 
         listView = (ListView) rootView.findViewById(R.id.listViewLeagues);
         listView.setAdapter(adapter);

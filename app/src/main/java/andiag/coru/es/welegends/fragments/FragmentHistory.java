@@ -150,11 +150,12 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
-        scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
-        alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
-
-        alphaAdapter.setFirstOnly(false);
+        if (recyclerAdapter == null) {
+            recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
+            scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
+            alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
+            alphaAdapter.setFirstOnly(false);
+        }
 
         recyclerView.setAdapter(alphaAdapter);
 
@@ -238,7 +239,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             for (GameDto g : recentGames.getGames()) {
                 champId = g.getChampionId();
                 mapid = g.getMapId();
-                lvl = g.getLevel();
+                lvl = g.getStats().getLevel();
                 winner = g.getStats().getWin();
                 kills = g.getStats().getChampionsKilled();
                 deaths = g.getStats().getNumDeaths();
@@ -277,9 +278,11 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         @Override
         protected void onPostExecute(ArrayList<Bundle> bundles) {
             super.onPostExecute(bundles);
-            recyclerAdapter.updateHistory(bundles);
-            scaleAdapter.notifyDataSetChanged();
-            alphaAdapter.notifyDataSetChanged();
+            if (recyclerAdapter != null) {
+                recyclerAdapter.updateHistory(bundles);
+                scaleAdapter.notifyDataSetChanged();
+                alphaAdapter.notifyDataSetChanged();
+            }
             changeRefreshingValue(false);
             isLoading = false;
         }

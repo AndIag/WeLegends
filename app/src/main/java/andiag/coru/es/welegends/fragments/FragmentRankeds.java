@@ -203,12 +203,12 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             }
         });
 
-        recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
-        scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
-        alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
-
-        alphaAdapter.setFirstOnly(false);
-
+        if (recyclerAdapter == null) {
+            recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
+            scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
+            alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
+            alphaAdapter.setFirstOnly(false);
+        }
         recyclerView.setAdapter(alphaAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));

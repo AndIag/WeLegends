@@ -11,7 +11,7 @@ public class League implements Serializable {
 
     private String queue;
     private String name;
-    private List<Entry> entries = new ArrayList<Entry>();
+    private List<Entry> entries;
     private String tier;
 
     public String getQueue() {

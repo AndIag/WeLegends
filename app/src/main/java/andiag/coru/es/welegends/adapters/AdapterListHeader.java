@@ -57,16 +57,16 @@ public class AdapterListHeader extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         final Item i = items.get(position);
-        if (i != null) {
+        //if (i != null) {
             if(i.isSection()){
                 ItemSection si = (ItemSection)i;
-                v = vi.inflate(R.layout.group_item, null);
+                if (v == null) v = vi.inflate(R.layout.group_item, null);
                 TextView sectionView =
                         (TextView) v.findViewById(R.id.textGroup);
                 sectionView.setText(si.getName());
             } else {
                 ItemLeague ei = (ItemLeague)i;
-                v = vi.inflate(R.layout.item_league, null);
+                if (v == null) v = vi.inflate(R.layout.item_league, null);
                 TextView textName = (TextView) v.findViewById(R.id.textTeamName);
                 TextView textDiv = (TextView) v.findViewById(R.id.textDivision);
                 TextView textDivName = (TextView) v.findViewById(R.id.textDivName);
@@ -90,7 +90,7 @@ public class AdapterListHeader extends BaseAdapter {
                 image.setImageResource(id);
 
             }
-        }
+        //}
         v.setOnClickListener(null);
         v.setOnLongClickListener(null);
         v.setLongClickable(false);

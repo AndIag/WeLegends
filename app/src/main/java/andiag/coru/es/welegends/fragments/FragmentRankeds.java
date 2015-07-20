@@ -299,8 +299,10 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             try {
 
                 Match match;
+                Object object;
                 for (int i = 0; i < array.length(); i++) {
-                    match = gson.fromJson(array.get(i).toString(), Match.class);
+                    object = array.get(i);
+                    match = gson.fromJson(object.toString(), Match.class);
                     list.add(match);
                 }
                 Collections.reverse(list);

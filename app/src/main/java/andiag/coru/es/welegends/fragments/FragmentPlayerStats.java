@@ -201,14 +201,16 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setInfoInView(){
-        ArrayList<League> solo = new ArrayList<>();
         ArrayList<League> list3 = new ArrayList<>();
         ArrayList<League> list5 = new ArrayList<>();
+
+        ArrayList<Item> groups = new ArrayList<>();
 
         for(League l : leagues){
             switch (l.getQueue()){
                 case "RANKED_SOLO_5x5":
-                    solo.add(l);
+                    groups.add(new ItemSection("Solo"));
+                    groups.add(new ItemLeague(l));
                     break;
                 case "RANKED_TEAM_3x3":
                     list3.add(l);
@@ -218,9 +220,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     break;
             }
         }
-        ArrayList<Item> groups = new ArrayList<>();
-        groups.add(new ItemSection("Solo"));
-        groups.add(new ItemLeague(solo.get(0)));
+
 
         if (!list5.isEmpty()) groups.add(new ItemSection("Team 5vs5"));
         for (League l : list5){
@@ -261,6 +261,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                         try {
                             arrayLeagues = response.getJSONArray(Long.toString(summoner.getId()));
                             League l;
+                            leagues.clear();
                             for (int i = 0; i < arrayLeagues.length(); i++) {
                                 l = gson.fromJson(arrayLeagues.get(i).toString(), League.class);
                                 leagues.add(l);

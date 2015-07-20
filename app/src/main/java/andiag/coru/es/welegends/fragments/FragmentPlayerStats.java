@@ -46,7 +46,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private static ActivityMain activityMain;
     //NEEDED METHODS
     private final Gson gson = new Gson();
-    private Item itemSection;
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
@@ -204,10 +203,9 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setInfoInView(){
-
         int pos5 = -1, pos3 = -1;
-
         ArrayList<Item> groups = new ArrayList<>();
+        Item itemSection;
 
         for(League l : leagues){
             switch (l.getQueue()){

@@ -46,7 +46,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private static ActivityMain activityMain;
     //NEEDED METHODS
     private final Gson gson = new Gson();
-    Item itemSection;
+    private Item itemSection;
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;

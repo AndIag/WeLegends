@@ -119,6 +119,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         this.summoner_id = summoner_id;
         this.region = region;
         getSummonerHistory(BEGININDEX, ENDINDEX);
+        changeRefreshingValue(true);
     }
 
     //SAVE AND RETRIEVE DATA
@@ -167,7 +168,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 getSummonerHistory(BEGININDEX, ENDINDEX);
             }
         });
-        changeRefreshingValue(true);
     }
 
     @Override

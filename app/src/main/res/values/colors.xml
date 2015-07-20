@@ -17,12 +17,16 @@
     <color name="pos0">@color/primary_dark</color>
     <color name="pos1">#0277BD</color>
     <color name="pos2">#33691E</color>
-    <color name="pos3">#C62828</color>
+    <color name="pos3">#EF6C00</color>
+    <color name="pos4">#C62828</color>
 
     <color name="posT0">@color/primary</color>
     <color name="posT1">#03A9F4</color>
     <color name="posT2">#8BC34A</color>
-    <color name="posT3">#F44336</color>
+    <color name="posT3">#FFA000</color>
+    <color name="posT4">#F44336</color>
+
+
     <color name="tab_text_color">#FFFFFF</color>
 
     <color name="white">#FFFFFFFF</color>

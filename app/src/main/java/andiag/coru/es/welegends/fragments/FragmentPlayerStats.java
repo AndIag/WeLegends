@@ -117,6 +117,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                leagues.clear();
                 getLeagues();
             }
         });
@@ -261,7 +262,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                         try {
                             arrayLeagues = response.getJSONArray(Long.toString(summoner.getId()));
                             League l;
-                            leagues.clear();
                             for (int i = 0; i < arrayLeagues.length(); i++) {
                                 l = gson.fromJson(arrayLeagues.get(i).toString(), League.class);
                                 leagues.add(l);

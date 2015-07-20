@@ -13,6 +13,7 @@ import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
+import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
 import andiag.coru.es.welegends.fragments.FragmentRankeds;
 import andiag.coru.es.welegends.utils.ViewServer;
 
@@ -43,8 +44,8 @@ public class ActivityMain extends AnimatedTabbedActivity {
         }
         tab.setFragment(FragmentPlayerStats.getInstance(this));
         tab.setName(tabName.toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT1));
-        tab.setToolBarColors(getResources().getColor(R.color.pos1));
+        tab.setActionBarColors(getResources().getColor(R.color.posT0));
+        tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
         tabs.add(0, tab);
 
@@ -52,8 +53,8 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab = new Tab();
         tab.setFragment(FragmentRankeds.getInstance(this));
         tab.setName(getString(R.string.section_ranked).toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT0));
-        tab.setToolBarColors(getResources().getColor(R.color.pos0));
+        tab.setActionBarColors(getResources().getColor(R.color.posT1));
+        tab.setToolBarColors(getResources().getColor(R.color.pos1));
 
         tabs.add(1, tab);
 
@@ -65,6 +66,15 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab.setToolBarColors(getResources().getColor(R.color.pos2));
 
         tabs.add(2, tab);
+
+        //FRAGMENT CHAMPIONS STATS
+        tab = new Tab();
+        tab.setFragment(FragmentRankedChampStats.getInstance(this));
+        tab.setName(getString(R.string.section_champs).toUpperCase());
+        tab.setActionBarColors(getResources().getColor(R.color.posT0));
+        tab.setToolBarColors(getResources().getColor(R.color.pos0));
+
+        tabs.add(3, tab);
 
         setPager();
     }

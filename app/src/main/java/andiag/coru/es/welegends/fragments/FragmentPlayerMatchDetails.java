@@ -56,7 +56,7 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_player_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_match_info, container, false);
 
         initializeRefresh(view);
 

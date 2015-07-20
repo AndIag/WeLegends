@@ -46,6 +46,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private static ActivityMain activityMain;
     //NEEDED METHODS
     private final Gson gson = new Gson();
+    Item itemSection;
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
@@ -203,8 +204,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setInfoInView(){
-        ArrayList<League> list3 = new ArrayList<>();
-        ArrayList<League> list5 = new ArrayList<>();
+
+        int pos5 = -1, pos3 = -1;
 
         ArrayList<Item> groups = new ArrayList<>();
 
@@ -215,22 +216,22 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     groups.add(new ItemLeague(l));
                     break;
                 case "RANKED_TEAM_3x3":
-                    list3.add(l);
+                    if (pos3 < 0) {
+                        itemSection = new ItemSection("Team 3vs3");
+                        groups.add(itemSection);
+                        pos3 = groups.indexOf(itemSection);
+                    }
+                    groups.add(pos3 + 1, new ItemLeague(l));
                     break;
                 case "RANKED_TEAM_5x5":
-                    list5.add(l);
+                    if (pos5 < 0) {
+                        itemSection = new ItemSection("Team 5vs5");
+                        groups.add(itemSection);
+                        pos5 = groups.indexOf(itemSection);
+                    }
+                    groups.add(pos5 + 1, new ItemLeague(l));
                     break;
             }
-        }
-
-        if (!list5.isEmpty()) groups.add(new ItemSection("Team 5vs5"));
-        for (League l : list5){
-            groups.add(new ItemLeague(l));
-        }
-
-        if (!list3.isEmpty()) groups.add(new ItemSection("Team 3vs3"));
-        for (League l : list3){
-            groups.add(new ItemLeague(l));
         }
 
         adapter.updateItems(groups);

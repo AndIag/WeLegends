@@ -73,6 +73,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private String region;
     private long summoner_id;
     private ArrayList<Match> matchesHistoryList = new ArrayList<>();
+    //NEEDED METHODS
+    private String request;
 
     //CONSTRUCTION AND DESTRUCTION
     public FragmentRankeds() {
@@ -231,7 +233,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         return view;
     }
 
-    //NEEDED METHODS
     private void getSummonerHistory(int beginIndex, int endIndex) {
         if (isLoading) return;
 
@@ -245,7 +246,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         incrementIndexes();
 
-        String request = handler.getServer() + region.toLowerCase() + handler.getMatchHistory() + summoner_id + "/" + beginIndex + "/" + endIndex;
+        request = handler.getServer() + region.toLowerCase() + handler.getMatchHistory() + summoner_id + "/" + beginIndex + "/" + endIndex;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
@@ -257,9 +258,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                             new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            isLoading = false;
-                            changeRefreshingValue(false);
                         }
+                        isLoading = false;
+                        changeRefreshingValue(false);
                     }
                 }, new Response.ErrorListener() {
             @Override

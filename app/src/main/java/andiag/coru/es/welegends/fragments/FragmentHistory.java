@@ -48,22 +48,20 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
     private static FragmentHistory fragmentHistory;
     private static ActivityMain activityMain;
-
+    private final Gson gson = new Gson();
     private ObservableRecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private ScaleInAnimationAdapter scaleAdapter;
     private AlphaInAnimationAdapter alphaAdapter;
     private AdapterHistory recyclerAdapter;
-
     //METRICS
     private DisplayMetrics outMetrics;
     private Display display;
-
     private boolean isLoading = false;
     private long summoner_id;
     private String region;
     private RecentGamesDto recentGames;
-
+    private String request;
 
     public static void deleteFragment() {
         fragmentHistory = null;
@@ -85,6 +83,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         this.summoner_id = summoner_id;
         this.region = region;
         getSummonerHistory();
+        changeRefreshingValue(true);
     }
 
     @Override
@@ -102,7 +101,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 getSummonerHistory();
             }
         });
-        changeRefreshingValue(true);
     }
 
     //SAVE AND RETRIEVE DATA
@@ -183,7 +181,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         if (isLoading) return;
 
         isLoading = true;
-        final Gson gson = new Gson();
 
         changeRefreshingValue(true);
         APIHandler handler = APIHandler.getInstance();
@@ -191,7 +188,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             handler = APIHandler.getInstance(activityMain);
         }
 
-        String request = handler.getServer() + handler.getRecent_games() + summoner_id;
+        request = handler.getServer() + handler.getRecent_games() + summoner_id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
@@ -200,6 +197,8 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                         recentGames = gson.fromJson(response.toString(), RecentGamesDto.class);
                         Collections.reverse(recentGames.getGames());
                         new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        changeRefreshingValue(false);
+                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override

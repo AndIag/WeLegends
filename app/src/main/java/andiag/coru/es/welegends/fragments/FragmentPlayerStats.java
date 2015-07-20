@@ -264,13 +264,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                                 leagues.add(l);
                             }
                             setInfoInView();
-                            changeRefreshingValue(false);
-                            isLoading = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            isLoading = false;
-                            changeRefreshingValue(false);
                         }
+                        changeRefreshingValue(false);
+                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override

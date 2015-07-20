@@ -55,6 +55,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private AlphaInAnimationAdapter alphaAdapter;
     private AdapterHistory recyclerAdapter;
 
+    //METRICS
+    private DisplayMetrics outMetrics;
+    private Display display;
+
     private boolean isLoading = false;
     private long summoner_id;
     private String region;
@@ -142,8 +146,11 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         initializeRefresh(view);
 
         recyclerView.setHasFixedSize(true);
-        Display display = activityMain.getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
+
+        display = activityMain.getWindowManager().getDefaultDisplay();
+        if (outMetrics == null) {
+            outMetrics = new DisplayMetrics();
+        }
         display.getMetrics(outMetrics);
 
         float density = activityMain.getResources().getDisplayMetrics().density;

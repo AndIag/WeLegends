@@ -44,16 +44,17 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private static FragmentPlayerStats fragmentPlayerStats;
     private static ActivityMain activityMain;
-
+    //NEEDED METHODS
+    private final Gson gson = new Gson();
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
     private boolean isLoading;
     private AdapterListHeader adapter;
     private ListView listView;
-
     private Summoner summoner;
     private ArrayList<League> leagues = new ArrayList<>();
+    private String request;
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -222,7 +223,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             }
         }
 
-
         if (!list5.isEmpty()) groups.add(new ItemSection("Team 5vs5"));
         for (League l : list5){
             groups.add(new ItemLeague(l));
@@ -238,13 +238,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     }
 
-    //NEEDED METHODS
     private void getLeagues() {
         if (isLoading) return;
 
         isLoading = true;
-
-        final Gson gson = new Gson();
 
         changeRefreshingValue(true);
         APIHandler handler = APIHandler.getInstance();
@@ -252,7 +249,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             handler = APIHandler.getInstance(activityMain);
         }
 
-        String request = handler.getServer() + activityMain.getRegion().toLowerCase() + handler.getLeagues() + summoner.getId();
+        request = handler.getServer() + activityMain.getRegion().toLowerCase() + handler.getLeagues() + summoner.getId();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

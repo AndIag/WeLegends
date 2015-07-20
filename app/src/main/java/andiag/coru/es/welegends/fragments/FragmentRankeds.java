@@ -62,6 +62,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private ObservableRecyclerView recyclerView;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
+    //METRICS
+    private DisplayMetrics outMetrics;
+    private Display display;
     private int BEGININDEX = 0;
     private int ENDINDEX = 10;
     private boolean isLoading = false;
@@ -180,8 +183,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         initializeRefresh(view);
 
         recyclerView.setHasFixedSize(true);
-        Display display = activityMain.getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
+
+        display = activityMain.getWindowManager().getDefaultDisplay();
+        if (outMetrics == null) {
+            outMetrics = new DisplayMetrics();
+        }
         display.getMetrics(outMetrics);
 
         float density = activityMain.getResources().getDisplayMetrics().density;
@@ -297,7 +303,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             ArrayList<Match> list = new ArrayList<>();
 
             try {
-
                 Match match;
                 Object object;
                 for (int i = 0; i < array.length(); i++) {

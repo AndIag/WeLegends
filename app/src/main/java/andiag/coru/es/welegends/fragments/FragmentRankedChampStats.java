@@ -215,7 +215,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             ArrayList<Bundle> bundles = new ArrayList<>();
             ArrayList<ChampionStatsDto> championStats = rankedStatsDto.getChampions();
             AggregatedStatsDto aggregatedStatsDto;
-            ChampionStatsDto championStatsDto;
             Bundle m;
             Bundle summonerBundle = new Bundle();
             float wins, lost, percent;
@@ -260,7 +259,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     bundles.add(m);
                 }
             }
-            summonerBundle.putInt("image", ImagesHandler.getChamp(maxUsedChamp));
+            summonerBundle.putInt("image", maxUsedChamp);
             bundles.add(0, summonerBundle);
             return bundles;
         }

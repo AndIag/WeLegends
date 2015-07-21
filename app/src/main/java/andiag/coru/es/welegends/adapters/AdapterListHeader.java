@@ -60,7 +60,7 @@ public class AdapterListHeader extends BaseAdapter {
         //if (i != null) {
             if(i.isSection()){
                 ItemSection si = (ItemSection)i;
-                if (v == null) v = vi.inflate(R.layout.group_item, null);
+                if (v == null) v = vi.inflate(R.layout.item_group, null);
                 TextView sectionView =
                         (TextView) v.findViewById(R.id.textGroup);
                 sectionView.setText(si.getName());

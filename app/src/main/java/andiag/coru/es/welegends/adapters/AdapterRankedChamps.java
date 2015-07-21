@@ -3,13 +3,16 @@ package andiag.coru.es.welegends.adapters;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import andiag.coru.es.welegends.R;
 
 /**
  * Created by andyq on 21/07/2015.
@@ -24,14 +27,36 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         this.context = context;
     }
 
+    // OUTSIDE METHODS
+
+    public void updateChamps(List<Bundle> cL) {
+        if (cL != null) {
+            this.champList = cL;
+            notifyDataSetChanged();
+        }
+    }
+
+    public void clearChamps() {
+        champList.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
             //inflate your layout and pass it to view holder
-            return new VHItem(null);
+
+            View itemView = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.item_champions_stats, parent, false);
+            return new VHItem(itemView);
         } else if (viewType == TYPE_HEADER) {
             //inflate your layout and pass it to view holder
-            return new VHHeader(null);
+
+            View itemView = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.item_champions_header, parent, false);
+            return new VHHeader(itemView);
         }
 
         throw new RuntimeException("There is no type that matches the type " + viewType + " + make sure your using types correctly");
@@ -39,11 +64,17 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Bundle item = getItem(position);
         if (holder instanceof VHItem) {
-            Bundle dataItem = getItem(position);
+            VHItem h = (VHItem) holder;
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.
+            VHHeader h = (VHHeader) holder;
+            h.textVictories.setText(item.getString("victories"));
+            h.textDefeats.setText(item.getString("defeats"));
+            h.textGlobalKDA.setText(item.getString("globalkda"));
+            h.textPercent.setText(item.getString("percent"));
         }
     }
 
@@ -77,10 +108,19 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        Button button;
+        TextView textVictories,textDefeats,textGlobalKDA,textPercent;
+        RelativeLayout background;
+        View view;
 
         public VHHeader(View itemView) {
             super(itemView);
+            this.view=itemView;
+            background = (RelativeLayout) view.findViewById(R.id.relativeBackground);
+            textVictories = (TextView) view.findViewById(R.id.textVictories);
+            textDefeats = (TextView) view.findViewById(R.id.textDefeats);
+            textGlobalKDA = (TextView) view.findViewById(R.id.textGlobalKDA);
+            textPercent = (TextView) view.findViewById(R.id.textPercent);
+
         }
     }
 }

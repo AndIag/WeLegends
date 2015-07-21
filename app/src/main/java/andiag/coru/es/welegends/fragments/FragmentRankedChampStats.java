@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
@@ -101,6 +103,21 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
+
+        Bundle m = new Bundle();
+        ArrayList<Bundle> bundles = new ArrayList<>();
+        m.putString("victories",Integer.toString(789));
+        m.putString("defeats",Integer.toString(889));
+        m.putString("globalkda","15/4/3");
+        m.putString("percent","65%");
+        bundles.add(m);
+        bundles.add(new Bundle());
+        bundles.add(new Bundle());
+        bundles.add(new Bundle());
+        bundles.add(new Bundle());
+        bundles.add(new Bundle());
+
+        adapter.updateChamps(bundles);
 
         return rootView;
     }

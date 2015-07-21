@@ -56,7 +56,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     public void onBindViewHolder(HistoryViewHolder holder, int i) {
         Bundle bundle = historyList.get(i);
 
-                holder.position = i;
+        holder.position = i;
         holder.vCS.setText(bundle.getString("cs"));
         holder.vGold.setText(bundle.getString("gold"));
         holder.vLVL.setText(bundle.getString("lvl"));

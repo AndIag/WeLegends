@@ -73,6 +73,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textD.setText(item.getString("defeats"));
             h.textV.setText(item.getString("victories"));
             h.textKDA.setText(item.getString("kda"));
+            h.imageChamp.setImageResource(item.getInt("image"));
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.

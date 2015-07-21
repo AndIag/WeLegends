@@ -195,7 +195,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         recentGames = gson.fromJson(response.toString(), RecentGamesDto.class);
-                        Collections.reverse(recentGames.getGames());
+                        //Collections.reverse(recentGames.getGames());
                         new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         changeRefreshingValue(false);
                         isLoading = false;

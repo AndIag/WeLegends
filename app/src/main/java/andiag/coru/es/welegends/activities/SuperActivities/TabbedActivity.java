@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.ReaderViewPagerTransformer;
 
 /**
  * Created by Iago on 12/07/2015.
@@ -28,6 +29,7 @@ public class TabbedActivity extends ActionBarActivity {
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
+        mPager.setPageTransformer(true,new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
     }
 
     @Override

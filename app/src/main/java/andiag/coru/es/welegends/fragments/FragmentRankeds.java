@@ -67,7 +67,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private Display display;
     private int BEGININDEX = 0;
     private int ENDINDEX = 10;
-    private boolean isLoading = false;
 
     //BASIC DATA
     private String region;
@@ -119,7 +118,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         this.summoner_id = summoner_id;
         this.region = region;
         getSummonerHistory(BEGININDEX, ENDINDEX);
-        changeRefreshingValue(true);
     }
 
     //SAVE AND RETRIEVE DATA
@@ -208,7 +206,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
                 //When we reach our limit we load mote matches
-                if (!isLoading) {
+                if (!isLoading()) {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount - 1) {
                         getSummonerHistory(BEGININDEX, ENDINDEX);
                     }
@@ -234,11 +232,10 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     }
 
     private void getSummonerHistory(int beginIndex, int endIndex) {
-        if (isLoading) return;
-
-        isLoading = true;
+        if (isLoading()) return;
 
         changeRefreshingValue(true);
+
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
             handler = APIHandler.getInstance(activityMain);
@@ -258,16 +255,13 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                             new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            changeRefreshingValue(false);
                         }
-                        isLoading = false;
-                        changeRefreshingValue(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("ERROR", error.toString());
-                isLoading = false;
-                changeRefreshingValue(false);
                 decrementIndexes();
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
@@ -282,6 +276,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                     }
                     Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
+
+                    changeRefreshingValue(false);
                 }
             }
         });
@@ -296,6 +292,12 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         public ParseDataTask(JSONArray array) {
             this.array = array;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            changeRefreshingValue(true);
         }
 
         @Override
@@ -314,7 +316,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 Collections.reverse(list);
             } catch (JSONException e) {
                 e.printStackTrace();
-                isLoading = false;
                 changeRefreshingValue(false);
             }
 
@@ -337,6 +338,12 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         public RetrieveDataTask(ArrayList<Match> m) {
             this.matches = m;
             dateF = DateFormat.getDateInstance(DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            changeRefreshingValue(true);
         }
 
         @Override
@@ -414,7 +421,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 alphaAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
-            isLoading = false;
         }
     }
 }

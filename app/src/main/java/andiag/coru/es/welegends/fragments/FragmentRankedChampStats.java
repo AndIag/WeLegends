@@ -42,7 +42,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ranked_champions_stats, container, false);
-
         return rootView;
     }
 }

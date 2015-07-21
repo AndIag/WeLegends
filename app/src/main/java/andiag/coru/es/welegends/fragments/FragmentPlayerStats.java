@@ -49,7 +49,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
-    private boolean isLoading;
     private AdapterListHeader adapter;
     private ListView listView;
     private Summoner summoner;
@@ -122,8 +121,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 getLeagues();
             }
         });
-
-        changeRefreshingValue(true);
     }
 
     @Override
@@ -180,7 +177,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 if (leagues == null) {
                     leagues = new ArrayList<>();
                 }
-                changeRefreshingValue(false);
                 setInfoInView();
             }
         }
@@ -203,10 +199,12 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setInfoInView(){
-        int pos5 = -1, pos3 = -1;
-        ArrayList<Item> groups = new ArrayList<>();
-        Item itemSection;
 
+        int pos5 = -1, pos3 = -1;
+
+        ArrayList<Item> groups = new ArrayList<>();
+
+        Item itemSection;
         for(League l : leagues){
             switch (l.getQueue()){
                 case "RANKED_SOLO_5x5":
@@ -238,11 +236,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void getLeagues() {
-        if (isLoading) return;
-
-        isLoading = true;
+        if (isLoading()) return;
 
         changeRefreshingValue(true);
+
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
             handler = APIHandler.getInstance(activityMain);
@@ -263,17 +260,15 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                                 leagues.add(l);
                             }
                             setInfoInView();
+                            changeRefreshingValue(false);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            changeRefreshingValue(false);
                         }
-                        changeRefreshingValue(false);
-                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                isLoading = false;
-                changeRefreshingValue(false);
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
                     String message = activityMain.getString(R.string.errorDefault);
@@ -287,6 +282,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     }
                     Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
+
+                    changeRefreshingValue(false);
                 }
             }
         });

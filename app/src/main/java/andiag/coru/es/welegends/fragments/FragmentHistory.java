@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.DTOs.recentGamesDTOs.GameDto;
@@ -57,7 +56,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     //METRICS
     private DisplayMetrics outMetrics;
     private Display display;
-    private boolean isLoading = false;
     private long summoner_id;
     private String region;
     private RecentGamesDto recentGames;
@@ -83,7 +81,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         this.summoner_id = summoner_id;
         this.region = region;
         getSummonerHistory();
-        changeRefreshingValue(true);
     }
 
     @Override
@@ -178,11 +175,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     }
 
     private void getSummonerHistory() {
-        if (isLoading) return;
-
-        isLoading = true;
+        if (isLoading()) return;
 
         changeRefreshingValue(true);
+
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
             handler = APIHandler.getInstance(activityMain);
@@ -195,16 +191,11 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         recentGames = gson.fromJson(response.toString(), RecentGamesDto.class);
-                        //Collections.reverse(recentGames.getGames());
                         new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        changeRefreshingValue(false);
-                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                isLoading = false;
-                changeRefreshingValue(false);
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
                     String message = activityMain.getString(R.string.errorDefault);
@@ -218,6 +209,8 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                     }
                     Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
+
+                    changeRefreshingValue(false);
                 }
             }
         });
@@ -233,6 +226,12 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         public RetrieveDataTask(RecentGamesDto recentGames) {
             this.recentGames = recentGames;
             dateF = DateFormat.getDateInstance(DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            changeRefreshingValue(true);
         }
 
         @Override
@@ -294,7 +293,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 alphaAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
-            isLoading = false;
         }
     }
 

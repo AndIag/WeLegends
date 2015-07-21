@@ -45,4 +45,11 @@ public abstract class SwipeRefreshLayoutFragment extends Fragment {
         }
     }
 
+    public boolean isLoading() {
+        if (refreshLayout != null) {
+            return refreshLayout.isRefreshing();
+        }
+        return false;
+    }
+
 }

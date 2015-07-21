@@ -211,7 +211,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         });
 
         if (recyclerAdapter == null) {
-            recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
+            recyclerAdapter = new AdapterHistory(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
             alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
             alphaAdapter.setFirstOnly(false);

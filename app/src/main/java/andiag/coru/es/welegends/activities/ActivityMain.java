@@ -30,6 +30,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     protected void createTabs() {
         super.createTabs();
+        int pos = 0;
         Tab tab;
         String tabName;
 
@@ -47,16 +48,20 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
         tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
-        tabs.add(0, tab);
+        tabs.add(pos, tab);
+        pos++;
 
-        //FRAGMENT RANKEDS TAB
-        tab = new Tab();
-        tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
-        tab.setName(getString(R.string.section_ranked).toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT1));
-        tab.setToolBarColors(getResources().getColor(R.color.pos1));
+        if (summoner.getSummonerLevel() == 30) {
+            //FRAGMENT RANKEDS TAB
+            tab = new Tab();
+            tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
+            tab.setName(getString(R.string.section_ranked).toUpperCase());
+            tab.setActionBarColors(getResources().getColor(R.color.posT1));
+            tab.setToolBarColors(getResources().getColor(R.color.pos1));
 
-        tabs.add(1, tab);
+            tabs.add(pos, tab);
+            pos++;
+        }
 
         //FRAGMENT HISTORY TAB
         tab = new Tab();
@@ -65,16 +70,20 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tab.setActionBarColors(getResources().getColor(R.color.posT2));
         tab.setToolBarColors(getResources().getColor(R.color.pos2));
 
-        tabs.add(2, tab);
+        tabs.add(pos, tab);
+        pos++;
 
-        //FRAGMENT CHAMPIONS STATS
-        tab = new Tab();
-        tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
-        tab.setName(getString(R.string.section_champs).toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT3));
-        tab.setToolBarColors(getResources().getColor(R.color.pos3));
+        if (summoner.getSummonerLevel() == 30) {
+            //FRAGMENT CHAMPIONS STATS
+            tab = new Tab();
+            tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
+            tab.setName(getString(R.string.section_champs).toUpperCase());
+            tab.setActionBarColors(getResources().getColor(R.color.posT3));
+            tab.setToolBarColors(getResources().getColor(R.color.pos3));
 
-        tabs.add(3, tab);
+            tabs.add(pos, tab);
+            pos++;
+        }
 
         setPager();
     }

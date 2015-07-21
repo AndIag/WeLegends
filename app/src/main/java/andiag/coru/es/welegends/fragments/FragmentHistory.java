@@ -58,8 +58,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     //METRICS
     private DisplayMetrics outMetrics;
     private Display display;
+    //ARGUMENTS
     private long summoner_id;
     private String region;
+
     private RecentGamesDto recentGames;
     private String request;
 
@@ -157,7 +159,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         recyclerView.setLayoutManager(layoutManager);
 
         if (recyclerAdapter == null) {
-            recyclerAdapter = new AdapterHistory(activityMain, summoner_id);
+            recyclerAdapter = new AdapterHistory(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
             alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
             alphaAdapter.setFirstOnly(false);

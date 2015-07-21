@@ -42,7 +42,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         } else {
             tabName = getString(R.string.section_summoner).toUpperCase();
         }
-        tab.setFragment(FragmentPlayerStats.getInstance(this));
+        tab.setFragment(FragmentPlayerStats.newInstance(this));
         tab.setName(tabName.toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
         tab.setToolBarColors(getResources().getColor(R.color.pos0));

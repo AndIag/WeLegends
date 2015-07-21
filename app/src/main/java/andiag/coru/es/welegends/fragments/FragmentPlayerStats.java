@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -43,7 +44,6 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
  */
 public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
-    private static FragmentPlayerStats fragmentPlayerStats;
     private static ActivityMain activityMain;
     //NEEDED METHODS
     private final Gson gson = new Gson();
@@ -52,7 +52,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private APIHandler apiHandler;
     private AdapterListHeader adapter;
     private ListView listView;
+    //ARGUMENTS
     private Summoner summoner;
+    private String region;
+
     private ArrayList<League> leagues = new ArrayList<>();
     private String request;
 
@@ -61,16 +64,12 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         apiHandler = APIHandler.getInstance();
     }
 
-    public static void deleteFragment() {
-        fragmentPlayerStats = null;
-    }
-
-    public static FragmentPlayerStats getInstance(ActivityMain aM) {
-        activityMain = aM;
-        if (fragmentPlayerStats != null) {
-            return fragmentPlayerStats;
-        }
-        fragmentPlayerStats = new FragmentPlayerStats();
+    public static FragmentPlayerStats newInstance(String region, Summoner summoner) {
+        FragmentPlayerStats fragmentPlayerStats = new FragmentPlayerStats();
+        Bundle args = new Bundle();
+        args.putSerializable("summoner", summoner);
+        args.putString("region", region);
+        fragmentPlayerStats.setArguments(args);
         return fragmentPlayerStats;
     }
 
@@ -127,22 +126,52 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("region", region);
         outState.putSerializable("summoner", summoner);
         outState.putSerializable("leagues", leagues);
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
         //Se ejecuta al girar la pantalla no al cambiar de tab
+        if (getArguments() != null) {
+            summoner = (Summoner) getArguments().getSerializable("summoner");
+            region = getArguments().getString("region");
+        }
         if (savedInstanceState != null) { //Load saved data in onPause
             leagues = (ArrayList<League>) savedInstanceState.getSerializable("leagues");
             summoner = (Summoner) savedInstanceState.getSerializable("summoner");
+            region = savedInstanceState.getString("region");
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activityMain = (ActivityMain) activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
+        adapter = new AdapterListHeader(activityMain);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (apiHandler == null) {
+            apiHandler = APIHandler.getInstance();
+            if (apiHandler == null) {
+                apiHandler = APIHandler.getInstance(activityMain);
+            }
+        }
+        if (imageLoader == null) {
+            imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
+        }
+        if (leagues.isEmpty()){
+            getLeagues();
+        } else setInfoInView();
     }
 
     @Override //Si se ejecuta al cambiar 2 fragments para el lado
@@ -157,10 +186,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         TextView txtName = (TextView) rootView.findViewById(R.id.textSummonerName);
         TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
-
-        if (adapter == null) {
-            adapter = new AdapterListHeader(activityMain);
-        }
 
         listView = (ListView) rootView.findViewById(R.id.listViewLeagues);
         listView.setAdapter(adapter);
@@ -183,20 +208,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         }
 
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (apiHandler == null) {
-            apiHandler = APIHandler.getInstance();
-            if (apiHandler == null) {
-                apiHandler = APIHandler.getInstance(activityMain);
-            }
-        }
-        if (imageLoader == null) {
-            imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
-        }
     }
 
     private void setInfoInView(){

@@ -38,14 +38,9 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
     private List<Bundle> historyList = new ArrayList<>();
     private Context context;
-    private DateFormat dateF;
-    private int lastPosition = -1;
-    private long sum_id;
 
-    public AdapterHistory(Context context,long sum_id) {
+    public AdapterHistory(Context context) {
         this.context = context;
-        this.sum_id = sum_id;
-        dateF = DateFormat.getDateInstance(DateFormat.SHORT,context.getResources().getConfiguration().locale);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
         //FRAGMENT CHAMPIONS STATS
         tab = new Tab();
-        tab.setFragment(FragmentRankedChampStats.getInstance(this));
+        tab.setFragment(FragmentRankedChampStats.newInstance());
         tab.setName(getString(R.string.section_champs).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT3));
         tab.setToolBarColors(getResources().getColor(R.color.pos3));

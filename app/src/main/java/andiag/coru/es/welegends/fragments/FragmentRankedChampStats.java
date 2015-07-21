@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -14,23 +15,45 @@ import andiag.coru.es.welegends.activities.ActivityMain;
  */
 public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
-    private static FragmentRankedChampStats fragmentRankedChampStats;
     private static ActivityMain activityMain;
 
-    public FragmentRankedChampStats() {
-    }
-
-    public static void deleteFragment() {
-        fragmentRankedChampStats = null;
-    }
-
-    public static FragmentRankedChampStats getInstance(ActivityMain aM) {
-        activityMain = aM;
-        if (fragmentRankedChampStats != null) {
-            return fragmentRankedChampStats;
-        }
-        fragmentRankedChampStats = new FragmentRankedChampStats();
+    public static FragmentRankedChampStats newInstance() {
+        FragmentRankedChampStats fragmentRankedChampStats = new FragmentRankedChampStats();
+        Bundle args = new Bundle();
+        fragmentRankedChampStats.setArguments(args);
         return fragmentRankedChampStats;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    public void onRetrieveInstanceState(Bundle savedInstanceState) {
+        if (getArguments() != null) {
+
+        }
+        if (savedInstanceState != null) { //Load saved data in onPause
+
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activityMain = (ActivityMain) activity;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

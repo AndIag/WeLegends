@@ -86,7 +86,8 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/textView9"
             android:layout_marginTop="10dp"
-            android:divider="@color/transparent" />
+            android:dividerHeight="2dp"
+            android:divider="@color/posT0" />
 
     </RelativeLayout>
 

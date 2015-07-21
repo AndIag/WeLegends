@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.AggregatedStatsDto;
@@ -67,6 +66,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         super.onSaveInstanceState(outState);
         outState.putLong("summoner_id", summoner_id);
         outState.putString("region", region);
+        outState.putSerializable("rankedStatsDto", rankedStatsDto);
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         if (savedInstanceState != null) {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
+            rankedStatsDto = (RankedStatsDto) savedInstanceState.getSerializable("rankedStatsDto");
         }
     }
 
@@ -99,7 +100,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         if (rankedStatsDto == null) {
             getChamps();
         } else {
-
+            new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -195,11 +196,9 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
     private class RetrieveDataTask extends AsyncTask<Void, Void, ArrayList<Bundle>> {
 
         private RankedStatsDto rankedStatsDto;
-        private DateFormat dateF;
 
         public RetrieveDataTask(RankedStatsDto rankedStatsDto) {
             this.rankedStatsDto = rankedStatsDto;
-            dateF = DateFormat.getDateInstance(DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
         }
 
         @Override

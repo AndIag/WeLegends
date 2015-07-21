@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -46,8 +47,8 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
  */
 public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
-    private static FragmentHistory fragmentHistory;
     private static ActivityMain activityMain;
+
     private final Gson gson = new Gson();
     private ObservableRecyclerView recyclerView;
     private GridLayoutManager layoutManager;
@@ -62,26 +63,13 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private RecentGamesDto recentGames;
     private String request;
 
-    public static void deleteFragment() {
-        fragmentHistory = null;
-    }
-
-    public static FragmentHistory getInstance(ActivityMain aM) {
-        activityMain = aM;
-        if (fragmentHistory != null) {
-            return fragmentHistory;
-        }
-        fragmentHistory = new FragmentHistory();
+    public static FragmentHistory newInstance(long summoner_id, String region) {
+        FragmentHistory fragmentHistory = new FragmentHistory();
+        Bundle args = new Bundle();
+        args.putLong("summoner_id", summoner_id);
+        args.putString("region", region);
+        fragmentHistory.setArguments(args);
         return fragmentHistory;
-    }
-
-    public void setSummoner_id(long summoner_id, String region) {
-        if (recentGames != null) {
-            return;
-        }
-        this.summoner_id = summoner_id;
-        this.region = region;
-        getSummonerHistory();
     }
 
     @Override
@@ -111,8 +99,11 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
-        //Se ejecuta al girar la pantalla no al cambiar de tab
-        if (savedInstanceState != null) { //Load saved data in onPause
+        if (getArguments() != null) {
+            summoner_id = getArguments().getLong("summoner_id");
+            region = getArguments().getString("region");
+        }
+        if (savedInstanceState != null) {
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
             recentGames = (RecentGamesDto) savedInstanceState.getSerializable("recentgames");
@@ -120,17 +111,25 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (recentGames != null) {
-            new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activityMain = (ActivityMain) activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (recentGames == null) {
+            getSummonerHistory();
+        } else {
+            new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     @Override

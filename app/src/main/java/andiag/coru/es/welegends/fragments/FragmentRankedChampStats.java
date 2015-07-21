@@ -224,7 +224,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             int assist = aggregatedStatsDto.getTotalAssists();
             m.putString("globalkda", kills + "/" + death + "/" + assist);
             float percent = (wins / (wins + lost)) * 100;
-            m.putString("percent", percent + "%");
+            m.putString("percent", String.format("%.2f", percent) + "%");
             bundles.add(m);
 
             bundles.add(new Bundle());

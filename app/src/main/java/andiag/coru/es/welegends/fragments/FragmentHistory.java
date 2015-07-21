@@ -186,7 +186,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             handler = APIHandler.getInstance(activityMain);
         }
 
-        request = handler.getServer() + handler.getRecent_games() + summoner_id;
+        request = handler.getServer() + region + handler.getRecent_games() + summoner_id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

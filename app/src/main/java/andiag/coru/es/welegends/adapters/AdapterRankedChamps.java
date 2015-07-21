@@ -1,7 +1,6 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,11 +68,11 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         Bundle item = getItem(position);
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
-            h.textCS.setText("");
-            h.textGold.setText("");
-            h.textD.setText("");
-            h.textV.setText("");
-            h.textKDA.setText("");
+            h.textCS.setText(item.getString("cs"));
+            h.textGold.setText(item.getString("gold"));
+            h.textD.setText(item.getString("defeats"));
+            h.textV.setText(item.getString("victories"));
+            h.textKDA.setText(item.getString("kda"));
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.

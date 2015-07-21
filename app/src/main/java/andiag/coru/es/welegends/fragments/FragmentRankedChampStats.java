@@ -27,12 +27,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.AggregatedStatsDto;
+import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.ChampionStatsDto;
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /**
  * Created by Iago on 11/07/2015.
@@ -211,28 +213,55 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         @Override
         protected ArrayList<Bundle> doInBackground(Void... voids) {
             ArrayList<Bundle> bundles = new ArrayList<>();
-            Bundle m = new Bundle();
+            ArrayList<ChampionStatsDto> championStats = rankedStatsDto.getChampions();
+            AggregatedStatsDto aggregatedStatsDto;
+            ChampionStatsDto championStatsDto;
+            Bundle m;
+            Bundle summonerBundle = new Bundle();
+            float wins, lost, percent;
+            int kills, death, assist;
+            int maxUsedChamp = 0, maxGamesPlayed = 0;
+            int id;
 
-            AggregatedStatsDto aggregatedStatsDto = rankedStatsDto.getChampions().get(rankedStatsDto.getChampions().size() - 1).getStats();
+            for (ChampionStatsDto c : championStats) {
+                m = new Bundle();
+                id = c.getId();
+                aggregatedStatsDto = c.getStats();
 
-            float wins = aggregatedStatsDto.getTotalSessionsWon();
-            m.putString("victories", String.valueOf((int) wins));
-            float lost = aggregatedStatsDto.getTotalSessionsLost();
-            m.putString("defeats", String.valueOf((int) lost));
-            int kills = aggregatedStatsDto.getTotalChampionKills();
-            int death = aggregatedStatsDto.getTotalDeathsPerSession();
-            int assist = aggregatedStatsDto.getTotalAssists();
-            m.putString("globalkda", kills + "/" + death + "/" + assist);
-            float percent = (wins / (wins + lost)) * 100;
-            m.putString("percent", String.format("%.2f", percent) + "%");
-            bundles.add(m);
+                wins = aggregatedStatsDto.getTotalSessionsWon();
+                m.putString("victories", String.valueOf((int) wins));
+                lost = aggregatedStatsDto.getTotalSessionsLost();
+                m.putString("defeats", String.valueOf((int) lost));
 
-            bundles.add(new Bundle());
-            bundles.add(new Bundle());
-            bundles.add(new Bundle());
-            bundles.add(new Bundle());
-            bundles.add(new Bundle());
+                m.putInt("image", ImagesHandler.getChamp(id));
+                if (id == 0) { //Summoner Data
+                    summonerBundle = m;
+                    kills = aggregatedStatsDto.getTotalChampionKills();
+                    death = aggregatedStatsDto.getTotalDeathsPerSession();
+                    assist = aggregatedStatsDto.getTotalAssists();
+                    summonerBundle.putString("globalkda", kills + "/" + death + "/" + assist);
 
+                    percent = (wins / (wins + lost)) * 100;
+                    summonerBundle.putString("percent", String.format("%.2f", percent) + "%");
+                } else {
+                    m.putString("cs", String.valueOf(aggregatedStatsDto.getTotalMinionKills()
+                            + aggregatedStatsDto.getTotalNeutralMinionsKilled()));
+                    m.putString("gold", String.valueOf(aggregatedStatsDto.getTotalGoldEarned()));
+
+                    kills = aggregatedStatsDto.getTotalChampionKills();
+                    death = aggregatedStatsDto.getTotalDeathsPerSession();
+                    assist = aggregatedStatsDto.getTotalAssists();
+                    m.putString("kda", kills + "/" + death + "/" + assist);
+
+                    if ((wins + lost) > maxGamesPlayed) {
+                        maxGamesPlayed = (int) (wins + lost);
+                        maxUsedChamp = id;
+                    }
+                    bundles.add(m);
+                }
+            }
+            summonerBundle.putInt("image", ImagesHandler.getChamp(maxUsedChamp));
+            bundles.add(0, summonerBundle);
             return bundles;
         }
 

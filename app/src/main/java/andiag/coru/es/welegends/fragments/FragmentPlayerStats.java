@@ -257,7 +257,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             handler = APIHandler.getInstance(activityMain);
         }
 
-        request = handler.getServer() + activityMain.getRegion().toLowerCase() + handler.getLeagues() + summoner.getId();
+        request = handler.getServer() + region.toLowerCase() + handler.getLeagues() + summoner.getId();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

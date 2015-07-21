@@ -361,9 +361,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 duration = m.getMatchDuration();
 
                 p = m.getParticipants().get(0);
-
-                stats = p.getStats();
                 champId = p.getChampionId();
+                stats = p.getStats();
+
                 kills = stats.getKills();
                 deaths = stats.getDeaths();
                 assists = stats.getAssists();

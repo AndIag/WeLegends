@@ -233,7 +233,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 lost = aggregatedStatsDto.getTotalSessionsLost();
                 m.putString("defeats", String.valueOf((int) lost));
 
-                m.putInt("image", ImagesHandler.getChamp(id));
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
                     kills = aggregatedStatsDto.getTotalChampionKills();
@@ -244,6 +243,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     percent = (wins / (wins + lost)) * 100;
                     summonerBundle.putString("percent", String.format("%.2f", percent) + "%");
                 } else {
+                    m.putInt("image", ImagesHandler.getChamp(id));
                     m.putString("cs", String.valueOf(aggregatedStatsDto.getTotalMinionKills()
                             + aggregatedStatsDto.getTotalNeutralMinionsKilled()));
                     m.putString("gold", String.valueOf(aggregatedStatsDto.getTotalGoldEarned()));

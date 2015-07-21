@@ -1,11 +1,13 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,6 +69,11 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         Bundle item = getItem(position);
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
+            h.textCS.setText("");
+            h.textGold.setText("");
+            h.textD.setText("");
+            h.textV.setText("");
+            h.textKDA.setText("");
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.
@@ -100,10 +107,19 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class VHItem extends RecyclerView.ViewHolder {
-        TextView title;
+        TextView textKDA,textGold,textCS,textV,textD;
+        ImageView imageChamp;
+        View v;
 
         public VHItem(View itemView) {
             super(itemView);
+            this.v = itemView;
+            textCS = (TextView) v.findViewById(R.id.textCS);
+            textKDA = (TextView) v.findViewById(R.id.textKDA);
+            textGold = (TextView) v.findViewById(R.id.textGold);
+            textV = (TextView) v.findViewById(R.id.textV);
+            textD = (TextView) v.findViewById(R.id.textD);
+            imageChamp =(ImageView) v.findViewById(R.id.imgChamp);
         }
     }
 

@@ -40,7 +40,6 @@ import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
-import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -354,34 +353,24 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
             String d, date_s;
+            Participant p;
 
             for (Match m : matches) {
                 mapid = m.getMapId();
                 creation = m.getMatchCreation();
                 duration = m.getMatchDuration();
 
-                long participantId = -1;
-                for (ParticipantIdentities pi : m.getParticipantIdentities()) {
-                    if (pi.getPlayer().getSummonerId() == summoner_id) {
-                        participantId = pi.getParticipantId();
-                        break;
-                    }
-                }
+                p = m.getParticipants().get(0);
+                champId = p.getChampionId();
+                stats = p.getStats();
 
-                for (Participant p : m.getParticipants()) {
-                    if (p.getParticipantId() == participantId) {
-                        stats = p.getStats();
-                        champId = p.getChampionId();
-                        kills = stats.getKills();
-                        deaths = stats.getDeaths();
-                        assists = stats.getAssists();
-                        lvl = stats.getChampLevel();
-                        minions = stats.getMinionsKilled();
-                        winner = stats.isWinner();
-                        gold = stats.getGoldEarned();
-                        break;
-                    }
-                }
+                kills = stats.getKills();
+                deaths = stats.getDeaths();
+                assists = stats.getAssists();
+                lvl = stats.getChampLevel();
+                minions = stats.getMinionsKilled();
+                winner = stats.isWinner();
+                gold = stats.getGoldEarned();
 
                 d = String.format("%d ' %d ''",
                         TimeUnit.SECONDS.toMinutes(duration),

@@ -42,7 +42,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         } else {
             tabName = getString(R.string.section_summoner).toUpperCase();
         }
-        tab.setFragment(FragmentPlayerStats.newInstance(this));
+        tab.setFragment(FragmentPlayerStats.newInstance(region,summoner));
         tab.setName(tabName.toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT0));
         tab.setToolBarColors(getResources().getColor(R.color.pos0));
@@ -135,7 +135,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        FragmentPlayerStats.deleteFragment();
         ActivitySummoner.setActivityMain(null);
         this.finish();
     }

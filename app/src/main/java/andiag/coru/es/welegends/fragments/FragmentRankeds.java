@@ -147,6 +147,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             startIndex();
             getSummonerHistory();
         } else {
+            recyclerAdapter.clearHistory();
             new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }

@@ -51,7 +51,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
         //FRAGMENT RANKEDS TAB
         tab = new Tab();
-        tab.setFragment(FragmentRankeds.getInstance(this));
+        tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
         tab.setName(getString(R.string.section_ranked).toUpperCase());
         tab.setActionBarColors(getResources().getColor(R.color.posT1));
         tab.setToolBarColors(getResources().getColor(R.color.pos1));
@@ -116,11 +116,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
 
-        //SETTING DATA IN FRAGMENTS
-        //FragmentRankeds.getInstance(this).setSummoner_id(summoner.getId(), region);
-        //FragmentHistory.getInstance(this).setSummoner_id(summoner.getId(), region);
-        //FragmentPlayerStats.getInstance(this).setSummoner(summoner);
-
         setAnimation();
 
     }
@@ -140,7 +135,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        FragmentRankeds.deleteFragment();
         FragmentPlayerStats.deleteFragment();
         ActivitySummoner.setActivityMain(null);
         this.finish();

@@ -202,10 +202,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                             JSONObject summonerJSON = response.getJSONObject(summonerName);
                             Summoner summoner = (Summoner) gson.fromJson(summonerJSON.toString(), Summoner.class);
                             startMainActivity(summoner);
-                            isLoading = false;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -72,23 +72,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         return fragmentHistory;
     }
 
-    @Override
-    protected void initializeRefresh(View view) {
-        setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
-        setColors(null); //NULL means default colors
-        setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //Clear our adapter
-                recyclerAdapter.clearHistory();
-                scaleAdapter.notifyDataSetChanged();
-                alphaAdapter.notifyDataSetChanged();
-                //Load new values
-                getSummonerHistory();
-            }
-        });
-    }
-
     //SAVE AND RETRIEVE DATA
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -130,6 +113,23 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         } else {
             new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+    }
+
+    @Override
+    protected void initializeRefresh(View view) {
+        setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
+        setColors(null); //NULL means default colors
+        setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Clear our adapter
+                recyclerAdapter.clearHistory();
+                scaleAdapter.notifyDataSetChanged();
+                alphaAdapter.notifyDataSetChanged();
+                //Load new values
+                getSummonerHistory();
+            }
+        });
     }
 
     @Override

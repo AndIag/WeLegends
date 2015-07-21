@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.fragments;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -53,7 +54,6 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
  */
 public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
-    private static FragmentRankeds fragmentRankeds;
     private static ActivityMain activityMain;
     //AUXILIAR DATA
     private final int INCREMENT = 10;
@@ -66,30 +66,22 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     //METRICS
     private DisplayMetrics outMetrics;
     private Display display;
-    private int BEGININDEX = 0;
-    private int ENDINDEX = 10;
+    private int BEGININDEX;
+    private int ENDINDEX;
 
     //BASIC DATA
     private String region;
     private long summoner_id;
-    private ArrayList<Match> matchesHistoryList = new ArrayList<>();
+    private ArrayList<Match> matchesHistoryList;
     //NEEDED METHODS
     private String request;
 
-    //CONSTRUCTION AND DESTRUCTION
-    public FragmentRankeds() {
-    }
-
-    public static void deleteFragment() {
-        fragmentRankeds = null;
-    }
-
-    public static FragmentRankeds getInstance(ActivityMain aM) {
-        activityMain = aM;
-        if (fragmentRankeds != null) {
-            return fragmentRankeds;
-        }
-        fragmentRankeds = new FragmentRankeds();
+    public static FragmentRankeds newInstance(long summoner_id, String region) {
+        FragmentRankeds fragmentRankeds = new FragmentRankeds();
+        Bundle args = new Bundle();
+        args.putLong("summoner_id", summoner_id);
+        args.putString("region", region);
+        fragmentRankeds.setArguments(args);
         return fragmentRankeds;
     }
 
@@ -112,15 +104,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         matchesHistoryList = new ArrayList<>();
     }
 
-    public void setSummoner_id(long summoner_id, String region) {
-        if (matchesHistoryList != null && matchesHistoryList.size() > 0) {
-            return;
-        }
-        this.summoner_id = summoner_id;
-        this.region = region;
-        getSummonerHistory(BEGININDEX, ENDINDEX);
-    }
-
     //SAVE AND RETRIEVE DATA
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -133,7 +116,10 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
-        //Se ejecuta al girar la pantalla no al cambiar de tab
+        if (getArguments() != null) {
+            summoner_id = getArguments().getLong("summoner_id");
+            region = getArguments().getString("region");
+        }
         if (savedInstanceState != null) { //Load saved data in onPause
             BEGININDEX = savedInstanceState.getInt("beginIndex");
             ENDINDEX = savedInstanceState.getInt("endIndex");
@@ -144,9 +130,24 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activityMain = (ActivityMain) activity;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        if ((matchesHistoryList != null) && (matchesHistoryList.size() > 0)) {
+        if (matchesHistoryList == null) {
+            startIndex();
+            getSummonerHistory();
+        } else {
             new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -164,15 +165,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 alphaAdapter.notifyDataSetChanged();
                 //Load new values
                 startIndex();
-                getSummonerHistory(BEGININDEX, ENDINDEX);
+                getSummonerHistory();
             }
         });
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        onRetrieveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -209,7 +204,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 //When we reach our limit we load mote matches
                 if (!isLoading()) {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount - 1) {
-                        getSummonerHistory(BEGININDEX, ENDINDEX);
+                        getSummonerHistory();
                     }
                 }
             }
@@ -232,7 +227,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         return view;
     }
 
-    private void getSummonerHistory(int beginIndex, int endIndex) {
+    private void getSummonerHistory() {
         if (isLoading()) return;
 
         changeRefreshingValue(true);
@@ -242,9 +237,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             handler = APIHandler.getInstance(activityMain);
         }
 
+        request = handler.getServer() + region.toLowerCase() + handler.getMatchHistory() + summoner_id + "/" + BEGININDEX + "/" + ENDINDEX;
         incrementIndexes();
-
-        request = handler.getServer() + region.toLowerCase() + handler.getMatchHistory() + summoner_id + "/" + beginIndex + "/" + endIndex;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

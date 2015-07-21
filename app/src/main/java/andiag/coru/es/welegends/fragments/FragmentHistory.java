@@ -113,6 +113,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         if (recentGames == null) {
             getSummonerHistory();
         } else {
+            recyclerAdapter.clearHistory();
             new RetrieveDataTask(recentGames).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }

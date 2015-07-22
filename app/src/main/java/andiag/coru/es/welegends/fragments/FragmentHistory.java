@@ -290,7 +290,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 data.putBoolean("winner", winner);
                 data.putString("duration", date_s + "   " + d);
                 if (isRanked) {
-                    data.putInt("isRanked", R.drawable.scoreboardicon_gold);
+                    data.putInt("isRanked", android.R.drawable.ic_menu_compass);
                 }
                 bundles.add(data);
             }

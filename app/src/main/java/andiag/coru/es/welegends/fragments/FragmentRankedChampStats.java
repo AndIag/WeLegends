@@ -25,6 +25,8 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.AggregatedStatsDto;
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.ChampionStatsDto;
@@ -204,6 +206,23 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             this.rankedStatsDto = rankedStatsDto;
         }
 
+        private void sortChampionStatsDto(ArrayList<ChampionStatsDto> championStats) {
+            Collections.sort(championStats, new Comparator<ChampionStatsDto>() {
+                @Override
+                public int compare(ChampionStatsDto lhs, ChampionStatsDto rhs) {
+                    int lTotalGames = lhs.getStats().getTotalSessionsPlayed();
+                    int rTotalGames = rhs.getStats().getTotalSessionsPlayed();
+                    if (lTotalGames < rTotalGames) {
+                        return 1;
+                    }
+                    if (lTotalGames > rTotalGames) {
+                        return -1;
+                    }
+                    return 0;
+                }
+            });
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -221,6 +240,8 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             float kills, death, assist, gold, cs, totalGames;
             int maxUsedChamp = 0, maxGamesPlayed = 0;
             int id;
+
+            sortChampionStatsDto(championStats);
 
             for (ChampionStatsDto c : championStats) {
                 m = new Bundle();

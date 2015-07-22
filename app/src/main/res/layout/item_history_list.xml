@@ -31,6 +31,11 @@
             android:layout_marginTop="20dp"
             android:transitionName="imageChampion" />
 
+        <ImageView
+            android:id="@+id/isRanked"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
         <TextView
             android:id="@+id/textLVL"
             android:layout_width="wrap_content"

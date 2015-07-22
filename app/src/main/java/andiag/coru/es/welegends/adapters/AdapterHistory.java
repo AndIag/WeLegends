@@ -8,28 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.entities.Match;
-import andiag.coru.es.welegends.entities.Participant;
-import andiag.coru.es.welegends.entities.ParticipantIdentities;
-import andiag.coru.es.welegends.entities.ParticipantStats;
-import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
-import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -66,6 +55,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
         holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
+        holder.isRanked.setImageResource(bundle.getInt("isRanked"));
         if (bundle.getBoolean("winner")) {
             holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));
         } else {
@@ -99,7 +89,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         protected TextView vChampName;
         protected TextView vMap, vDuration;
         protected TextView vKDA, vLVL, vCS, vGold;
-        protected ImageView vImageChamp;
+        protected ImageView vImageChamp, isRanked;
         protected View view;
         protected RelativeLayout relativeLayout,relativeImage;
         protected CardView cardView;
@@ -130,6 +120,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             vGold = (TextView) v.findViewById(R.id.textGold);
             vDuration = (TextView) v.findViewById(R.id.textDuration);
             vImageChamp = (ImageView) v.findViewById(R.id.imgChamp);
+            isRanked = (ImageView) v.findViewById(R.id.isRanked);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutText);
             relativeImage = (RelativeLayout) v.findViewById(R.id.RelativeLayoutImage);
         }

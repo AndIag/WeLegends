@@ -394,6 +394,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
                 data.putBoolean("winner", winner);
                 data.putString("duration", date_s + "   " + d);
+                data.putInt("isRanked", R.drawable.scoreboardicon_gold);
                 bundles.add(data);
             }
             return bundles;

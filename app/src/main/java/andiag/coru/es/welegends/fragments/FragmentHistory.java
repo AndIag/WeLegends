@@ -244,13 +244,14 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             int mapid, champId;
             long creation, duration;
             long kills, assists, deaths, minions, lvl, gold;
-            boolean winner;
+            boolean winner, isRanked;
             Calendar date = Calendar.getInstance();
             Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
             String d, date_s;
 
             for (GameDto g : recentGames.getGames()) {
+                isRanked = false;
                 champId = g.getChampionId();
                 mapid = g.getMapId();
                 lvl = g.getStats().getLevel();
@@ -262,6 +263,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 gold = g.getStats().getGoldEarned();
                 creation = g.getCreateDate();
                 duration = g.getStats().getTimePlayed();
+
+                if (g.getSubType().contains("RANKED") && !(g.getSubType().contains("UNRANKED"))) {
+                    isRanked = true;
+                }
 
                 d = String.format("%d ' %d ''",
                         TimeUnit.SECONDS.toMinutes(duration),
@@ -284,6 +289,9 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
                 data.putBoolean("winner", winner);
                 data.putString("duration", date_s + "   " + d);
+                if (isRanked) {
+                    data.putInt("isRanked", R.drawable.scoreboardicon_gold);
+                }
                 bundles.add(data);
             }
             return bundles;

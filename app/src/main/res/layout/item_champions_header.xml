@@ -5,14 +5,10 @@
     android:layout_width="360dp"
     android:layout_height="200dp"
     android:layout_margin="5dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:stateListAnimator="@anim/lift_up"
+    android:clickable="false"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="1dp"
-    card_view:cardUseCompatPadding="true"
-    card_view:contentPadding="3dp"
-    card_view:cardBackgroundColor="@color/black"
+    card_view:cardElevation="0dp"
+    card_view:contentPadding="0dp"
     card_view:cardPreventCornerOverlap="false">
 
     <RelativeLayout

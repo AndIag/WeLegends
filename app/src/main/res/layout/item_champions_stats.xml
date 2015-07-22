@@ -39,7 +39,9 @@
             android:text="24/7/48"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_above="@+id/imageView7"
-            android:layout_centerHorizontal="true" />
+            android:layout_toRightOf="@+id/imageView6"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:id="@+id/textGold"
@@ -97,10 +99,10 @@
             android:layout_height="20dp"
             android:id="@+id/imageView9"
             android:src="@drawable/tick"
-            android:layout_alignBottom="@+id/textKDA"
-            android:layout_toRightOf="@+id/textKDA"
+            android:layout_alignBottom="@+id/imageView6"
+            android:layout_toRightOf="@+id/imageView6"
             android:layout_toEndOf="@+id/textKDA"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginStart="60dp" />
 
         <ImageView

@@ -21,7 +21,8 @@ public abstract class NamesHandler {
         mapsNames.put(11, R.string.rift);
         mapsNames.put(10, R.string.tt);
         mapsNames.put(8, R.string.cs);
-        mapsNames.put(12, R.string.ha);
+        mapsNames.put(12, R.string.ha);//Puede que este mal
+        mapsNames.put(14, R.string.ha);
     }
 
     private static void initializeChampionNames() {

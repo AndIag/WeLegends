@@ -23,7 +23,8 @@ public abstract class ImagesHandler {
         maps.put(11, R.drawable.summoner_rift);
         maps.put(10, R.drawable.twisted_treeline);
         maps.put(8, R.drawable.crystal_scar);
-        maps.put(12, R.drawable.howling_abyss1);
+        maps.put(12, R.drawable.howling_abyss1);//Puede que este mal
+        maps.put(14, R.drawable.howling_abyss1);
     }
 
     private static void initializeSpells() {

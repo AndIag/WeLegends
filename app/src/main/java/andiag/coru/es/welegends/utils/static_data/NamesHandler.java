@@ -22,7 +22,7 @@ public abstract class NamesHandler {
         mapsNames.put(10, R.string.tt);
         mapsNames.put(8, R.string.cs);
         mapsNames.put(12, R.string.ha);//Puede que este mal
-        mapsNames.put(14, R.string.ha);
+        mapsNames.put(14, R.string.butcher);
     }
 
     private static void initializeChampionNames() {

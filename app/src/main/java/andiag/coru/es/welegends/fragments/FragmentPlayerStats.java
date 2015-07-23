@@ -294,9 +294,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     }
                     Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
-
-                    changeRefreshingValue(false);
                 }
+                changeRefreshingValue(false);
             }
         });
 

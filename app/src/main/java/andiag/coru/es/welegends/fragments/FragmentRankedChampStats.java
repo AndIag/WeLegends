@@ -187,9 +187,8 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     }
                     Toast.makeText(activityMain, message
                             , Toast.LENGTH_LONG).show();
-
-                    changeRefreshingValue(false);
                 }
+                changeRefreshingValue(false);
             }
         });
 

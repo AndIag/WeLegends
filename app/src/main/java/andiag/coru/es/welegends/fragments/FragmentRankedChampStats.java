@@ -274,9 +274,9 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 } else {
                     m.putInt("image", ImagesHandler.getChamp(id));
                     cs = aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled();
-                    m.putString("cs", String.format("%.2f", cs / totalGames));
+                    m.putString("cs", String.format("%.1f", cs / totalGames));
                     gold = aggregatedStatsDto.getTotalGoldEarned();
-                    m.putString("gold", String.format("%.1f", gold / totalGames)+ "k");
+                    m.putString("gold", String.format("%.1f", gold / (totalGames * 1000)) + "k");
 
                     kills = aggregatedStatsDto.getTotalChampionKills();
                     death = aggregatedStatsDto.getTotalDeathsPerSession();

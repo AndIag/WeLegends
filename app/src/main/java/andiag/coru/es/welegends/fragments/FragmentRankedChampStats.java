@@ -153,7 +153,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
     private void getChamps() {
         if (isLoading()) return;
-
         final Gson gson = new Gson();
         changeRefreshingValue(true);
 

@@ -14,6 +14,7 @@ public abstract class SwipeRefreshLayoutFragment extends Fragment {
 
     int[] colors = {R.color.swype_1, R.color.swype_2, R.color.swype_3, R.color.swype_4};
     private SwipeRefreshLayout refreshLayout;
+    private boolean isLoading = false;
 
     public SwipeRefreshLayoutFragment() {
     }
@@ -42,14 +43,12 @@ public abstract class SwipeRefreshLayoutFragment extends Fragment {
     public void changeRefreshingValue(boolean bool) {
         if (refreshLayout != null) {
             refreshLayout.setRefreshing(bool);
+            isLoading = bool;
         }
     }
 
     public boolean isLoading() {
-        if (refreshLayout != null) {
-            return refreshLayout.isRefreshing();
-        }
-        return false;
+        return isLoading;
     }
 
 }

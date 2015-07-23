@@ -114,13 +114,22 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     protected void initializeRefresh(View view) {
         setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
         setColors(null); //NULL means default colors
-        setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                leagues.clear();
-                getLeagues();
-            }
-        });
+        if (summoner.getSummonerLevel() == 30) {
+            setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    leagues.clear();
+                    getLeagues();
+                }
+            });
+        } else {
+            setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    changeRefreshingValue(false);
+                }
+            });
+        }
     }
 
     @Override
@@ -169,9 +178,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         if (imageLoader == null) {
             imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
         }
-        if (leagues.isEmpty()){
-            getLeagues();
-        } else setInfoInView();
+        if (summoner.getSummonerLevel() == 30) {
+            if (leagues.isEmpty()) {
+                getLeagues();
+            } else setInfoInView();
+        }
     }
 
     @Override //Si se ejecuta al cambiar 2 fragments para el lado
@@ -195,19 +206,34 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             txtName.setText(summoner.getName());
             txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
 
-            if (leagues != null && leagues.size() == 0) {
-                //Tenemos que cargar las ligas
-                getLeagues();
-            } else {
-                //Ya las teniamos cargadas
-                if (leagues == null) {
-                    leagues = new ArrayList<>();
+            if (summoner.getSummonerLevel() == 30) {
+                if (leagues != null && leagues.size() == 0) {
+                    //Tenemos que cargar las ligas
+                    getLeagues();
+                } else {
+                    //Ya las teniamos cargadas
+                    if (leagues == null) {
+                        leagues = new ArrayList<>();
+                    }
+                    setInfoInView();
                 }
-                setInfoInView();
+            } else {
+                setNotLVL30Info();
             }
         }
 
         return rootView;
+    }
+
+    private void setNotLVL30Info() {
+        ArrayList<Item> groups = new ArrayList<>();
+        League l = new League();
+        l.setName("UNRANKED");
+        groups.add(new ItemSection("Solo"));
+        groups.add(new ItemLeague(l));
+
+        adapter.updateItems(groups);
+        setListViewHeightBasedOnItems(listView);
     }
 
     private void setInfoInView(){
@@ -248,7 +274,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void getLeagues() {
-        if (isLoading()) return;
+        if (isLoading() || summoner.getSummonerLevel() != 30) return;
 
         changeRefreshingValue(true);
 

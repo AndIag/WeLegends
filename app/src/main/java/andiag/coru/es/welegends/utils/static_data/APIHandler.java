@@ -24,6 +24,7 @@ public class APIHandler {
     private String stats;
     private String leagues;
     private String recent_games;
+    private String champions;
 
     private APIHandler(Activity activity) {
 
@@ -43,6 +44,7 @@ public class APIHandler {
             stats = properties.getProperty("stats");
             leagues = properties.getProperty("leagues");
             recent_games = properties.getProperty("recent_games");
+            champions = properties.getProperty("champions");
 
             inputStream.close();
         } catch (IOException e) {
@@ -95,5 +97,9 @@ public class APIHandler {
 
     public String getRecent_games() {
         return recent_games;
+    }
+
+    public String getChampions() {
+        return champions;
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Iago on 25/07/2015.
  */
-public class ChampioDto implements Serializable {
+public class ChampionDto implements Serializable {
 
     private ArrayList<String> allytips;
     private String blurb;
@@ -26,7 +26,7 @@ public class ChampioDto implements Serializable {
     private ArrayList<String> tags;
     private String title;
 
-    public ChampioDto() {
+    public ChampionDto() {
     }
 
     public ArrayList<String> getAllytips() {

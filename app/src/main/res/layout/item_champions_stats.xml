@@ -36,63 +36,64 @@
             android:id="@+id/textKDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView7"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/imageView6"
-            android:layout_toRightOf="@+id/imageView6"
             android:text="24/7/48"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/imageView9"
+            android:layout_toRightOf="@+id/imageView6"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_marginLeft="20dp" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView8"
-            android:layout_alignLeft="@+id/textKDA"
-            android:layout_alignStart="@+id/textKDA"
             android:text="30/min"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textKDA"
+            android:layout_alignStart="@+id/textKDA" />
 
         <TextView
             android:id="@+id/textCS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView8"
-            android:layout_alignEnd="@+id/textGold"
-            android:layout_alignLeft="@+id/textGold"
-            android:layout_alignRight="@+id/textGold"
-            android:layout_alignStart="@+id/textGold"
             android:text="7/min"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/imageView8"
+            android:layout_alignLeft="@+id/textGold"
+            android:layout_alignStart="@+id/textGold"
+            android:layout_marginTop="5dp" />
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignTop="@+id/imgChamp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/imgChamp"
+            android:src="@drawable/icon_sword"
+            android:layout_alignTop="@+id/imgChamp"
             android:layout_toRightOf="@+id/imgChamp"
-            android:src="@drawable/scoreboardicon_score" />
+            android:layout_toEndOf="@+id/imgChamp"
+            android:layout_marginStart="20dp" />
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignLeft="@+id/imageView6"
             android:layout_alignStart="@+id/imageView6"
             android:layout_below="@+id/imageView6"
-            android:src="@drawable/scoreboardicon_gold" />
+            android:src="@drawable/icon_gold"
+            android:layout_marginTop="2dp" />
 
         <ImageView
             android:id="@+id/imageView8"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignLeft="@+id/imageView7"
             android:layout_alignStart="@+id/imageView7"
             android:layout_below="@+id/imageView7"
-            android:src="@drawable/scoreboardicon_minion" />
+            android:src="@drawable/icon_minion"
+            android:layout_marginTop="2dp" />
 
         <ImageView
             android:id="@+id/imageView9"

@@ -74,7 +74,7 @@
             android:layout_alignLeft="@+id/imageView3"
             android:layout_alignStart="@+id/imageView3"
             android:layout_alignTop="@+id/imgChamp"
-            android:src="@drawable/scoreboardicon_score" />
+            android:src="@drawable/icon_sword" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -83,7 +83,8 @@
             android:layout_alignLeft="@+id/imageView5"
             android:layout_alignStart="@+id/imageView5"
             android:layout_below="@+id/imageView4"
-            android:src="@drawable/scoreboardicon_minion" />
+            android:src="@drawable/icon_minion"
+            android:layout_marginTop="5dp" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -91,42 +92,49 @@
             android:layout_height="25dp"
             android:layout_below="@+id/imageView3"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/scoreboardicon_gold" />
+            android:src="@drawable/icon_gold"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/textKDA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView4"
-            android:layout_toEndOf="@+id/imageView4"
-            android:layout_toRightOf="@+id/imageView4"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/button_text" />
+            android:textColor="@color/button_text"
+            android:layout_alignBottom="@+id/imageView4"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/imageView4"
+            android:layout_toEndOf="@+id/imageView4" />
 
         <TextView
             android:id="@+id/textCS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView4"
-            android:layout_toEndOf="@+id/imageView4"
-            android:layout_toRightOf="@+id/imageView4"
             android:gravity="left"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/button_text" />
+            android:textColor="@color/button_text"
+            android:layout_above="@+id/imageView5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/imageView3"
+            android:layout_toEndOf="@+id/imageView3" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView3"
-            android:layout_toEndOf="@+id/imageView3"
-            android:layout_toRightOf="@+id/imageView3"
             android:gravity="left"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/button_text" />
+            android:textColor="@color/button_text"
+            android:layout_alignBottom="@+id/imageView5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/imageView5"
+            android:layout_toEndOf="@+id/imageView5" />
 
         <RelativeLayout
             android:id="@+id/RelativeLayoutText"

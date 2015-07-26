@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Created by Iago on 25/07/2015.
  */
 public class ChampionListDto implements Serializable {
-    private HashMap<Integer, ChampioDto> data;
+    private HashMap<Integer, ChampionDto> data;
     private String format;
     private HashMap<String, String> keys;
     private String type;
@@ -16,11 +16,11 @@ public class ChampionListDto implements Serializable {
     public ChampionListDto() {
     }
 
-    public HashMap<Integer, ChampioDto> getData() {
+    public HashMap<Integer, ChampionDto> getData() {
         return data;
     }
 
-    public void setData(HashMap<Integer, ChampioDto> data) {
+    public void setData(HashMap<Integer, ChampionDto> data) {
         this.data = data;
     }
 

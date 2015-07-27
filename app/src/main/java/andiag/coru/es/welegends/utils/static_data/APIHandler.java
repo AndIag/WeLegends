@@ -25,6 +25,7 @@ public class APIHandler {
     private String leagues;
     private String recent_games;
     private String champions;
+    private String versions;
 
     private APIHandler(Activity activity) {
 
@@ -45,6 +46,7 @@ public class APIHandler {
             leagues = properties.getProperty("leagues");
             recent_games = properties.getProperty("recent_games");
             champions = properties.getProperty("champions");
+            versions = properties.getProperty("versions");
 
             inputStream.close();
         } catch (IOException e) {
@@ -65,6 +67,15 @@ public class APIHandler {
             ourInstance = new APIHandler(activity);
         }
         return ourInstance;
+    }
+
+
+    public String getVersions() {
+        return versions;
+    }
+
+    public void setVersions(String versions) {
+        this.versions = versions;
     }
 
     public String getServer() {

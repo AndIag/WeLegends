@@ -122,6 +122,8 @@ public class ActivitySplashScreen extends Activity {
                                 ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                                        , Toast.LENGTH_LONG).show();
                             }
                         } else {
                             //Get champions from server
@@ -172,6 +174,8 @@ public class ActivitySplashScreen extends Activity {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                                    , Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

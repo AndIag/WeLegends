@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -54,7 +56,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vMap.setText(bundle.getInt("mapName"));
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
-        holder.vImageChamp.setImageResource(bundle.getInt("champImage"));
+        holder.vImageChamp.setImageBitmap(ChampionsHandler.getChampImage((Activity) context, bundle.getInt("champId")));
         holder.isRanked.setImageResource(bundle.getInt("isRanked"));
         if (bundle.getBoolean("winner")) {
             holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));

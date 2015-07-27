@@ -1,11 +1,18 @@
 package andiag.coru.es.welegends.utils.champions;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +27,9 @@ public abstract class ChampionsHandler {
     private static final String HISTORY_FILE_NAME = "ChampionsData";
     private static ChampionListDto champions;
     private static SharedPreferences settings;
+
+    private static ContextWrapper cw;
+    private static File directory;
 
     public static ChampionListDto getChampions() {
         return champions;
@@ -109,6 +119,25 @@ public abstract class ChampionsHandler {
 
     public static String getChampKey(int id) {
         return champions.getData().get(id).getKey();
+    }
+
+    public static Bitmap getChampImage(Activity activity, int id) {
+        if (cw == null) {
+            cw = new ContextWrapper(activity.getApplicationContext());
+        }
+        if (directory == null) {
+            directory = cw.getDir("Images", Context.MODE_PRIVATE);
+        }
+
+        File f = new File(directory, id + ".png");
+        Bitmap b = null;
+        try {
+            b = BitmapFactory.decodeStream(new FileInputStream(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 
 }

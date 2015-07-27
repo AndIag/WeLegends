@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 
 /**
  * Created by andyq on 21/07/2015.
@@ -73,7 +75,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textD.setText(item.getString("defeats"));
             h.textV.setText(item.getString("victories"));
             h.textKDA.setText(item.getString("kda"));
-            h.imageChamp.setImageResource(item.getInt("image"));
+            h.imageChamp.setImageBitmap(ChampionsHandler.getChampImage((Activity) context, item.getInt("imageId")));
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.

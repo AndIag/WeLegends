@@ -385,7 +385,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data = new Bundle();
                 data.putLong("matchId", m.getMatchId());
                 data.putString("champName", ChampionsHandler.getChampName(champId));
-                data.putInt("champImage", ImagesHandler.getChamp(champId));
+                //data.putInt("champImage", ImagesHandler.getChamp(champId));
+                data.putInt("champId", champId);
                 data.putInt("mapName", NamesHandler.getMapName(mapid));
                 data.putInt("mapImage", ImagesHandler.getMap(mapid));
                 data.putString("kda", kills + "/" + deaths + "/" + assists);

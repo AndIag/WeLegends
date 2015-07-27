@@ -3,6 +3,7 @@ package andiag.coru.es.welegends.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.champions.TaskGetChamImg;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -43,6 +45,12 @@ public class ActivitySplashScreen extends Activity {
     private ProgressBar progressBar;
     private TextView textView;
     private Activity activity;
+
+    public void setProgressText(String text) {
+        if (textView != null) {
+            textView.setText(text);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +81,6 @@ public class ActivitySplashScreen extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -81,7 +88,7 @@ public class ActivitySplashScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void startActivity() {
+    public void startActivity() {
         Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
         startActivity(mainIntent);
         finish();
@@ -168,7 +175,7 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
-                            startActivity();
+                            new TaskGetChamImg(activity, ChampionsHandler.getChampions().getData(), ChampionsHandler.getServerVersion(activity)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)

@@ -36,7 +36,6 @@ import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
-import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /**
  * Created by Iago on 11/07/2015.
@@ -271,7 +270,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     }
 
                 } else {
-                    m.putInt("image", ImagesHandler.getChamp(id));
+                    m.putInt("imageId", id);
                     cs = aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled();
                     m.putString("cs", String.format("%.1f", cs / totalGames));
                     gold = aggregatedStatsDto.getTotalGoldEarned();

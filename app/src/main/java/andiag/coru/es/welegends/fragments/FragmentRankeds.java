@@ -43,6 +43,7 @@ import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.ChampionsHandler;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
@@ -383,7 +384,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
                 data = new Bundle();
                 data.putLong("matchId", m.getMatchId());
-                data.putString("champName", NamesHandler.getChampName(champId));
+                data.putString("champName", ChampionsHandler.getChampName(champId));
                 data.putInt("champImage", ImagesHandler.getChamp(champId));
                 data.putInt("mapName", NamesHandler.getMapName(mapid));
                 data.putInt("mapImage", ImagesHandler.getMap(mapid));

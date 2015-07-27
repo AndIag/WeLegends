@@ -16,4 +16,9 @@ public abstract class ChampionsHandler {
         champions = c;
     }
 
+    public static String getChampName(int id) {
+        if (champions == null) return "NOT FOUND";
+        return champions.getData().get(id).getName();
+    }
+
 }

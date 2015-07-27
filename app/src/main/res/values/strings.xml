@@ -72,4 +72,9 @@
     <string name="level">Level</string>
     <string name="section_champs">CHAMPION STATS</string>
     <string name="butcher">Butcher’s Bridge</string>
+    <string name="penta">Pentakills</string>
+    <string name="quadra">Quadrakills</string>
+    <string name="triple">Triplekills</string>
+    <string name="doble">Doublekills</string>
+    <string name="single">Kills</string>
 </resources>

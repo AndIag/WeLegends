@@ -107,4 +107,8 @@ public abstract class ChampionsHandler {
         return champions.getData().get(id).getName();
     }
 
+    public static String getChampKey(int id) {
+        return champions.getData().get(id).getKey();
+    }
+
 }

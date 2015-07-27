@@ -117,6 +117,7 @@ public class ActivitySplashScreen extends Activity {
                                 e.printStackTrace();
                                 Toast.makeText(activity, getResources().getString(R.string.internalServerError)
                                         , Toast.LENGTH_LONG).show();
+                                activity.finish();
                             }
                         } else {
                             //Get champions from server
@@ -172,6 +173,7 @@ public class ActivitySplashScreen extends Activity {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)
                                     , Toast.LENGTH_LONG).show();
+                            activity.finish();
                         }
                     }
                 }, new Response.ErrorListener() {

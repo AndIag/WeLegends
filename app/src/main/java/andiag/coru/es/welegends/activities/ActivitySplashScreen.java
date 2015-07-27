@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -116,8 +118,13 @@ public class ActivitySplashScreen extends Activity {
                         ArrayList<String> versions = gson.fromJson(response.toString()
                                 , new TypeToken<ArrayList<String>>() {
                         }.getType());
-                        if (versions != null && versions.get(0).equals(ChampionsHandler.getVersion(activity))) {
-                            ChampionsHandler.setChampions(null); //Initialize champions with our static data
+                        if (versions != null && versions.get(0).equals(ChampionsHandler.getServerVersion(activity))) {
+                            try {
+                                ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
+                            } catch (JSONException e) {
+                                Log.d("CRASH", "STATIC LOAD CHAMPIONS");
+                                e.printStackTrace();
+                            }
                         } else {
                             //Get champions from server
                             getChampionsFromServer();
@@ -163,7 +170,12 @@ public class ActivitySplashScreen extends Activity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class));
+                        try {
+                            ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
+                        } catch (JSONException e) {
+                            Log.d("CRASH", "DINAMIC LOAD CHAMPIONS");
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -26,9 +26,9 @@ import java.util.TimerTask;
 
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
-import andiag.coru.es.welegends.utils.static_data.ChampionsHandler;
 
 /**
  * Created by Andy on 26/06/2015.

@@ -27,9 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
@@ -42,7 +39,6 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
  */
 public class ActivitySplashScreen extends Activity {
 
-    private static final long SPLASH_SCREEN_DELAY = 2000;
     private String request;
     private ProgressBar progressBar;
     private TextView textView;
@@ -51,8 +47,6 @@ public class ActivitySplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Get actual time
-        long t = Calendar.getInstance().getTimeInMillis();
-
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -63,23 +57,6 @@ public class ActivitySplashScreen extends Activity {
 
         APIHandler.getInstance(this);
         getVersion();
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                //Iniciar actividad principal y finalizar splash
-                Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
-                startActivity(mainIntent);
-                finish();
-            }
-        };
-
-        //Set the new delay time
-        long delay = SPLASH_SCREEN_DELAY - (Calendar.getInstance().getTimeInMillis() - t);
-        if (delay > 0) {
-            Timer timer = new Timer();
-            timer.schedule(task, delay);
-        }
     }
 
     @Override
@@ -102,6 +79,12 @@ public class ActivitySplashScreen extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startActivity() {
+        Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
+        startActivity(mainIntent);
+        finish();
     }
 
     private void getVersion() {
@@ -129,8 +112,11 @@ public class ActivitySplashScreen extends Activity {
                         if (versions != null && versions.get(0).equals(ChampionsHandler.getServerVersion(activity))) {
                             try {
                                 ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
+                                startActivity();
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                                        , Toast.LENGTH_LONG).show();
                             }
                         } else {
                             //Get champions from server
@@ -181,8 +167,11 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
+                            startActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                                    , Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

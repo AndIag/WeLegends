@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -40,7 +43,9 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 public class ActivitySplashScreen extends Activity {
 
     private static final long SPLASH_SCREEN_DELAY = 2000;
-    String request;
+    private String request;
+    private ProgressBar progressBar;
+    private TextView textView;
     private Activity activity;
 
     @Override
@@ -50,13 +55,14 @@ public class ActivitySplashScreen extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_splash_screen);
+        progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
+        textView = (TextView) this.findViewById(R.id.loadingText);
+
+
         APIHandler.getInstance(this);
         getVersion();
-
-        //Poner pantalla vertical
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        setContentView(R.layout.activity_splash_screen);
 
         TimerTask task = new TimerTask() {
             @Override
@@ -110,6 +116,9 @@ public class ActivitySplashScreen extends Activity {
 
         request = handler.getServer() + handler.getVersions();
 
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setText(getResources().getString(R.string.checkingVersion));
+
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -122,8 +131,6 @@ public class ActivitySplashScreen extends Activity {
                                 ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(activity, getResources().getString(R.string.internalServerError)
-                                        , Toast.LENGTH_LONG).show();
                             }
                         } else {
                             //Get champions from server
@@ -153,7 +160,6 @@ public class ActivitySplashScreen extends Activity {
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
-
     }
 
     private void getChampionsFromServer() {
@@ -166,6 +172,9 @@ public class ActivitySplashScreen extends Activity {
 
         request = handler.getServer() + handler.getChampions();
 
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setText(getResources().getString(R.string.loadNames));
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -174,8 +183,6 @@ public class ActivitySplashScreen extends Activity {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(activity, getResources().getString(R.string.internalServerError)
-                                    , Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {

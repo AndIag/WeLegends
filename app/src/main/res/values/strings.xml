@@ -72,4 +72,6 @@
     <string name="level">Level</string>
     <string name="section_champs">CHAMPION STATS</string>
     <string name="butcher">Butcher’s Bridge</string>
+    <string name="checkingVersion">Checking Server Version</string>
+    <string name="loadNames">Loading Champ Names</string>
 </resources>

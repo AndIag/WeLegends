@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,12 +13,16 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpStatus;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,8 +39,8 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 public class ActivitySplashScreen extends Activity {
 
     private static final long SPLASH_SCREEN_DELAY = 2000;
+    String request;
     private Activity activity;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class ActivitySplashScreen extends Activity {
         super.onCreate(savedInstanceState);
 
         APIHandler.getInstance(this);
-        initializeChampionsFromServer();
+        getVersion();
 
         //Poner pantalla vertical
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -94,23 +97,73 @@ public class ActivitySplashScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initializeChampionsFromServer() {
+    private void getVersion() {
         final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
         if (handler == null) {
             handler = APIHandler.getInstance(this);
         }
+
         activity = this;
 
-        String request = handler.getServer() + handler.getChampions();
+        request = handler.getServer() + handler.getVersions();
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, request, (String) null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ArrayList<String> versions = gson.fromJson(response.toString()
+                                , new TypeToken<ArrayList<String>>() {
+                        }.getType());
+                        if (versions != null && versions.get(0).equals(ChampionsHandler.getVersion(activity))) {
+                            ChampionsHandler.setChampions(null); //Initialize champions with our static data
+                        } else {
+                            //Get champions from server
+                            getChampionsFromServer();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null) {
+                    String message = activity.getString(R.string.errorDefault);
+                    switch (networkResponse.statusCode) {
+                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
+                            message = activity.getString(R.string.error500);
+                            break;
+                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
+                            message = activity.getString(R.string.error503);
+                            break;
+                    }
+                    Toast.makeText(activity, message
+                            , Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+    private void getChampionsFromServer() {
+        final Gson gson = new Gson();
+
+        APIHandler handler = APIHandler.getInstance();
+        if (handler == null) {
+            handler = APIHandler.getInstance(this);
+        }
+
+        request = handler.getServer() + handler.getChampions();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class));
-                        Log.d("DONE", "DONE");
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -136,5 +189,6 @@ public class ActivitySplashScreen extends Activity {
 
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
+
 
 }

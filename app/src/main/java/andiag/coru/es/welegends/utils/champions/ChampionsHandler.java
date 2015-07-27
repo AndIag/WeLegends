@@ -1,5 +1,8 @@
 package andiag.coru.es.welegends.utils.champions;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 
 /**
@@ -28,6 +31,11 @@ public abstract class ChampionsHandler {
 
     private static void saveChampionsInFile() {
 
+    }
+
+    public static String getVersion(Activity activity) {
+        SharedPreferences settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
+        return settings.getString("version", "0");
     }
 
     public static String getChampName(int id) {

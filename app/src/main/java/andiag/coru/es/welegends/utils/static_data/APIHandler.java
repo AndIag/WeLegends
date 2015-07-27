@@ -74,10 +74,6 @@ public class APIHandler {
         return versions;
     }
 
-    public void setVersions(String versions) {
-        this.versions = versions;
-    }
-
     public String getServer() {
         return server;
     }

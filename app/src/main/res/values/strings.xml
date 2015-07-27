@@ -74,4 +74,9 @@
     <string name="butcher">Butcher’s Bridge</string>
     <string name="checkingVersion">Checking Server Version</string>
     <string name="loadNames">Loading Champ Names</string>
+    <string name="penta">Pentakills</string>
+    <string name="quadra">Quadrakills</string>
+    <string name="triple">Triplekills</string>
+    <string name="doble">Doublekills</string>
+    <string name="single">Kills</string>
 </resources>

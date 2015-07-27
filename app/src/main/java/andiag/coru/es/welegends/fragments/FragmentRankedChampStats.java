@@ -252,6 +252,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 m.putString("defeats", String.valueOf((int) lost));
                 totalGames = wins + lost;
 
+
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
                     kills = aggregatedStatsDto.getTotalChampionKills();
@@ -287,6 +288,12 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                         maxGamesPlayed = (int) (wins + lost);
                         maxUsedChamp = id;
                     }
+                    m.putString("penta",Integer.toString(aggregatedStatsDto.getTotalPentaKills()));
+                    m.putString("quadra",Integer.toString(aggregatedStatsDto.getTotalQuadraKills()));
+                    m.putString("triple",Integer.toString(aggregatedStatsDto.getTotalTripleKills()));
+                    m.putString("double",Integer.toString(aggregatedStatsDto.getTotalDoubleKills()));
+                    m.putString("kills",Integer.toString(aggregatedStatsDto.getTotalChampionKills()));
+
                     bundles.add(m);
                 }
             }

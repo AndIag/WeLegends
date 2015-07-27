@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -122,7 +121,6 @@ public class ActivitySplashScreen extends Activity {
                             try {
                                 ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
                             } catch (JSONException e) {
-                                Log.d("CRASH", "STATIC LOAD CHAMPIONS");
                                 e.printStackTrace();
                             }
                         } else {
@@ -173,7 +171,6 @@ public class ActivitySplashScreen extends Activity {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
                         } catch (JSONException e) {
-                            Log.d("CRASH", "DINAMIC LOAD CHAMPIONS");
                             e.printStackTrace();
                         }
                     }

@@ -2,7 +2,6 @@ package andiag.coru.es.welegends.utils.champions;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,12 +27,10 @@ public abstract class ChampionsHandler {
 
     public static void setChampions(ChampionListDto c, Activity activity) throws JSONException {
         if (c != null) {
-            Log.d("DINAMIC", "DINAMIC LOAD");
             champions = c;
             saveChampionsInFile(activity);
             return;
         }
-        Log.d("STATIC", "STATIC LOAD");
         retrieveChampionsFromFile(activity);
     }
 

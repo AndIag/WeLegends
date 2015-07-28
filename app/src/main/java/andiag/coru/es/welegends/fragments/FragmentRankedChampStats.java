@@ -37,6 +37,7 @@ import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
  * Created by Iago on 11/07/2015.
@@ -50,6 +51,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
     private DisplayMetrics outMetrics;
     private Display display;
     private AdapterRankedChamps adapter;
+    private ScaleInAnimationAdapter scaleAdapter;
 
     private RankedStatsDto rankedStatsDto;
     private String region;
@@ -96,6 +98,8 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
         adapter = new AdapterRankedChamps(getActivity());
+        scaleAdapter = new ScaleInAnimationAdapter(adapter);
+        scaleAdapter.setFirstOnly(false);
     }
 
     @Override
@@ -105,6 +109,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             getChamps();
         } else {
             adapter.clearChamps();
+            scaleAdapter.notifyDataSetChanged();
             new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -117,6 +122,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             @Override
             public void onRefresh() {
                 adapter.clearChamps();
+                scaleAdapter.notifyDataSetChanged();
                 getChamps();
             }
         });
@@ -146,7 +152,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(scaleAdapter);
 
         return rootView;
     }
@@ -307,6 +313,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             super.onPostExecute(bundles);
             if (adapter != null) {
                 adapter.updateChamps(bundles);
+                scaleAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
         }

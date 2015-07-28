@@ -140,6 +140,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Intent i = new Intent(thisActivity, ActivitySplashScreen.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra("loadData", true);
                     startActivity(i);
                     thisActivity.finish();

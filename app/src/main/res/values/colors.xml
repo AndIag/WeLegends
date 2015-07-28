@@ -35,10 +35,10 @@
     <color name="white_20">#33FFFFFF</color>
     <color name="transparent">#00000000</color>
 
-    <color name="win">#CC76FF03</color>
+    <color name="win">#8BC34A</color>
     <color name="winDarker">#689F38</color>
-    <color name="lose">#88607D8B</color>
-    <color name="loseDarker">#455A64</color>
+    <color name="lose">#F44336</color>
+    <color name="loseDarker">#C62828</color>
 
     <color name="swype_1">#ff92ff2f</color>
     <color name="swype_2">#ffffbc00</color>

@@ -149,6 +149,7 @@ public class ActivitySplashScreen extends Activity {
                                     ActivitySplashScreen.this.finish();
                                 }
                             });
+                            builder.setCancelable(false);
                             builder.show();
                         }
                     }

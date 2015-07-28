@@ -40,7 +40,6 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 import andiag.coru.es.welegends.utils.static_data.NamesHandler;
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
@@ -105,6 +104,13 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
+
+        if (recyclerAdapter == null) {
+            recyclerAdapter = new AdapterHistory(activityMain);
+            scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
+            scaleAdapter.setFirstOnly(false);
+        }
+
     }
 
     @Override
@@ -157,12 +163,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         layoutManager = new GridLayoutManager(activityMain, columns);
 
         recyclerView.setLayoutManager(layoutManager);
-
-        if (recyclerAdapter == null) {
-            recyclerAdapter = new AdapterHistory(activityMain);
-            scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
-            scaleAdapter.setFirstOnly(false);
-        }
 
         recyclerView.setAdapter(scaleAdapter);
 

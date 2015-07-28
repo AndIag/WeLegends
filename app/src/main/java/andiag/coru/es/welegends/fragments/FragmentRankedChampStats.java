@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
@@ -96,9 +92,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
-        adapter = new AdapterRankedChamps(getActivity());
-        scaleAdapter = new ScaleInAnimationAdapter(adapter);
-        scaleAdapter.setFirstOnly(false);
+        if (adapter == null) {
+            adapter = new AdapterRankedChamps(getActivity());
+            scaleAdapter = new ScaleInAnimationAdapter(adapter);
+            scaleAdapter.setFirstOnly(false);
+        }
     }
 
     @Override

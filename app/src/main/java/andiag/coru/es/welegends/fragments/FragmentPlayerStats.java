@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
@@ -236,7 +237,17 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         stats.add(getProfileBundle());
 
         League l = new League();
-        l.setName("UNRANKED");
+        Entry e = new Entry();
+        e.setDivision("");
+        e.setWins(0);
+        e.setLosses(0);
+        e.setPlayerOrTeamName(summoner.getName());
+        e.setLeaguePoints(0);
+        l.setName(summoner.getName());
+        l.setTier("Unranked");
+        List list = new ArrayList<Entry>();
+        list.add(e);
+        l.setEntries(list);
 
         stats.add(getDividerBundle("Solo"));
         stats.add(getItemBundle(l));

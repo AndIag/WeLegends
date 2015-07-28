@@ -64,9 +64,14 @@ public class ActivitySplashScreen extends Activity {
         progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
         textView = (TextView) this.findViewById(R.id.loadingText);
 
-
         APIHandler.getInstance(this);
-        getVersion();
+        activity = this;
+
+        if (getIntent().getExtras() != null) {
+            getChampionsFromServer(true);
+        } else {
+            getVersion();
+        }
     }
 
     @Override
@@ -96,10 +101,6 @@ public class ActivitySplashScreen extends Activity {
         finish();
     }
 
-    public void showDialog() {
-
-    }
-
     private void getVersion() {
         final Gson gson = new Gson();
 
@@ -107,8 +108,6 @@ public class ActivitySplashScreen extends Activity {
         if (handler == null) {
             handler = APIHandler.getInstance(this);
         }
-
-        activity = this;
 
         request = handler.getServer() + handler.getVersions();
 
@@ -141,7 +140,7 @@ public class ActivitySplashScreen extends Activity {
                             builder.setMessage(activity.getResources().getString(R.string.dialogDownloadMsg));
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    getChampionsFromServer();
+                                    getChampionsFromServer(false);
                                 }
                             });
                             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -178,7 +177,7 @@ public class ActivitySplashScreen extends Activity {
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
 
-    private void getChampionsFromServer() {
+    private void getChampionsFromServer(final boolean reload) {
         final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
@@ -197,7 +196,7 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
-                            new TaskGetChamImg(activity, ChampionsHandler.getChampions().getData(), ChampionsHandler.getServerVersion(activity)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new TaskGetChamImg(activity, ChampionsHandler.getChampions().getData(), ChampionsHandler.getServerVersion(activity), reload).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)

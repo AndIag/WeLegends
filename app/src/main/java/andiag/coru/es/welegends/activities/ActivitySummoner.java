@@ -1,6 +1,9 @@
 package andiag.coru.es.welegends.activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -41,6 +44,7 @@ import andiag.coru.es.welegends.utils.static_data.APIHandler;
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
     private static ActivityMain activityMain;
+    private static Activity thisActivity;
     private String region;
     private boolean isLoading = false;
     private ArrayList<SummonerHistoryDto> history;
@@ -56,6 +60,8 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_summoner);
 
+        thisActivity = this;
+
         getWindow().setBackgroundDrawable(null);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -64,7 +70,9 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         spinner.setOnItemSelectedListener(this);
 
         listSummoners = (ListView) findViewById(R.id.listViewSummHistory);
-        adapter = new AdapterSummoner(this);
+        if (adapter == null) {
+            adapter = new AdapterSummoner(this);
+        }
         listSummoners.setAdapter(adapter);
 
         listSummoners.setOnItemClickListener(this);
@@ -119,7 +127,27 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         //About Dialog
         if (id == R.id.action_about) {
             DialogAbout dialogAbout = DialogAbout.newInstance();
-            //dialogAbout.show(this.getFragmentManager(), "DialogAbout");
+            dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
+            return true;
+        }
+
+        if (id == R.id.action_update) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(getResources().getString(R.string.dialogDownloadTitle));
+
+            builder.setMessage(getResources().getString(R.string.dialogDownloadMsg));
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent i = new Intent(thisActivity, ActivitySplashScreen.class);
+                    i.putExtra("loadData", true);
+                    startActivity(i);
+                    thisActivity.finish();
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.setCancelable(true);
+            builder.show();
             return true;
         }
 

@@ -59,7 +59,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private final int INCREMENT = 10;
     //VIEW DATA
     private ScaleInAnimationAdapter scaleAdapter;
-    private AlphaInAnimationAdapter alphaAdapter;
     private ObservableRecyclerView recyclerView;
     private AdapterHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
@@ -163,7 +162,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 //Clear our adapter
                 recyclerAdapter.clearHistory();
                 scaleAdapter.notifyDataSetChanged();
-                alphaAdapter.notifyDataSetChanged();
                 //Load new values
                 startIndex();
                 getSummonerHistory();
@@ -214,10 +212,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         if (recyclerAdapter == null) {
             recyclerAdapter = new AdapterHistory(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
-            alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
-            alphaAdapter.setFirstOnly(false);
         }
-        recyclerView.setAdapter(alphaAdapter);
+        recyclerView.setAdapter(scaleAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
@@ -407,7 +403,6 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             if (recyclerAdapter != null) {
                 recyclerAdapter.updateHistory(bundles);
                 scaleAdapter.notifyDataSetChanged();
-                alphaAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
         }

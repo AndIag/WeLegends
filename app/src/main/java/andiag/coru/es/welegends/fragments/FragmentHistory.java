@@ -54,7 +54,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
     private ObservableRecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private ScaleInAnimationAdapter scaleAdapter;
-    private AlphaInAnimationAdapter alphaAdapter;
     private AdapterHistory recyclerAdapter;
     //METRICS
     private DisplayMetrics outMetrics;
@@ -129,7 +128,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 //Clear our adapter
                 recyclerAdapter.clearHistory();
                 scaleAdapter.notifyDataSetChanged();
-                alphaAdapter.notifyDataSetChanged();
                 //Load new values
                 getSummonerHistory();
             }
@@ -163,11 +161,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
         if (recyclerAdapter == null) {
             recyclerAdapter = new AdapterHistory(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
-            alphaAdapter = new AlphaInAnimationAdapter(scaleAdapter);
-            alphaAdapter.setFirstOnly(false);
+            scaleAdapter.setFirstOnly(false);
         }
 
-        recyclerView.setAdapter(alphaAdapter);
+        recyclerView.setAdapter(scaleAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
@@ -303,7 +300,6 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
             if (recyclerAdapter != null) {
                 recyclerAdapter.updateHistory(bundles);
                 scaleAdapter.notifyDataSetChanged();
-                alphaAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
         }

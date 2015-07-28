@@ -5,91 +5,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="andiag.coru.es.welegends.fragments.FragmentRankeds">
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:scrollbars="vertical">
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/u"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <andiag.coru.es.welegends.utils.CircledNetworkImageView
-            android:id="@+id/imageSummoner"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-        <TextView
-            android:id="@+id/textSummonerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageSummoner"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_toRightOf="@+id/imageSummoner"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textSummonerName"
-            android:layout_alignLeft="@+id/textSummonerName"
-            android:layout_alignRight="@+id/textSummonerName"
-            android:layout_alignStart="@+id/textSummonerName"
-            android:layout_below="@+id/textSummonerName"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textServer"
-            android:layout_alignLeft="@+id/textServer"
-            android:layout_alignRight="@+id/textServer"
-            android:layout_alignStart="@+id/textServer"
-            android:layout_below="@+id/textServer"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageSummoner"
-            android:layout_alignStart="@+id/imageSummoner"
-            android:layout_below="@id/imageSummoner"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/black" />
-
-
-        <ListView
-            android:id="@+id/listViewLeagues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/textView9"
-            android:layout_marginTop="10dp"
-            android:dividerHeight="2dp"
-            android:divider="@color/posT0" />
-
-    </RelativeLayout>
-
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+        android:scrollbars="vertical"/>
 </android.support.v4.widget.SwipeRefreshLayout>

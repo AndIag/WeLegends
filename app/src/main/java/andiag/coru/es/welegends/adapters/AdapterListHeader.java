@@ -60,7 +60,7 @@ public class AdapterListHeader extends BaseAdapter {
         //if (i != null) {
             if(i.isSection()){
                 ItemSection si = (ItemSection)i;
-                if (v == null) v = vi.inflate(R.layout.item_group, null);
+                if (v == null) v = vi.inflate(R.layout.item_player_divider, null);
                 TextView sectionView =
                         (TextView) v.findViewById(R.id.textGroup);
                 sectionView.setText(si.getName());
@@ -78,7 +78,7 @@ public class AdapterListHeader extends BaseAdapter {
                     textDiv.setText("UNRANKED");
                     image.setImageResource(R.drawable.unranked);
                 } else {
-                    if (v == null) v = vi.inflate(R.layout.item_league, null);
+                    if (v == null) v = vi.inflate(R.layout.item_player_item, null);
                     image = (ImageView) v.findViewById(R.id.imageRanked);
                     textDiv = (TextView) v.findViewById(R.id.textDivision);
                     TextView textName = (TextView) v.findViewById(R.id.textTeamName);

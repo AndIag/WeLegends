@@ -3,6 +3,7 @@ package andiag.coru.es.welegends.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpStatus;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterListHeader;
+import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
+import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.ItemLeague;
 import andiag.coru.es.welegends.entities.ItemSection;
 import andiag.coru.es.welegends.entities.League;
@@ -38,6 +42,7 @@ import andiag.coru.es.welegends.entities.utils.Item;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
  * Created by Iago on 11/07/2015.
@@ -50,8 +55,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private View rootView;
     private ImageLoader imageLoader;
     private APIHandler apiHandler;
-    private AdapterListHeader adapter;
-    private ListView listView;
+    private AdapterPlayerStats adapter;
+    private ScaleInAnimationAdapter scaleAdapter;
+    private ObservableRecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
     //ARGUMENTS
     private Summoner summoner;
     private String region;
@@ -163,7 +170,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
-        adapter = new AdapterListHeader(activityMain);
+        adapter = new AdapterPlayerStats(activityMain);
+        scaleAdapter = new ScaleInAnimationAdapter(adapter);
     }
 
     @Override
@@ -191,20 +199,18 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         initializeRefresh(rootView);
 
-        CircledNetworkImageView networkImg = (CircledNetworkImageView) rootView.findViewById(R.id.imageSummoner);
-        networkImg.setErrorImageResId(R.drawable.item_default);
-        networkImg.setDefaultImageResId(R.drawable.item_default);
+        recyclerView = (ObservableRecyclerView) rootView.findViewById(R.id.scroll);
 
-        TextView txtName = (TextView) rootView.findViewById(R.id.textSummonerName);
-        TextView txtLevel = (TextView) rootView.findViewById(R.id.textLevel);
+        layoutManager = new LinearLayoutManager(activityMain);
 
-        listView = (ListView) rootView.findViewById(R.id.listViewLeagues);
-        listView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(scaleAdapter);
 
         if (summoner != null) {
-            networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
-            txtName.setText(summoner.getName());
-            txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
+            //networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
+            //txtName.setText(summoner.getName());
+            //txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
 
             if (summoner.getSummonerLevel() == 30) {
                 if (leagues != null && leagues.size() == 0) {
@@ -226,50 +232,103 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void setNotLVL30Info() {
-        ArrayList<Item> groups = new ArrayList<>();
+        ArrayList<Bundle> stats = new ArrayList<>();
+        stats.add(getProfileBundle());
+
         League l = new League();
         l.setName("UNRANKED");
-        groups.add(new ItemSection("Solo"));
-        groups.add(new ItemLeague(l));
 
-        adapter.updateItems(groups);
-        setListViewHeightBasedOnItems(listView);
+        stats.add(getDividerBundle("Solo"));
+        stats.add(getItemBundle(l));
+
+        adapter.updateStats(stats);
+        scaleAdapter.notifyDataSetChanged();
+        //setListViewHeightBasedOnItems(listView);
     }
 
     private void setInfoInView(){
+        ArrayList<Bundle> stats = new ArrayList<>();
+
+
+        stats.add(getProfileBundle());
 
         int pos5 = -1, pos3 = -1;
 
         ArrayList<Item> groups = new ArrayList<>();
 
-        Item itemSection;
+        Bundle index;
         for(League l : leagues){
             switch (l.getQueue()){
                 case "RANKED_SOLO_5x5":
-                    groups.add(new ItemSection("Solo"));
-                    groups.add(new ItemLeague(l));
+
+                    stats.add(getDividerBundle("Solo"));
+
+                    stats.add(getItemBundle(l));
                     break;
                 case "RANKED_TEAM_3x3":
                     if (pos3 < 0) {
-                        itemSection = new ItemSection("Team 3vs3");
-                        groups.add(itemSection);
-                        pos3 = groups.indexOf(itemSection);
+                        index = getDividerBundle("Teams 3vs3");
+                        stats.add(index);
+                        pos3 = stats.indexOf(index);
                     }
-                    groups.add(pos3 + 1, new ItemLeague(l));
+                    if((pos3+1)<=pos5) pos5++;
+
+                    stats.add(pos3 + 1, getItemBundle(l));
                     break;
                 case "RANKED_TEAM_5x5":
                     if (pos5 < 0) {
-                        itemSection = new ItemSection("Team 5vs5");
-                        groups.add(itemSection);
-                        pos5 = groups.indexOf(itemSection);
+                        index = getDividerBundle("Teams 5vs5");
+                        stats.add(index);
+                        pos5 = stats.indexOf(index);
                     }
-                    groups.add(pos5 + 1, new ItemLeague(l));
+                    if((pos5+1)<=pos3) pos3++;
+
+                    stats.add(pos5 + 1, getItemBundle(l));
                     break;
             }
         }
 
-        adapter.updateItems(groups);
-        setListViewHeightBasedOnItems(listView);
+        adapter.updateStats(stats);
+        scaleAdapter.notifyDataSetChanged();
+        scaleAdapter.setFirstOnly(false);
+        //setListViewHeightBasedOnItems(listView);
+
+    }
+
+    private Bundle getDividerBundle(String title){
+        Bundle b = new Bundle();
+        b.putString("divider",title);
+        b.putInt("type", AdapterPlayerStats.TYPE_DIVIDER);
+        return b;
+    }
+
+    private Bundle getProfileBundle(){
+        Bundle b = new Bundle();
+        b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
+        b.putString("summoner", summoner.getName());
+        b.putString("server", region.toUpperCase());
+        b.putString("url",apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId());
+        b.putInt("type", AdapterPlayerStats.TYPE_HEADER);
+        return b;
+    }
+
+    private Bundle getItemBundle(League l){
+
+        Bundle item = new Bundle();
+        Entry entry = l.getEntries().get(0);
+        item.putString("division", l.getTier() + " " + entry.getDivision());
+        item.putString("divname",l.getName());
+        item.putString("wins",Integer.toString(entry.getWins()));
+        item.putString("losses",Integer.toString(entry.getLosses()));
+        item.putString("lp",Integer.toString(entry.getLeaguePoints()));
+        item.putString("name",entry.getPlayerOrTeamName());
+        item.putInt("type",AdapterPlayerStats.TYPE_ITEM);
+
+        String imres = l.getTier() + entry.getDivision();
+        int id = activityMain.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
+        item.putInt("image",id);
+
+        return item;
 
     }
 

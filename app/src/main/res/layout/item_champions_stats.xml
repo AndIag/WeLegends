@@ -99,12 +99,12 @@
             android:id="@+id/imageView9"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_alignBottom="@+id/imageView6"
-            android:layout_marginLeft="150dp"
-            android:layout_marginStart="60dp"
-            android:layout_toEndOf="@+id/textKDA"
-            android:layout_toRightOf="@+id/imageView6"
-            android:src="@drawable/tick" />
+            android:src="@drawable/tick"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_above="@+id/imageView7"
+            android:layout_toLeftOf="@+id/textV"
+            android:layout_toStartOf="@+id/textV" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -122,10 +122,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/textKDA"
-            android:layout_toRightOf="@+id/imageView9"
             android:gravity="center"
             android:text="30"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_marginRight="16dp"
+            android:layout_above="@+id/imageView7" />
 
         <TextView
             android:id="@+id/textD"
@@ -138,7 +139,8 @@
             android:layout_alignStart="@+id/textV"
             android:gravity="center"
             android:text="23"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/imageView10" />
 
     </RelativeLayout>
 

@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,28 +98,6 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             int myWidth = 650;
             int myHeight = 384;
             String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_0.jpg";
-            Log.d("PONIENDO BACK", championImg);
-            /*
-            Picasso.with(context).load("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg)
-                    .resize(myWidth,myHeight).into(new Target() {
-
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    Log.d("LOADING IMAGE", "IMGAGELDFKJLSDKFJ");
-                    h.background.setBackground(new BitmapDrawable(context.getResources(), bitmap));
-                }
-
-                @Override
-                public void onBitmapFailed(final Drawable errorDrawable) {
-                    Log.d("LOADING IMAGE", "FAILED");
-                }
-
-                @Override
-                public void onPrepareLoad(final Drawable placeHolderDrawable) {
-                    Log.d("LOADING IMAGE", "Prepare Load");
-                }
-            });
-            */
 
             imageLoader.get("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,
                     new ImageLoader.ImageListener() {

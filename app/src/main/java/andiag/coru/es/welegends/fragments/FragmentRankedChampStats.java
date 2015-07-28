@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -46,10 +47,8 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
     private static ActivityMain activityMain;
     private ObservableRecyclerView recyclerView;
-    private GridLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     //METRICS
-    private DisplayMetrics outMetrics;
-    private Display display;
     private AdapterRankedChamps adapter;
     private ScaleInAnimationAdapter scaleAdapter;
 
@@ -136,19 +135,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
         initializeRefresh(rootView);
 
-        recyclerView.setHasFixedSize(true);
-
-        display = activityMain.getWindowManager().getDefaultDisplay();
-        if (outMetrics == null) {
-            outMetrics = new DisplayMetrics();
-        }
-        display.getMetrics(outMetrics);
-
-        float density = activityMain.getResources().getDisplayMetrics().density;
-        float dpWidth = outMetrics.widthPixels / density;
-        int columns = Math.round(dpWidth / 300);
-
-        layoutManager = new GridLayoutManager(activityMain, columns);
+        layoutManager = new LinearLayoutManager(activityMain);
 
         recyclerView.setLayoutManager(layoutManager);
 

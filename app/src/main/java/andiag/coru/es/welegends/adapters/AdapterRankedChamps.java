@@ -2,8 +2,12 @@ package andiag.coru.es.welegends.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +15,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**
  * Created by andyq on 21/07/2015.
@@ -25,9 +35,11 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_ITEM = 1;
     private Context context;
     private List<Bundle> champList = new ArrayList<>();
+    private ImageLoader imageLoader;
 
     public AdapterRankedChamps(Context context) {
         this.context = context;
+        imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
 
     // OUTSIDE METHODS
@@ -79,11 +91,52 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.
-            VHHeader h = (VHHeader) holder;
+            final VHHeader h = (VHHeader) holder;
             h.textVictories.setText(item.getString("victories"));
             h.textDefeats.setText(item.getString("defeats"));
             h.textGlobalKDA.setText(item.getString("globalkda"));
             h.textPercent.setText(item.getString("percent"));
+
+            int myWidth = 650;
+            int myHeight = 384;
+            String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_0.jpg";
+            Log.d("PONIENDO BACK", championImg);
+            /*
+            Picasso.with(context).load("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg)
+                    .resize(myWidth,myHeight).into(new Target() {
+
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Log.d("LOADING IMAGE", "IMGAGELDFKJLSDKFJ");
+                    h.background.setBackground(new BitmapDrawable(context.getResources(), bitmap));
+                }
+
+                @Override
+                public void onBitmapFailed(final Drawable errorDrawable) {
+                    Log.d("LOADING IMAGE", "FAILED");
+                }
+
+                @Override
+                public void onPrepareLoad(final Drawable placeHolderDrawable) {
+                    Log.d("LOADING IMAGE", "Prepare Load");
+                }
+            });
+            */
+
+            imageLoader.get("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,
+                    new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    h.background.setBackground(new BitmapDrawable(context.getResources(), response.getBitmap()));
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+            //h.background.setBackground();
         }
     }
 

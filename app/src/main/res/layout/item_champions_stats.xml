@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="left|top"
             android:layout_margin="5dp"
-            android:src="@drawable/gnar"
+            android:src="@drawable/default0"
             android:transitionName="imageChampion" />
 
         <TextView

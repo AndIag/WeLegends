@@ -72,6 +72,12 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        VolleyHelper.getInstance(this).getRequestQueue().cancelAll(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -220,6 +226,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         });
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        jsonObjectRequest.setTag(this);
 
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
 

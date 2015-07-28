@@ -1,5 +1,8 @@
 package andiag.coru.es.welegends.activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +22,7 @@ import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends AnimatedTabbedActivity {
 
+    private Activity thisActivity;
     private Summoner summoner;
     private String summonerName;
     private String region;
@@ -118,6 +122,8 @@ public class ActivityMain extends AnimatedTabbedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_main);
 
+        thisActivity = this;
+
         //NEED THIS TO USE SETANIMATION METHOD
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -165,6 +171,28 @@ public class ActivityMain extends AnimatedTabbedActivity {
             dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
             return true;
         }
+
+        if (id == R.id.action_update) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(getResources().getString(R.string.dialogDownloadTitle));
+
+            builder.setMessage(getResources().getString(R.string.dialogDownloadMsg));
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent i = new Intent(thisActivity, ActivitySplashScreen.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra("loadData", true);
+                    startActivity(i);
+                    thisActivity.finish();
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.setCancelable(true);
+            builder.show();
+            return true;
+        }
+
         if (id == android.R.id.home) {
             onBackPressed();
         }

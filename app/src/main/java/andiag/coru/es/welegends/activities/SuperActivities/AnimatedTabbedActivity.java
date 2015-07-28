@@ -31,8 +31,9 @@ import andiag.coru.es.welegends.utils.ViewServer;
  */
 public class AnimatedTabbedActivity extends TabbedActivity implements ObservableScrollViewCallbacks {
 
+    final ColorDrawable actionBarBackground = new ColorDrawable();
+    final ColorDrawable actionBarTabsColor = new ColorDrawable();
     private ActionBar actionBar;
-
     private View mToolbarView;
     private TouchInterceptionFrameLayout mInterceptionLayout;
     private ScrollState mLastScrollState;
@@ -122,8 +123,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
     }
 
     protected void setAnimation() {
-        final ColorDrawable actionBarBackground = new ColorDrawable();
-        final ColorDrawable actionBarTabsColor = new ColorDrawable();
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayHomeAsUpEnabled(true);

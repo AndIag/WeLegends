@@ -36,11 +36,13 @@ public class TaskGetChamImg extends AsyncTask<Void, Integer, Void> {
 
     private float totalChamps;
     private int count = 0;
+    private boolean reload;
 
-    public TaskGetChamImg(Activity activity, HashMap<Integer, ChampionDto> champions, String version) {
+    public TaskGetChamImg(Activity activity, HashMap<Integer, ChampionDto> champions, String version, boolean reload) {
         this.activity = activity;
         this.champions = champions;
         this.version = version;
+        this.reload = reload;
         keys = champions.keySet();
         totalChamps = keys.size();
     }
@@ -75,7 +77,7 @@ public class TaskGetChamImg extends AsyncTask<Void, Integer, Void> {
             Log.d("URL", final_url);
             try {
                 imgpath = new File(directory, championDto.getId() + ".png");
-                if (imgpath.exists()) {
+                if (!reload && imgpath.exists()) {
                     Log.d("Exists", "imagepah exist");
                     continue;
                 }

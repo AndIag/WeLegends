@@ -79,4 +79,6 @@
     <string name="triple">Triplekills</string>
     <string name="doble">Doublekills</string>
     <string name="single">Kills</string>
+    <string name="dialogDownloadTitle">Download App resources?</string>
+    <string name="dialogDownloadMsg">The app need some resources to work, this may take a bit and it need network connection.\n Make sure your phone is connected to a Wi-Fi point.</string>
 </resources>

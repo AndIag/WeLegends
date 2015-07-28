@@ -1,6 +1,8 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -94,6 +96,10 @@ public class ActivitySplashScreen extends Activity {
         finish();
     }
 
+    public void showDialog() {
+
+    }
+
     private void getVersion() {
         final Gson gson = new Gson();
 
@@ -124,11 +130,26 @@ public class ActivitySplashScreen extends Activity {
                                 e.printStackTrace();
                                 Toast.makeText(activity, getResources().getString(R.string.internalServerError)
                                         , Toast.LENGTH_LONG).show();
-                                activity.finish();
+                                ActivitySplashScreen.this.finish();
                             }
                         } else {
                             //Get champions from server
-                            getChampionsFromServer();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+                            builder.setTitle(activity.getResources().getString(R.string.dialogDownloadTitle));
+
+                            builder.setMessage(activity.getResources().getString(R.string.dialogDownloadMsg));
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    getChampionsFromServer();
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    ActivitySplashScreen.this.finish();
+                                }
+                            });
+                            builder.show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -180,7 +201,7 @@ public class ActivitySplashScreen extends Activity {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)
                                     , Toast.LENGTH_LONG).show();
-                            activity.finish();
+                            ActivitySplashScreen.this.finish();
                         }
                     }
                 }, new Response.ErrorListener() {

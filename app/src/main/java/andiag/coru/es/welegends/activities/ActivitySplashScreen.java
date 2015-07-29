@@ -67,7 +67,7 @@ public class ActivitySplashScreen extends Activity {
         APIHandler.getInstance(this);
         activity = this;
 
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("loadData")) {
             getChampionsFromServer(true);
         } else {
             getVersion();

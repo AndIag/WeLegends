@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,12 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textD.setText(item.getString("defeats"));
             h.textV.setText(item.getString("victories"));
             h.textKDA.setText(item.getString("kda"));
-            h.imageChamp.setImageBitmap(ChampionsHandler.getChampImage((Activity) context, item.getInt("imageId")));
+            h.imageChamp.setErrorImageResId(R.drawable.item_default);
+            h.imageChamp.setDefaultImageResId(R.drawable.item_default);
+            h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + "/img/champion/" + item.getString("champKey") + ".png",
+                    imageLoader);
             //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
             //cast holder to VHHeader and set data for header.
@@ -132,7 +137,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
     class VHItem extends RecyclerView.ViewHolder {
         TextView textKDA,textGold,textCS,textV,textD;
-        ImageView imageChamp;
+        NetworkImageView imageChamp;
         View v;
 
         public VHItem(View itemView) {
@@ -143,7 +148,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             textGold = (TextView) v.findViewById(R.id.textGold);
             textV = (TextView) v.findViewById(R.id.textV);
             textD = (TextView) v.findViewById(R.id.textD);
-            imageChamp =(ImageView) v.findViewById(R.id.imgChamp);
+            imageChamp = (NetworkImageView) v.findViewById(R.id.imgChamp);
         }
     }
 

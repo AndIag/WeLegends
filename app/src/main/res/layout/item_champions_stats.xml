@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imgChamp"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -29,51 +29,50 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="left|top"
             android:layout_margin="5dp"
-            android:src="@drawable/default0"
             android:transitionName="imageChampion" />
 
         <TextView
             android:id="@+id/textKDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24/7/48"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_alignTop="@+id/imageView9"
-            android:layout_toRightOf="@+id/imageView6"
+            android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/imageView6"
-            android:layout_marginLeft="20dp" />
+            android:layout_toRightOf="@+id/imageView6"
+            android:text="24/7/48"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="30/min"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_centerVertical="true"
             android:layout_alignLeft="@+id/textKDA"
-            android:layout_alignStart="@+id/textKDA" />
+            android:layout_alignStart="@+id/textKDA"
+            android:layout_centerVertical="true"
+            android:text="30/min"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textCS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7/min"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_alignTop="@+id/imageView8"
             android:layout_alignLeft="@+id/textGold"
             android:layout_alignStart="@+id/textGold"
-            android:layout_marginTop="5dp" />
+            android:layout_alignTop="@+id/imageView8"
+            android:layout_marginTop="5dp"
+            android:text="7/min"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/icon_sword"
             android:layout_alignTop="@+id/imgChamp"
-            android:layout_toRightOf="@+id/imgChamp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/imgChamp"
-            android:layout_marginStart="20dp" />
+            android:layout_toRightOf="@+id/imgChamp"
+            android:src="@drawable/icon_sword" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -82,8 +81,8 @@
             android:layout_alignLeft="@+id/imageView6"
             android:layout_alignStart="@+id/imageView6"
             android:layout_below="@+id/imageView6"
-            android:src="@drawable/icon_gold"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="2dp"
+            android:src="@drawable/icon_gold" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -92,19 +91,19 @@
             android:layout_alignLeft="@+id/imageView7"
             android:layout_alignStart="@+id/imageView7"
             android:layout_below="@+id/imageView7"
-            android:src="@drawable/icon_minion"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="2dp"
+            android:src="@drawable/icon_minion" />
 
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/tick"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_above="@+id/imageView7"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_toLeftOf="@+id/textV"
-            android:layout_toStartOf="@+id/textV" />
+            android:layout_toStartOf="@+id/textV"
+            android:src="@drawable/tick" />
 
         <ImageView
             android:id="@+id/imageView10"
@@ -119,14 +118,14 @@
             android:id="@+id/textV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView7"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/textKDA"
+            android:layout_marginRight="16dp"
             android:gravity="center"
             android:text="30"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_marginRight="16dp"
-            android:layout_above="@+id/imageView7" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textD"
@@ -137,10 +136,10 @@
             android:layout_alignLeft="@+id/textV"
             android:layout_alignRight="@+id/textV"
             android:layout_alignStart="@+id/textV"
+            android:layout_alignTop="@+id/imageView10"
             android:gravity="center"
             android:text="23"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_alignTop="@+id/imageView10" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </RelativeLayout>
 

@@ -1,8 +1,6 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -122,23 +120,7 @@ public class ActivitySplashScreen extends Activity {
                             }
                         } else {
                             //Get champions from server
-                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-                            builder.setTitle(activity.getResources().getString(R.string.dialogDownloadTitle));
-
-                            builder.setMessage(activity.getResources().getString(R.string.dialogDownloadMsg));
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    getChampionsFromServer();
-                                }
-                            });
-                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    ActivitySplashScreen.this.finish();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.show();
+                            getChampionsFromServer();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -185,6 +167,7 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
+                            startActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)

@@ -32,6 +32,7 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
+import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -262,7 +263,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     }
 
                 } else {
-                    m.putInt("imageId", id);
+                    m.putString("champKey", ChampionsHandler.getChampKey(id));
                     cs = aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled();
                     m.putString("cs", String.format("%.1f", cs / totalGames));
                     gold = aggregatedStatsDto.getTotalGoldEarned();

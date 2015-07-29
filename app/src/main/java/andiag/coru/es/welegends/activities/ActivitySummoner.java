@@ -1,9 +1,7 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -128,27 +126,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         if (id == R.id.action_about) {
             DialogAbout dialogAbout = DialogAbout.newInstance();
             dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
-            return true;
-        }
-
-        if (id == R.id.action_update) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            builder.setTitle(getResources().getString(R.string.dialogDownloadTitle));
-
-            builder.setMessage(getResources().getString(R.string.dialogDownloadMsg));
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    Intent i = new Intent(thisActivity, ActivitySplashScreen.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra("loadData", true);
-                    startActivity(i);
-                    thisActivity.finish();
-                }
-            });
-            builder.setNegativeButton("Cancel", null);
-            builder.setCancelable(true);
-            builder.show();
             return true;
         }
 

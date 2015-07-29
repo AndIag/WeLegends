@@ -3,13 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="andiag.coru.es.welegends.activities.ActivitySummoner">
 
-    <item
-        android:id="@+id/action_update"
-        android:icon="@drawable/refresh"
-        android:orderInCategory="90"
-        android:title="@string/action_updateDB"
-        app:showAsAction="ifRoom" />
-
     <item android:id="@+id/action_about"
           android:orderInCategory="100"
         android:title="@string/action_about"

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
-import andiag.coru.es.welegends.utils.champions.TaskGetChamImg;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -47,12 +45,6 @@ public class ActivitySplashScreen extends Activity {
     private ProgressBar progressBar;
     private TextView textView;
     private Activity activity;
-
-    public void setProgressText(String text) {
-        if (textView != null) {
-            textView.setText(text);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +59,8 @@ public class ActivitySplashScreen extends Activity {
         APIHandler.getInstance(this);
         activity = this;
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("loadData")) {
-            getChampionsFromServer(true);
-        } else {
-            getVersion();
-        }
+        getVersion();
+
     }
 
     @Override
@@ -140,7 +129,7 @@ public class ActivitySplashScreen extends Activity {
                             builder.setMessage(activity.getResources().getString(R.string.dialogDownloadMsg));
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    getChampionsFromServer(false);
+                                    getChampionsFromServer();
                                 }
                             });
                             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -177,7 +166,7 @@ public class ActivitySplashScreen extends Activity {
         VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
 
-    private void getChampionsFromServer(final boolean reload) {
+    private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
         APIHandler handler = APIHandler.getInstance();
@@ -196,7 +185,6 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
-                            new TaskGetChamImg(activity, ChampionsHandler.getChampions().getData(), ChampionsHandler.getServerVersion(activity), reload).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(activity, getResources().getString(R.string.internalServerError)

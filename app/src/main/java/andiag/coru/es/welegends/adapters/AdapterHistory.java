@@ -14,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -29,9 +33,11 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
 
     private List<Bundle> historyList = new ArrayList<>();
     private Context context;
+    private ImageLoader imageLoader;
 
     public AdapterHistory(Context context) {
         this.context = context;
+        imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
 
     @Override
@@ -56,7 +62,14 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vMap.setText(bundle.getInt("mapName"));
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
-        holder.vImageChamp.setImageBitmap(ChampionsHandler.getChampImage((Activity) context, bundle.getInt("champId")));
+        //holder.vImageChamp.setImageBitmap(ChampionsHandler.getChampImage((Activity) context, bundle.getInt("champId")));
+        holder.vImageChamp.setErrorImageResId(R.drawable.item_default);
+        holder.vImageChamp.setDefaultImageResId(R.drawable.item_default);
+        holder.vImageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                        + ChampionsHandler.getServerVersion((Activity) context)
+                        + "/img/champion/" + bundle.getString("champKey") + ".png",
+                imageLoader);
+
         holder.isRanked.setImageResource(bundle.getInt("isRanked"));
         if (bundle.getBoolean("winner")) {
             holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));
@@ -91,7 +104,8 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         protected TextView vChampName;
         protected TextView vMap, vDuration;
         protected TextView vKDA, vLVL, vCS, vGold;
-        protected ImageView vImageChamp, isRanked;
+        protected ImageView isRanked;
+        protected NetworkImageView vImageChamp;
         protected View view;
         protected RelativeLayout relativeLayout,relativeImage;
         protected CardView cardView;
@@ -121,7 +135,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             vLVL = (TextView) v.findViewById(R.id.textLVL);
             vGold = (TextView) v.findViewById(R.id.textGold);
             vDuration = (TextView) v.findViewById(R.id.textDuration);
-            vImageChamp = (ImageView) v.findViewById(R.id.imgChamp);
+            vImageChamp = (NetworkImageView) v.findViewById(R.id.imgChamp);
             isRanked = (ImageView) v.findViewById(R.id.isRanked);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.RelativeLayoutText);
             relativeImage = (RelativeLayout) v.findViewById(R.id.RelativeLayoutImage);

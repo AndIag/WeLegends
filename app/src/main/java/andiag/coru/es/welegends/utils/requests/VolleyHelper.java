@@ -41,7 +41,7 @@ public class VolleyHelper {
     public ImageLoader getImageLoader() {
         if (imageLoader == null){
             imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
-                private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(20);
+                private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(50);
 
 
                 @Override

@@ -20,28 +20,8 @@ public class DialogAbout extends DialogFragment {
         return f;
     }
 
-    public static void onTwitterIagoClick(Activity activity) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("twitter://user?screen_name=Iagocanalejas"));
-            activity.startActivity(intent);
-
-        } catch (Exception e) {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/#!/Iagocanalejas")));
-        }
-    }
-
-    public static void onTwitterAndyClick(Activity activity) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("twitter://user?screen_name=ANDYear20"));
-            activity.startActivity(intent);
-
-        } catch (Exception e) {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/#!/ANDYear20")));
-        }
+    public static void onGoogleButtonClick(Activity activity) {
+        activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/112257302862182562124/posts")));
     }
 
     @Override

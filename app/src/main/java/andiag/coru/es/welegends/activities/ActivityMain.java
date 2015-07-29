@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
@@ -175,5 +176,9 @@ public class ActivityMain extends AnimatedTabbedActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onGoogleButtonClick(View view) {
+        DialogAbout.onGoogleButtonClick(this);
     }
 }

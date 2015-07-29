@@ -132,6 +132,10 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         return super.onOptionsItemSelected(item);
     }
 
+    public void onGoogleButtonClick(View view) {
+        DialogAbout.onGoogleButtonClick(this);
+    }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -245,16 +249,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-    //Dialog About Methods
-    public void onTwitterIagoClick(View view) {
-        DialogAbout.onTwitterIagoClick(this);
-    }
-
-    public void onTwitterAndyClick(View view) {
-        DialogAbout.onTwitterAndyClick(this);
     }
 
     @Override

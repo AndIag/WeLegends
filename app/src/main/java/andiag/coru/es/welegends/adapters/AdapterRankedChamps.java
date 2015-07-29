@@ -2,12 +2,9 @@ package andiag.coru.es.welegends.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,8 +92,6 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textGlobalKDA.setText(item.getString("globalkda"));
             h.textPercent.setText(item.getString("percent"));
 
-            int myWidth = 650;
-            int myHeight = 384;
             String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_0.jpg";
 
             imageLoader.get("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,
@@ -111,8 +106,6 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 }
             });
-
-            //h.background.setBackground();
         }
     }
 

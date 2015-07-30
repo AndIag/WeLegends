@@ -21,7 +21,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -114,7 +114,7 @@ public class ActivitySplashScreen extends Activity {
                                 startActivity();
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                                Toast.makeText(activity, getResources().getString(R.string.error500)
                                         , Toast.LENGTH_LONG).show();
                                 ActivitySplashScreen.this.finish();
                             }
@@ -127,19 +127,11 @@ public class ActivitySplashScreen extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = activity.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activity.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activity.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activity, message
-                            , Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -170,7 +162,7 @@ public class ActivitySplashScreen extends Activity {
                             startActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(activity, getResources().getString(R.string.internalServerError)
+                            Toast.makeText(activity, getResources().getString(R.string.error500)
                                     , Toast.LENGTH_LONG).show();
                             ActivitySplashScreen.this.finish();
                         }
@@ -179,19 +171,11 @@ public class ActivitySplashScreen extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = activity.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activity.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activity.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activity, message
-                            , Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
             }
         });
 

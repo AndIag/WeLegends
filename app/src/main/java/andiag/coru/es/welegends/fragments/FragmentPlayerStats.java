@@ -7,9 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -22,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,15 +28,12 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.adapters.AdapterListHeader;
 import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
 import andiag.coru.es.welegends.entities.Entry;
-import andiag.coru.es.welegends.entities.ItemLeague;
-import andiag.coru.es.welegends.entities.ItemSection;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.entities.utils.Item;
-import andiag.coru.es.welegends.utils.CircledNetworkImageView;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -343,19 +336,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = activityMain.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activityMain.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activityMain.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activityMain, message
-                            , Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -166,19 +166,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = activityMain.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activityMain.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activityMain.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activityMain, message
-                            , Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

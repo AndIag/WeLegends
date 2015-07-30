@@ -271,7 +271,7 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
+
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -300,7 +300,7 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
+
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -329,7 +329,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -358,7 +357,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -387,7 +385,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -416,7 +413,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -445,7 +441,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -474,7 +469,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
@@ -503,7 +497,6 @@ android:layout_height="match_parent"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
-                    android:text="@string/hello_world"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>

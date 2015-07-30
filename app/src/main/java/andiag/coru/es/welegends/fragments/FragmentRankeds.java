@@ -24,7 +24,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +40,7 @@ import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -257,19 +257,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 Log.d("ERROR", error.toString());
                 decrementIndexes();
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = activityMain.getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = activityMain.getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = activityMain.getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(activityMain, message
-                            , Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

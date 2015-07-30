@@ -15,7 +15,7 @@ public abstract class NamesHandler {
     }
 
     public static void initializeMapNames() {
-        mapsNames = new DefaultHashMap<>(R.string.notFoundError);
+        mapsNames = new DefaultHashMap<>(R.string.error404);
         mapsNames.put(11, R.string.rift);
         mapsNames.put(10, R.string.tt);
         mapsNames.put(8, R.string.cs);

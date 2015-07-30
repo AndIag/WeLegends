@@ -37,13 +37,13 @@ import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.TabbedActivity;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -260,18 +260,11 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
                 Log.d("ERROR", error.toString());
                 isLoading = false;
                 NetworkResponse networkResponse = error.networkResponse;
+                String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
-                    String message = getString(R.string.errorDefault);
-                    switch (networkResponse.statusCode) {
-                        case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                            message = getString(R.string.error500);
-                            break;
-                        case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                            message = getString(R.string.error503);
-                            break;
-                    }
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
 

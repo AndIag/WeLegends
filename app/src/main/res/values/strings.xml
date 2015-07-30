@@ -1,20 +1,56 @@
 <resources>
-    <string name="app_name">WeLegends</string>
 
-    <string name="action_settings">Settings</string>
+    <!-- App, Activityes, Fragments and Dialogs Names -->
+    <string name="app_name">WeLegends</string>
     <string name="title_activity_activity_summoner">Find Summoner</string>
     <string name="title_activity_match_detail">Match Details</string>
     <string name="title_activity_activity_main">ActivityMain</string>
+    <string name="title_activity_activity_details">ActivityDetails</string>
+    <string name="title_activity_activity_about">About</string>
 
+    <!-- Sections -->
+    <string name="section_ranked">RANKEDS</string>
+    <string name="section_summoner">SUMMONER</string>
+    <string name="section_history">HISTORY</string>
+    <string name="section_champs">CHAMPION STATS</string>
+    <string name="title_section_champion">Champion</string>
+    <string name="title_section_victory_team">Victory Team</string>
+    <string name="title_section_defeat_team">Defeat Team</string>
+
+    <!-- SubSections -->
+    <string name="queue_solo">Solo/Duo</string>
+    <string name="queue_team5">Team 5vs5</string>
+    <string name="queue_team3">Team 3vs3</string>
+    <string name="region_prompt">Choose a region: </string>
+
+    <!-- Actions -->
+    <string name="action_settings">Settings</string>
+    <string name="go">Search</string>
+    <string name="action_about">About</string>
+
+    <!-- Errors && Messages-->
+    <string name="error500">Internal Server Error</string>
+    <string name="error503">Service Unavailable</string>
+    <string name="error404">Not Found</string>
+    <string name="loadErrorDialogTittle">Error Loading History</string>
+    <string name="errorDefault">Unknown Error</string>
+    <string name="summonerHistoryError">Can`t Load Summoner History</string>
+    <string name="loadingSummonerError">ERROR: Loading Summoner</string>
+    <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
+    <string name="checkingVersion">Checking Server Version</string>
+    <string name="loadNames">Loading Champ Names</string>
+
+    <!-- Map Names -->
     <string name="rift">Summoner\'s Rift</string>
     <string name="tt">Twisted Treeline</string>
     <string name="cs">The Crystal Scar</string>
     <string name="ha">Howling Abyss</string>
+    <string name="butcher">Butcher’s Bridge</string>
 
+
+    <!-- Other Shit -->
     <string name="summoner">Summoner:</string>
-    <string name="go">Search</string>
     <string name="hint_summoner">Summoner\'s name</string>
-    <string name="action_search">Search</string>
     <string name="earnedGold">Earned gold:</string>
     <string name="killingSprees">Killing sprees:</string>
     <string name="largestKillingSpree">Largest killing spree:</string>
@@ -24,17 +60,13 @@
     <string name="physicalDamageDealtToChampions">Physical damage dealt to champions:</string>
     <string name="totalDamageDealt">Total damage dealt:</string>
     <string name="totalDamageDealtToChampions">Total damage dealt to champions:</string>
-    <string name="loadErrorDialogTittle">Error Loading History</string>
-    <string name="unknowErrorCode">Unknow Error</string>
-    <string name="internalServerError">Internal Server Error</string>
-    <string name="notFoundError">Not Found</string>
-    <string name="badRequestError">Bad Request</string>
-    <string name="loadErrorDialogMessage">Something goes wrong. ERROR:</string>
+    <string name="level">Level</string>
+    <string name="penta">Pentakills</string>
+    <string name="quadra">Quadrakills</string>
+    <string name="triple">Triplekills</string>
+    <string name="doble">Doublekills</string>
+    <string name="single">Kills</string>
 
-    <string name="region_prompt">Choose a region: </string>
-    <string name="action_about">About</string>
-    <string name="iago">\@iagocanalejas</string>
-    <string name="ok">Ok!</string>
     <string-array name="region_array">
         <item>EUW</item>
         <item>KR</item>
@@ -48,39 +80,6 @@
         <item>BR</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_activity_main2">ActivityMain2</string>
-    <string name="error500">Internal Server Error</string>
-    <string name="error503">Internal Server Error</string>
-    <string name="errorDefault">Unknown Error</string>
-    <string name="summonerHistoryError">Can`t Load Summoner History</string>
-    <string name="loadingSummonerError">ERROR: Loading Summoner</string>
-    <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
-    <string name="title_activity_activity_details">ActivityDetails</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="title_section_details1">Champion</string>
-    <string name="title_section_details2">Victory Team</string>
-    <string name="title_section_details3">Defeat Team</string>
-    <string name="queue_solo">Solo/Duo</string>
-    <string name="queue_team5">Team 5vs5</string>
-    <string name="queue_team3">Team 3vs3</string>
-    <string name="section_ranked">RANKEDS</string>
-    <string name="section_summoner">SUMMONER</string>
-    <string name="section_history">HISTORY</string>
-    <string name="level">Level</string>
-    <string name="section_champs">CHAMPION STATS</string>
-    <string name="butcher">Butcher’s Bridge</string>
-    <string name="checkingVersion">Checking Server Version</string>
-    <string name="loadNames">Loading Champ Names</string>
-    <string name="penta">Pentakills</string>
-    <string name="quadra">Quadrakills</string>
-    <string name="triple">Triplekills</string>
-    <string name="doble">Doublekills</string>
-    <string name="single">Kills</string>
-    <string name="dialogDownloadTitle">Download App resources?</string>
-    <string name="dialogDownloadMsg">The app need some resources to work, this may take a bit and it need network connection.\n Make sure your phone is connected to a Wi-Fi point.</string>
-    <string name="action_updateDB">Update Database</string>
-    <string name="title_activity_activity_about">About</string>
+    <string name="iago">\@iagocanalejas</string>
+    <string name="ok">Ok!</string>
 </resources>

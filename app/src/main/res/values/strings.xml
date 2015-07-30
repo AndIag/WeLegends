@@ -47,6 +47,12 @@
     <string name="ha">Howling Abyss</string>
     <string name="butcher">Butcher’s Bridge</string>
 
+    <!-- Libraries Description -->
+    <string name="volley">Asynchronously networking library introduced to make networking calls much easier and faster without writing tons of code.</string>
+    <string name="gson">Gson is a Java library used to convert Java Objects into their JSON representation or to convert a JSON string to an equivalent Java object.</string>
+    <string name="obserbabl_escroll_view">Library to interact with Android Toolbar and helpful to implement look and feel of Material Design apps.</string>
+    <string name="recyclerview_animators">Library to easily create RecyclerView with animations.</string>
+    <string name="smart_tab_layout">A custom ViewPager title strip which gives continuous feedback to the user when scrolling.</string>
 
     <!-- Other Shit -->
     <string name="summoner">Summoner:</string>

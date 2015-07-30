@@ -28,9 +28,8 @@
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:alpha="0.3"
-        android:background="@color/black"
+        android:layout_marginBottom="10dp"
+        android:background="@color/posT0"
         android:src="@drawable/andiag" />
 
     <ScrollView
@@ -60,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Rellenar aqui" />
+                android:text="@string/volley" />
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Large"
@@ -74,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Rellenar aqui" />
+                android:text="@string/gson" />
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Large"
@@ -88,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Rellenar aqui" />
+                android:text="@string/obserbabl_escroll_view" />
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Large"
@@ -102,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Rellenar aqui" />
+                android:text="@string/recyclerview_animators" />
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Large"
@@ -116,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Rellenar aqui" />
+                android:text="@string/smart_tab_layout" />
 
         </LinearLayout>
     </ScrollView>

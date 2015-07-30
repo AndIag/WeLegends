@@ -37,6 +37,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="andiag.coru.es.welegends.activities.ActivityMain" />
         </activity>
+        <activity
+            android:name=".activities.ActivityAbout"
+            android:label="@string/title_activity_activity_about"></activity>
     </application>
 
 </manifest>

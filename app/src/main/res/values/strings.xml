@@ -82,4 +82,5 @@
     <string name="dialogDownloadTitle">Download App resources?</string>
     <string name="dialogDownloadMsg">The app need some resources to work, this may take a bit and it need network connection.\n Make sure your phone is connected to a Wi-Fi point.</string>
     <string name="action_updateDB">Update Database</string>
+    <string name="title_activity_activity_about">About</string>
 </resources>

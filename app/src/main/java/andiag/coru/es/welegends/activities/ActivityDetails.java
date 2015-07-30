@@ -42,7 +42,6 @@ import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.TabbedActivity;
-import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
 import andiag.coru.es.welegends.utils.ViewServer;
@@ -156,7 +155,7 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_details);
+        setContentView(R.layout.activity_details);
 
         onRetrieveInstanceState(savedInstanceState);
 
@@ -307,12 +306,8 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_about) {
-            DialogAbout dialogAbout = DialogAbout.newInstance();
-            dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
-            return true;
-        }
         if (id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

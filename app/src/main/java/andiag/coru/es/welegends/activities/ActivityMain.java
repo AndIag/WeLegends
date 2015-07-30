@@ -7,11 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
-import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
@@ -119,7 +117,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_main);
+        setContentView(R.layout.activity_main);
 
         thisActivity = this;
 
@@ -166,9 +164,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_about) {
-            DialogAbout dialogAbout = DialogAbout.newInstance();
-            dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
-            return true;
+            startActivity(new Intent(this, ActivityAbout.class));
         }
 
         if (id == android.R.id.home) {
@@ -178,7 +174,4 @@ public class ActivityMain extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onGoogleButtonClick(View view) {
-        DialogAbout.onGoogleButtonClick(this);
-    }
 }

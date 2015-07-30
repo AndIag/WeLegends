@@ -33,7 +33,6 @@ import java.util.Calendar;
 import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
-import andiag.coru.es.welegends.dialogs.DialogAbout;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -56,7 +55,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_summoner);
+        setContentView(R.layout.activity_summoner);
 
         thisActivity = this;
 
@@ -124,16 +123,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         //About Dialog
         if (id == R.id.action_about) {
-            DialogAbout dialogAbout = DialogAbout.newInstance();
-            dialogAbout.show(getSupportFragmentManager(), "DialogAbout");
+            startActivity(new Intent(this, ActivityAbout.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onGoogleButtonClick(View view) {
-        DialogAbout.onGoogleButtonClick(this);
     }
 
     private boolean isNetworkAvailable() {

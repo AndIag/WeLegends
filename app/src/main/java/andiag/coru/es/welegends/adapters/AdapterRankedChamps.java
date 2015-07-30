@@ -99,18 +99,9 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
             String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_0.jpg";
 
-            imageLoader.get("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,
-                    new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    h.background.setBackground(new BitmapDrawable(context.getResources(), response.getBitmap()));
-                }
+            h.background.setErrorImageResId(R.drawable.gnar_0);
+            h.background.setImageUrl("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,imageLoader);
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
         }
     }
 
@@ -154,13 +145,13 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
     class VHHeader extends RecyclerView.ViewHolder {
         TextView textVictories,textDefeats,textGlobalKDA,textPercent;
-        RelativeLayout background;
+        NetworkImageView background;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view=itemView;
-            background = (RelativeLayout) view.findViewById(R.id.relativeBackground);
+            background = (NetworkImageView) view.findViewById(R.id.imageBackground);
             textVictories = (TextView) view.findViewById(R.id.textVictories);
             textDefeats = (TextView) view.findViewById(R.id.textDefeats);
             textGlobalKDA = (TextView) view.findViewById(R.id.textGlobalKDA);

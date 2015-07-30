@@ -90,11 +90,17 @@ public class TabbedActivity extends ActionBarActivity {
         private final int DEFAULT_COLOR = Color.CYAN;
         private final String DEFAULT_NAME = "DEFAULT";
 
+        private int mScrollY;
+
         private ArrayList<Tab> tabs = new ArrayList<>();
 
         public SectionsPagerAdapter(FragmentManager fm, ArrayList<Tab> tabs) {
             super(fm);
             this.tabs = tabs;
+        }
+
+        public void setScrollY(int scrollY) {
+            mScrollY = scrollY;
         }
 
         @Override

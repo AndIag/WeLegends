@@ -182,7 +182,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         initializeRefresh(view);
 
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
 
         display = activityMain.getWindowManager().getDefaultDisplay();
         if (outMetrics == null) {

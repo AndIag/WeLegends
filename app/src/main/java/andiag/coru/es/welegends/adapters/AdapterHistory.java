@@ -58,6 +58,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vGold.setText(bundle.getString("gold"));
         holder.vLVL.setText(bundle.getString("lvl"));
         holder.vKDA.setText(bundle.getString("kda"));
+        holder.vStartDate.setText(bundle.getString("startDate"));
         holder.vDuration.setText(bundle.getString("duration"));
         holder.vMap.setText(bundle.getInt("mapName"));
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
@@ -101,7 +102,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vChampName;
-        protected TextView vMap, vDuration;
+        protected TextView vMap, vDuration, vStartDate;
         protected TextView vKDA, vLVL, vCS, vGold;
         protected ImageView isRanked;
         protected NetworkImageView vImageChamp;
@@ -133,6 +134,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             vCS = (TextView) v.findViewById(R.id.textCS);
             vLVL = (TextView) v.findViewById(R.id.textLVL);
             vGold = (TextView) v.findViewById(R.id.textGold);
+            vStartDate = (TextView) v.findViewById(R.id.textStartDate);
             vDuration = (TextView) v.findViewById(R.id.textDuration);
             vImageChamp = (NetworkImageView) v.findViewById(R.id.imgChamp);
             isRanked = (ImageView) v.findViewById(R.id.isRanked);

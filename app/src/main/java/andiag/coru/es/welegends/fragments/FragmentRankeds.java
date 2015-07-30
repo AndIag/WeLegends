@@ -331,7 +331,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         public RetrieveDataTask(ArrayList<Match> m) {
             this.matches = m;
-            dateF = DateFormat.getDateInstance(DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
+            dateF = DateFormat.getDateInstance(DateFormat.MEDIUM, activityMain.getResources().getConfiguration().locale);
         }
 
         @Override
@@ -370,7 +370,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 winner = stats.isWinner();
                 gold = stats.getGoldEarned();
 
-                d = String.format("%d ' %d ''",
+                d = String.format("%d' %d''",
                         TimeUnit.SECONDS.toMinutes(duration),
                         duration -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
@@ -390,7 +390,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data.putString("cs", Long.toString(minions));
                 data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
                 data.putBoolean("winner", winner);
-                data.putString("duration", date_s + "   " + d);
+                data.putString("startDate", date_s);
+                data.putString("duration", d);
                 data.putInt("isRanked", android.R.drawable.ic_menu_compass);
                 bundles.add(data);
             }

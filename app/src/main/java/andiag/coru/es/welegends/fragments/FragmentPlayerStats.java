@@ -165,8 +165,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         layoutManager = new LinearLayoutManager(activityMain);
 
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(false);
 
         recyclerView.setAdapter(scaleAdapter);
+
+        recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
         if (summoner != null) {
             //networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);

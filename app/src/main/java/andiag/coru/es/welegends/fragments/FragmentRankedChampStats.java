@@ -138,7 +138,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
         recyclerView.setLayoutManager(layoutManager);
 
+        recyclerView.setHasFixedSize(false);
+
         recyclerView.setAdapter(scaleAdapter);
+
+        recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
         return rootView;
     }

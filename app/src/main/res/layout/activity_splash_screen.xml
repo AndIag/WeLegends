@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imageSplash"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/splash" />
@@ -31,7 +31,6 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageSplash"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp" />
 

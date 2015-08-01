@@ -12,7 +12,7 @@ public class ActivityChampionStatsDetails extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_champion_stats_details);
+        setContentView(R.layout.activity_champion_details);
     }
 
     @Override

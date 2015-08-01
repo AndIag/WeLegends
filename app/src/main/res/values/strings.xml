@@ -88,4 +88,8 @@
 
     <string name="iago">\@iagocanalejas</string>
     <string name="ok">Ok!</string>
+    <string name="title_activity_activity_champion_stats_details">ActivityChampionStatsDetails
+    </string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

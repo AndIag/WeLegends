@@ -39,7 +39,11 @@
         </activity>
         <activity
             android:name=".activities.ActivityAbout"
-            android:label="@string/title_activity_activity_about"></activity>
+            android:label="@string/title_activity_activity_about" />
+        <activity
+            android:name=".activities.ActivityChampionStatsDetails"
+            android:label="@string/title_activity_activity_champion_stats_details" >
+        </activity>
     </application>
 
 </manifest>

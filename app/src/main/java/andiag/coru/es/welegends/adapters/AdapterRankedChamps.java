@@ -2,14 +2,17 @@ package andiag.coru.es.welegends.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -19,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
+import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
+import andiag.coru.es.welegends.fragments.SwipeRefreshLayoutFragment;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
@@ -29,11 +37,13 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private Context context;
+    private SwipeRefreshLayoutFragment fragment;
     private List<Bundle> champList = new ArrayList<>();
     private ImageLoader imageLoader;
 
-    public AdapterRankedChamps(Context context) {
-        this.context = context;
+    public AdapterRankedChamps(SwipeRefreshLayoutFragment fragment) {
+        this.context = fragment.getActivity();
+        this.fragment = fragment;
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
 
@@ -130,10 +140,21 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView textKDA,textGold,textCS,textV,textD;
         NetworkImageView imageChamp;
         View v;
+        protected CardView cardView;
+        int position;
 
         public VHItem(View itemView) {
             super(itemView);
             this.v = itemView;
+            cardView = (CardView) v.findViewById(R.id.cardView);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ActivityChampionStatsDetails.class);
+                    i.putExtra("champData", (((FragmentRankedChampStats) fragment).getChampionStats(position)));
+                    context.startActivity(i);
+                }
+            });
             textCS = (TextView) v.findViewById(R.id.textCS);
             textKDA = (TextView) v.findViewById(R.id.textKDA);
             textGold = (TextView) v.findViewById(R.id.textGold);

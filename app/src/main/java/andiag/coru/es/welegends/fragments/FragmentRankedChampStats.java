@@ -63,6 +63,13 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         return fragmentRankedChampStats;
     }
 
+    public ChampionStatsDto getChampionStats(int position){
+        if(rankedStatsDto==null){
+            return new ChampionStatsDto();
+        }
+        return rankedStatsDto.getChampions().get(position);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -94,7 +101,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
         if (adapter == null) {
-            adapter = new AdapterRankedChamps(getActivity());
+            adapter = new AdapterRankedChamps(this);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }

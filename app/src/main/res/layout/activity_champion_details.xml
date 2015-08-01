@@ -14,10 +14,11 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/primary" />
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:id="@+id/imageView"
+        android:transitionName="imageChampion"
         android:layout_below="@+id/textChamp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -114,8 +115,8 @@
         android:layout_height="wrap_content"
         android:text="20k"
         android:layout_alignBottom="@+id/imageView14"
-        android:layout_alignRight="@+id/textChamp"
-        android:layout_alignEnd="@+id/textChamp" />
+        android:layout_toRightOf="@+id/imageView14"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
     <ImageView
         android:layout_width="30dp"

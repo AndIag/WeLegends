@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -152,7 +153,9 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View view) {
                     Intent i = new Intent(context, ActivityChampionStatsDetails.class);
                     i.putExtra("champData", (((FragmentRankedChampStats) fragment).getChampionStats(position)));
-                    context.startActivity(i);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation(((ActivityMain) context), (View)imageChamp, "imageChampion");
+                    context.startActivity(i,options.toBundle());
                 }
             });
             textCS = (TextView) v.findViewById(R.id.textCS);

@@ -108,7 +108,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textGlobalKDA.setText(item.getString("globalkda"));
             h.textPercent.setText(item.getString("percent"));
 
-            String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_0.jpg";
+            String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_1.jpg";
 
             h.background.setErrorImageResId(R.drawable.gnar_0);
             h.background.setImageUrl("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,imageLoader);

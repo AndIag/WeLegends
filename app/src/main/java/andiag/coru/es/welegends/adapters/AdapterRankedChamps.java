@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,7 +159,6 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         NetworkImageView imageChamp;
         View v;
         protected CardView cardView;
-        int position;
 
         public VHItem(View itemView) {
             super(itemView);
@@ -168,7 +168,8 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context, ActivityChampionStatsDetails.class);
-                    i.putExtra("champData", getItem(position));
+                    i.putExtra("champData", getItem(getAdapterPosition()));
+                    i.putExtra("isHeader", false);
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(((ActivityMain) context), (View)imageChamp, "imageChampion");
                     context.startActivity(i,options.toBundle());
@@ -187,10 +188,21 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView textVictories,textDefeats,textGlobalKDA,textPercent;
         NetworkImageView background;
         View view;
+        protected CardView cardView;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view=itemView;
+            cardView = (CardView) view.findViewById(R.id.cardView);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ActivityChampionStatsDetails.class);
+                    i.putExtra("champData", getItem(getAdapterPosition()));
+                    i.putExtra("isHeader", true);
+                    context.startActivity(i);
+                }
+            });
             background = (NetworkImageView) view.findViewById(R.id.imageBackground);
             textVictories = (TextView) view.findViewById(R.id.textVictories);
             textDefeats = (TextView) view.findViewById(R.id.textDefeats);

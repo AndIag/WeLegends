@@ -176,6 +176,7 @@ public class ActivitySplashScreen extends Activity {
                     message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
                 Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                ActivitySplashScreen.this.finish();
             }
         });
 

@@ -19,27 +19,44 @@ public class ActivityChampionStatsDetails extends Activity {
 
     private Bundle stats;
     private ImageLoader imageLoader;
+    private boolean isHeader;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private void loadNotHeaderView() {
         setContentView(R.layout.activity_champion_details);
 
-        onRetrieveInstanceState(savedInstanceState);
         imageLoader = VolleyHelper.getInstance(this).getImageLoader();
 
         NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + ChampionsHandler.getServerVersion(this)
-                        + "/img/champion/" + stats.getString("champKey") + ".png", imageLoader);
+                + ChampionsHandler.getServerVersion(this)
+                + "/img/champion/" + stats.getString("champKey") + ".png", imageLoader);
+
+    }
+
+    private void loadHeaderView() {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+
+
+        if(!isHeader){
+            loadNotHeaderView();
+        }
+        if(!isHeader){
+            loadHeaderView();
+        }
 
 
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBundle("champData", stats);
+            super.onSaveInstanceState(outState);
+            outState.putBundle("champData", stats);
     }
 
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
@@ -47,7 +64,11 @@ public class ActivityChampionStatsDetails extends Activity {
             stats = savedInstanceState.getBundle("champData");
         }else{
             Bundle extras = getIntent().getExtras();
-            stats = extras.getBundle("champData");
+
+            isHeader = extras.getBoolean("isHeader");
+            if(!isHeader) {
+                stats = extras.getBundle("champData");
+            }
         }
     }
 

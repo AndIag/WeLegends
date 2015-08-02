@@ -123,7 +123,7 @@
         android:layout_height="30dp"
         android:src="@drawable/icon_minion"
         android:id="@+id/imageView15"
-        android:layout_marginLeft="36dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginStart="36dp"
         android:layout_alignTop="@+id/imageView14"
         android:layout_toRightOf="@+id/textGold"
@@ -296,7 +296,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="48%"
         android:id="@+id/textPercent"
         android:layout_below="@+id/imageView14"
@@ -305,6 +304,9 @@
         android:layout_above="@+id/tableLayout2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

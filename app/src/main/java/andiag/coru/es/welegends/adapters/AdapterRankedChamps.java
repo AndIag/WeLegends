@@ -38,13 +38,11 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private Context context;
-    private SwipeRefreshLayoutFragment fragment;
     private List<Bundle> champList = new ArrayList<>();
     private ImageLoader imageLoader;
 
-    public AdapterRankedChamps(SwipeRefreshLayoutFragment fragment) {
-        this.context = fragment.getActivity();
-        this.fragment = fragment;
+    public AdapterRankedChamps(Context context) {
+        this.context = context;
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
 
@@ -86,13 +84,23 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Bundle item = getItem(position);
+        float totalGames, kills, death, assist;
+
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
             h.textCS.setText(item.getString("cs"));
             h.textGold.setText(item.getString("gold"));
             h.textD.setText(item.getString("defeats"));
             h.textV.setText(item.getString("victories"));
-            h.textKDA.setText(item.getString("kda"));
+
+            totalGames = item.getFloat("totalGames");
+            kills = item.getFloat("kills");
+            death = item.getFloat("death");
+            assist = item.getFloat("assist");
+            h.textKDA.setText(String.format("%.1f", kills / totalGames)
+                    + "/" + String.format("%.1f", death / totalGames)
+                    + "/" + String.format("%.1f", assist / totalGames));
+
             h.imageChamp.setErrorImageResId(R.drawable.item_default);
             h.imageChamp.setDefaultImageResId(R.drawable.item_default);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
@@ -105,7 +113,15 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             final VHHeader h = (VHHeader) holder;
             h.textVictories.setText(item.getString("victories"));
             h.textDefeats.setText(item.getString("defeats"));
-            h.textGlobalKDA.setText(item.getString("globalkda"));
+
+            totalGames = item.getFloat("totalGames");
+            kills = item.getFloat("kills");
+            death = item.getFloat("death");
+            assist = item.getFloat("assist");
+            h.textGlobalKDA.setText(String.format("%.1f", kills / totalGames)
+                    + "/" + String.format("%.1f", death / totalGames)
+                    + "/" + String.format("%.1f", assist / totalGames));
+
             h.textPercent.setText(item.getString("percent"));
 
             String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_1.jpg";
@@ -152,7 +168,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context, ActivityChampionStatsDetails.class);
-                    i.putExtra("champData", (((FragmentRankedChampStats) fragment).getChampionStats(position)));
+                    i.putExtra("champData", getItem(position));
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(((ActivityMain) context), (View)imageChamp, "imageChampion");
                     context.startActivity(i,options.toBundle());

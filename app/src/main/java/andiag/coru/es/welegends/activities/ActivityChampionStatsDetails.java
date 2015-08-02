@@ -17,7 +17,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 public class ActivityChampionStatsDetails extends Activity {
 
-    private ChampionStatsDto stats;
+    private Bundle stats;
     private ImageLoader imageLoader;
 
     @Override
@@ -28,12 +28,10 @@ public class ActivityChampionStatsDetails extends Activity {
         onRetrieveInstanceState(savedInstanceState);
         imageLoader = VolleyHelper.getInstance(this).getImageLoader();
 
-        Log.d("ID CHAMP", Integer.toString(stats.getId()));
-
         NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                         + ChampionsHandler.getServerVersion(this)
-                        + "/img/champion/" + ChampionsHandler.getChampKey(stats.getId()) + ".png", imageLoader);
+                        + "/img/champion/" + stats.getString("champKey") + ".png", imageLoader);
 
 
     }
@@ -41,17 +39,15 @@ public class ActivityChampionStatsDetails extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBundle("champData", stats);
     }
 
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            stats = (ChampionStatsDto) savedInstanceState.getSerializable("champData");
-        } else {
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                stats = (ChampionStatsDto) intent.getSerializableExtra("champData");
-            }
+            stats = savedInstanceState.getBundle("champData");
+        }else{
+            Bundle extras = getIntent().getExtras();
+            stats = extras.getBundle("champData");
         }
     }
 

@@ -63,13 +63,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         return fragmentRankedChampStats;
     }
 
-    public ChampionStatsDto getChampionStats(int position){
-        if(rankedStatsDto==null){
-            return new ChampionStatsDto();
-        }
-        return rankedStatsDto.getChampions().get(position);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -101,7 +94,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
         if (adapter == null) {
-            adapter = new AdapterRankedChamps(this);
+            adapter = new AdapterRankedChamps(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }
@@ -255,9 +248,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     assist = aggregatedStatsDto.getTotalAssists();
 
                     if (totalGames != 0) {
-                        summonerBundle.putString("globalkda", String.format("%.1f", kills / totalGames)
-                                + "/" + String.format("%.1f", death / totalGames)
-                                + "/" + String.format("%.1f", assist / totalGames));
+                        m.putFloat("totalGames", totalGames);
+                        m.putFloat("kills", kills);
+                        m.putFloat("death", death);
+                        m.putFloat("assist", assist);
+
                         percent = (wins / totalGames) * 100;
                         summonerBundle.putString("percent", String.format("%.2f", percent) + "%");
                     } else {
@@ -275,9 +270,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     kills = aggregatedStatsDto.getTotalChampionKills();
                     death = aggregatedStatsDto.getTotalDeathsPerSession();
                     assist = aggregatedStatsDto.getTotalAssists();
-                    m.putString("kda", String.format("%.1f", kills / totalGames)
-                            + "/" + String.format("%.1f", death / totalGames)
-                            + "/" + String.format("%.1f", assist / totalGames));
+
+                    m.putFloat("totalGames", totalGames);
+                    m.putFloat("kills", kills);
+                    m.putFloat("death", death);
+                    m.putFloat("assist", assist);
 
                     if ((wins + lost) > maxGamesPlayed) {
                         maxGamesPlayed = (int) (wins + lost);
@@ -287,7 +284,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     m.putString("quadra",Integer.toString(aggregatedStatsDto.getTotalQuadraKills()));
                     m.putString("triple",Integer.toString(aggregatedStatsDto.getTotalTripleKills()));
                     m.putString("double",Integer.toString(aggregatedStatsDto.getTotalDoubleKills()));
-                    m.putString("kills",Integer.toString(aggregatedStatsDto.getTotalChampionKills()));
 
                     bundles.add(m);
                 }

@@ -49,6 +49,10 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
     // OUTSIDE METHODS
 
+    public boolean needReload(){
+        return champList.size()==0;
+    }
+
     public void updateChamps(List<Bundle> cL) {
         if (cL != null) {
             this.champList = cL;

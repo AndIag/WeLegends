@@ -108,9 +108,11 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
         if (rankedStatsDto == null) {
             getChamps();
         } else {
-            adapter.clearChamps();
-            scaleAdapter.notifyDataSetChanged();
-            new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if(adapter.needReload()) {
+                adapter.clearChamps();
+                scaleAdapter.notifyDataSetChanged();
+                new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         }
     }
 

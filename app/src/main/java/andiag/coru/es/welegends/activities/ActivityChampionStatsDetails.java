@@ -46,7 +46,7 @@ public class ActivityChampionStatsDetails extends Activity {
         if(!isHeader){
             loadNotHeaderView();
         }
-        if(!isHeader){
+        if(isHeader){
             loadHeaderView();
         }
 

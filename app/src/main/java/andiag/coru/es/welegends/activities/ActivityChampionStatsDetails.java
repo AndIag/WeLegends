@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -18,18 +19,72 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 public class ActivityChampionStatsDetails extends Activity {
 
     private Bundle stats;
+        /*
+        * champKey          String
+        * name              String
+        * victories         String
+        * defeats           String
+        * cs                String
+        * gold              String
+        * totalGames        float
+        * kills             float
+        * death             float
+        * assist            float
+        * penta             String
+        * quadra            String
+        * triple            String
+        * double            String
+        * image             int
+        * */
     private ImageLoader imageLoader;
     private boolean isHeader;
 
     private void loadNotHeaderView() {
         setContentView(R.layout.activity_champion_details);
 
+        NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
+        TextView tname = (TextView) findViewById(R.id.textChamp);
+        TextView tkills = (TextView) findViewById(R.id.textKills);
+        TextView tdeath = (TextView) findViewById(R.id.textDeath);
+        TextView tassist = (TextView) findViewById(R.id.textAssists);
+        TextView tkda = (TextView) findViewById(R.id.textKDA);
+        TextView tgold = (TextView) findViewById(R.id.textGold);
+        TextView tcs = (TextView) findViewById(R.id.textCS);
+        TextView tpercent = (TextView) findViewById(R.id.textPercent);
+        TextView tKills = (TextView) findViewById(R.id.text1);
+        TextView tDouble = (TextView) findViewById(R.id.text2);
+        TextView tTriple = (TextView) findViewById(R.id.text3);
+        TextView tQuadra = (TextView) findViewById(R.id.text4);
+        TextView tPenta = (TextView) findViewById(R.id.text5);
+
+        float totalGames, kills, death, assist;
+
+        totalGames = stats.getFloat("totalGames");
+        kills = stats.getFloat("kills");
+        death = stats.getFloat("death");
+        assist = stats.getFloat("assist");
+
         imageLoader = VolleyHelper.getInstance(this).getImageLoader();
 
-        NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                 + ChampionsHandler.getServerVersion(this)
                 + "/img/champion/" + stats.getString("champKey") + ".png", imageLoader);
+
+        tname.setText(stats.getString("name"));
+
+        tkills.setText(String.format("%.1f", kills / totalGames));
+        tdeath.setText(String.format("%.1f", death / totalGames));
+        tassist.setText(String.format("%.1f", assist / totalGames));
+        tkda.setText(String.format("%.2f", (kills + assist) / death));
+        tgold.setText(stats.getString("gold"));
+        tcs.setText(stats.getString("cs"));
+        tpercent.setText(String.format("%.1f", (Float.valueOf(stats.getString("victories"))/totalGames) * 100) + "%");
+
+        tKills.setText(String.format("%.0f", kills));
+        tDouble.setText(stats.getString("double"));
+        tTriple.setText(stats.getString("triple"));
+        tQuadra.setText(stats.getString("quadra"));
+        tPenta.setText(stats.getString("penta"));
 
     }
 

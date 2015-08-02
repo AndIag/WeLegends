@@ -249,19 +249,18 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 m.putString("defeats", String.valueOf((int) lost));
                 totalGames = wins + lost;
 
-
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
                     kills = aggregatedStatsDto.getTotalChampionKills();
                     death = aggregatedStatsDto.getTotalDeathsPerSession();
                     assist = aggregatedStatsDto.getTotalAssists();
 
-                    if (totalGames != 0) {
-                        m.putFloat("totalGames", totalGames);
-                        m.putFloat("kills", kills);
-                        m.putFloat("death", death);
-                        m.putFloat("assist", assist);
+                    m.putFloat("totalGames", totalGames);
+                    m.putFloat("kills", kills);
+                    m.putFloat("death", death);
+                    m.putFloat("assist", assist);
 
+                    if (totalGames != 0) {
                         percent = (wins / totalGames) * 100;
                         summonerBundle.putString("percent", String.format("%.2f", percent) + "%");
                     } else {
@@ -271,6 +270,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
                 } else {
                     m.putString("champKey", ChampionsHandler.getChampKey(id));
+                    m.putString("name", ChampionsHandler.getChampName(id));
                     cs = aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled();
                     m.putString("cs", String.format("%.1f", cs / totalGames));
                     gold = aggregatedStatsDto.getTotalGoldEarned();
@@ -285,14 +285,15 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     m.putFloat("death", death);
                     m.putFloat("assist", assist);
 
-                    if ((wins + lost) > maxGamesPlayed) {
-                        maxGamesPlayed = (int) (wins + lost);
-                        maxUsedChamp = id;
-                    }
                     m.putString("penta",Integer.toString(aggregatedStatsDto.getTotalPentaKills()));
                     m.putString("quadra",Integer.toString(aggregatedStatsDto.getTotalQuadraKills()));
                     m.putString("triple",Integer.toString(aggregatedStatsDto.getTotalTripleKills()));
                     m.putString("double",Integer.toString(aggregatedStatsDto.getTotalDoubleKills()));
+
+                    if ((wins + lost) > maxGamesPlayed) {
+                        maxGamesPlayed = (int) (wins + lost);
+                        maxUsedChamp = id;
+                    }
 
                     bundles.add(m);
                 }

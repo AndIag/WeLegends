@@ -174,9 +174,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
                     Intent i = new Intent(context, ActivityChampionStatsDetails.class);
                     i.putExtra("champData", getItem(getAdapterPosition()));
                     i.putExtra("isHeader", false);
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(((ActivityMain) context), (View)imageChamp, "imageChampion");
-                    context.startActivity(i,options.toBundle());
+                    context.startActivity(i);
                 }
             });
             textCS = (TextView) v.findViewById(R.id.textCS);

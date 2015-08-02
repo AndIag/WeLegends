@@ -19,6 +19,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
+import org.apache.http.HttpStatus;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -341,6 +343,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 NetworkResponse networkResponse = error.networkResponse;
                 String message = getString(R.string.errorDefault);
                 if (networkResponse != null) {
+                    if (networkResponse.statusCode== HttpStatus.SC_NOT_FOUND){
+                        setNotLVL30Info();
+                        changeRefreshingValue(false);
+                        return;
+                    }
                     message = getString(NetworkError.parseServerError(networkResponse.statusCode));
                 }
                 Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();

@@ -37,7 +37,6 @@ public class ActivityChampionStatsDetails extends Activity {
     * triple            int
     * double            int
     * turrets           int
-    * firstblood        int
     * */
     private ImageLoader imageLoader;
     private boolean isHeader;
@@ -59,6 +58,7 @@ public class ActivityChampionStatsDetails extends Activity {
         TextView tTriple = (TextView) findViewById(R.id.text3);
         TextView tQuadra = (TextView) findViewById(R.id.text4);
         TextView tPenta = (TextView) findViewById(R.id.text5);
+        TextView tTurrets = (TextView) findViewById(R.id.textTurrets);
 
         float totalGames, kills, death, assist;
 
@@ -93,6 +93,7 @@ public class ActivityChampionStatsDetails extends Activity {
         tTriple.setText(String.valueOf(stats.getInt("triple")));
         tQuadra.setText(String.valueOf(stats.getInt("quadra")));
         tPenta.setText(String.valueOf(stats.getInt("penta")));
+        tTurrets.setText(String.valueOf(stats.getInt("turrets")));
 
     }
 

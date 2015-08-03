@@ -42,7 +42,7 @@
             android:label="@string/title_activity_activity_about" />
         <activity
             android:name=".activities.ActivityChampionStatsDetails"
-            android:label="@string/title_activity_activity_champion_stats_details" >
+            android:label="@string/title_activity_champion_stats_details" >
         </activity>
     </application>
 

@@ -7,6 +7,7 @@
     <string name="title_activity_activity_main">ActivityMain</string>
     <string name="title_activity_activity_details">ActivityDetails</string>
     <string name="title_activity_activity_about">About</string>
+    <string name="title_activity_champion_stats_details">ActivityChampionStatsDetails</string>
 
     <!-- Sections -->
     <string name="section_ranked">RANKEDS</string>
@@ -72,6 +73,7 @@
     <string name="triple">Triplekills</string>
     <string name="doble">Doublekills</string>
     <string name="single">Kills</string>
+    <string name="turrets">Total Turrets Destroy</string>
 
     <string-array name="region_array">
         <item>EUW</item>
@@ -86,10 +88,6 @@
         <item>BR</item>
     </string-array>
 
-    <string name="iago">\@iagocanalejas</string>
-    <string name="ok">Ok!</string>
-    <string name="title_activity_activity_champion_stats_details">ActivityChampionStatsDetails
-    </string>
-
     <string name="hello_world">Hello world!</string>
+
 </resources>

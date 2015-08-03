@@ -98,10 +98,6 @@ public class TabbedActivity extends ActionBarActivity {
             this.tabs = tabs;
         }
 
-        public void removeFragments(){
-
-        }
-
         @Override
         public Fragment getItem(int position) {
             try {

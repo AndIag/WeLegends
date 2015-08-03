@@ -377,10 +377,12 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data.putString("champKey", ChampionsHandler.getChampKey(champId));
                 data.putInt("mapName", NamesHandler.getMapName(mapid));
                 data.putInt("mapImage", ImagesHandler.getMap(mapid));
-                data.putString("kda", kills + "/" + deaths + "/" + assists);
-                data.putString("lvl", Long.toString(lvl));
-                data.putString("cs", Long.toString(minions));
-                data.putString("gold", String.format("%.1f", (float) gold / 1000) + "k");
+                data.putLong("kills", kills);
+                data.putLong("death", deaths);
+                data.putLong("assist", assists);
+                data.putLong("lvl", lvl);
+                data.putLong("cs", minions);
+                data.putFloat("gold", gold);
                 data.putBoolean("winner", winner);
                 data.putString("startDate", date_s);
                 data.putString("duration", d);

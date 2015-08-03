@@ -26,9 +26,24 @@ import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
-/**
- * Created by Andy on 26/06/2015.
- */
+        /*      BUNDLE DATA
+        * matchId           long
+        * champName         String
+        * champKey          String
+        * mapName           int(Resource)
+        * mapImage          int(Resource)
+        * kills             long
+        * death             long
+        * assist            long
+        * lvl               long
+        * cs                long
+        * gold              float
+        * winner            boolean
+        * startDate         String
+        * duration          String
+        * isRanked          int(Resource)
+        * */
+
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryViewHolder> {
 
     private List<Bundle> historyList = new ArrayList<>();
@@ -54,10 +69,11 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         Bundle bundle = historyList.get(i);
 
         holder.position = i;
-        holder.vCS.setText(bundle.getString("cs"));
-        holder.vGold.setText(bundle.getString("gold"));
-        holder.vLVL.setText(bundle.getString("lvl"));
-        holder.vKDA.setText(bundle.getString("kda"));
+        holder.vCS.setText(String.valueOf(bundle.getLong("cs")));
+        holder.vGold.setText(String.format("%.1f", bundle.getFloat("gold") / 1000) + "k");
+        holder.vLVL.setText(String.valueOf(bundle.getLong("lvl")));
+        holder.vKDA.setText(bundle.getLong("kills") + "/"
+                + bundle.getLong("death") + "/" + bundle.getLong("assist"));
         holder.vStartDate.setText(bundle.getString("startDate"));
         holder.vDuration.setText(bundle.getString("duration"));
         holder.vMap.setText(bundle.getInt("mapName"));

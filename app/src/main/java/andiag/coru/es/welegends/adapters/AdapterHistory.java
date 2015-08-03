@@ -28,8 +28,10 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
         * matchId           long
+        * champId           int
         * champName         String
         * champKey          String
+        * mapId             int
         * mapName           int(Resource)
         * mapImage          int(Resource)
         * kills             long

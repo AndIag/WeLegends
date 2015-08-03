@@ -268,8 +268,10 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
                 data = new Bundle();
                 data.putLong("matchId", g.getGameId());
+                data.putInt("champId", champId);
                 data.putString("champName", ChampionsHandler.getChampName(champId));
                 data.putString("champKey", ChampionsHandler.getChampKey(champId));
+                data.putInt("mapId", mapid);
                 data.putInt("mapName", NamesHandler.getMapName(mapid));
                 data.putInt("mapImage", ImagesHandler.getMap(mapid));
                 data.putLong("kills", kills);

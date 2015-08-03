@@ -118,26 +118,8 @@ public abstract class ChampionsHandler {
     }
 
     public static String getChampKey(int id) {
+        if (champions == null) return "Null";
         return champions.getData().get(id).getKey();
-    }
-
-    public static Bitmap getChampImage(Activity activity, int id) {
-        if (cw == null) {
-            cw = new ContextWrapper(activity.getApplicationContext());
-        }
-        if (directory == null) {
-            directory = cw.getDir("Images", Context.MODE_PRIVATE);
-        }
-
-        File f = new File(directory, id + ".png");
-        Bitmap b = null;
-        try {
-            b = BitmapFactory.decodeStream(new FileInputStream(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return b;
     }
 
 }

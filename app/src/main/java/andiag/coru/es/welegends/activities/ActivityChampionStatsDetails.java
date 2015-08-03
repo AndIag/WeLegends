@@ -20,23 +20,25 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 public class ActivityChampionStatsDetails extends Activity {
 
     private Bundle stats;
-        /*
-        * champKey          String
-        * name              String
-        * victories         String
-        * defeats           String
-        * cs                String
-        * gold              String
-        * totalGames        float
-        * kills             float
-        * death             float
-        * assist            float
-        * penta             String
-        * quadra            String
-        * triple            String
-        * double            String
-        * image             int
-        * */
+    /*      BUNDLE DATA
+    * champId           int
+    * name              String
+    * key               String
+    * victories         float
+    * defeats           float
+    * totalGames        float
+    * kills             float
+    * death             float
+    * assist            float
+    * cs                float
+    * gold              float
+    * penta             int
+    * quadra            int
+    * triple            int
+    * double            int
+    * turrets           int
+    * firstblood        int
+    * */
     private ImageLoader imageLoader;
     private boolean isHeader;
 
@@ -69,7 +71,7 @@ public class ActivityChampionStatsDetails extends Activity {
 
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                 + ChampionsHandler.getServerVersion(this)
-                + "/img/champion/" + stats.getString("champKey") + ".png", imageLoader);
+                + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
 
         tname.setText(stats.getString("name"));
 
@@ -79,16 +81,18 @@ public class ActivityChampionStatsDetails extends Activity {
         tassist.setText(String.format("%.1f", assist / totalGames));
         tkda.setText(String.format("%.2f", (kills + assist) / death));
         tkda.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KDA, (kills + assist) / death)));
-        tgold.setText(stats.getString("gold"));
-        tcs.setText(stats.getString("cs"));
-        tpercent.setText(String.format("%.1f", (Float.valueOf(stats.getString("victories"))/totalGames) * 100) + "%");
-        tpercent.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.PERCENT, (Float.valueOf(stats.getString("victories")) / totalGames) * 100)));
+
+        tgold.setText(String.format("%.1f", stats.getFloat("gold") / (totalGames * 1000)) + "k");
+        tcs.setText(String.format("%.1f",stats.getFloat("cs")/totalGames ));
+
+        tpercent.setText(String.format("%.1f", (stats.getFloat("victories")/totalGames) * 100) + "%");
+        tpercent.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.PERCENT, (stats.getFloat("victories") / totalGames) * 100)));
 
         tKills.setText(String.format("%.0f", kills));
-        tDouble.setText(stats.getString("double"));
-        tTriple.setText(stats.getString("triple"));
-        tQuadra.setText(stats.getString("quadra"));
-        tPenta.setText(stats.getString("penta"));
+        tDouble.setText(String.valueOf(stats.getInt("double")));
+        tTriple.setText(String.valueOf(stats.getInt("triple")));
+        tQuadra.setText(String.valueOf(stats.getInt("quadra")));
+        tPenta.setText(String.valueOf(stats.getInt("penta")));
 
     }
 

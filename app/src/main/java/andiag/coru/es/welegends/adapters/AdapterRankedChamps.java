@@ -22,19 +22,38 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
 import andiag.coru.es.welegends.fragments.SwipeRefreshLayoutFragment;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
-/**
- * Created by andyq on 21/07/2015.
- */
+        /*      BUNDLE DATA
+        * champId           int
+        * key               String
+        * name              String
+        * victories         float
+        * defeats           float
+        * totalGames        float
+        * kills             float
+        * death             float
+        * assist            float
+        * cs                float
+        * gold              float
+        * penta             int
+        * quadra            int
+        * triple            int
+        * double            int
+        * turrets           int
+        * firstblood        int
+        * */
+
 public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
@@ -90,50 +109,46 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Bundle item = getItem(position);
         float totalGames, kills, death, assist;
+        totalGames = item.getFloat("totalGames");
+        kills = item.getFloat("kills");
+        death = item.getFloat("death");
+        assist = item.getFloat("assist");
 
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
-            h.textCS.setText(item.getString("cs"));
-            h.textGold.setText(item.getString("gold"));
-            h.textD.setText(item.getString("defeats"));
-            h.textV.setText(item.getString("victories"));
+            h.textD.setText(String.valueOf((int) item.getFloat("defeats")));
+            h.textV.setText(String.valueOf((int) item.getFloat("victories")));
 
-            totalGames = item.getFloat("totalGames");
-            kills = item.getFloat("kills");
-            death = item.getFloat("death");
-            assist = item.getFloat("assist");
             h.textKDA.setText(String.format("%.1f", kills / totalGames)
                     + "/" + String.format("%.1f", death / totalGames)
                     + "/" + String.format("%.1f", assist / totalGames));
+
+            h.textCS.setText(String.format("%.1f", item.getFloat("cs")/totalGames));
+            h.textGold.setText(String.format("%.1f", item.getFloat("gold") / (totalGames * 1000)) + "k");
 
             h.imageChamp.setErrorImageResId(R.drawable.item_default);
             h.imageChamp.setDefaultImageResId(R.drawable.item_default);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)
-                            + "/img/champion/" + item.getString("champKey") + ".png",
+                            + "/img/champion/" + item.getString("key") + ".png",
                     imageLoader);
-            //cast holder to VHItem and set data
         } else if (holder instanceof VHHeader) {
-            //cast holder to VHHeader and set data for header.
             final VHHeader h = (VHHeader) holder;
-            h.textVictories.setText(item.getString("victories"));
-            h.textDefeats.setText(item.getString("defeats"));
+            h.textVictories.setText(String.valueOf((int) item.getFloat("victories")));
+            h.textDefeats.setText(String.valueOf((int) item.getFloat("defeats")));
 
-            totalGames = item.getFloat("totalGames");
-            kills = item.getFloat("kills");
-            death = item.getFloat("death");
-            assist = item.getFloat("assist");
             h.textGlobalKDA.setText(String.format("%.1f", kills / totalGames)
                     + "/" + String.format("%.1f", death / totalGames)
                     + "/" + String.format("%.1f", assist / totalGames));
 
-            h.textPercent.setText(item.getString("percent"));
+            h.textPercent.setText(String.format("%.2f", (item.getFloat("victories")/totalGames) * 100) + "%");
 
-            String championImg = ChampionsHandler.getChampKey(item.getInt("image"))+"_1.jpg";
+            Log.d("CHAMP", String.valueOf(item.getInt("champId")));
+
+            String championImg = item.getString("key")+"_1.jpg";
 
             h.background.setErrorImageResId(R.drawable.gnar_0);
             h.background.setImageUrl("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,imageLoader);
-
         }
     }
 

@@ -231,9 +231,8 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
             AggregatedStatsDto aggregatedStatsDto;
             Bundle m;
             Bundle summonerBundle = new Bundle();
-            float wins, lost, percent;
-            float kills, death, assist, gold, cs, totalGames;
-            int maxUsedChamp = 0, maxGamesPlayed = 0;
+            float wins, lost, totalGames;
+            int maxUsedChampId = 0, maxGamesPlayed = 0;
             int id;
 
             sortChampionStatsDto(championStats);
@@ -244,61 +243,43 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 aggregatedStatsDto = c.getStats();
 
                 wins = aggregatedStatsDto.getTotalSessionsWon();
-                m.putString("victories", String.valueOf((int) wins));
                 lost = aggregatedStatsDto.getTotalSessionsLost();
-                m.putString("defeats", String.valueOf((int) lost));
                 totalGames = wins + lost;
+
+                m.putFloat("victories", wins);
+                m.putFloat("defeats", lost);
+                m.putFloat("totalGames", totalGames);
+                m.putFloat("kills", aggregatedStatsDto.getTotalChampionKills());
+                m.putFloat("death", aggregatedStatsDto.getTotalDeathsPerSession());
+                m.putFloat("assist", aggregatedStatsDto.getTotalAssists());
+                m.putFloat("cs", aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled());
+                m.putFloat("gold", aggregatedStatsDto.getTotalGoldEarned());
+                m.putInt("penta", aggregatedStatsDto.getTotalPentaKills());
+                m.putInt("quadra", aggregatedStatsDto.getTotalQuadraKills());
+                m.putInt("triple",aggregatedStatsDto.getTotalTripleKills());
+                m.putInt("double", aggregatedStatsDto.getTotalDoubleKills());
+                m.putInt("turrets", aggregatedStatsDto.getTotalTurretsKilled());
+                m.putInt("firstblood", aggregatedStatsDto.getTotalFirstBlood());
 
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
-                    kills = aggregatedStatsDto.getTotalChampionKills();
-                    death = aggregatedStatsDto.getTotalDeathsPerSession();
-                    assist = aggregatedStatsDto.getTotalAssists();
-
-                    m.putFloat("totalGames", totalGames);
-                    m.putFloat("kills", kills);
-                    m.putFloat("death", death);
-                    m.putFloat("assist", assist);
-
-                    if (totalGames != 0) {
-                        percent = (wins / totalGames) * 100;
-                        summonerBundle.putString("percent", String.format("%.2f", percent) + "%");
-                    } else {
-                        summonerBundle.putString("globalkda", "0/0/0");
-                        summonerBundle.putString("percent", "100%");
-                    }
-
-                } else {
-                    m.putString("champKey", ChampionsHandler.getChampKey(id));
+                }else{
+                    m.putInt("champId", id);
+                    m.putString("key", ChampionsHandler.getChampKey(id));
                     m.putString("name", ChampionsHandler.getChampName(id));
-                    cs = aggregatedStatsDto.getTotalMinionKills() + aggregatedStatsDto.getTotalNeutralMinionsKilled();
-                    m.putString("cs", String.format("%.1f", cs / totalGames));
-                    gold = aggregatedStatsDto.getTotalGoldEarned();
-                    m.putString("gold", String.format("%.1f", gold / (totalGames * 1000)) + "k");
-
-                    kills = aggregatedStatsDto.getTotalChampionKills();
-                    death = aggregatedStatsDto.getTotalDeathsPerSession();
-                    assist = aggregatedStatsDto.getTotalAssists();
-
-                    m.putFloat("totalGames", totalGames);
-                    m.putFloat("kills", kills);
-                    m.putFloat("death", death);
-                    m.putFloat("assist", assist);
-
-                    m.putString("penta",Integer.toString(aggregatedStatsDto.getTotalPentaKills()));
-                    m.putString("quadra",Integer.toString(aggregatedStatsDto.getTotalQuadraKills()));
-                    m.putString("triple",Integer.toString(aggregatedStatsDto.getTotalTripleKills()));
-                    m.putString("double",Integer.toString(aggregatedStatsDto.getTotalDoubleKills()));
-
-                    if ((wins + lost) > maxGamesPlayed) {
-                        maxGamesPlayed = (int) (wins + lost);
-                        maxUsedChamp = id;
-                    }
-
                     bundles.add(m);
+
+                    if ((totalGames) > maxGamesPlayed) {
+                        maxGamesPlayed = (int) totalGames;
+                        maxUsedChampId = id;
+                    }
                 }
             }
-            summonerBundle.putInt("image", maxUsedChamp);
+
+            Log.d("DATA", String.valueOf(maxUsedChampId));
+            summonerBundle.putInt("champId", maxUsedChampId);
+            summonerBundle.putString("key", ChampionsHandler.getChampKey(maxUsedChampId));
+            summonerBundle.putString("name", ChampionsHandler.getChampName(maxUsedChampId));
             bundles.add(0, summonerBundle);
             return bundles;
         }

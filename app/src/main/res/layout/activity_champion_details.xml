@@ -123,7 +123,7 @@
         android:layout_height="30dp"
         android:src="@drawable/icon_minion"
         android:id="@+id/imageView15"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="36dp"
         android:layout_alignTop="@+id/imageView14"
         android:layout_toRightOf="@+id/textGold"

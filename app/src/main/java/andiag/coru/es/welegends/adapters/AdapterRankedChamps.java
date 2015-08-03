@@ -142,8 +142,6 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
             h.textPercent.setText(String.format("%.2f", (item.getFloat("victories")/totalGames) * 100) + "%");
 
-            Log.d("CHAMP", String.valueOf(item.getInt("champId")));
-
             String championImg = item.getString("key")+"_1.jpg";
 
             h.background.setErrorImageResId(R.drawable.gnar_0);

@@ -275,7 +275,6 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 }
             }
 
-            Log.d("DATA", String.valueOf(maxUsedChampId));
             summonerBundle.putInt("champId", maxUsedChampId);
             summonerBundle.putString("key", ChampionsHandler.getChampKey(maxUsedChampId));
             summonerBundle.putString("name", ChampionsHandler.getChampName(maxUsedChampId));

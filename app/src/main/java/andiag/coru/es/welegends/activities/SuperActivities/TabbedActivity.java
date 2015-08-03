@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
@@ -85,7 +86,7 @@ public class TabbedActivity extends ActionBarActivity {
         }
     }
 
-    protected class SectionsPagerAdapter extends FragmentPagerAdapter {
+    protected class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private final int DEFAULT_COLOR = Color.CYAN;
         private final String DEFAULT_NAME = "DEFAULT";
@@ -95,6 +96,10 @@ public class TabbedActivity extends ActionBarActivity {
         public SectionsPagerAdapter(FragmentManager fm, ArrayList<Tab> tabs) {
             super(fm);
             this.tabs = tabs;
+        }
+
+        public void removeFragments(){
+
         }
 
         @Override

@@ -5,7 +5,7 @@ import andiag.coru.es.welegends.R;
 /**
  * Created by iagoc on 03/08/2015.
  */
-public class StatsColor {
+public abstract class StatsColor {
 
     public static final int DEATHS = 0;
     public static final int KDA = 1;

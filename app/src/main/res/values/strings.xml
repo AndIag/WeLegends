@@ -40,6 +40,7 @@
     <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
     <string name="checkingVersion">Checking Server Version</string>
     <string name="loadNames">Loading Champ Names</string>
+    <string name="working">Working...</string>
 
     <!-- Map Names -->
     <string name="rift">Summoner\'s Rift</string>
@@ -89,5 +90,6 @@
     </string-array>
 
     <string name="hello_world">Hello world!</string>
+    <string name="searching_summoner">Searching summoner...</string>
 
 </resources>

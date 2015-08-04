@@ -1,12 +1,14 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,9 +49,24 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private ArrayList<SummonerHistoryDto> history;
     private ListView listSummoners;
     private AdapterSummoner adapter;
+    private ProgressDialog progressDialog;
 
     public static void setActivityMain(ActivityMain a) {
+        if(a==null && activityMain!=null){
+            activityMain.finish();
+        }
         activityMain = a;
+    }
+
+    private void showProgressDialog(){
+        progressDialog = ProgressDialog.show(this, getResources().getString(R.string.working)
+                , getResources().getString(R.string.searching_summoner), true, false);
+    }
+
+    private void dismissProgressDialog(){
+        if(progressDialog!=null && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -187,12 +204,14 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             e.printStackTrace();
         }
 
+        dismissProgressDialog();
         isLoading = false;
     }
 
     private void getSummonerId(final String summonerName){
         if (isLoading) return;
 
+        showProgressDialog();
         isLoading = true;
 
         final Gson gson = new Gson();
@@ -222,9 +241,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerError),
                         Toast.LENGTH_LONG).show();
-                if (activityMain != null) {
-                    activityMain.finish();
-                }
+                dismissProgressDialog();
                 isLoading = false;
             }
         });

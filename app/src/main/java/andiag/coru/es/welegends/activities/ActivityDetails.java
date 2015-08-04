@@ -257,14 +257,8 @@ public class ActivityDetails extends TabbedActivity implements ObservableScrollV
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.toString());
+                Toast.makeText(getApplicationContext(), getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 isLoading = false;
-                NetworkResponse networkResponse = error.networkResponse;
-                String message = getString(R.string.errorDefault);
-                if (networkResponse != null) {
-                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
-                }
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
 

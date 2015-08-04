@@ -29,15 +29,16 @@
     <string name="go">Search</string>
     <string name="action_about">About</string>
 
-    <!-- Errors && Messages-->
+    <!-- Errors -->
+    <string name="timeout">TimeOut Error</string>
     <string name="error500">Internal Server Error</string>
-    <string name="error503">Service Unavailable</string>
     <string name="error404">Not Found</string>
-    <string name="loadErrorDialogTittle">Error Loading History</string>
-    <string name="errorDefault">Unknown Error</string>
-    <string name="summonerHistoryError">Can`t Load Summoner History</string>
-    <string name="loadingSummonerError">ERROR: Loading Summoner</string>
-    <string name="voidSummonerError">ERROR: Can`t load a noname Summoner</string>
+    <string name="summonerHistoryError">ERROR: Loading Summoner History</string>
+    <string name="voidSummonerError">ERROR: Loading a NULL Summoner</string>
+    <string name="loadingSummonerUnknowError">UNKNOW ERROR: Loading Summoner</string>
+    <string name="unknowkError">Unknown Error</string>
+
+    <!-- Messages -->
     <string name="checkingVersion">Checking Server Version</string>
     <string name="loadNames">Loading Champ Names</string>
     <string name="working">Working...</string>

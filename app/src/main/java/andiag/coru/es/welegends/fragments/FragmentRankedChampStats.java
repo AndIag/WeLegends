@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -178,12 +177,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                String message = getString(R.string.errorDefault);
-                if (networkResponse != null) {
-                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
-                }
-                Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

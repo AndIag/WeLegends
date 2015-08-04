@@ -254,14 +254,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", error.toString());
                 decrementIndexes();
-                NetworkResponse networkResponse = error.networkResponse;
-                String message = getString(R.string.errorDefault);
-                if (networkResponse != null) {
-                    message = getString(NetworkError.parseServerError(networkResponse.statusCode));
-                }
-                Toast.makeText(activityMain, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

@@ -1,5 +1,11 @@
 package andiag.coru.es.welegends.utils;
 
+import android.widget.Toast;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+
 import org.apache.http.HttpStatus;
 
 import andiag.coru.es.welegends.R;
@@ -9,21 +15,32 @@ import andiag.coru.es.welegends.R;
  */
 public abstract class NetworkError {
 
-    public static int parseServerError(int statusCode) {
-        int message;
-        switch (statusCode) {
-            case HttpStatus.SC_INTERNAL_SERVER_ERROR:
-                message = R.string.error500;
-                break;
-            case HttpStatus.SC_SERVICE_UNAVAILABLE:
-                message = R.string.error503;
-                break;
-            case HttpStatus.SC_NOT_FOUND:
-                message = R.string.error404;
-                break;
-            default:
-                message = R.string.errorDefault;
-                break;
+    private static NetworkResponse networkResponse;
+
+    public static int parseVolleyError(VolleyError error) {
+        int message = R.string.unknowkError;
+        if (error.networkResponse == null) {
+            if (error.getClass().equals(TimeoutError.class)) {
+                message =  R.string.timeout;
+            }
+        }else{
+            networkResponse = error.networkResponse;
+
+            switch (networkResponse.statusCode) {
+                case HttpStatus.SC_INTERNAL_SERVER_ERROR:
+                    message = R.string.error500;
+                    break;
+                case HttpStatus.SC_SERVICE_UNAVAILABLE:
+                    message = R.string.error500;
+                    break;
+                case HttpStatus.SC_NOT_FOUND:
+                    message = R.string.error404;
+                    break;
+                default:
+                    message = R.string.unknowkError;
+                    break;
+            }
+
         }
         return message;
     }

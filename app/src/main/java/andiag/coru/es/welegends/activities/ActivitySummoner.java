@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -239,7 +238,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerError),
+                Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerUnknowError),
                         Toast.LENGTH_LONG).show();
                 dismissProgressDialog();
                 isLoading = false;

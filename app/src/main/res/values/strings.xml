@@ -35,13 +35,14 @@
     <string name="error404">Not Found</string>
     <string name="summonerHistoryError">ERROR: Loading Summoner History</string>
     <string name="voidSummonerError">ERROR: Loading a NULL Summoner</string>
-    <string name="loadingSummonerUnknowError">UNKNOW ERROR: Loading Summoner</string>
     <string name="unknowkError">Unknown Error</string>
+    <string name="networkUnavailable">Network is Unavailable</string>
 
     <!-- Messages -->
     <string name="checkingVersion">Checking Server Version</string>
     <string name="loadNames">Loading Champ Names</string>
-    <string name="working">Working...</string>
+    <string name="working">Working…</string>
+    <string name="searching_summoner">Searching summoner…</string>
 
     <!-- Map Names -->
     <string name="rift">Summoner\'s Rift</string>
@@ -91,6 +92,5 @@
     </string-array>
 
     <string name="hello_world">Hello world!</string>
-    <string name="searching_summoner">Searching summoner...</string>
 
 </resources>

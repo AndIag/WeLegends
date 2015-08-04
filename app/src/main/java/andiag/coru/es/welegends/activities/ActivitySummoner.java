@@ -35,6 +35,7 @@ import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
 import andiag.coru.es.welegends.entities.Summoner;
+import andiag.coru.es.welegends.utils.NetworkError;
 import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -172,7 +173,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                         Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(this, "Network is unavailable!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.networkUnavailable), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -232,13 +233,14 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                             startMainActivity(summoner);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            dismissProgressDialog();
                         }
                         isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), getString(R.string.loadingSummonerUnknowError),
+                Toast.makeText(getApplicationContext(), getString(NetworkError.parseVolleyError(error)),
                         Toast.LENGTH_LONG).show();
                 dismissProgressDialog();
                 isLoading = false;

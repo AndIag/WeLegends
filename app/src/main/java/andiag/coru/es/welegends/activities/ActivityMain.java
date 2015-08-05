@@ -3,6 +3,7 @@ package andiag.coru.es.welegends.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +24,22 @@ public class ActivityMain extends AnimatedTabbedActivity {
     private Summoner summoner;
     private String summonerName;
     private String region;
+    private boolean isUnranked = false;
 
     public String getRegion() {
         return region;
+    }
+
+    public void setUnranked(){
+        isUnranked=true;
+    }
+
+    public boolean isUnranked(){
+        return isUnranked;
+    }
+
+    public void removeTab(Fragment fragment){
+        removeTab(fragment);
     }
 
     @Override
@@ -52,7 +66,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tabs.add(pos, tab);
         pos++;
 
-        if (summoner.getSummonerLevel() == 30) {
+        if (summoner.getSummonerLevel() == 30 && !isUnranked) {
             //FRAGMENT RANKEDS TAB
             tab = new Tab();
             tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
@@ -74,7 +88,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         tabs.add(pos, tab);
         pos++;
 
-        if (summoner.getSummonerLevel() == 30) {
+        if (summoner.getSummonerLevel() == 30 && !isUnranked) {
             //FRAGMENT CHAMPIONS STATS
             tab = new Tab();
             tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
@@ -95,6 +109,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable("summoner", summoner);
         outState.putString("region", region);
+        outState.putBoolean("isUnranked", isUnranked);
     }
 
     //RetrieveData
@@ -102,6 +117,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         if (savedInstanceState != null) {
             summoner = (Summoner) savedInstanceState.getSerializable("summoner");
             region = savedInstanceState.getString("region");
+            isUnranked = savedInstanceState.getBoolean("isUnranked");
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();

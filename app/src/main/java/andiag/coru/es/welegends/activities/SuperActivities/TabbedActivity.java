@@ -6,8 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,17 @@ public class TabbedActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tabs = new ArrayList<>();
+    }
+
+    public void removeTab(Fragment fragment){
+        for(Tab t : tabs){
+            if(t.getFragment() == fragment){
+                Log.d("REMOVE FRAGMENT", "REMOVED");
+                tabs.remove(t);
+                break;
+            }
+        }
+        mPagerAdapter.removeTab(fragment);
     }
 
     protected class Tab {
@@ -98,6 +112,17 @@ public class TabbedActivity extends ActionBarActivity {
             this.tabs = tabs;
         }
 
+        public void removeTab(Fragment fragment){
+            for(Tab t : tabs){
+                if(t.getFragment() == fragment){
+                    Log.d("REMOVE FRAGMENT", "REMOVED IN");
+                    tabs.remove(t);
+                    notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
+
         @Override
         public Fragment getItem(int position) {
             try {
@@ -126,6 +151,22 @@ public class TabbedActivity extends ActionBarActivity {
         @Override
         public int getCount() {
             return tabs.size();
+        }
+
+        //this is called when notifyDataSetChanged() is called
+        @Override
+        public int getItemPosition(Object object) {
+            // refresh all fragments when data set changed
+            return PagerAdapter.POSITION_NONE;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            FragmentManager manager = ((Fragment)object).getFragmentManager();
+            android.support.v4.app.FragmentTransaction trans = manager.beginTransaction();
+            trans.remove((Fragment)object);
+            trans.commit();
         }
 
         @Override

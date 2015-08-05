@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -172,11 +173,19 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         rankedStatsDto = gson.fromJson(response.toString(), RankedStatsDto.class);
-                        new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if(rankedStatsDto!=null) {
+                            new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse.statusCode== HttpStatus.SC_NOT_FOUND){
+                    activityMain.setUnranked();
+                    changeRefreshingValue(false);
+                    return;
+                }
                 Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }

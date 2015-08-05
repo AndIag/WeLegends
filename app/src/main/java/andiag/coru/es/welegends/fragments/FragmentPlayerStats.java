@@ -83,7 +83,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     protected void initializeRefresh(View view) {
         setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));
         setColors(null); //NULL means default colors
-        if (summoner.getSummonerLevel() == 30) {
+        if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
             setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -148,10 +148,12 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         if (imageLoader == null) {
             imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
         }
-        if (summoner.getSummonerLevel() == 30) {
+        if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
             if (leagues.isEmpty()) {
                 getLeagues();
             } else setInfoInView();
+        }else{
+            setNotLVL30Info();
         }
     }
 
@@ -177,7 +179,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             //txtName.setText(summoner.getName());
             //txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
 
-            if (summoner.getSummonerLevel() == 30) {
+            if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
                 if (leagues != null && leagues.size() == 0) {
                     //Tenemos que cargar las ligas
                     getLeagues();

@@ -245,9 +245,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                         JSONArray arrayMatches = null;
                         try {
                             arrayMatches = response.getJSONArray("matches");
-                            new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            if(arrayMatches!=null) {
+                                new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            activityMain.setUnranked();
                             changeRefreshingValue(false);
                         }
                     }
@@ -305,8 +307,10 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         @Override
         protected void onPostExecute(ArrayList<Match> matches) {
             super.onPostExecute(matches);
-            matchesHistoryList.addAll(matches);
-            new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if(matches!=null && matches.size()>0) {
+                matchesHistoryList.addAll(matches);
+                new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         }
     }
 

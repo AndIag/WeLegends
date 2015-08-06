@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -43,17 +42,6 @@ public class TabbedActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tabs = new ArrayList<>();
-    }
-
-    public void removeTab(Fragment fragment){
-        for(Tab t : tabs){
-            if(t.getFragment() == fragment){
-                Log.d("REMOVE FRAGMENT", "REMOVED");
-                tabs.remove(t);
-                break;
-            }
-        }
-        mPagerAdapter.removeTab(fragment);
     }
 
     protected class Tab {
@@ -117,17 +105,6 @@ public class TabbedActivity extends ActionBarActivity {
 
         public void clear(){
             tabs.clear();
-        }
-
-        public void removeTab(Fragment fragment){
-            for(Tab t : tabs){
-                if(t.getFragment() == fragment){
-                    Log.d("REMOVE FRAGMENT", "REMOVED IN");
-                    tabs.remove(t);
-                    notifyDataSetChanged();
-                    break;
-                }
-            }
         }
 
         @Override

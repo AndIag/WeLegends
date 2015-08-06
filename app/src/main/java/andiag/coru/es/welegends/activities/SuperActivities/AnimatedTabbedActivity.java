@@ -40,6 +40,7 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
     private ScrollState mLastScrollState;
     private int mSlop;
     private boolean mScrolled;
+    private SmartTabLayout slidingTabLayout;
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
         public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
@@ -123,6 +124,12 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
         }
     }
 
+    protected void reloadActionBar() {
+        if (slidingTabLayout != null) {
+            slidingTabLayout.setViewPager(mPager);
+        }
+    }
+
     protected void setAnimation() {
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(actionBarBackground);
@@ -134,7 +141,7 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         findViewById(R.id.pager_wrapper).setPadding(0, getActionBarSize() + tabHeight, 0, 0);
 
-        SmartTabLayout slidingTabLayout = (SmartTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout = (SmartTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setBackground(actionBarTabsColor);
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white_20));

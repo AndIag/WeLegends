@@ -3,7 +3,6 @@ package andiag.coru.es.welegends.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +24,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
     private String summonerName;
     private String region;
     private boolean isUnranked = false;
+    private boolean isCreatingTabs = false;
 
     public String getRegion() {
         return region;
@@ -32,75 +32,82 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
     public void setUnranked(){
         isUnranked=true;
+        createTabs();
+        reloadActionBar();
     }
 
     public boolean isUnranked(){
         return isUnranked;
     }
 
-    public void removeTab(Fragment fragment){
-        removeTab(fragment);
+    private synchronized void setCreatingTabs(boolean bool) {
+        isCreatingTabs = bool;
     }
+
 
     @Override
     protected void createTabs() {
-        super.createTabs();
-        int pos = 0;
-        Tab tab;
-        String tabName;
+        if (!isCreatingTabs) {
+            setCreatingTabs(true);
+            super.createTabs();
+            int pos = 0;
+            Tab tab;
+            String tabName;
 
-        //FRAGMENT PLAYER STATS
-        tab = new Tab();
-        if (summoner != null) {
-            tabName = summoner.getName().toUpperCase();
-        } else if (summonerName != null) {
-            tabName = summonerName.toUpperCase();
-        } else {
-            tabName = getString(R.string.section_summoner).toUpperCase();
-        }
-        tab.setFragment(FragmentPlayerStats.newInstance(region,summoner));
-        tab.setName(tabName.toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT0));
-        tab.setToolBarColors(getResources().getColor(R.color.pos0));
-
-        tabs.add(pos, tab);
-        pos++;
-
-        if (summoner.getSummonerLevel() == 30 && !isUnranked) {
-            //FRAGMENT RANKEDS TAB
+            //FRAGMENT PLAYER STATS
             tab = new Tab();
-            tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
-            tab.setName(getString(R.string.section_ranked).toUpperCase());
-            tab.setActionBarColors(getResources().getColor(R.color.posT1));
-            tab.setToolBarColors(getResources().getColor(R.color.pos1));
+            if (summoner != null) {
+                tabName = summoner.getName().toUpperCase();
+            } else if (summonerName != null) {
+                tabName = summonerName.toUpperCase();
+            } else {
+                tabName = getString(R.string.section_summoner).toUpperCase();
+            }
+            tab.setFragment(FragmentPlayerStats.newInstance(region, summoner));
+            tab.setName(tabName.toUpperCase());
+            tab.setActionBarColors(getResources().getColor(R.color.posT0));
+            tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
             tabs.add(pos, tab);
             pos++;
-        }
 
-        //FRAGMENT HISTORY TAB
-        tab = new Tab();
-        tab.setFragment(FragmentHistory.newInstance(summoner.getId(), region));
-        tab.setName(getString(R.string.section_history).toUpperCase());
-        tab.setActionBarColors(getResources().getColor(R.color.posT2));
-        tab.setToolBarColors(getResources().getColor(R.color.pos2));
+            if (summoner.getSummonerLevel() == 30 && !isUnranked) {
+                //FRAGMENT RANKEDS TAB
+                tab = new Tab();
+                tab.setFragment(FragmentRankeds.newInstance(summoner.getId(), region));
+                tab.setName(getString(R.string.section_ranked).toUpperCase());
+                tab.setActionBarColors(getResources().getColor(R.color.posT1));
+                tab.setToolBarColors(getResources().getColor(R.color.pos1));
 
-        tabs.add(pos, tab);
-        pos++;
+                tabs.add(pos, tab);
+                pos++;
+            }
 
-        if (summoner.getSummonerLevel() == 30 && !isUnranked) {
-            //FRAGMENT CHAMPIONS STATS
+            //FRAGMENT HISTORY TAB
             tab = new Tab();
-            tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
-            tab.setName(getString(R.string.section_champs).toUpperCase());
-            tab.setActionBarColors(getResources().getColor(R.color.posT3));
-            tab.setToolBarColors(getResources().getColor(R.color.pos3));
+            tab.setFragment(FragmentHistory.newInstance(summoner.getId(), region));
+            tab.setName(getString(R.string.section_history).toUpperCase());
+            tab.setActionBarColors(getResources().getColor(R.color.posT2));
+            tab.setToolBarColors(getResources().getColor(R.color.pos2));
 
             tabs.add(pos, tab);
             pos++;
-        }
 
-        setPager();
+            if (summoner.getSummonerLevel() == 30 && !isUnranked) {
+                //FRAGMENT CHAMPIONS STATS
+                tab = new Tab();
+                tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
+                tab.setName(getString(R.string.section_champs).toUpperCase());
+                tab.setActionBarColors(getResources().getColor(R.color.posT3));
+                tab.setToolBarColors(getResources().getColor(R.color.pos3));
+
+                tabs.add(pos, tab);
+                pos++;
+            }
+
+            setPager();
+            setCreatingTabs(false);
+        }
     }
 
     //SaveData

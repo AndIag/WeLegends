@@ -1,12 +1,14 @@
 package andiag.coru.es.welegends.fragments;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityDetails;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,15 +17,42 @@ import andiag.coru.es.welegends.R;
  */
 public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
 
+    private static ActivityDetails activityMain;
+
     public FragmentPlayerMatchDetails() {
         // Required empty public constructor
     }
 
     public static FragmentPlayerMatchDetails newInstance() {
-        FragmentPlayerMatchDetails fragmentPlayerMatchDetails = new FragmentPlayerMatchDetails();
-        Bundle args = new Bundle();
-        fragmentPlayerMatchDetails.setArguments(args);
-        return fragmentPlayerMatchDetails;
+        return new FragmentPlayerMatchDetails();
+    }
+
+    //SAVE AND RETRIEVE DATA
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    public void onRetrieveInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) { //Load saved data in onPause
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activityMain = (ActivityDetails) activity;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onRetrieveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

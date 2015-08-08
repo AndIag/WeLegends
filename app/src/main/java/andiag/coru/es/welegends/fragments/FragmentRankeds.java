@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -386,7 +384,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data.putBoolean("winner", winner);
                 data.putString("startDate", date_s);
                 data.putString("duration", d);
-                data.putInt("isRanked", android.R.drawable.ic_menu_compass);
+                data.putInt("matchType", android.R.drawable.ic_menu_compass);
                 bundles.add(data);
             }
             return bundles;

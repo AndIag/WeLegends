@@ -88,7 +88,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                         + "/img/champion/" + bundle.getString("champKey") + ".png",
                 imageLoader);
 
-        holder.isRanked.setImageResource(bundle.getInt("isRanked"));
+        holder.isRanked.setImageResource(bundle.getInt("matchType"));
         if (bundle.getBoolean("winner")) {
             holder.relativeLayout.setBackgroundColor(context.getResources().getColor(R.color.win));
         } else {

@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
@@ -66,6 +68,15 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
             }
         });
         changeRefreshingValue(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_match_info, container, false);
+
+        initializeRefresh(view);
+
+        return view;
     }
 
 }

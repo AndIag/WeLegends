@@ -1,6 +1,5 @@
 package andiag.coru.es.welegends.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +18,6 @@ import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends AnimatedTabbedActivity {
 
-    private Activity thisActivity;
     private Summoner summoner;
     private String summonerName;
     private String region;
@@ -102,7 +100,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
                 tab.setToolBarColors(getResources().getColor(R.color.pos3));
 
                 tabs.add(pos, tab);
-                pos++;
             }
 
             setPager();
@@ -141,8 +138,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        thisActivity = this;
 
         //NEED THIS TO USE SETANIMATION METHOD
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));

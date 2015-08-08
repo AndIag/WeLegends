@@ -16,6 +16,13 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment {
     public FragmentVictoryDefeatDetails() {
     }
 
+    public static FragmentVictoryDefeatDetails newInstance() {
+        FragmentVictoryDefeatDetails fragmentVictoryDefeatDetails = new FragmentVictoryDefeatDetails();
+        Bundle args = new Bundle();
+        fragmentVictoryDefeatDetails.setArguments(args);
+        return fragmentVictoryDefeatDetails;
+    }
+
     @Override
     protected void initializeRefresh(View view) {
         setRefreshLayout((SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh));

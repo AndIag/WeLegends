@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -43,7 +42,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
         * winner            boolean
         * startDate         String
         * duration          String
-        * isRanked          int(Resource)
+        * matchType         int(Resource)
         * */
 
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryViewHolder> {
@@ -140,9 +139,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                     Intent i = new Intent(context, ActivityDetails.class);
                     i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
                     i.putExtra("region", ((ActivityMain) context).getRegion());
-                    Toast.makeText(context, "CLICKED"
-                            , Toast.LENGTH_LONG).show();
-                    //context.startActivity(i);
+                    context.startActivity(i);
                 }
             });
 

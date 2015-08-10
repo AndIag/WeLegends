@@ -41,6 +41,72 @@ android:layout_height="match_parent"
             android:textColor="@android:color/white" />
 
         <LinearLayout
+            android:id="@+id/linearItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignEnd="@+id/linearInfo"
+            android:layout_alignLeft="@+id/linearInfo"
+            android:layout_alignRight="@+id/linearInfo"
+            android:layout_alignStart="@+id/linearInfo"
+            android:layout_below="@id/linearInfo"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <ImageView
+                android:id="@+id/imageTotem"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem3"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem4"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem5"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+            <ImageView
+                android:id="@+id/imageItem6"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/item_default"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linearNames"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -123,7 +189,7 @@ android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="15"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textD"
@@ -132,7 +198,7 @@ android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="5"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textA"
@@ -141,7 +207,7 @@ android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="10"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textKDA"
@@ -150,7 +216,7 @@ android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="5"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textCS"
@@ -159,7 +225,7 @@ android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="266"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textGold"
@@ -168,84 +234,18 @@ android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:text="16.5k"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/linearInfo"
-            android:layout_alignLeft="@+id/linearInfo"
-            android:layout_alignRight="@+id/linearInfo"
-            android:layout_alignStart="@+id/linearInfo"
-            android:layout_below="@id/linearInfo"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
-
-                <ImageView
-                    android:id="@+id/imgTotem"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="16dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="0dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt4"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt5"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgIt6"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
-                    />
-            </TableRow>
-
-        </TableLayout>
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tableLayout"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
             android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:stretchColumns="*"
+            android:layout_below="@id/linearItems">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -266,7 +266,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textEarnedGold"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -295,7 +295,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textKillingSprees"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -324,7 +324,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textLargestKillingSprees"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -352,7 +352,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textMagicDamageDealt"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -380,7 +380,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textMagicDamageDealtToChampions"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -408,7 +408,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textPhysicalDamageDealt"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -436,7 +436,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textPhysicalDamageDealtToChampions"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -464,7 +464,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textTotalDamageDealt"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
@@ -492,7 +492,7 @@ android:layout_height="match_parent"
                 <TextView
                     android:id="@+id/textTotalDamageDealtToChampions"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"

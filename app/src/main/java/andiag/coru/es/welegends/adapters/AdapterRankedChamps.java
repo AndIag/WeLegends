@@ -3,34 +3,22 @@ package andiag.coru.es.welegends.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
-import andiag.coru.es.welegends.activities.ActivityDetails;
-import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.entities.Match;
-import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
-import andiag.coru.es.welegends.fragments.SwipeRefreshLayoutFragment;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
@@ -115,6 +103,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
+
             h.textD.setText(String.valueOf((int) item.getFloat("defeats")));
             h.textV.setText(String.valueOf((int) item.getFloat("victories")));
 
@@ -171,10 +160,10 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class VHItem extends RecyclerView.ViewHolder {
+        protected CardView cardView;
         TextView textKDA,textGold,textCS,textV,textD;
         NetworkImageView imageChamp;
         View v;
-        protected CardView cardView;
 
         public VHItem(View itemView) {
             super(itemView);
@@ -199,10 +188,10 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
+        protected CardView cardView;
         TextView textVictories,textDefeats,textGlobalKDA,textPercent;
         NetworkImageView background;
         View view;
-        protected CardView cardView;
 
         public VHHeader(View itemView) {
             super(itemView);

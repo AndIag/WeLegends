@@ -28,6 +28,10 @@ public class ActivityMain extends AnimatedTabbedActivity {
         return region;
     }
 
+    public Summoner getSummoner() {
+        return summoner;
+    }
+
     public void setUnranked(){
         isUnranked=true;
         createTabs();

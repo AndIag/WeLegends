@@ -2,7 +2,6 @@ package andiag.coru.es.welegends.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +20,9 @@ import org.json.JSONObject;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
 import andiag.coru.es.welegends.entities.Match;
+import andiag.coru.es.welegends.entities.Participant;
+import andiag.coru.es.welegends.entities.ParticipantIdentities;
+import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.utils.MyNetworkError;
@@ -32,11 +34,15 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
     protected boolean isLoading = false;
     private ActivityDetails thisActivity;
-    private long matchId;
+    private long matchId, summonerId;
     private String region;
     private Match match;
     private boolean isCreatingTabs = false;
-    private String request;
+    private FragmentPlayerMatchDetails fragmentPlayerMatchDetails;
+
+    public void setFragmentPlayerMatchDetails(FragmentPlayerMatchDetails fragmentPlayerMatchDetails) {
+        this.fragmentPlayerMatchDetails = fragmentPlayerMatchDetails;
+    }
 
     private synchronized void setCreatingTabs(boolean bool) {
         isCreatingTabs = bool;
@@ -90,6 +96,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         super.onSaveInstanceState(outState);
         outState.putLong("matchId", matchId);
         outState.putString("region", region);
+        outState.putLong("summonerId", summonerId);
         outState.putSerializable("match", match);
     }
 
@@ -98,6 +105,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         if (savedInstanceState != null) {
             matchId = savedInstanceState.getLong("matchId");
             region = savedInstanceState.getString("region");
+            summonerId = savedInstanceState.getLong("summonerId");
             match = (Match) savedInstanceState.getSerializable("match");
         } else {
             Intent intent = getIntent();
@@ -105,6 +113,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             if (extras != null) {
                 matchId = extras.getLong("matchId");
                 region = extras.getString("region");
+                summonerId = extras.getLong("summonerId");
                 getMatchDetails();
             }
         }
@@ -170,8 +179,51 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private Bundle parseSummonerData() {
+        Bundle b = new Bundle();
+        Participant participant = null;
+        ParticipantStats participantStats;
+
+        int participantId = 0; //Get summoner participant ID
+        for (ParticipantIdentities pi : match.getParticipantIdentities()) {
+            if (pi.getPlayer().getSummonerId() == summonerId) {
+                participantId = pi.getParticipantId();
+                break;
+            }
+        }
+
+        for (Participant p : match.getParticipants()) {
+            if (p.getParticipantId() == participantId) {
+                participant = p;
+                break;
+            }
+        }
+
+        if (participant != null) {
+            participantStats = participant.getStats();
+            b.putInt("championId", participant.getChampionId());
+            b.putInt("spell1", participant.getSpell1Id());
+            b.putInt("spell2", participant.getSpell2Id());
+            b.putLong("kills", participantStats.getKills());
+            b.putLong("deaths", participantStats.getDeaths());
+            b.putLong("assists", participantStats.getAssists());
+            b.putLong("cs", participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled());
+            b.putLong("gold", participantStats.getGoldEarned());
+            b.putLong("item0", participantStats.getItem0());
+            b.putLong("item1", participantStats.getItem1());
+            b.putLong("item2", participantStats.getItem2());
+            b.putLong("item3", participantStats.getItem3());
+            b.putLong("item4", participantStats.getItem4());
+            b.putLong("item5", participantStats.getItem5());
+            b.putLong("item6", participantStats.getItem6());
+        }
+        return b;
+    }
+
     private void setMatchDataOnFragments() {
-        //match data are here just set it on fragments
+        if (fragmentPlayerMatchDetails != null) {
+            fragmentPlayerMatchDetails.setData(parseSummonerData());
+        }
     }
 
     private void getMatchDetails() {
@@ -184,7 +236,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             handler = APIHandler.getInstance(this);
         }
 
-        request = handler.getServer() + region.toLowerCase() + handler.getMatch() + matchId;
+        String request = handler.getServer() + region.toLowerCase() + handler.getMatch() + matchId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

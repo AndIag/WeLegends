@@ -139,6 +139,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                     Intent i = new Intent(context, ActivityDetails.class);
                     i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
                     i.putExtra("region", ((ActivityMain) context).getRegion());
+                    i.putExtra("summonerId", ((ActivityMain) context).getSummoner().getId());
                     context.startActivity(i);
                 }
             });

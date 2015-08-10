@@ -3,23 +3,37 @@ package andiag.coru.es.welegends.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPlayerMatchDetails#newInstance} factory method to
- * create an instance of this fragment.
- */
+/*
+            Int     "championId"
+            Int     "spell1"
+            Int     "spell2"
+            Long    "kills"
+            Long    "deaths"
+            Long    "assists"
+            Long    "cs"
+            Long    "gold"
+            Long    "item0"
+            Long    "item1"
+            Long    "item2"
+            Long    "item3"
+            Long    "item4"
+            Long    "item5"
+            Long    "item6"
+*/
 public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
 
     private static ActivityDetails activityMain;
+    TextView textK, textD, textA, textKDA, textCS, textGold;
+    private Bundle data;
 
     public FragmentPlayerMatchDetails() {
         // Required empty public constructor
@@ -29,14 +43,32 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         return new FragmentPlayerMatchDetails();
     }
 
+    public void setData(Bundle data) {
+        this.data = data;
+        setDataOnView();
+    }
+
+    private void setDataOnView() {
+        textK.setText(String.valueOf(data.getLong("kills")));
+        textD.setText(String.valueOf(data.getLong("deaths")));
+        textA.setText(String.valueOf(data.getLong("assists")));
+        long deaths = data.getLong("deaths");
+        if (deaths == 0) deaths = 1;
+        float KDA = (data.getLong("kills") + data.getLong("assists")) / deaths;
+        textKDA.setText(String.format("%.1f", KDA));
+        textCS.setText(String.valueOf(data.getLong("cs")));
+        textGold.setText(String.valueOf(data.getLong("gold")));
+    }
+
     //SAVE AND RETRIEVE DATA
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(data);
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) { //Load saved data in onPause
+            data = savedInstanceState;
         }
     }
 
@@ -44,6 +76,7 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activityMain = (ActivityDetails) activity;
+        activityMain.setFragmentPlayerMatchDetails(this);
     }
 
     @Override
@@ -75,6 +108,13 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         View view = inflater.inflate(R.layout.fragment_match_info, container, false);
 
         initializeRefresh(view);
+
+        textK = (TextView) view.findViewById(R.id.textK);
+        textD = (TextView) view.findViewById(R.id.textD);
+        textA = (TextView) view.findViewById(R.id.textA);
+        textKDA = (TextView) view.findViewById(R.id.textKDA);
+        textCS = (TextView) view.findViewById(R.id.textCS);
+        textGold = (TextView) view.findViewById(R.id.textGold);
 
         return view;
     }

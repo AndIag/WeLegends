@@ -34,7 +34,7 @@ import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.entities.utils.Item;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -349,7 +349,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                         return;
                     }
                 }
-                Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

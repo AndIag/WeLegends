@@ -35,7 +35,7 @@ import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -240,7 +240,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), getString(NetworkError.parseVolleyError(error)),
+                Toast.makeText(getApplicationContext(), getString(MyNetworkError.parseVolleyError(error)),
                         Toast.LENGTH_LONG).show();
                 dismissProgressDialog();
                 isLoading = false;

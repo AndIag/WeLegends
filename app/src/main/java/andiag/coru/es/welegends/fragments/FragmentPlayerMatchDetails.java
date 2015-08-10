@@ -67,7 +67,7 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
                 changeRefreshingValue(false);
             }
         });
-        changeRefreshingValue(true);
+        //changeRefreshingValue(true);
     }
 
     @Override

@@ -13,7 +13,7 @@ import andiag.coru.es.welegends.R;
 /**
  * Created by Iago on 30/07/2015.
  */
-public abstract class NetworkError {
+public abstract class MyNetworkError {
 
     private static NetworkResponse networkResponse;
 

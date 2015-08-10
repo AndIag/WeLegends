@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -28,10 +29,10 @@ public class AdapterSummoner extends BaseAdapter {
     private APIHandler apiHandler;
 
 
-    public AdapterSummoner(Context context) {
+    public AdapterSummoner(ActivitySummoner context) {
         inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
-        apiHandler = APIHandler.getInstance();
+        apiHandler = APIHandler.getInstance(context);
     }
 
     public void updateSummoners(ArrayList<SummonerHistoryDto> summoners) {

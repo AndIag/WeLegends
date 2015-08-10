@@ -12,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -127,7 +125,7 @@ public class ActivitySplashScreen extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(activity, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 ActivitySplashScreen.this.finish();
             }
         });
@@ -167,7 +165,7 @@ public class ActivitySplashScreen extends Activity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(activity, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 ActivitySplashScreen.this.finish();
             }
         });

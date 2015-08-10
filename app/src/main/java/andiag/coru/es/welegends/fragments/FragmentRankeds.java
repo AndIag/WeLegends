@@ -38,7 +38,7 @@ import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -255,7 +255,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 decrementIndexes();
-                Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

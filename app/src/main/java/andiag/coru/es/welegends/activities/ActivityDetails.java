@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,7 @@ import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivit
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -163,6 +164,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
         if (id == android.R.id.home) {
             onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -194,7 +196,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(thisActivity, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(thisActivity, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
             }
         });
 

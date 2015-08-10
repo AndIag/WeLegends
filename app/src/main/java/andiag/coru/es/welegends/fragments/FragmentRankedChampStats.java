@@ -11,11 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
@@ -23,6 +30,7 @@ import com.google.gson.Gson;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,7 +41,7 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
-import andiag.coru.es.welegends.utils.NetworkError;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -180,13 +188,18 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                VolleyLog.d("RankedChampStats", "Error: " + error.getMessage());
+
                 NetworkResponse networkResponse = error.networkResponse;
-                if (networkResponse.statusCode== HttpStatus.SC_NOT_FOUND){
-                    activityMain.setUnranked();
-                    changeRefreshingValue(false);
-                    return;
+                if (networkResponse != null) {
+                    if (networkResponse.statusCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                        activityMain.setUnranked();
+                        changeRefreshingValue(false);
+                        return;
+                    }
                 }
-                Toast.makeText(activityMain, getString(NetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 changeRefreshingValue(false);
             }
         });

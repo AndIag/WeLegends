@@ -55,7 +55,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             tab.setFragment(FragmentPlayerMatchDetails.newInstance());
             tab.setName(getString(R.string.title_section_champion));
             tab.setActionBarColors(getResources().getColor(R.color.posT0));
-            tab.setToolBarColors(getResources().getColor(R.color.posT0));
+            tab.setToolBarColors(getResources().getColor(R.color.pos0));
 
             tabs.add(pos, tab);
             pos++;
@@ -65,7 +65,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             tab.setFragment(FragmentVictoryDefeatDetails.newInstance());
             tab.setName(getString(R.string.title_section_victory_team));
             tab.setActionBarColors(getResources().getColor(R.color.posT2));
-            tab.setToolBarColors(getResources().getColor(R.color.posT2));
+            tab.setToolBarColors(getResources().getColor(R.color.pos2));
 
             tabs.add(pos, tab);
             pos++;
@@ -75,7 +75,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             tab.setFragment(FragmentVictoryDefeatDetails.newInstance());
             tab.setName(getString(R.string.title_section_defeat_team));
             tab.setActionBarColors(getResources().getColor(R.color.posT4));
-            tab.setToolBarColors(getResources().getColor(R.color.posT4));
+            tab.setToolBarColors(getResources().getColor(R.color.pos4));
 
             tabs.add(pos, tab);
 

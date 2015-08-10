@@ -21,7 +21,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/gplus" />
+        android:src="@drawable/gplus"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/logoImage"

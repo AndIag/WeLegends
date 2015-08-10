@@ -199,7 +199,9 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                         return;
                     }
                 }
-                Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                if(isAdded()) {
+                    Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                }
                 changeRefreshingValue(false);
             }
         });

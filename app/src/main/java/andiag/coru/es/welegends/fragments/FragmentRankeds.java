@@ -255,7 +255,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 decrementIndexes();
-                Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                if(isAdded()) {
+                    Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                }
                 changeRefreshingValue(false);
             }
         });

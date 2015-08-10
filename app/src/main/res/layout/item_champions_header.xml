@@ -4,10 +4,11 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_margin="5dp"
-    android:clickable="false"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="0dp"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="5dp"
     card_view:contentPadding="0dp"
     card_view:cardPreventCornerOverlap="false">
 

@@ -76,14 +76,18 @@ public class ActivityChampionStatsDetails extends Activity {
         tname.setText(stats.getString("name"));
 
         tkills.setText(String.format("%.1f", kills / totalGames));
+        tkills.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, kills / totalGames)));
         tdeath.setText(String.format("%.1f", death / totalGames));
         tdeath.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, death / totalGames)));
         tassist.setText(String.format("%.1f", assist / totalGames));
+        tassist.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, assist / totalGames)));
         tkda.setText(String.format("%.2f", (kills + assist) / death));
         tkda.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KDA, (kills + assist) / death)));
 
         tgold.setText(String.format("%.1f", stats.getFloat("gold") / (totalGames * 1000)) + "k");
-        tcs.setText(String.format("%.1f",stats.getFloat("cs")/totalGames ));
+        tgold.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.GOLD, stats.getFloat("gold") / totalGames)));
+        tcs.setText(String.format("%.1f", stats.getFloat("cs") / totalGames));
+        tcs.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.CS,  stats.getFloat("cs") / totalGames)));
 
         tpercent.setText(String.format("%.1f", (stats.getFloat("victories")/totalGames) * 100) + "%");
         tpercent.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.PERCENT, (stats.getFloat("victories") / totalGames) * 100)));

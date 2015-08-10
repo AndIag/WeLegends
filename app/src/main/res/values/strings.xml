@@ -93,4 +93,10 @@
 
     <string name="hello_world">Hello world!</string>
 
+    <!-- Stats -->
+    <string name="stat_perfect">Perfect</string>
+    <string name="stat_good">Good</string>
+    <string name="stat_regular">Regular</string>
+    <string name="stat_bad">Bad</string>
+
 </resources>

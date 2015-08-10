@@ -53,6 +53,6 @@
     <!-- Statistics -->
     <color name="stats_perfect">#03A9F4</color>
     <color name="stats_good">#4CAF50</color>
-    <color name="stats_regular">#FFEB3B</color>
+    <color name="stats_regular">#FFC107</color>
     <color name="stats_bad">#F44336</color>
 </resources>

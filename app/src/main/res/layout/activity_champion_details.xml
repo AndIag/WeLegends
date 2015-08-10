@@ -337,4 +337,67 @@
         android:textSize="@dimen/abc_text_size_headline_material"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:background="@color/stats_perfect" />
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:text="@string/stat_perfect"
+        android:gravity="center" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:background="@color/stats_good" />
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:text="@string/stat_good"
+        android:gravity="center" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:background="@color/stats_regular" />
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:text="@string/stat_regular"
+        android:gravity="center" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:background="@color/stats_bad" />
+
+    <TextView
+        android:layout_weight="2.5"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:text="@string/stat_bad"
+        android:gravity="center" />
+
+    </LinearLayout>
+
 </RelativeLayout>

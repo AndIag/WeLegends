@@ -12,10 +12,16 @@ public abstract class StatsColor {
     public static final int PERCENT = 2;
     public static final int GOLD = 3;
     public static final int CS = 4;
+    public static final int KILLS =5;
 
     public static int getColor(int mode, float value){
         int color = R.color.stats_bad;
         switch (mode) {
+            case KILLS:
+                if(value<2) color = R.color.stats_regular;
+                if(value>=2 && value<21) color = R.color.stats_good;
+                if(value>=21) color = R.color.stats_perfect;
+                break;
             case DEATHS:
                 if(value>8) color = R.color.stats_bad;
                 if(value>5 && value<=8) color = R.color.stats_regular;

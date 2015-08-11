@@ -16,7 +16,7 @@ android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageChampion"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -44,58 +44,58 @@ android:layout_height="match_parent"
             android:id="@+id/linearItems"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_alignEnd="@+id/linearInfo"
             android:layout_alignLeft="@+id/linearInfo"
             android:layout_alignRight="@+id/linearInfo"
             android:layout_alignStart="@+id/linearInfo"
             android:layout_below="@id/linearInfo"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageTotem"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
                 android:layout_marginRight="16dp"
+                android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem1"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem2"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem3"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem4"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem5"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/item_default"/>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem6"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -240,12 +240,12 @@ android:layout_height="match_parent"
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linearItems"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
             android:shrinkColumns="*"
-            android:stretchColumns="*"
-            android:layout_below="@id/linearItems">
+            android:stretchColumns="*">
 
             <TableRow
                 android:layout_width="match_parent"

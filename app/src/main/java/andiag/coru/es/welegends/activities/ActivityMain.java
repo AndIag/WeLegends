@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
 import andiag.coru.es.welegends.entities.Summoner;
+import andiag.coru.es.welegends.fragments.FragmentChampStats;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
-import andiag.coru.es.welegends.fragments.FragmentRankedChampStats;
 import andiag.coru.es.welegends.fragments.FragmentRankeds;
 import andiag.coru.es.welegends.utils.ViewServer;
 
@@ -98,7 +98,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
             if (summoner.getSummonerLevel() == 30 && !isUnranked) {
                 //FRAGMENT CHAMPIONS STATS
                 tab = new Tab();
-                tab.setFragment(FragmentRankedChampStats.newInstance(summoner.getId(), region));
+                tab.setFragment(FragmentChampStats.newInstance(summoner.getId(), region));
                 tab.setName(getString(R.string.section_champs).toUpperCase());
                 tab.setActionBarColors(getResources().getColor(R.color.posT3));
                 tab.setToolBarColors(getResources().getColor(R.color.pos3));

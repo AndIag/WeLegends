@@ -4,7 +4,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/swipeRefresh"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-    tools:context="andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails">
+    tools:context="andiag.coru.es.welegends.fragments.FragmentMatchDetails">
 <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
     android:id="@+id/scroll"
     android:layout_width="match_parent"

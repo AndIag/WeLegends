@@ -43,7 +43,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 /**
  * Created by Iago on 11/07/2015.
  */
-public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
+public class FragmentChampStats extends SwipeRefreshLayoutFragment {
 
     private static ActivityMain activityMain;
     private ObservableRecyclerView recyclerView;
@@ -57,13 +57,13 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
     private long summoner_id;
     private String request;
 
-    public static FragmentRankedChampStats newInstance(long summoner_id, String region) {
-        FragmentRankedChampStats fragmentRankedChampStats = new FragmentRankedChampStats();
+    public static FragmentChampStats newInstance(long summoner_id, String region) {
+        FragmentChampStats fragmentChampStats = new FragmentChampStats();
         Bundle args = new Bundle();
         args.putLong("summoner_id", summoner_id);
         args.putString("region", region);
-        fragmentRankedChampStats.setArguments(args);
-        return fragmentRankedChampStats;
+        fragmentChampStats.setArguments(args);
+        return fragmentChampStats;
     }
 
     @Override

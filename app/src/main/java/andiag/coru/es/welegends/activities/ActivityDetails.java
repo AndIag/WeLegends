@@ -23,7 +23,7 @@ import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
-import andiag.coru.es.welegends.fragments.FragmentPlayerMatchDetails;
+import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.ViewServer;
@@ -38,10 +38,10 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private String region;
     private Match match;
     private boolean isCreatingTabs = false;
-    private FragmentPlayerMatchDetails fragmentPlayerMatchDetails;
+    private FragmentMatchDetails fragmentMatchDetails;
 
-    public void setFragmentPlayerMatchDetails(FragmentPlayerMatchDetails fragmentPlayerMatchDetails) {
-        this.fragmentPlayerMatchDetails = fragmentPlayerMatchDetails;
+    public void setFragmentMatchDetails(FragmentMatchDetails fragmentMatchDetails) {
+        this.fragmentMatchDetails = fragmentMatchDetails;
     }
 
     private synchronized void setCreatingTabs(boolean bool) {
@@ -58,7 +58,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
             //PLAYER STATS
             tab = new Tab();
-            tab.setFragment(FragmentPlayerMatchDetails.newInstance());
+            tab.setFragment(FragmentMatchDetails.newInstance());
             tab.setName(getString(R.string.title_section_champion));
             tab.setActionBarColors(getResources().getColor(R.color.posT0));
             tab.setToolBarColors(getResources().getColor(R.color.pos0));
@@ -221,8 +221,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     }
 
     private void setMatchDataOnFragments() {
-        if (fragmentPlayerMatchDetails != null) {
-            fragmentPlayerMatchDetails.setData(parseSummonerData());
+        if (fragmentMatchDetails != null) {
+            fragmentMatchDetails.setData(parseSummonerData());
         }
     }
 

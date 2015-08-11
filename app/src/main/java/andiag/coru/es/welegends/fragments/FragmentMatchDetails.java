@@ -34,7 +34,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
             Long    "item5"
             Long    "item6"
 */
-public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
+public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
 
     private static ActivityDetails activityMain;
     private TextView textK, textD, textA, textKDA, textCS, textGold;
@@ -42,12 +42,12 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
     private Bundle data;
     private ImageLoader imageLoader;
 
-    public FragmentPlayerMatchDetails() {
+    public FragmentMatchDetails() {
         // Required empty public constructor
     }
 
-    public static FragmentPlayerMatchDetails newInstance() {
-        return new FragmentPlayerMatchDetails();
+    public static FragmentMatchDetails newInstance() {
+        return new FragmentMatchDetails();
     }
 
     public void setData(Bundle data) {
@@ -81,6 +81,8 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         setItemImage(imgIt4, data.getLong("item3"));
         setItemImage(imgIt5, data.getLong("item4"));
         setItemImage(imgIt6, data.getLong("item5"));
+
+        changeRefreshingValue(false);
     }
 
     private void setItemImage(NetworkImageView imgView, long id) {
@@ -95,29 +97,16 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         }
     }
 
-    //SAVE AND RETRIEVE DATA
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(data);
-    }
-
-    public void onRetrieveInstanceState(Bundle savedInstanceState) {
-        if (savedInstanceState != null) { //Load saved data in onPause
-            data = savedInstanceState;
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activityMain = (ActivityDetails) activity;
-        activityMain.setFragmentPlayerMatchDetails(this);
+        activityMain.setFragmentMatchDetails(this);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onRetrieveInstanceState(savedInstanceState);
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
     }
 
@@ -136,7 +125,7 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
                 changeRefreshingValue(false);
             }
         });
-        //changeRefreshingValue(true);
+        changeRefreshingValue(true);
     }
 
     @Override

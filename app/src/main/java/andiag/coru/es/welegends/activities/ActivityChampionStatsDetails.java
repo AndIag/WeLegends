@@ -69,8 +69,6 @@ public class ActivityChampionStatsDetails extends Activity {
         death = stats.getFloat("death");
         assist = stats.getFloat("assist");
 
-        imageLoader = VolleyHelper.getInstance(this).getImageLoader();
-
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                 + ChampionsHandler.getServerVersion(this)
                 + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
@@ -107,7 +105,66 @@ public class ActivityChampionStatsDetails extends Activity {
     }
 
     private void loadHeaderView() {
+        setContentView(R.layout.activity_champion_details_header);
 
+        NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
+        TextView tname = (TextView) findViewById(R.id.textChamp);
+        TextView tkills = (TextView) findViewById(R.id.textKills);
+        TextView tdeath = (TextView) findViewById(R.id.textDeath);
+        TextView tassist = (TextView) findViewById(R.id.textAssists);
+        TextView tkda = (TextView) findViewById(R.id.textKDA);
+        TextView tgold = (TextView) findViewById(R.id.textGold);
+        TextView tcs = (TextView) findViewById(R.id.textCS);
+        TextView tpercent = (TextView) findViewById(R.id.textPercent);
+        TextView tKills = (TextView) findViewById(R.id.text1);
+        TextView tDouble = (TextView) findViewById(R.id.text2);
+        TextView tTriple = (TextView) findViewById(R.id.text3);
+        TextView tQuadra = (TextView) findViewById(R.id.text4);
+        TextView tPenta = (TextView) findViewById(R.id.text5);
+        TextView tTurrets = (TextView) findViewById(R.id.textTurrets);
+
+        TextView tDealt = (TextView) findViewById(R.id.textDamageDealt);
+        TextView tTaken = (TextView) findViewById(R.id.textDamageTaken);
+
+        float totalGames, kills, death, assist;
+
+        totalGames = stats.getFloat("totalGames");
+        kills = stats.getFloat("kills");
+        death = stats.getFloat("death");
+        assist = stats.getFloat("assist");
+
+        imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                + ChampionsHandler.getServerVersion(this)
+                + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
+
+        tname.setText(stats.getString("name"));
+
+        tkills.setText(String.format("%.1f", kills / totalGames));
+        tkills.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, kills / totalGames)));
+        tdeath.setText(String.format("%.1f", death / totalGames));
+        tdeath.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, death / totalGames)));
+        tassist.setText(String.format("%.1f", assist / totalGames));
+        tassist.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, assist / totalGames)));
+        tkda.setText(String.format("%.2f", (kills + assist) / death));
+        tkda.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KDA, (kills + assist) / death)));
+
+        tgold.setText(String.format("%.1f", stats.getFloat("gold") / (totalGames * 1000)) + "k");
+        tgold.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.GOLD, stats.getFloat("gold") / totalGames)));
+        tcs.setText(String.format("%.1f", stats.getFloat("cs") / totalGames));
+        tcs.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.CS, stats.getFloat("cs") / totalGames)));
+
+        tpercent.setText(String.format("%.1f", (stats.getFloat("victories") / totalGames) * 100) + "%");
+        tpercent.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.PERCENT, (stats.getFloat("victories") / totalGames) * 100)));
+
+        tKills.setText(String.format("%.0f", kills));
+        tDouble.setText(String.valueOf(stats.getInt("double")));
+        tTriple.setText(String.valueOf(stats.getInt("triple")));
+        tQuadra.setText(String.valueOf(stats.getInt("quadra")));
+        tPenta.setText(String.valueOf(stats.getInt("penta")));
+        tTurrets.setText(String.valueOf(stats.getInt("turrets")));
+
+        tDealt.setText(String.format("%.0f", stats.getInt("dealt") / totalGames));
+        tTaken.setText(String.format("%.0f", stats.getInt("taken") / totalGames));
     }
 
     @Override
@@ -115,6 +172,7 @@ public class ActivityChampionStatsDetails extends Activity {
             super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
 
+        imageLoader = VolleyHelper.getInstance(this).getImageLoader();
 
         if(!isHeader){
             loadNotHeaderView();
@@ -122,8 +180,6 @@ public class ActivityChampionStatsDetails extends Activity {
         if(isHeader){
             loadHeaderView();
         }
-
-
     }
 
     @Override
@@ -137,11 +193,8 @@ public class ActivityChampionStatsDetails extends Activity {
             stats = savedInstanceState.getBundle("champData");
         }else{
             Bundle extras = getIntent().getExtras();
-
             isHeader = extras.getBoolean("isHeader");
-            if(!isHeader) {
-                stats = extras.getBundle("champData");
-            }
+            stats = extras.getBundle("champData");
         }
     }
 

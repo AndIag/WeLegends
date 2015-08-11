@@ -154,7 +154,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private boolean isPositionHeader(int position) {
-        return position == 0;
+        return position == TYPE_HEADER;
     }
 
     private Bundle getItem(int position) {
@@ -203,7 +203,7 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context, ActivityChampionStatsDetails.class);
-                    i.putExtra("champData", getItem(getAdapterPosition()));
+                    i.putExtra("champData", getItem(0));
                     i.putExtra("isHeader", true);
                     context.startActivity(i);
                 }

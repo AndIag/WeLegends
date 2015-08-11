@@ -87,8 +87,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
 
     private void setItemImage(NetworkImageView imgView, long id) {
         if (id > 0) {
-            imgView.setErrorImageResId(R.drawable.default_champion);
-            imgView.setDefaultImageResId(R.drawable.default_champion);
+            imgView.setErrorImageResId(R.drawable.default_item);
+            imgView.setDefaultImageResId(R.drawable.default_item);
             imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
                             ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
                     imageLoader);

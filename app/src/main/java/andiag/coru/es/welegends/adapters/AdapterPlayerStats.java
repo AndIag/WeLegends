@@ -87,8 +87,8 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.textLevel.setText(item.getString("level"));
             h.textSumName.setText(item.getString("summoner"));
             h.textServer.setText(item.getString("server"));
-            h.playerIcon.setErrorImageResId(R.drawable.item_default);
-            h.playerIcon.setDefaultImageResId(R.drawable.item_default);
+            h.playerIcon.setErrorImageResId(R.drawable.default_champion);
+            h.playerIcon.setDefaultImageResId(R.drawable.default_champion);
             h.playerIcon.setImageUrl(item.getString("url"),imageLoader);
 
         } else if (holder instanceof VHDivider) {

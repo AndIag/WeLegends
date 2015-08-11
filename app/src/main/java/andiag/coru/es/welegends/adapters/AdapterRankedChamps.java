@@ -116,8 +116,8 @@ public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewH
             h.textCS.setText(String.format("%.1f", item.getFloat("cs")/totalGames));
             h.textGold.setText(String.format("%.1f", item.getFloat("gold") / (totalGames * 1000)) + "k");
 
-            h.imageChamp.setErrorImageResId(R.drawable.item_default);
-            h.imageChamp.setDefaultImageResId(R.drawable.item_default);
+            h.imageChamp.setErrorImageResId(R.drawable.default_champion);
+            h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)
                             + "/img/champion/" + item.getString("key") + ".png",

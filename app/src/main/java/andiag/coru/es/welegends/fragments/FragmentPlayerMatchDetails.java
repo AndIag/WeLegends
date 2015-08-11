@@ -67,8 +67,8 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         textCS.setText(String.valueOf(data.getLong("cs")));
         textGold.setText(String.valueOf(data.getLong("gold") / 1000 + "k"));
 
-        imageChampion.setErrorImageResId(R.drawable.item_default);
-        imageChampion.setDefaultImageResId(R.drawable.item_default);
+        imageChampion.setErrorImageResId(R.drawable.default_champion);
+        imageChampion.setDefaultImageResId(R.drawable.default_champion);
         imageChampion.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                         + ChampionsHandler.getServerVersion(getActivity())
                         + "/img/champion/" + ChampionsHandler.getChampKey(data.getInt("championId")) + ".png",
@@ -85,13 +85,13 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
 
     private void setItemImage(NetworkImageView imgView, long id) {
         if (id > 0) {
-            imgView.setErrorImageResId(R.drawable.item_default);
-            imgView.setDefaultImageResId(R.drawable.item_default);
+            imgView.setErrorImageResId(R.drawable.default_champion);
+            imgView.setDefaultImageResId(R.drawable.default_champion);
             imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
                             ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
                     imageLoader);
         } else {
-            imgView.setImageResource(R.drawable.item_default);
+            imgView.setImageResource(R.drawable.default_champion);
         }
     }
 

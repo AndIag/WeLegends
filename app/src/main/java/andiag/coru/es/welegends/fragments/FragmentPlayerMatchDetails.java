@@ -55,18 +55,6 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         setDataOnView();
     }
 
-    private void setItemImage(NetworkImageView imgView, long id) {
-        if (id > 0) {
-            imgView.setErrorImageResId(R.drawable.item_default);
-            imgView.setDefaultImageResId(R.drawable.item_default);
-            imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
-                            ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
-                    imageLoader);
-        } else {
-            imgView.setImageResource(R.drawable.item_default);
-        }
-    }
-
     private void setDataOnView() {
         textK.setText(String.valueOf(data.getLong("kills")));
         textD.setText(String.valueOf(data.getLong("deaths")));
@@ -93,6 +81,18 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         setItemImage(imgIt4, data.getLong("item3"));
         setItemImage(imgIt5, data.getLong("item4"));
         setItemImage(imgIt6, data.getLong("item5"));
+    }
+
+    private void setItemImage(NetworkImageView imgView, long id) {
+        if (id > 0) {
+            imgView.setErrorImageResId(R.drawable.item_default);
+            imgView.setDefaultImageResId(R.drawable.item_default);
+            imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
+                            ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
+                    imageLoader);
+        } else {
+            imgView.setImageResource(R.drawable.item_default);
+        }
     }
 
     //SAVE AND RETRIEVE DATA

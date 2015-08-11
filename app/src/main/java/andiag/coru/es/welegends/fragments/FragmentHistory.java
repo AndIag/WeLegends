@@ -141,7 +141,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_match_history, container, false);
 
         recyclerView = (ObservableRecyclerView) view.findViewById(R.id.scroll);
 

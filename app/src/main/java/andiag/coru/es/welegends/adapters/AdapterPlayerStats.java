@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -57,21 +56,21 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.item_player_item, parent, false);
+                    inflate(R.layout.item_summoner_item, parent, false);
             return new VHItem(itemView);
 
         } else if (viewType == TYPE_HEADER) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.item_player_header, parent, false);
+                    inflate(R.layout.item_summoner_header, parent, false);
             return new VHHeader(itemView);
 
         } else if (viewType == TYPE_DIVIDER) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.item_player_divider, parent, false);
+                    inflate(R.layout.item_summoner_divider, parent, false);
             return new VHDivider(itemView);
 
         }

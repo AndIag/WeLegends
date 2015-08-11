@@ -159,7 +159,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     @Override //Si se ejecuta al cambiar 2 fragments para el lado
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_player_stats, container, false);
+        rootView = inflater.inflate(R.layout.fragment_summoner_stats, container, false);
 
         initializeRefresh(rootView);
 

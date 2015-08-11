@@ -12,14 +12,14 @@
         android:id="@+id/textSumm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/networkSummImage"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
+        android:layout_toEndOf="@+id/networkSummImage"
+        android:layout_toRightOf="@+id/networkSummImage"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/primary_dark"
-        android:layout_toRightOf="@+id/networkSummImage"
-        android:layout_toEndOf="@+id/networkSummImage"
-        android:layout_alignBottom="@+id/networkSummImage" />
+        android:textColor="@color/primary_dark" />
 </RelativeLayout>

@@ -60,7 +60,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
     public HistoryViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.
                 from(viewGroup.getContext()).
-                inflate(R.layout.item_history_list, viewGroup, false);
+                inflate(R.layout.item_match_history, viewGroup, false);
 
         return new HistoryViewHolder(itemView);
     }

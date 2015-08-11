@@ -59,7 +59,7 @@ public class AdapterSummoner extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         SummonerHistoryDto summoner = summoners.get(i);
         if(view == null){
-            view = inflater.inflate(R.layout.item_summoner,null);
+            view = inflater.inflate(R.layout.item_summoner_history, null);
         }
 
         CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);

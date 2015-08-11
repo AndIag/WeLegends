@@ -11,23 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
@@ -145,7 +138,7 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_ranked_champions_stats, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_champions_stats, container, false);
 
         recyclerView = (ObservableRecyclerView) rootView.findViewById(R.id.scroll);
 

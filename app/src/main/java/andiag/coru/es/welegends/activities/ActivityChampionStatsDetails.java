@@ -81,6 +81,7 @@ public class ActivityChampionStatsDetails extends Activity {
         tdeath.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, death / totalGames)));
         tassist.setText(String.format("%.1f", assist / totalGames));
         tassist.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, assist / totalGames)));
+        if (death == 0) death = 1;
         tkda.setText(String.format("%.2f", (kills + assist) / death));
         tkda.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KDA, (kills + assist) / death)));
 
@@ -145,6 +146,7 @@ public class ActivityChampionStatsDetails extends Activity {
         tdeath.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, death / totalGames)));
         tassist.setText(String.format("%.1f", assist / totalGames));
         tassist.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, assist / totalGames)));
+        if (death == 0) death = 1;
         tkda.setText(String.format("%.2f", (kills + assist) / death));
         tkda.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KDA, (kills + assist) / death)));
 

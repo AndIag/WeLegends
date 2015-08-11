@@ -5,151 +5,151 @@
 
 
     <TextView
+        android:id="@+id/textChamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Jinx"
-        android:id="@+id/textChamp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="Jinx"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primary" />
 
     <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:id="@+id/imageView"
-        android:transitionName="imageChampion"
-        android:layout_below="@+id/textChamp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/textChamp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/default0" />
+        android:src="@drawable/default_champion"
+        android:transitionName="imageChampion" />
 
     <ImageView
+        android:id="@+id/imageView13"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/icon_sword"
         android:layout_alignTop="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@+id/imageView"
-        android:id="@+id/imageView13"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+        android:layout_toRightOf="@+id/imageView"
+        android:src="@drawable/icon_sword" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView13"
-        android:layout_toRightOf="@+id/imageView13"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout">
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/imageView13"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textKills"
-            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="15"
-            android:gravity="center" />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="15" />
 
         <TextView
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="/"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="/" />
 
         <TextView
             android:id="@+id/textDeath"
-            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="3"
-            android:gravity="center" />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="3" />
 
         <TextView
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="/"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="/" />
 
         <TextView
             android:id="@+id/textAssists"
-            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="12"
-            android:gravity="center" />
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="12" />
 
         <TextView
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=":"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=":" />
 
         <TextView
             android:id="@+id/textKDA"
-            android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="5.12"
-            android:gravity="center" />
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="5.12" />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/imageView14"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/icon_gold"
-        android:layout_below="@+id/imageView13"
         android:layout_alignLeft="@+id/imageView13"
         android:layout_alignStart="@+id/imageView13"
-        android:id="@+id/imageView14"
-        android:layout_marginTop="5dp" />
+        android:layout_below="@+id/imageView13"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/icon_gold" />
 
     <TextView
         android:id="@+id/textGold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20k"
         android:layout_alignBottom="@+id/imageView14"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@+id/imageView14"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+        android:text="20k" />
 
     <ImageView
+        android:id="@+id/imageView15"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/icon_minion"
-        android:id="@+id/imageView15"
+        android:layout_alignTop="@+id/imageView14"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="36dp"
-        android:layout_alignTop="@+id/imageView14"
+        android:layout_toEndOf="@+id/textGold"
         android:layout_toRightOf="@+id/textGold"
-        android:layout_toEndOf="@+id/textGold" />
+        android:src="@drawable/icon_minion" />
 
     <TextView
         android:id="@+id/textCS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="250cs"
         android:layout_alignBottom="@+id/imageView15"
-        android:layout_toRightOf="@+id/imageView15"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@+id/imageView15"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+        android:layout_toRightOf="@+id/imageView15"
+        android:text="250cs" />
 
     <TableLayout
+        android:id="@+id/tableLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical"
         android:shrinkColumns="*"
-        android:stretchColumns="*"
-        android:layout_below="@+id/imageView"
-        android:layout_alignRight="@+id/linearLayout"
-        android:layout_alignEnd="@+id/linearLayout"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/tableLayout2">
+        android:stretchColumns="*">
 
         <TableRow
             android:layout_width="match_parent"
@@ -378,81 +378,81 @@
     </TableLayout>
 
     <TextView
+        android:id="@+id/textPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="48%"
-        android:id="@+id/textPercent"
-        android:layout_below="@+id/imageView14"
-        android:layout_alignLeft="@+id/imageView14"
-        android:layout_alignStart="@+id/imageView14"
         android:layout_above="@+id/tableLayout2"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/imageView14"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@+id/imageView14"
+        android:layout_below="@+id/imageView14"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="48%"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@dimen/abc_text_size_headline_material"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
+        android:layout_alignParentBottom="true"
 
         android:layout_alignParentLeft="false"
-        android:layout_alignParentBottom="true">
+        android:orientation="horizontal">
 
         <Button
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="18dp"
+            android:layout_weight="1"
             android:background="@color/stats_perfect" />
 
     <TextView
-        android:layout_weight="2.5"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:text="@string/stat_perfect"
-        android:gravity="center" />
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:text="@string/stat_perfect" />
 
         <Button
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="18dp"
+            android:layout_weight="1"
             android:background="@color/stats_good" />
 
     <TextView
-        android:layout_weight="2.5"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:text="@string/stat_good"
-        android:gravity="center" />
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:text="@string/stat_good" />
 
         <Button
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="18dp"
+            android:layout_weight="1"
             android:background="@color/stats_regular" />
 
     <TextView
-        android:layout_weight="2.5"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:text="@string/stat_regular"
-        android:gravity="center" />
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:text="@string/stat_regular" />
 
         <Button
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="18dp"
+            android:layout_weight="1"
             android:background="@color/stats_bad" />
 
     <TextView
-        android:layout_weight="2.5"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:text="@string/stat_bad"
-        android:gravity="center" />
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:text="@string/stat_bad" />
 
     </LinearLayout>
 

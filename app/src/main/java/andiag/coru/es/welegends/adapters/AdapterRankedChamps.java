@@ -39,6 +39,8 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
         * triple            int
         * double            int
         * turrets           int
+        * dealt             int
+        * taken             int
         * */
 
 public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

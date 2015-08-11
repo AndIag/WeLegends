@@ -1,9 +1,7 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
-import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.ChampionStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
@@ -37,6 +34,8 @@ public class ActivityChampionStatsDetails extends Activity {
     * triple            int
     * double            int
     * turrets           int
+    * dealt             int
+    * taken             int
     * */
     private ImageLoader imageLoader;
     private boolean isHeader;

@@ -152,13 +152,13 @@ public class FragmentPlayerMatchDetails extends SwipeRefreshLayoutFragment {
         textCS = (TextView) view.findViewById(R.id.textCS);
         textGold = (TextView) view.findViewById(R.id.textGold);
         imageChampion = (NetworkImageView) view.findViewById(R.id.imageChampion);
-        imgTotem = (NetworkImageView) view.findViewById(R.id.imgTotem);
-        imgIt1 = (NetworkImageView) view.findViewById(R.id.imgIt1);
-        imgIt2 = (NetworkImageView) view.findViewById(R.id.imgIt2);
-        imgIt3 = (NetworkImageView) view.findViewById(R.id.imgIt3);
-        imgIt4 = (NetworkImageView) view.findViewById(R.id.imgIt4);
-        imgIt5 = (NetworkImageView) view.findViewById(R.id.imgIt5);
-        imgIt6 = (NetworkImageView) view.findViewById(R.id.imgIt6);
+        imgTotem = (NetworkImageView) view.findViewById(R.id.imageTotem);
+        imgIt1 = (NetworkImageView) view.findViewById(R.id.imageItem1);
+        imgIt2 = (NetworkImageView) view.findViewById(R.id.imageItem2);
+        imgIt3 = (NetworkImageView) view.findViewById(R.id.imageItem3);
+        imgIt4 = (NetworkImageView) view.findViewById(R.id.imageItem4);
+        imgIt5 = (NetworkImageView) view.findViewById(R.id.imageItem5);
+        imgIt6 = (NetworkImageView) view.findViewById(R.id.imageItem6);
 
         return view;
     }

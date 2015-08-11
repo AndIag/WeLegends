@@ -76,7 +76,9 @@
     <string name="triple">Triplekills</string>
     <string name="doble">Doublekills</string>
     <string name="single">Kills</string>
-    <string name="turrets">Total Turrets Destroy</string>
+    <string name="turrets">Total turrets destroyed</string>
+    <string name="average_damage_dealt">Damage dealt</string>
+    <string name="average_damage_taken">Damage taken</string>
 
     <string-array name="region_array">
         <item>EUW</item>

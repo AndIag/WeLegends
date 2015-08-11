@@ -277,6 +277,9 @@ public class FragmentRankedChampStats extends SwipeRefreshLayoutFragment {
                 m.putInt("triple",aggregatedStatsDto.getTotalTripleKills());
                 m.putInt("double", aggregatedStatsDto.getTotalDoubleKills());
                 m.putInt("turrets", aggregatedStatsDto.getTotalTurretsKilled());
+                m.putInt("dealt",aggregatedStatsDto.getTotalDamageDealt());
+                m.putInt("taken",aggregatedStatsDto.getTotalDamageTaken());
+
 
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;

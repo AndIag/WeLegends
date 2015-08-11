@@ -60,6 +60,9 @@ public class ActivityChampionStatsDetails extends Activity {
         TextView tPenta = (TextView) findViewById(R.id.text5);
         TextView tTurrets = (TextView) findViewById(R.id.textTurrets);
 
+        TextView tDealt = (TextView) findViewById(R.id.textDamageDealt);
+        TextView tTaken = (TextView) findViewById(R.id.textDamageTaken);
+
         float totalGames, kills, death, assist;
 
         totalGames = stats.getFloat("totalGames");
@@ -87,9 +90,9 @@ public class ActivityChampionStatsDetails extends Activity {
         tgold.setText(String.format("%.1f", stats.getFloat("gold") / (totalGames * 1000)) + "k");
         tgold.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.GOLD, stats.getFloat("gold") / totalGames)));
         tcs.setText(String.format("%.1f", stats.getFloat("cs") / totalGames));
-        tcs.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.CS,  stats.getFloat("cs") / totalGames)));
+        tcs.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.CS, stats.getFloat("cs") / totalGames)));
 
-        tpercent.setText(String.format("%.1f", (stats.getFloat("victories")/totalGames) * 100) + "%");
+        tpercent.setText(String.format("%.1f", (stats.getFloat("victories") / totalGames) * 100) + "%");
         tpercent.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.PERCENT, (stats.getFloat("victories") / totalGames) * 100)));
 
         tKills.setText(String.format("%.0f", kills));
@@ -98,6 +101,9 @@ public class ActivityChampionStatsDetails extends Activity {
         tQuadra.setText(String.valueOf(stats.getInt("quadra")));
         tPenta.setText(String.valueOf(stats.getInt("penta")));
         tTurrets.setText(String.valueOf(stats.getInt("turrets")));
+
+        tDealt.setText(String.format("%.0f",stats.getInt("dealt")/totalGames));
+        tTaken.setText(String.format("%.0f",stats.getInt("taken") / totalGames));
 
     }
 

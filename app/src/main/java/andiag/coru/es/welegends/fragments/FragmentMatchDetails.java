@@ -86,14 +86,12 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
     }
 
     private void setItemImage(NetworkImageView imgView, long id) {
+        imgView.setDefaultImageResId(R.drawable.default_item);
         if (id > 0) {
             imgView.setErrorImageResId(R.drawable.default_item);
-            imgView.setDefaultImageResId(R.drawable.default_item);
             imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
                             ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
                     imageLoader);
-        } else {
-            imgView.setImageResource(R.drawable.default_champion);
         }
     }
 

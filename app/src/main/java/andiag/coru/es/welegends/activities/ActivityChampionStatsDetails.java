@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -209,10 +210,11 @@ public class ActivityChampionStatsDetails extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.action_about) {
+            startActivity(new Intent(this, ActivityAbout.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }

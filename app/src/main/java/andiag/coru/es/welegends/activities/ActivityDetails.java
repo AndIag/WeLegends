@@ -25,6 +25,7 @@ import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
+import andiag.coru.es.welegends.fragments.NotifycableFragment;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -35,14 +36,11 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     protected boolean isLoading = false;
     private ActivityDetails thisActivity;
     private long matchId, summonerId;
+    private int principalChampId;
+    private boolean isWinner;
     private String region;
     private Match match;
     private boolean isCreatingTabs = false;
-    private FragmentMatchDetails fragmentMatchDetails;
-
-    public void setFragmentMatchDetails(FragmentMatchDetails fragmentMatchDetails) {
-        this.fragmentMatchDetails = fragmentMatchDetails;
-    }
 
     private synchronized void setCreatingTabs(boolean bool) {
         isCreatingTabs = bool;
@@ -97,6 +95,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         outState.putLong("matchId", matchId);
         outState.putString("region", region);
         outState.putLong("summonerId", summonerId);
+        outState.putInt("principalChamp", principalChampId);
+        outState.putBoolean("isWinner", isWinner);
         outState.putSerializable("match", match);
     }
 
@@ -106,6 +106,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             matchId = savedInstanceState.getLong("matchId");
             region = savedInstanceState.getString("region");
             summonerId = savedInstanceState.getLong("summonerId");
+            principalChampId = savedInstanceState.getInt("principalChamp");
+            isWinner = savedInstanceState.getBoolean("isWinner");
             match = (Match) savedInstanceState.getSerializable("match");
         } else {
             Intent intent = getIntent();
@@ -114,6 +116,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 matchId = extras.getLong("matchId");
                 region = extras.getString("region");
                 summonerId = extras.getLong("summonerId");
+                principalChampId = extras.getInt("principalChamp");
+                isWinner = extras.getBoolean("isWinner");
                 getMatchDetails();
             }
         }
@@ -132,6 +136,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         //GETTING DATA AND SET TABS TO VIEW PAGER
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
+
+        if (savedInstanceState != null) notifyFragments();
 
         setAnimation();
 
@@ -179,6 +185,25 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public int matchType(String queurType) {
+        if (queurType.contains("RANKED")) return 0;
+        return 1;
+    }
+
+    public Bundle getDetailsData() {
+        switch (matchType(match.getQueueType())) {
+            case 0:
+                return parseSummonerData();
+        }
+        return null;
+    }
+
+    private void notifyFragments() {
+        for (Tab t : tabs) {
+            ((NotifycableFragment) t.getFragment()).notifyFragment();
+        }
+    }
+
     private Bundle parseSummonerData() {
         Bundle b = new Bundle();
         Participant participant = null;
@@ -186,9 +211,11 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
         int participantId = 0; //Get summoner participant ID
         for (ParticipantIdentities pi : match.getParticipantIdentities()) {
-            if (pi.getPlayer().getSummonerId() == summonerId) {
-                participantId = pi.getParticipantId();
-                break;
+            if (pi.getPlayer() != null) {
+                if (pi.getPlayer().getSummonerId() == summonerId) {
+                    participantId = pi.getParticipantId();
+                    break;
+                }
             }
         }
 
@@ -220,12 +247,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return b;
     }
 
-    private void setMatchDataOnFragments() {
-        if (fragmentMatchDetails != null) {
-            fragmentMatchDetails.setData(parseSummonerData());
-        }
-    }
-
     private void getMatchDetails() {
         if (isLoading) return;
 
@@ -243,7 +264,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         match = gson.fromJson(response.toString(), Match.class);
-                        setMatchDataOnFragments();
+                        notifyFragments();
                     }
                 }, new Response.ErrorListener() {
             @Override

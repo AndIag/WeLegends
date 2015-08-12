@@ -17,6 +17,7 @@ public class Match implements Serializable {
     private String matchVersion;
     private ArrayList<ParticipantIdentities> participantIdentities;
     private ArrayList<Participant> participants;
+    private ArrayList<Team> teams;
     private String platformId;
     private String queueType;
     private String region;
@@ -127,5 +128,13 @@ public class Match implements Serializable {
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(ArrayList<Team> teams) {
+        this.teams = teams;
     }
 }

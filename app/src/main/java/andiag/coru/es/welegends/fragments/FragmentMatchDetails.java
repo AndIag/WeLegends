@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -53,7 +54,11 @@ public class FragmentMatchDetails extends NotifycableFragment {
     @Override
     public void notifyFragment() {
         data = activityMain.getDetailsData();
-        setDataOnView();
+        if (data != null) {
+            setDataOnView();
+        } else {
+            Toast.makeText(activityMain, getString(R.string.unknowkError), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setDataOnView() {

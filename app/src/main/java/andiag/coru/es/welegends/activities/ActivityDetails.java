@@ -21,7 +21,6 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
-import andiag.coru.es.welegends.entities.ParticipantIdentities;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
@@ -186,14 +185,14 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     }
 
     public int matchType(String queurType) {
-        if (queurType.contains("RANKED")) return 0;
-        return 1;
+        //We might need this if some type of mach have different structure
+        return 0;
     }
 
     public Bundle getDetailsData() {
         switch (matchType(match.getQueueType())) {
             case 0:
-                return parseSummonerData();
+                return parseSummonerNormalData();
         }
         return null;
     }
@@ -204,29 +203,20 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         }
     }
 
-    private Bundle parseSummonerData() {
-        Bundle b = new Bundle();
+    private Bundle parseSummonerNormalData() {
+        Bundle b = null;
         Participant participant = null;
         ParticipantStats participantStats;
 
-        int participantId = 0; //Get summoner participant ID
-        for (ParticipantIdentities pi : match.getParticipantIdentities()) {
-            if (pi.getPlayer() != null) {
-                if (pi.getPlayer().getSummonerId() == summonerId) {
-                    participantId = pi.getParticipantId();
-                    break;
-                }
-            }
-        }
-
         for (Participant p : match.getParticipants()) {
-            if (p.getParticipantId() == participantId) {
+            if (p.getChampionId() == principalChampId && p.getStats().isWinner() == isWinner) {
                 participant = p;
                 break;
             }
         }
 
         if (participant != null) {
+            b = new Bundle();
             participantStats = participant.getStats();
             b.putInt("championId", participant.getChampionId());
             b.putInt("spell1", participant.getSpell1Id());

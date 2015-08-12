@@ -140,7 +140,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                     i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
                     i.putExtra("region", ((ActivityMain) context).getRegion());
                     i.putExtra("summonerId", ((ActivityMain) context).getSummoner().getId());
-                    i.putExtra("principalChamp", historyList.get(position).getInt("championId"));
+                    i.putExtra("principalChamp", historyList.get(position).getInt("champId"));
                     i.putExtra("isWinner", historyList.get(position).getBoolean("winner"));
                     context.startActivity(i);
                 }

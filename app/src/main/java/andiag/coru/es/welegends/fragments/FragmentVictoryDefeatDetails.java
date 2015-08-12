@@ -3,6 +3,7 @@ package andiag.coru.es.welegends.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 
 import andiag.coru.es.welegends.R;
@@ -11,7 +12,7 @@ import andiag.coru.es.welegends.activities.ActivityDetails;
 /**
  * Created by Iago on 11/07/2015.
  */
-public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment {
+public class FragmentVictoryDefeatDetails extends NotifycableFragment {
 
     private static ActivityDetails activityMain;
 
@@ -20,6 +21,11 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment {
 
     public static FragmentVictoryDefeatDetails newInstance() {
         return new FragmentVictoryDefeatDetails();
+    }
+
+    @Override
+    public void notifyFragment() {
+        Log.d("NOTIFICATION", "RECEIVED");
     }
 
     //SAVE AND RETRIEVE DATA

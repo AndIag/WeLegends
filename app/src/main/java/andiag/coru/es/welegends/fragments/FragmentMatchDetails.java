@@ -34,7 +34,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
             Long    "item5"
             Long    "item6"
 */
-public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
+public class FragmentMatchDetails extends NotifycableFragment {
 
     private static ActivityDetails activityMain;
     private TextView textK, textD, textA, textKDA, textCS, textGold;
@@ -50,8 +50,9 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
         return new FragmentMatchDetails();
     }
 
-    public void setData(Bundle data) {
-        this.data = data;
+    @Override
+    public void notifyFragment() {
+        data = activityMain.getDetailsData();
         setDataOnView();
     }
 
@@ -99,7 +100,6 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         activityMain = (ActivityDetails) activity;
-        activityMain.setFragmentMatchDetails(this);
     }
 
     @Override
@@ -149,5 +149,4 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment {
 
         return view;
     }
-
 }

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Victory Team"
+        android:id="@+id/textBoolean"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/winDarker"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textBoolean"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/relativeLayout">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/default_champion"
+            android:id="@+id/imageBanned1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Leblanc"
+            android:id="@+id/textBanned1"
+            android:layout_below="@id/imageBanned1"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/default_champion"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageBanned1"
+            android:layout_toEndOf="@+id/imageBanned1"
+            android:id="@+id/imageBanned2"
+            android:layout_marginLeft="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Leblanc"
+            android:id="@+id/textBanned2"
+            android:layout_below="@+id/imageBanned2"
+            android:layout_alignLeft="@+id/imageBanned2"
+            android:layout_alignStart="@+id/imageBanned2" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/default_champion"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageBanned2"
+            android:layout_toEndOf="@+id/imageBanned2"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/imageBanned3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Ekko"
+            android:id="@+id/textBanned3"
+            android:layout_below="@+id/imageBanned3"
+            android:layout_alignLeft="@+id/imageBanned3"
+            android:layout_alignStart="@+id/imageBanned3" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageBaron"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/baron_nashor"
+        android:layout_toStartOf="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:tint="@color/win" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:id="@+id/imageDragon"
+        android:src="@drawable/dragon"
+        android:layout_alignTop="@+id/textBaron"
+        android:layout_toRightOf="@+id/relativeLayout"
+        android:layout_toEndOf="@+id/relativeLayout"
+        android:tint="@color/win" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="2"
+        android:id="@+id/textBaron"
+        android:layout_alignBottom="@+id/imageBaron"
+        android:layout_toRightOf="@+id/imageBaron"
+        android:layout_toEndOf="@+id/imageBaron"
+        android:layout_alignTop="@+id/imageBaron"
+        android:gravity="center"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="2"
+        android:id="@+id/textDragon"
+        android:gravity="center"
+        android:layout_alignTop="@+id/imageDragon"
+        android:layout_toLeftOf="@+id/imageDragon"
+        android:layout_toStartOf="@+id/imageDragon"
+        android:layout_alignBottom="@+id/imageDragon"
+        android:layout_marginRight="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="68/25/36"
+        android:id="@+id/textKDA"
+        android:layout_alignTop="@+id/textDragon"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

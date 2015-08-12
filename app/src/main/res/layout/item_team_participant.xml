@@ -35,22 +35,29 @@
             android:id="@+id/textKDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView9"
-            android:layout_marginLeft="20dp"
-            android:layout_toEndOf="@+id/imageView6"
-            android:layout_toRightOf="@+id/imageView6"
             android:text="24/7/48"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:gravity="center_vertical"
+            android:layout_alignTop="@+id/imageView6"
+            android:layout_toRightOf="@+id/imageView6"
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="56dp"
+            android:layout_above="@+id/imageView7" />
 
         <TextView
             android:id="@+id/textGold"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textKDA"
             android:layout_alignStart="@+id/textKDA"
-            android:layout_centerVertical="true"
             android:text="30/min"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/imageView7"
+            android:layout_alignBottom="@+id/imageView7"
+            android:layout_alignRight="@+id/textKDA"
+            android:layout_alignEnd="@+id/textKDA"
+            android:gravity="center_vertical" />
 
         <TextView
             android:id="@+id/textCS"
@@ -58,21 +65,19 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textGold"
             android:layout_alignStart="@+id/textGold"
-            android:layout_alignTop="@+id/imageView8"
-            android:layout_marginTop="5dp"
             android:text="7/min"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/imageView8"
+            android:layout_alignBottom="@+id/imageView8"
+            android:gravity="center_vertical" />
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:src="@drawable/icon_sword"
             android:layout_alignTop="@+id/imgChamp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/imgChamp"
-            android:layout_toRightOf="@+id/imgChamp"
-            android:src="@drawable/icon_sword" />
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -95,49 +100,22 @@
             android:src="@drawable/icon_minion" />
 
         <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_above="@+id/imageView7"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_toLeftOf="@+id/textV"
-            android:layout_toStartOf="@+id/textV"
-            android:src="@drawable/tick" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageSpell1"
+            android:layout_alignTop="@+id/imgChamp"
+            android:layout_toRightOf="@+id/imgChamp"
+            android:layout_toEndOf="@+id/imgChamp"
+            android:src="@drawable/flash" />
 
         <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignBottom="@+id/textCS"
-            android:layout_alignLeft="@+id/imageView9"
-            android:layout_alignStart="@+id/imageView9"
-            android:src="@drawable/cross" />
-
-        <TextView
-            android:id="@+id/textV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView7"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/textKDA"
-            android:layout_marginRight="16dp"
-            android:gravity="center"
-            android:text="30"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/textD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView10"
-            android:layout_alignLeft="@+id/textV"
-            android:layout_alignStart="@+id/textV"
-            android:layout_alignTop="@+id/imageView10"
-            android:gravity="center"
-            android:text="23"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageSpell2"
+            android:src="@drawable/heal"
+            android:layout_alignBottom="@+id/imgChamp"
+            android:layout_alignLeft="@+id/imageSpell1"
+            android:layout_alignStart="@+id/imageSpell1" />
 
     </RelativeLayout>
 

@@ -102,7 +102,7 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:id="@+id/imageView18"
+            android:id="@+id/imageSpell1"
             android:layout_alignTop="@+id/imgChamp"
             android:layout_toRightOf="@+id/imgChamp"
             android:layout_toEndOf="@+id/imgChamp"
@@ -111,11 +111,11 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:id="@+id/imageView19"
+            android:id="@+id/imageSpell2"
             android:src="@drawable/heal"
             android:layout_alignBottom="@+id/imgChamp"
-            android:layout_alignLeft="@+id/imageView18"
-            android:layout_alignStart="@+id/imageView18" />
+            android:layout_alignLeft="@+id/imageSpell1"
+            android:layout_alignStart="@+id/imageSpell1" />
 
     </RelativeLayout>
 

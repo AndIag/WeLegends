@@ -3,9 +3,8 @@ package andiag.coru.es.welegends.fragments;
 /**
  * Created by iagoc on 12/08/2015.
  */
-public abstract class NotifycableFragment extends SwipeRefreshLayoutFragment {
+public interface NotifycableFragment {
 
-    public abstract void notifyFragment();
-    public abstract void notifyRotated();
+    void notifyFragment();
 
 }

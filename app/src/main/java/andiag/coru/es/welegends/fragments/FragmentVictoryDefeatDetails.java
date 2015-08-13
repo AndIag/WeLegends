@@ -21,7 +21,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 /**
  * Created by Iago on 11/07/2015.
  */
-public class FragmentVictoryDefeatDetails extends NotifycableFragment {
+public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment implements NotifycableFragment {
 
     private static ActivityDetails activityMain;
 
@@ -47,11 +47,6 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
     @Override
     public void notifyFragment() {
         Log.d("NOTIFICATION", "RECEIVED");
-    }
-
-    @Override
-    public void notifyRotated() {
-
     }
 
     //SAVE AND RETRIEVE DATA

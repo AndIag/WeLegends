@@ -41,8 +41,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private Match match;
     private boolean isCreatingTabs = false;
 
-    private boolean rotated = false;
-
     private synchronized void setCreatingTabs(boolean bool) {
         isCreatingTabs = bool;
     }
@@ -138,7 +136,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
 
-        if (savedInstanceState != null) rotated = true;
+        //if(savedInstanceState!=null) notifyFragments();
 
         setAnimation();
 
@@ -154,8 +152,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     public void onResume() {
         super.onResume();
         ViewServer.get(this).setFocusedWindow(this);
-
-        if (rotated) notifyRotated();
     }
 
     @Override
@@ -194,6 +190,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     }
 
     public Bundle getDetailsData() {
+        if (match == null) return null;
         switch (matchType(match.getQueueType())) {
             case 0:
                 return parseSummonerNormalData();
@@ -204,12 +201,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private void notifyFragments() {
         for (Tab t : tabs) {
             ((NotifycableFragment) t.getFragment()).notifyFragment();
-        }
-    }
-
-    private void notifyRotated() {
-        for (Tab t : tabs) {
-            ((NotifycableFragment) t.getFragment()).notifyRotated();
         }
     }
 

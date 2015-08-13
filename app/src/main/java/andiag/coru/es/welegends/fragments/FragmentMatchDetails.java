@@ -128,7 +128,7 @@ public class FragmentMatchDetails extends NotifycableFragment {
                 changeRefreshingValue(false);
             }
         });
-        changeRefreshingValue(true);
+        //changeRefreshingValue(true);
     }
 
     @Override

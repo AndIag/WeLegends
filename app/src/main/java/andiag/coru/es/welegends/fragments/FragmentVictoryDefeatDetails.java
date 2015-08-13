@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
-import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
 import andiag.coru.es.welegends.adapters.AdapterTeamDetails;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
@@ -84,6 +85,11 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
 
         recyclerView.setHasFixedSize(false);
 
+        ArrayList<Bundle> list = new ArrayList<>();
+        list.add(new Bundle());
+        list.add(new Bundle());
+        adapter.updateTeamMembers(list);
+
         recyclerView.setAdapter(scaleAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
@@ -106,7 +112,7 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
                 changeRefreshingValue(false);
             }
         });
-        changeRefreshingValue(true);
+        //changeRefreshingValue(true);
     }
 
 }

@@ -21,6 +21,8 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 /*
             Int     "championId"
             Long    "duration"
+            String  "role"
+            String  "lane"
             Int     "spell1"
             Int     "spell2"
             Long    "kills"

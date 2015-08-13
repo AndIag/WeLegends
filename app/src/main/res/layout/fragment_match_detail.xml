@@ -262,7 +262,7 @@ android:layout_height="match_parent"
                     android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/textEarnedGold"
+                    android:id="@+id/textGoldPerMinute"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -286,12 +286,12 @@ android:layout_height="match_parent"
                     android:background="@color/left_row"
                     android:gravity="left"
                     android:padding="3dip"
-                    android:text="@string/killingSprees"
+                    android:text="@string/farmedCs"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/textKillingSprees"
+                    android:id="@+id/textCSperMinute"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -315,12 +315,97 @@ android:layout_height="match_parent"
                     android:background="@color/left_row"
                     android:gravity="left"
                     android:padding="3dip"
-                    android:text="@string/largestKillingSpree"
+                    android:text="@string/totalDamageDealt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/textLargestKillingSprees"
+                    android:id="@+id/textTotalDamageDealt"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/right_row"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/left_row"
+                    android:gravity="left"
+                    android:padding="3dip"
+                    android:text="@string/totalDamageTaken"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/textTotalDamageTaken"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/right_row"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/left_row"
+                    android:gravity="left"
+                    android:padding="3dip"
+                    android:text="@string/healDone"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/textHealth"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/right_row"
+                    android:gravity="center"
+                    android:padding="3dip"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip">
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/left_row"
+                    android:gravity="left"
+                    android:padding="3dip"
+                    android:text="@string/physicalDamageDealt"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/textPhysicalDamageDealt"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -371,133 +456,23 @@ android:layout_height="match_parent"
                     android:background="@color/left_row"
                     android:gravity="left"
                     android:padding="3dip"
-                    android:text="@string/magicDamageDealtToChampions"
+                    android:text="@string/killingSprees"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/textMagicDamageDealtToChampions"
+                    android:id="@+id/textKillingSprees"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/right_row"
                     android:gravity="center"
                     android:padding="3dip"
+
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip">
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/left_row"
-                    android:gravity="left"
-                    android:padding="3dip"
-                    android:text="@string/physicalDamageDealt"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textPhysicalDamageDealt"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/right_row"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip">
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/left_row"
-                    android:gravity="left"
-                    android:padding="3dip"
-                    android:text="@string/physicalDamageDealtToChampions"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textPhysicalDamageDealtToChampions"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/right_row"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip">
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/left_row"
-                    android:gravity="left"
-                    android:padding="3dip"
-                    android:text="@string/totalDamageDealt"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textTotalDamageDealt"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/right_row"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip">
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/left_row"
-                    android:gravity="left"
-                    android:padding="3dip"
-                    android:text="@string/totalDamageDealtToChampions"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textTotalDamageDealtToChampions"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/right_row"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white" />
-            </TableRow>
         </TableLayout>
     </RelativeLayout>
 

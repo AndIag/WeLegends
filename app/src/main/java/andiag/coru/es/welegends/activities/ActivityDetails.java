@@ -219,6 +219,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             b = new Bundle();
             participantStats = participant.getStats();
             b.putInt("championId", participant.getChampionId());
+            b.putLong("duration", match.getMatchDuration());
             b.putInt("spell1", participant.getSpell1Id());
             b.putInt("spell2", participant.getSpell2Id());
             b.putLong("kills", participantStats.getKills());
@@ -233,6 +234,12 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             b.putLong("item4", participantStats.getItem4());
             b.putLong("item5", participantStats.getItem5());
             b.putLong("item6", participantStats.getItem6());
+            b.putLong("killingSprees", participantStats.getLargestKillingSpree());
+            b.putLong("damageDealt", participantStats.getTotalDamageDealtToChampions());
+            b.putLong("damageTaken", participantStats.getTotalDamageTaken());
+            b.putLong("physicalDamageDealt", participantStats.getPhysicalDamageDealtToChampions());
+            b.putLong("magicDamageDealt", participantStats.getMagicDamageDealtToChampions());
+            b.putLong("healDone", participantStats.getTotalHeal());
         }
         return b;
     }

@@ -20,6 +20,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
             Int     "championId"
+            Long    "duration"
             Int     "spell1"
             Int     "spell2"
             Long    "kills"
@@ -34,11 +35,18 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
             Long    "item4"
             Long    "item5"
             Long    "item6"
+            Long    "damageDealt"
+            Long    "damageTaken"
+            Long    "healDone"
+            Long    "physicalDamageDealt"
+            Long    "magicDamageDealt"
+            Long    "killingSprees"
 */
 public class FragmentMatchDetails extends NotifycableFragment {
 
     private static ActivityDetails activityMain;
-    private TextView textK, textD, textA, textKDA, textCS, textGold;
+    private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin;
+    private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree;
     private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion;
     private Bundle data;
     private ImageLoader imageLoader;
@@ -67,11 +75,10 @@ public class FragmentMatchDetails extends NotifycableFragment {
         textA.setText(String.valueOf(data.getLong("assists")));
         long deaths = data.getLong("deaths");
         if (deaths == 0) deaths = 1;
-        float KDA = (data.getLong("kills") + data.getLong("assists")) / deaths;
-        textKDA.setText(String.format("%.1f", KDA));
+        textKDA.setText(String.format("%.1f", ((float) data.getLong("kills") + (float) data.getLong("assists")) / deaths));
 
         textCS.setText(String.valueOf(data.getLong("cs")));
-        textGold.setText(String.valueOf(data.getLong("gold") / 1000 + "k"));
+        textGold.setText(String.format("%.1f", ((float) data.getLong("gold")) / 1000) + "k");
 
         imageChampion.setErrorImageResId(R.drawable.default_champion);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
@@ -87,6 +94,16 @@ public class FragmentMatchDetails extends NotifycableFragment {
         setItemImage(imgIt4, data.getLong("item3"));
         setItemImage(imgIt5, data.getLong("item4"));
         setItemImage(imgIt6, data.getLong("item5"));
+
+        float minDuration = ((float) data.getLong("duration")) / 60;
+        textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration) + "g");
+        textCsPerMin.setText(String.format("%.1f", ((float) data.getLong("cs")) / minDuration) + "cs");
+        textDamageTaken.setText(String.valueOf(data.getLong("damageTaken")));
+        textDamageDealt.setText(String.valueOf(data.getLong("damageDealt")));
+        textHeal.setText(String.valueOf(data.getLong("healDone")));
+        textPhyDealt.setText(String.valueOf(data.getLong("physicalDamageDealt")));
+        textMagDealt.setText(String.valueOf(data.getLong("magicDamageDealt")));
+        textKillingSpree.setText(String.valueOf(data.getLong("killingSprees")));
 
         changeRefreshingValue(false);
     }
@@ -151,6 +168,14 @@ public class FragmentMatchDetails extends NotifycableFragment {
         imgIt4 = (NetworkImageView) view.findViewById(R.id.imageItem4);
         imgIt5 = (NetworkImageView) view.findViewById(R.id.imageItem5);
         imgIt6 = (NetworkImageView) view.findViewById(R.id.imageItem6);
+        textGoldPerMin = (TextView) view.findViewById(R.id.textGoldPerMinute);
+        textCsPerMin = (TextView) view.findViewById(R.id.textCSperMinute);
+        textDamageDealt = (TextView) view.findViewById(R.id.textTotalDamageDealt);
+        textDamageTaken = (TextView) view.findViewById(R.id.textTotalDamageTaken);
+        textHeal = (TextView) view.findViewById(R.id.textHealth);
+        textPhyDealt = (TextView) view.findViewById(R.id.textPhysicalDamageDealt);
+        textMagDealt = (TextView) view.findViewById(R.id.textMagicDamageDealt);
+        textKillingSpree = (TextView) view.findViewById(R.id.textKillingSprees);
 
         return view;
     }

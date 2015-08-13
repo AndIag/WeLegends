@@ -61,15 +61,14 @@
     <!-- Other Shit -->
     <string name="summoner">Summoner:</string>
     <string name="hint_summoner">Summoner\'s name</string>
-    <string name="earnedGold">Earned gold:</string>
-    <string name="killingSprees">Killing sprees:</string>
-    <string name="largestKillingSpree">Largest killing spree:</string>
+    <string name="earnedGold">Gold per minute:</string>
+    <string name="farmedCs">Creeps per minute:</string>
+    <string name="killingSprees">Largest killing spree:</string>
+    <string name="healDone">Total heal done:</string>
     <string name="magicDamageDealt">Magic damage dealt:</string>
-    <string name="magicDamageDealtToChampions">Magic damage dealt to champions:</string>
     <string name="physicalDamageDealt">Physical damage dealt:</string>
-    <string name="physicalDamageDealtToChampions">Physical damage dealt to champions:</string>
     <string name="totalDamageDealt">Total damage dealt:</string>
-    <string name="totalDamageDealtToChampions">Total damage dealt to champions:</string>
+    <string name="totalDamageTaken">Total damage taken:</string>
     <string name="level">Level</string>
     <string name="penta">Pentakills</string>
     <string name="quadra">Quadrakills</string>

@@ -28,8 +28,10 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
     private List<Bundle> teamMembers = new ArrayList<>();
     private ImageLoader imageLoader;
+    private boolean type;
 
-    public AdapterTeamDetails(Context context) {
+    public AdapterTeamDetails(Context context,boolean type) {
+        this.type = type;
         this.context = context;
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
@@ -93,6 +95,18 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
+            int color;
+            if (type) {
+                h.textBoolean.setText(context.getResources().getString(R.string.victory_team));
+                color = context.getResources().getColor(R.color.win);
+            } else {
+                h.textBoolean.setText(context.getResources().getString(R.string.defeat_team));
+                color = context.getResources().getColor(R.color.lose);
+
+            }
+            h.textBoolean.setTextColor(color);
+            h.imageBaron.setColorFilter(color);
+            h.imageDragon.setColorFilter(color);
 
         }
 
@@ -118,8 +132,9 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        TextView textBoolean,textBanned1,textBanned2,textBanned3,textKDA,textBaron,textDragon;
+        TextView textBoolean,textBanned1,textBanned2,textBanned3,textKDA,textBaron,textDragon,textName;
         NetworkImageView imageBanned1,imageBanned2,imageBanned3;
+        ImageView imageDragon,imageBaron;
         View view;
 
         public VHHeader(View itemView) {
@@ -136,6 +151,8 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             textKDA = (TextView) view.findViewById(R.id.textKDA);
             textBaron = (TextView) view.findViewById(R.id.textBaron);
             textDragon = (TextView) view.findViewById(R.id.textDragon);
+            imageBaron = (ImageView) view.findViewById(R.id.imageBaron);
+            imageDragon = (ImageView) view.findViewById(R.id.imageDragon);
 
         }
     }

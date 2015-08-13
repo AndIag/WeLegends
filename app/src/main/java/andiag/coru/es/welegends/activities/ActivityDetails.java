@@ -41,6 +41,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private Match match;
     private boolean isCreatingTabs = false;
 
+    private boolean rotated = false;
+
     private synchronized void setCreatingTabs(boolean bool) {
         isCreatingTabs = bool;
     }
@@ -65,7 +67,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
             //VICTORY TEAM
             tab = new Tab();
-            tab.setFragment(FragmentVictoryDefeatDetails.newInstance());
+            tab.setFragment(FragmentVictoryDefeatDetails.newInstance(true));
             tab.setName(getString(R.string.title_section_victory_team));
             tab.setActionBarColors(getResources().getColor(R.color.posT2));
             tab.setToolBarColors(getResources().getColor(R.color.pos2));
@@ -75,7 +77,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
             //DEFEAT TEAM
             tab = new Tab();
-            tab.setFragment(FragmentVictoryDefeatDetails.newInstance());
+            tab.setFragment(FragmentVictoryDefeatDetails.newInstance(false));
             tab.setName(getString(R.string.title_section_defeat_team));
             tab.setActionBarColors(getResources().getColor(R.color.posT4));
             tab.setToolBarColors(getResources().getColor(R.color.pos4));
@@ -90,7 +92,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        //super.onSaveInstanceState(outState);
         outState.putLong("matchId", matchId);
         outState.putString("region", region);
         outState.putLong("summonerId", summonerId);
@@ -136,7 +138,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
 
-        if (savedInstanceState != null) notifyFragments();
+        if (savedInstanceState != null) rotated = true;
 
         setAnimation();
 
@@ -152,6 +154,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     public void onResume() {
         super.onResume();
         ViewServer.get(this).setFocusedWindow(this);
+
+        if (rotated) notifyRotated();
     }
 
     @Override
@@ -200,6 +204,12 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private void notifyFragments() {
         for (Tab t : tabs) {
             ((NotifycableFragment) t.getFragment()).notifyFragment();
+        }
+    }
+
+    private void notifyRotated() {
+        for (Tab t : tabs) {
+            ((NotifycableFragment) t.getFragment()).notifyRotated();
         }
     }
 

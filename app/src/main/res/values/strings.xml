@@ -78,6 +78,8 @@
     <string name="turrets">Total turrets destroyed</string>
     <string name="average_damage_dealt">Damage dealt</string>
     <string name="average_damage_taken">Damage taken</string>
+    <string name="victory_team">Victory Team</string>
+    <string name="defeat_team">Defeat Team</string>
 
     <string-array name="region_array">
         <item>EUW</item>

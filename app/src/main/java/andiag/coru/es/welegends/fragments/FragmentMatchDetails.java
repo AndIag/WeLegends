@@ -4,11 +4,11 @@ package andiag.coru.es.welegends.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -53,6 +53,8 @@ public class FragmentMatchDetails extends NotifycableFragment {
     private Bundle data;
     private ImageLoader imageLoader;
 
+    private boolean rotated = false;
+
     public FragmentMatchDetails() {
         // Required empty public constructor
     }
@@ -66,9 +68,21 @@ public class FragmentMatchDetails extends NotifycableFragment {
         data = activityMain.getDetailsData();
         if (data != null) {
             setDataOnView();
+        }
+        /*
+        if (data != null) {
+            setDataOnView();
         } else {
             Toast.makeText(activityMain, getString(R.string.unknowkError), Toast.LENGTH_LONG).show();
         }
+        */
+    }
+
+    @Override
+    public void notifyRotated() {
+        Log.d("FRAGMENT MATCH DETAILS", "NotifyRotated");
+        rotated = true;
+        data = activityMain.getDetailsData();
     }
 
     private void setDataOnView() {
@@ -130,11 +144,35 @@ public class FragmentMatchDetails extends NotifycableFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
+        Log.d("FRAGMENT MATCH DETAILS", "OnCreate");
+        if (savedInstanceState!=null){
+            Log.d("FRAGMENT MATCH DETAILS", "Instance!=NULL");
+            data = savedInstanceState.getBundle("data");
+            setDataOnView();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle("data", data);
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d("FRAGMENT MATCH DETAILS", "OnActivityCreated");
+        if (savedInstanceState!=null){
+            Log.d("FRAGMENT MATCH DETAILS", "Instance!=NULL");
+            data = savedInstanceState.getBundle("data");
+            setDataOnView();
+        }
     }
 
     @Override
@@ -152,7 +190,10 @@ public class FragmentMatchDetails extends NotifycableFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_match_detail, container, false);
+
+        LayoutInflater lf = activityMain.getLayoutInflater();
+
+        View view = lf.inflate(R.layout.fragment_match_detail, container, false);
 
         initializeRefresh(view);
 
@@ -179,6 +220,14 @@ public class FragmentMatchDetails extends NotifycableFragment {
         textMagDealt = (TextView) view.findViewById(R.id.textMagicDamageDealt);
         textKillingSpree = (TextView) view.findViewById(R.id.textKillingSprees);
 
+        Log.d("FRAGMENT MATCH DETAILS", "OnCreateView");
+        if (rotated){
+            Log.d("FRAGMENT MATCH DETAILS", "Rotated");
+            //data = savedInstanceState.getBundle("data");
+            setDataOnView();
+        }
+
         return view;
     }
+
 }

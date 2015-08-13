@@ -31,16 +31,27 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
     private AdapterTeamDetails adapter;
     private ScaleInAnimationAdapter scaleAdapter;
 
+    private boolean type;
+
     public FragmentVictoryDefeatDetails() {
     }
 
-    public static FragmentVictoryDefeatDetails newInstance() {
-        return new FragmentVictoryDefeatDetails();
+    public static FragmentVictoryDefeatDetails newInstance(boolean type) {
+        FragmentVictoryDefeatDetails f = new FragmentVictoryDefeatDetails();
+        Bundle arguments = new Bundle();
+        arguments.putBoolean("type",type);
+        f.setArguments(arguments);
+        return f;
     }
 
     @Override
     public void notifyFragment() {
         Log.d("NOTIFICATION", "RECEIVED");
+    }
+
+    @Override
+    public void notifyRotated() {
+
     }
 
     //SAVE AND RETRIEVE DATA
@@ -63,9 +74,10 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        type = getArguments().getBoolean("type");
         onRetrieveInstanceState(savedInstanceState);
         if (adapter == null) {
-            adapter = new AdapterTeamDetails(activityMain);
+            adapter = new AdapterTeamDetails(activityMain,type);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }

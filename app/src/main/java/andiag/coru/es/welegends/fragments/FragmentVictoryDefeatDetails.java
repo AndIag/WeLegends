@@ -3,11 +3,19 @@ package andiag.coru.es.welegends.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
+import andiag.coru.es.welegends.adapters.AdapterTeamDetails;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
  * Created by Iago on 11/07/2015.
@@ -15,6 +23,12 @@ import andiag.coru.es.welegends.activities.ActivityDetails;
 public class FragmentVictoryDefeatDetails extends NotifycableFragment {
 
     private static ActivityDetails activityMain;
+
+    private ObservableRecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+
+    private AdapterTeamDetails adapter;
+    private ScaleInAnimationAdapter scaleAdapter;
 
     public FragmentVictoryDefeatDetails() {
     }
@@ -49,6 +63,32 @@ public class FragmentVictoryDefeatDetails extends NotifycableFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
+        if (adapter == null) {
+            adapter = new AdapterTeamDetails(activityMain);
+            scaleAdapter = new ScaleInAnimationAdapter(adapter);
+            scaleAdapter.setFirstOnly(false);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_champions_stats, container, false);
+
+        recyclerView = (ObservableRecyclerView) rootView.findViewById(R.id.scroll);
+
+        initializeRefresh(rootView);
+
+        layoutManager = new LinearLayoutManager(activityMain);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setHasFixedSize(false);
+
+        recyclerView.setAdapter(scaleAdapter);
+
+        recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
+
+        return rootView;
     }
 
     @Override

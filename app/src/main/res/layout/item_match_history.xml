@@ -54,7 +54,7 @@
             android:textColor="@color/button_text" />
 
         <TextView
-            android:id="@+id/textSummonerName"
+            android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/imgChamp"

@@ -161,7 +161,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             this.view=itemView;
             playerIcon = (CircledNetworkImageView) view.findViewById(R.id.imageSummoner);
-            textSumName = (TextView) view.findViewById(R.id.textSummonerName);
+            textSumName = (TextView) view.findViewById(R.id.textName);
             textServer = (TextView) view.findViewById(R.id.textServer);
             textLevel = (TextView) view.findViewById(R.id.textLevel);
         }

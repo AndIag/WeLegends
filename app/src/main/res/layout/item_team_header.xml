@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:id="@+id/relativeLayout">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/default_champion"
@@ -36,7 +36,7 @@
             android:id="@+id/textBanned1"
             android:layout_below="@id/imageBanned1"/>
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/default_champion"
@@ -56,7 +56,7 @@
             android:layout_alignLeft="@+id/imageBanned2"
             android:layout_alignStart="@+id/imageBanned2" />
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="50dp"

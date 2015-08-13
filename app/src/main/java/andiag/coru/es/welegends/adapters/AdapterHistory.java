@@ -146,7 +146,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                 }
             });
 
-            vChampName = (TextView) v.findViewById(R.id.textSummonerName);
+            vChampName = (TextView) v.findViewById(R.id.textName);
             vMap = (TextView) v.findViewById(R.id.textMap);
             vKDA = (TextView) v.findViewById(R.id.textKDA);
             vCS = (TextView) v.findViewById(R.id.textCS);

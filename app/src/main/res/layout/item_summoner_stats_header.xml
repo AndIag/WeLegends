@@ -13,7 +13,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin" />
 
         <TextView
-            android:id="@+id/textSummonerName"
+            android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -33,11 +33,11 @@
             android:id="@+id/textServer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textSummonerName"
-            android:layout_alignLeft="@+id/textSummonerName"
-            android:layout_alignRight="@+id/textSummonerName"
-            android:layout_alignStart="@+id/textSummonerName"
-            android:layout_below="@+id/textSummonerName"
+            android:layout_alignEnd="@+id/textName"
+            android:layout_alignLeft="@+id/textName"
+            android:layout_alignRight="@+id/textName"
+            android:layout_alignStart="@+id/textName"
+            android:layout_below="@+id/textName"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"

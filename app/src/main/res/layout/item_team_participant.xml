@@ -28,8 +28,25 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="left|top"
-            android:layout_margin="5dp"
-            android:transitionName="imageChampion" />
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:transitionName="imageChampion"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/imgChamp"
+            android:layout_alignLeft="@+id/imgChamp"
+            android:layout_alignRight="@+id/imgChamp"
+            android:layout_alignStart="@+id/imgChamp"
+            android:layout_below="@+id/imgChamp"
+            android:background="@android:color/black"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/button_text"
+            android:layout_marginBottom="5dp" />
 
         <TextView
             android:id="@+id/textKDA"

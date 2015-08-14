@@ -236,6 +236,7 @@ android:layout_height="match_parent"
         </LinearLayout>
 
         <TableLayout
+            android:id="@+id/table"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearItems"
@@ -474,6 +475,72 @@ android:layout_height="match_parent"
             </TableRow>
 
         </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/table"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_perfect" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_perfect" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_good" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_good" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_regular" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_regular" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_bad" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_bad" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

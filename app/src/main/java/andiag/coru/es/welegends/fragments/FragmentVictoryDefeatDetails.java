@@ -90,13 +90,9 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         initializeRefresh(rootView);
 
         layoutManager = new LinearLayoutManager(activityMain);
-
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setHasFixedSize(false);
-
         recyclerView.setAdapter(scaleAdapter);
-
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
         return rootView;

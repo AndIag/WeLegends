@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,11 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.BannedChampion;
+import andiag.coru.es.welegends.entities.Participant;
+import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /*
         haveTeams       Boolean
@@ -107,7 +109,26 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
+            Participant p = (Participant) item.getSerializable("participant");
+            if (p != null) {
+                ParticipantStats participantStats = p.getStats();
+                h.textKDA.setText(participantStats.getKills() + "/"
+                        + participantStats.getDeaths() + "/"
+                        + participantStats.getAssists());
+                h.textGold.setText(String.format("%.1f", (float) participantStats.getGoldEarned() / 1000) + "k");
+                h.textCS.setText(String.valueOf(participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled()) + "cs");
+                h.textName.setText(ChampionsHandler.getChampName(p.getChampionId()));
 
+                h.imageChamp.setErrorImageResId(R.drawable.default_champion);
+                h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
+                h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                                + ChampionsHandler.getServerVersion((Activity) context)
+                                + "/img/champion/" + ChampionsHandler.getChampKey(p.getChampionId()) + ".png",
+                        imageLoader);
+
+                h.imageSpell1.setImageResource(ImagesHandler.getSpell(p.getSpell1Id()));
+                h.imageSpell2.setImageResource(ImagesHandler.getSpell(p.getSpell2Id()));
+            }
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
             int color;
@@ -141,8 +162,6 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
-        Log.d("CHAMPION", String.valueOf(bannedChampion.getChampionId()));
-        Log.d("PLACE", String.valueOf(bannedChampion.getPickTurn()));
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
             h.textBanned1.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
             h.imageBanned1.setErrorImageResId(R.drawable.default_champion);

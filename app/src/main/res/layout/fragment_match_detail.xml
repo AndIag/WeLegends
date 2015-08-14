@@ -112,7 +112,7 @@ android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/black_20"
+            android:background="@color/primary_20"
             android:orientation="horizontal">
 
             <TextView
@@ -244,7 +244,9 @@ android:layout_height="match_parent"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
             android:shrinkColumns="*"
-            android:stretchColumns="*">
+            android:stretchColumns="*"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -508,8 +510,10 @@ android:layout_height="match_parent"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
             android:layout_below="@+id/table"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <Button
                 android:layout_width="0dp"

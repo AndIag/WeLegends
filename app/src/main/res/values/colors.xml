@@ -4,6 +4,7 @@
     <color name="primary">#673AB7</color>
     <color name="primary_dark">#311B92</color>
     <color name="primary_light">#C5CAE9</color>
+    <color name="primary_20">#66673AB7</color>
     <color name="accent">#FF5722</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
@@ -21,8 +22,8 @@
     <color name="transparent">#00000000</color>
 
     <!-- Tables -->
-    <color name="left_row">#727272</color>
-    <color name="right_row">#B6B6B6</color>
+    <color name="left_row">@color/primary_dark</color>
+    <color name="right_row">@color/primary</color>
 
     <!-- Toolbar -->
     <color name="pos0">@color/primary_dark</color>

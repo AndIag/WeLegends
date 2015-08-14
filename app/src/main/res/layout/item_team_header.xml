@@ -34,7 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageBanned1"
             android:text="Leblanc"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:gravity="center"
+            android:textSize="11sp"
+            android:layout_alignRight="@+id/imageBanned1"
+            android:layout_alignEnd="@+id/imageBanned1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/black" />
 
         <andiag.coru.es.welegends.utils.CircledNetworkImageView
             android:id="@+id/imageBanned2"
@@ -54,7 +60,11 @@
             android:layout_alignStart="@+id/imageBanned2"
             android:layout_below="@+id/imageBanned2"
             android:text="Leblanc"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:gravity="center"
+            android:textSize="11sp"
+            android:layout_alignRight="@+id/imageBanned2"
+            android:layout_alignEnd="@+id/imageBanned2"
+            android:textColor="@color/black" />
 
         <andiag.coru.es.welegends.utils.CircledNetworkImageView
             android:id="@+id/imageBanned3"
@@ -75,7 +85,11 @@
             android:layout_alignStart="@+id/imageBanned3"
             android:layout_below="@+id/imageBanned3"
             android:text="Ekko"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
@@ -85,7 +99,6 @@
         android:layout_height="40dp"
         android:layout_below="@+id/relativeLayout"
         android:layout_marginTop="16dp"
-        android:layout_toLeftOf="@+id/relativeLayout"
         android:layout_toStartOf="@+id/relativeLayout"
         android:src="@drawable/baron_nashor"
         android:tint="@color/win" />

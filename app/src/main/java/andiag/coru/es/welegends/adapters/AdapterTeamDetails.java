@@ -20,6 +20,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
@@ -116,7 +117,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                         + participantStats.getDeaths() + "/"
                         + participantStats.getAssists());
                 h.textGold.setText(String.format("%.1f", (float) participantStats.getGoldEarned() / 1000) + "k");
-                h.textCS.setText(String.valueOf(participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled()) + "cs");
+                h.textCS.setText(String.valueOf(participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled()));
                 h.textName.setText(ChampionsHandler.getChampName(p.getChampionId()));
 
                 h.imageChamp.setErrorImageResId(R.drawable.default_champion);
@@ -212,16 +213,16 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class VHHeader extends RecyclerView.ViewHolder {
         TextView textBoolean,textBanned1,textBanned2,textBanned3,textKDA,textBaron,textDragon,textName;
-        NetworkImageView imageBanned1,imageBanned2,imageBanned3;
+        CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon,imageBaron;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view=itemView;
-            imageBanned1 = (NetworkImageView) view.findViewById(R.id.imageBanned1);
-            imageBanned2 = (NetworkImageView) view.findViewById(R.id.imageBanned2);
-            imageBanned3 = (NetworkImageView) view.findViewById(R.id.imageBanned3);
+            imageBanned1 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned1);
+            imageBanned2 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned2);
+            imageBanned3 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned3);
             textBoolean = (TextView) view.findViewById(R.id.textBoolean);
             textBanned1 = (TextView) view.findViewById(R.id.textBanned1);
             textBanned2 = (TextView) view.findViewById(R.id.textBanned2);

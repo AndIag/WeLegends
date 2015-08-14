@@ -101,5 +101,11 @@
     <string name="stat_good">Good</string>
     <string name="stat_regular">Regular</string>
     <string name="stat_bad">Bad</string>
+    <string name="jungle">Jungle</string>
+    <string name="mid">Mid</string>
+    <string name="top">Top</string>
+    <string name="carry">Carry</string>
+    <string name="support">Support</string>
+    <string name="bot">Bot</string>
 
 </resources>

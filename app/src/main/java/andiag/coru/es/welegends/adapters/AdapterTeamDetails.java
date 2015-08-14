@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +147,6 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             float kda = ((float) item.getInt("totalKills") + (float) item.getInt("totalAssits"))
                     / (float) item.getInt("totalDeaths");
-            Log.d("KDA", String.format("%.1f", kda));
             h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
 
             if (item.getBoolean("haveTeams", false)) {

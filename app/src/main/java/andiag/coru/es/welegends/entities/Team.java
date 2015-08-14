@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Team implements Serializable {
 
     private ArrayList<BannedChampion> bans;
-    private int baronkills;
-    private int dragonkills;
+    private int baronKills;
+    private int dragonKills;
     private boolean firstBaron;
     private boolean firstBlood;
     private boolean firstDragon;
@@ -33,19 +33,19 @@ public class Team implements Serializable {
     }
 
     public int getBaronkills() {
-        return baronkills;
+        return baronKills;
     }
 
-    public void setBaronkills(int baronkills) {
-        this.baronkills = baronkills;
+    public void setBaronkills(int baronKills) {
+        this.baronKills = baronKills;
     }
 
     public int getDragonkills() {
-        return dragonkills;
+        return dragonKills;
     }
 
-    public void setDragonkills(int dragonkills) {
-        this.dragonkills = dragonkills;
+    public void setDragonkills(int dragonKills) {
+        this.dragonKills = dragonKills;
     }
 
     public boolean isFirstBaron() {

@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +49,10 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements NotifycableFragment {
 
     private static ActivityDetails activityMain;
-    private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin;
-    private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree;
+    private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin, textChampName;
+    private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree, textRole;
     private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion;
+    private ImageView imageRole;
     private Bundle data;
     private ImageLoader imageLoader;
 
@@ -73,6 +75,9 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     }
 
     private void setDataOnView() {
+        textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
+        imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
+        textChampName.setText(ChampionsHandler.getChampName(data.getInt("championId")));
         textK.setText(String.valueOf(data.getLong("kills")));
         textK.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("kills"))));
         textD.setText(String.valueOf(data.getLong("deaths")));
@@ -170,6 +175,9 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
         initializeRefresh(view);
 
+        textChampName = (TextView) view.findViewById(R.id.textChampName);
+        textRole = (TextView) view.findViewById(R.id.textRole);
+        imageRole = (ImageView) view.findViewById(R.id.imageRole);
         textK = (TextView) view.findViewById(R.id.textK);
         textD = (TextView) view.findViewById(R.id.textD);
         textA = (TextView) view.findViewById(R.id.textA);
@@ -194,6 +202,57 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         textKillingSpree = (TextView) view.findViewById(R.id.textKillingSprees);
 
         return view;
+    }
+
+    private int getRole(String role, String lane) {
+        //Participant's lane (Legal values: MID, MIDDLE, TOP, JUNGLE, BOT, BOTTOM)
+        //Participant's role (Legal values: DUO, NONE, SOLO, DUO_CARRY, DUO_SUPPORT)
+
+        if (lane.equals("JUNGLE")) return 0;
+        if (lane.contains("MID")) return 1;
+        if (lane.equals("TOP")) return 2;
+        if (lane.contains("BOT") && role.contains("CARRY")) return 3;
+        if (lane.contains("BOT") && role.contains("SUPPORT")) return 4;
+        if (lane.contains("BOT")) return 5;
+        return -1;
+    }
+
+    private int getNameToRole(int role) {
+        switch (role) {
+            case 0:
+                return R.string.jungle;
+            case 1:
+                return R.string.mid;
+            case 2:
+                return R.string.top;
+            case 3:
+                return R.string.carry;
+            case 4:
+                return R.string.support;
+            case 5:
+                return R.string.bot;
+            default:
+                return R.string.error404;
+        }
+    }
+
+    private int getImageToRole(int role) {
+        switch (role) {
+            case 0:
+                return R.drawable.role_fighter;
+            case 1:
+                return R.drawable.role_mage;
+            case 2:
+                return R.drawable.role_tank;
+            case 3:
+                return R.drawable.role_marksman;
+            case 4:
+                return R.drawable.role_support;
+            case 5:
+                return R.drawable.role_assassin;
+            default:
+                return R.drawable.default_champion;
+        }
     }
 
 }

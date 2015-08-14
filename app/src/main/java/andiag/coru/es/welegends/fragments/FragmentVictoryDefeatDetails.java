@@ -56,9 +56,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
 
     @Override
     public void notifyFragment() {
-        if (type) {
-            data = activityMain.getData(1);
-        }
+        data = getBundleData();
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
             changeRefreshingValue(false);
@@ -125,9 +123,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     @Override
     public void onResume() {
         super.onResume();
-        if (type) {
-            data = activityMain.getData(1);
-        }
+        data = getBundleData();
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
             changeRefreshingValue(false);
@@ -145,6 +141,14 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
             }
         });
         changeRefreshingValue(true);
+    }
+
+    private Bundle getBundleData() {
+        if (type) {
+            return activityMain.getData(1);
+        } else {
+            return activityMain.getData(2);
+        }
     }
 
 }

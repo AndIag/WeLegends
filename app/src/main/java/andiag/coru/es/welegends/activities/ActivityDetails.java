@@ -291,12 +291,62 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return b;
     }
 
+    private Bundle getLosserTeamData() {
+        if (match == null) return null;
+        Bundle b = new Bundle();
+        Bundle lTeam = new Bundle();
+        Team losserTeam = null;
+        int kills = 0, assists = 0, deaths = 0, participant = 0;
+
+        if (match.getTeams() != null) {
+            for (Team t : match.getTeams()) {
+                if (!t.isWinner()) {
+                    losserTeam = t;
+                    break;
+                }
+            }
+            if (losserTeam != null) {
+                lTeam.putBoolean("haveTeams", true);
+                lTeam.putInt("baron", losserTeam.getBaronkills());
+                lTeam.putInt("drake", losserTeam.getDragonkills());
+                if (losserTeam.getBans() != null) {
+                    lTeam.putBoolean("haveBans", true);
+                    for (BannedChampion c : losserTeam.getBans()) {
+                        lTeam.putSerializable(String.valueOf(participant), c);
+                        participant++;
+                    }
+                    participant = 0;
+                }
+            }
+        }
+
+        for (Participant p : match.getParticipants()) {
+            if (!p.getStats().isWinner()) {
+                b.putSerializable(String.valueOf(participant), p);
+                participant++;
+                kills += p.getStats().getKills();
+                deaths += p.getStats().getDeaths();
+                assists += p.getStats().getAssists();
+            }
+        }
+
+        lTeam.putInt("totalKills", kills);
+        lTeam.putInt("totalDeaths", deaths);
+        lTeam.putInt("totalAssits", assists);
+
+        b.putBundle("team", lTeam);
+
+        return b;
+    }
+
     public synchronized Bundle getData(int fragment) {
         switch (fragment) {
             case 0:
                 return getDetailsData();
             case 1:
                 return getWinnerTeamData();
+            case 2:
+                return getLosserTeamData();
             default:
                 return null;
         }

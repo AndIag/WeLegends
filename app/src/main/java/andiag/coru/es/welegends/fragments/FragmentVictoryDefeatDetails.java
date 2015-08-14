@@ -59,6 +59,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         data = getBundleData();
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
+            scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
         }
     }
@@ -126,6 +127,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         data = getBundleData();
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
+            scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
         }
     }

@@ -474,6 +474,30 @@ android:layout_height="match_parent"
             </TableRow>
 
         </TableLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:id="@+id/imageRole"
+            android:layout_alignTop="@+id/imageChampion"
+            android:layout_alignRight="@+id/linearNames"
+            android:layout_alignEnd="@+id/linearNames"
+            android:src="@drawable/role_support"
+            android:layout_toRightOf="@+id/imageChampion"
+            android:layout_toEndOf="@+id/imageChampion" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Support"
+            android:id="@+id/textRole"
+            android:gravity="center"
+            android:layout_below="@+id/imageRole"
+            android:layout_toRightOf="@+id/imageChampion"
+            android:layout_above="@+id/linearNames"
+            android:layout_alignRight="@+id/linearNames"
+            android:layout_alignEnd="@+id/linearNames" />
     </RelativeLayout>
 
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

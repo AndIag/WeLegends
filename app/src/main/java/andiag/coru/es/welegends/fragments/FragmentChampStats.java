@@ -33,7 +33,7 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.ChampionStatsDto;
 import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.adapters.AdapterRankedChamps;
+import andiag.coru.es.welegends.adapters.AdapterChampStats;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
@@ -49,7 +49,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
     private ObservableRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     //METRICS
-    private AdapterRankedChamps adapter;
+    private AdapterChampStats adapter;
     private ScaleInAnimationAdapter scaleAdapter;
 
     private RankedStatsDto rankedStatsDto;
@@ -97,7 +97,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
         super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
         if (adapter == null) {
-            adapter = new AdapterRankedChamps(activityMain);
+            adapter = new AdapterChampStats(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }

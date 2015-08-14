@@ -43,14 +43,14 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
         * taken             int
         * */
 
-public class AdapterRankedChamps extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private Context context;
     private List<Bundle> champList = new ArrayList<>();
     private ImageLoader imageLoader;
 
-    public AdapterRankedChamps(Context context) {
+    public AdapterChampStats(Context context) {
         this.context = context;
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }

@@ -61,6 +61,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         }
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
+            changeRefreshingValue(false);
         }
     }
 
@@ -95,11 +96,6 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
 
         recyclerView.setHasFixedSize(false);
 
-        ArrayList<Bundle> list = new ArrayList<>();
-        list.add(new Bundle());
-        list.add(new Bundle());
-        adapter.updateTeamMembers(list);
-
         recyclerView.setAdapter(scaleAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
@@ -120,6 +116,8 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
             arrayList.add(b);
         }
 
+        b = data.getBundle("team");
+        arrayList.add(0, b);
 
         return arrayList;
     }
@@ -132,6 +130,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         }
         if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
+            changeRefreshingValue(false);
         }
     }
 

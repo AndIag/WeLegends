@@ -1,8 +1,10 @@
 package andiag.coru.es.welegends.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.entities.BannedChampion;
+import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
-    team                Bundle
         haveTeams       Boolean
             baron       Int
             drake       Int
@@ -27,6 +30,9 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
                 0       BannedChampion
                 1       BannedChampion
                 2       BannedChampion
+        totalKills  Int
+        totalDeaths Int
+        totalAssits Int
     participant         Participant
  */
 
@@ -113,12 +119,57 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                 color = context.getResources().getColor(R.color.lose);
 
             }
+            h.textKDA.setText(item.getInt("totalKills") + "/"
+                    + item.getInt("totalDeaths") + "/" + item.getInt("totalAssits"));
+
+            if (item.getBoolean("haveTeams", false)) {
+                h.textBaron.setText(String.valueOf(item.getInt("baron")));
+                h.textDragon.setText(String.valueOf(item.getInt("drake")));
+                if (item.getBoolean("haveBans", false)) {
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("0"), h);
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("1"), h);
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("2"), h);
+                }
+            }
+
             h.textBoolean.setTextColor(color);
             h.imageBaron.setColorFilter(color);
             h.imageDragon.setColorFilter(color);
 
         }
 
+    }
+
+    private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
+        Log.d("CHAMPION", String.valueOf(bannedChampion.getChampionId()));
+        Log.d("PLACE", String.valueOf(bannedChampion.getPickTurn()));
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
+            h.textBanned1.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned1.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned1.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned1.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                    imageLoader);
+        }
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 4 || bannedChampion.getPickTurn() == 3)) {
+            h.textBanned2.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned2.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned2.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned2.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                    imageLoader);
+        }
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 6 || bannedChampion.getPickTurn() == 5)) {
+            h.textBanned3.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned3.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned3.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned3.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
+                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                    imageLoader);
+        }
     }
 
     class VHItem extends RecyclerView.ViewHolder {

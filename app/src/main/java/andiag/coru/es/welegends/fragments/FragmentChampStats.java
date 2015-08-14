@@ -276,6 +276,8 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
 
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
+                    summonerBundle.putString("summonerName", activityMain.getSummoner().getName());
+                    summonerBundle.putLong("summonerProfileId", activityMain.getSummoner().getProfileIconId());
                 }else{
                     m.putInt("champId", id);
                     m.putString("key", ChampionsHandler.getChampKey(id));

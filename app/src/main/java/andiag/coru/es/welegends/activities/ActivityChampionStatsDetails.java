@@ -11,14 +11,18 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
 public class ActivityChampionStatsDetails extends Activity {
 
     private Bundle stats;
     /*      BUNDLE DATA
+    * summonerName      Summoner *solo en la header
+    * summonerProfileId int *solo en la header
     * champId           int
     * name              String
     * key               String
@@ -109,7 +113,9 @@ public class ActivityChampionStatsDetails extends Activity {
     private void loadHeaderView() {
         setContentView(R.layout.activity_champion_details_header);
 
-        NetworkImageView imageView = (NetworkImageView) findViewById(R.id.imageView);
+        APIHandler apiHandler = APIHandler.getInstance(this);
+
+        CircledNetworkImageView imageView = (CircledNetworkImageView) findViewById(R.id.imageView);
         TextView tname = (TextView) findViewById(R.id.textChamp);
         TextView tkills = (TextView) findViewById(R.id.textKills);
         TextView tdeath = (TextView) findViewById(R.id.textDeath);
@@ -135,11 +141,11 @@ public class ActivityChampionStatsDetails extends Activity {
         death = stats.getFloat("death");
         assist = stats.getFloat("assist");
 
-        imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                + ChampionsHandler.getServerVersion(this)
-                + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
+        imageView.setErrorImageResId(R.drawable.default_champion);
+        imageView.setDefaultImageResId(R.drawable.default_champion);
+        imageView.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + stats.getLong("summonerProfileId"), imageLoader);
 
-        tname.setText(stats.getString("name"));
+        tname.setText(stats.getString("summonerName"));
 
         tkills.setText(String.format("%.1f", kills / totalGames));
         tkills.setTextColor(getResources().getColor(StatsColor.getColor(StatsColor.KILLS, kills / totalGames)));

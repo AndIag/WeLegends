@@ -23,6 +23,8 @@ import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
+        * summonerName      String *solo en la header
+        * summonerProfileId int *solo en la header
         * champId           int
         * key               String
         * name              String

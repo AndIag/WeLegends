@@ -217,7 +217,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        TextView textBoolean,textBanned1,textBanned2,textBanned3,textKDA,textBaron,textDragon,textName;
+        TextView textBoolean, textBanned1, textBanned2, textBanned3, textKDA, textBaron, textDragon;
         CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon,imageBaron;
         View view;
@@ -232,7 +232,6 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             textBanned1 = (TextView) view.findViewById(R.id.textBanned1);
             textBanned2 = (TextView) view.findViewById(R.id.textBanned2);
             textBanned3 = (TextView) view.findViewById(R.id.textBanned3);
-
             textKDA = (TextView) view.findViewById(R.id.textKDA);
             textBaron = (TextView) view.findViewById(R.id.textBaron);
             textDragon = (TextView) view.findViewById(R.id.textDragon);

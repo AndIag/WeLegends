@@ -1,18 +1,13 @@
 package andiag.coru.es.welegends.utils.champions;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -109,16 +104,22 @@ public abstract class ChampionsHandler {
 
     public static String getServerVersion(Activity activity) {
         settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
-        return settings.getString("version", "0");
+        if (settings != null)
+            return settings.getString("version", "0");
+        return "5.15.1";
     }
 
     public static String getChampName(int id) {
         if (champions == null) return "NOT FOUND";
+        if (champions.getData() == null) return "NOT FOUNT";
+        if (champions.getData().get(id) == null) return "NOT FOUND";
         return champions.getData().get(id).getName();
     }
 
     public static String getChampKey(int id) {
         if (champions == null) return "Null";
+        if (champions.getData() == null) return "Null";
+        if (champions.getData().get(id) == null) return "Null";
         return champions.getData().get(id).getKey();
     }
 

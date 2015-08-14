@@ -21,6 +21,7 @@ import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
+import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
@@ -143,6 +144,10 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             h.textKDA.setText(item.getInt("totalKills") + "/"
                     + item.getInt("totalDeaths") + "/" + item.getInt("totalAssits"));
+
+            float kda = ((float) item.getInt("totalKills") + (float) item.getInt("totalAssits"))
+                    / (float) item.getInt("totalDeaths");
+            h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
 
             if (item.getBoolean("haveTeams", false)) {
                 h.textBaron.setText(String.valueOf(item.getInt("baron")));

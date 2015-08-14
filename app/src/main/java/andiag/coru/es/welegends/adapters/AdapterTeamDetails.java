@@ -18,9 +18,18 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
-/**
- * Created by andyq on 13/08/2015.
+/*
+    team                Bundle
+        haveTeams       Boolean
+            baron       Int
+            drake       Int
+            haveBans    Boolean
+                0       BannedChampion
+                1       BannedChampion
+                2       BannedChampion
+    participant         Participant
  */
+
 public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;

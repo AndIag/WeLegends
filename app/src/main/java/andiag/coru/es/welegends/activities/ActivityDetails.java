@@ -19,9 +19,11 @@ import org.json.JSONObject;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
+import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.fragments.NotifycableFragment;
@@ -184,35 +186,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public int matchType(String queurType) {
-        //We might need this if some type of mach have different structure
-        return 0;
-    }
-
-    public Bundle getDetailsData() {
-        if (match == null) return null;
-        switch (matchType(match.getQueueType())) {
-            case 0:
-                return parseSummonerNormalData();
-        }
-        return null;
-    }
-
-    public synchronized Bundle getData(int fragment) {
-        switch (fragment) {
-            case 0:
-                return getDetailsData();
-            default:
-                return null;
-        }
-    }
-
-    private void notifyFragments() {
-        for (Tab t : tabs) {
-            ((NotifycableFragment) t.getFragment()).notifyFragment();
-        }
-    }
-
     private Bundle parseSummonerNormalData() {
         Bundle b = null;
         Participant participant = null;
@@ -254,6 +227,85 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             b.putLong("healDone", participantStats.getTotalHeal());
         }
         return b;
+    }
+
+    private int matchType(String queurType) {
+        //We might need this if some type of mach have different structure
+        return 0;
+    }
+
+    private Bundle getDetailsData() {
+        if (match == null) return null;
+        switch (matchType(match.getQueueType())) {
+            case 0:
+                return parseSummonerNormalData();
+        }
+        return null;
+    }
+
+    private Bundle getWinnerTeamData() {
+        if (match == null) return null;
+        Bundle b = new Bundle();
+        Bundle wTeam = new Bundle();
+        Team winnerTeam = null;
+        int kills = 0, assists = 0, deaths = 0, participant = 0;
+
+        if (match.getTeams() != null) {
+            for (Team t : match.getTeams()) {
+                if (t.isWinner()) {
+                    winnerTeam = t;
+                    break;
+                }
+            }
+            if (winnerTeam != null) {
+                wTeam.putBoolean("haveTeams", true);
+                wTeam.putInt("baron", winnerTeam.getBaronkills());
+                wTeam.putInt("drake", winnerTeam.getDragonkills());
+                if (winnerTeam.getBans() != null) {
+                    wTeam.putBoolean("haveBans", true);
+                    for (BannedChampion c : winnerTeam.getBans()) {
+                        wTeam.putSerializable(String.valueOf(participant), c);
+                        participant++;
+                    }
+                    participant = 0;
+                }
+            }
+        }
+
+        for (Participant p : match.getParticipants()) {
+            if (p.getStats().isWinner()) {
+                b.putSerializable(String.valueOf(participant), p);
+                participant++;
+                kills += p.getStats().getKills();
+                deaths += p.getStats().getDeaths();
+                assists += p.getStats().getAssists();
+            }
+        }
+
+        wTeam.putInt("totalKills", kills);
+        wTeam.putInt("totalDeaths", deaths);
+        wTeam.putInt("totalAssits", assists);
+
+        b.putBundle("team", wTeam);
+
+        return b;
+    }
+
+    public synchronized Bundle getData(int fragment) {
+        switch (fragment) {
+            case 0:
+                return getDetailsData();
+            case 1:
+                return getWinnerTeamData();
+            default:
+                return null;
+        }
+    }
+
+    private void notifyFragments() {
+        for (Tab t : tabs) {
+            ((NotifycableFragment) t.getFragment()).notifyFragment();
+        }
     }
 
     private void getMatchDetails() {

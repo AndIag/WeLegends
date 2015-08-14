@@ -15,6 +15,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
@@ -73,14 +74,20 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
     private void setDataOnView() {
         textK.setText(String.valueOf(data.getLong("kills")));
+        textK.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("kills"))));
         textD.setText(String.valueOf(data.getLong("deaths")));
+        textD.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, data.getLong("deaths"))));
         textA.setText(String.valueOf(data.getLong("assists")));
+        textA.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("assists"))));
         long deaths = data.getLong("deaths");
         if (deaths == 0) deaths = 1;
-        textKDA.setText(String.format("%.1f", ((float) data.getLong("kills") + (float) data.getLong("assists")) / deaths));
-
+        float kda = ((float) data.getLong("kills") + (float) data.getLong("assists")) / deaths;
+        textKDA.setText(String.format("%.1f", kda));
+        textKDA.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
         textCS.setText(String.valueOf(data.getLong("cs")));
+        textCS.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.CS, data.getLong("cs"))));
         textGold.setText(String.format("%.1f", ((float) data.getLong("gold")) / 1000) + "k");
+        textGold.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.GOLD, data.getLong("gold"))));
 
         imageChampion.setErrorImageResId(R.drawable.default_champion);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);

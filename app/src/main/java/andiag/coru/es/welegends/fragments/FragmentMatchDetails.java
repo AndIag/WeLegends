@@ -63,7 +63,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
     @Override
     public void notifyFragment() {
-        data = activityMain.getDetailsData();
+        data = activityMain.getData(0);
         if (data != null) {
             setDataOnView();
         } else {
@@ -135,7 +135,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     @Override
     public void onResume() {
         super.onResume();
-        data = activityMain.getDetailsData();
+        data = activityMain.getData(0);
         if (data != null) {
             setDataOnView();
         }

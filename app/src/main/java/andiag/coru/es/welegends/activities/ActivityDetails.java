@@ -198,6 +198,15 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return null;
     }
 
+    public synchronized Bundle getData(int fragment) {
+        switch (fragment) {
+            case 0:
+                return getDetailsData();
+            default:
+                return null;
+        }
+    }
+
     private void notifyFragments() {
         for (Tab t : tabs) {
             ((NotifycableFragment) t.getFragment()).notifyFragment();

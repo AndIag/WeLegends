@@ -312,8 +312,12 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             }
             if (losserTeam != null) {
                 lTeam.putBoolean("haveTeams", true);
-                lTeam.putInt("baron", losserTeam.getBaronkills());
-                lTeam.putInt("drake", losserTeam.getDragonkills());
+                if (match.getQueueType().contains("3x3")) {
+                    lTeam.putInt("vilemaw", losserTeam.getVilemawKills());
+                } else {
+                    lTeam.putInt("baron", losserTeam.getBaronkills());
+                    lTeam.putInt("drake", losserTeam.getDragonkills());
+                }
                 if (losserTeam.getBans() != null) {
                     lTeam.putBoolean("haveBans", true);
                     for (BannedChampion c : losserTeam.getBans()) {

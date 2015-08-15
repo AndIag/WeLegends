@@ -113,7 +113,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         Bundle b;
 
         Set<String> keys = data.keySet();
-        for (int i = 0; i < keys.size() - 1; i++) {
+        for (int i = 0; i < keys.size() - 2; i++) {
             p = (Participant) data.getSerializable(String.valueOf(i));
             b = new Bundle();
             b.putSerializable("participant", p);

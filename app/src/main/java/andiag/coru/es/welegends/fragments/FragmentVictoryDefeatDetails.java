@@ -41,7 +41,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     private ScaleInAnimationAdapter scaleAdapter;
 
     private Bundle data;
-    private boolean type;
+    private boolean isWinner;
 
     public FragmentVictoryDefeatDetails() {
     }
@@ -49,7 +49,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     public static FragmentVictoryDefeatDetails newInstance(boolean type) {
         FragmentVictoryDefeatDetails f = new FragmentVictoryDefeatDetails();
         Bundle arguments = new Bundle();
-        arguments.putBoolean("type",type);
+        arguments.putBoolean("isWinner", type);
         f.setArguments(arguments);
         return f;
     }
@@ -57,7 +57,16 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     @Override
     public void notifyFragment() {
         data = getBundleData();
-        if (data != null && adapter != null) {
+        if (data != null) {
+            String queue = data.getString("queue");
+            if ((queue != null && queue.contains("RANKED")) || (queue != null && queue.contains("DRAFT"))) {
+                adapter = new AdapterTeamDetails(activityMain, isWinner, true);
+            } else {
+                adapter = new AdapterTeamDetails(activityMain, isWinner, false);
+            }
+            scaleAdapter = new ScaleInAnimationAdapter(adapter);
+            scaleAdapter.setFirstOnly(false);
+
             adapter.updateTeamMembers(parseData());
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
@@ -73,9 +82,9 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        type = getArguments().getBoolean("type");
+        isWinner = getArguments().getBoolean("isWinner");
         if (adapter == null) {
-            adapter = new AdapterTeamDetails(activityMain,type);
+            adapter = new AdapterTeamDetails(activityMain, isWinner, true);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }
@@ -121,7 +130,17 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     public void onResume() {
         super.onResume();
         data = getBundleData();
-        if (data != null && adapter != null) {
+        if (data != null) {
+            if (adapter == null) {
+                String queue = data.getString("queue");
+                if ((queue != null && queue.contains("RANKED")) || (queue != null && queue.contains("DRAFT"))) {
+                    adapter = new AdapterTeamDetails(activityMain, isWinner, true);
+                } else {
+                    adapter = new AdapterTeamDetails(activityMain, isWinner, false);
+                }
+                scaleAdapter = new ScaleInAnimationAdapter(adapter);
+                scaleAdapter.setFirstOnly(false);
+            }
             adapter.updateTeamMembers(parseData());
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
@@ -142,7 +161,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     }
 
     private Bundle getBundleData() {
-        if (type) {
+        if (isWinner) {
             return activityMain.getData(1);
         } else {
             return activityMain.getData(2);

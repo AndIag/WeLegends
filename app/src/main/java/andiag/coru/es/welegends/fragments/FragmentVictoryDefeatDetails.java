@@ -57,16 +57,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     @Override
     public void notifyFragment() {
         data = getBundleData();
-        if (data != null) {
-            String queue = data.getString("queue");
-            if ((queue != null && queue.contains("RANKED")) || (queue != null && queue.contains("DRAFT"))) {
-                adapter = new AdapterTeamDetails(activityMain, isWinner, true);
-            } else {
-                adapter = new AdapterTeamDetails(activityMain, isWinner, false);
-            }
-            scaleAdapter = new ScaleInAnimationAdapter(adapter);
-            scaleAdapter.setFirstOnly(false);
-
+        if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
@@ -84,7 +75,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         super.onCreate(savedInstanceState);
         isWinner = getArguments().getBoolean("isWinner");
         if (adapter == null) {
-            adapter = new AdapterTeamDetails(activityMain, isWinner, true);
+            adapter = new AdapterTeamDetails(activityMain, isWinner);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);
             scaleAdapter.setFirstOnly(false);
         }
@@ -130,17 +121,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     public void onResume() {
         super.onResume();
         data = getBundleData();
-        if (data != null) {
-            if (adapter == null) {
-                String queue = data.getString("queue");
-                if ((queue != null && queue.contains("RANKED")) || (queue != null && queue.contains("DRAFT"))) {
-                    adapter = new AdapterTeamDetails(activityMain, isWinner, true);
-                } else {
-                    adapter = new AdapterTeamDetails(activityMain, isWinner, false);
-                }
-                scaleAdapter = new ScaleInAnimationAdapter(adapter);
-                scaleAdapter.setFirstOnly(false);
-            }
+        if (data != null && adapter != null) {
             adapter.updateTeamMembers(parseData());
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);

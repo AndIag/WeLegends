@@ -391,6 +391,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(thisActivity, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                thisActivity.finish();
             }
         });
 

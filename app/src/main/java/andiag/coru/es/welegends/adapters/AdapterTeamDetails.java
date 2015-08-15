@@ -50,11 +50,9 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<Bundle> teamMembers = new ArrayList<>();
     private ImageLoader imageLoader;
     private boolean isWinner;
-    private boolean isRanked;
 
-    public AdapterTeamDetails(Context context, boolean isWinner, boolean isRanked) {
+    public AdapterTeamDetails(Context context, boolean isWinner) {
         this.isWinner = isWinner;
-        this.isRanked = isRanked;
         this.context = context;
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
@@ -75,19 +73,10 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                     inflate(R.layout.item_team_participant, parent, false);
             return new VHItem(itemView);
         } else if (viewType == TYPE_HEADER) {
-            View itemView;
-            if (isRanked) {
-                itemView = LayoutInflater.
-                        from(parent.getContext()).
-                        inflate(R.layout.item_team_header, parent, false);
-                return new VHHeaderRanked(itemView);
-            } else {
-                itemView = LayoutInflater.
-                        from(parent.getContext()).
-                        inflate(R.layout.item_team_header_noranked, parent, false);
-                return new VHHeader(itemView);
-            }
-
+            View itemView = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.item_team_header, parent, false);
+            return new VHHeader(itemView);
         }
 
         throw new RuntimeException("There is no isWinner that matches the isWinner " + viewType + " + make sure your using types correctly");
@@ -167,10 +156,17 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
                 h.textBaron.setText(String.valueOf(item.getInt("baron")));
                 h.textDragon.setText(String.valueOf(item.getInt("drake")));
-                if (isRanked && item.getBoolean("haveBans", false)) {
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("0"), (VHHeaderRanked) h);
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("1"), (VHHeaderRanked) h);
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("2"), (VHHeaderRanked) h);
+                if (item.getBoolean("haveBans", false)) {
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("0"), h);
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("1"), h);
+                    putBannedChampionOnView((BannedChampion) item.getSerializable("2"), h);
+                } else {
+                    h.imageBanned1.setVisibility(View.GONE);
+                    h.imageBanned2.setVisibility(View.GONE);
+                    h.imageBanned3.setVisibility(View.GONE);
+                    h.textBanned1.setVisibility(View.GONE);
+                    h.textBanned2.setVisibility(View.GONE);
+                    h.textBanned3.setVisibility(View.GONE);
                 }
             }
 
@@ -182,7 +178,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     }
 
-    private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeaderRanked h) {
+    private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
             h.textBanned1.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
             h.imageBanned1.setErrorImageResId(R.drawable.default_champion);
@@ -233,6 +229,8 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class VHHeader extends RecyclerView.ViewHolder {
         TextView textBoolean, textKDA, textBaron, textDragon;
+        TextView textBanned1, textBanned2, textBanned3;
+        CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon, imageBaron;
         View view;
 
@@ -245,17 +243,6 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             textDragon = (TextView) view.findViewById(R.id.textDragon);
             imageBaron = (ImageView) view.findViewById(R.id.imageBaron);
             imageDragon = (ImageView) view.findViewById(R.id.imageDragon);
-
-        }
-    }
-
-    class VHHeaderRanked extends VHHeader {
-        TextView textBanned1, textBanned2, textBanned3;
-        CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
-
-        public VHHeaderRanked(View itemView) {
-            super(itemView);
-            this.view=itemView;
             imageBanned1 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned1);
             imageBanned2 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned2);
             imageBanned3 = (CircledNetworkImageView) view.findViewById(R.id.imageBanned3);
@@ -264,5 +251,4 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             textBanned3 = (TextView) view.findViewById(R.id.textBanned3);
         }
     }
-
 }

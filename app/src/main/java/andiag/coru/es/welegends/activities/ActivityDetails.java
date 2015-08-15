@@ -289,7 +289,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         wTeam.putInt("totalKills", kills);
         wTeam.putInt("totalDeaths", deaths);
         wTeam.putInt("totalAssits", assists);
-        b.putString("queue", match.getQueueType());
 
         b.putBundle("team", wTeam);
 
@@ -342,7 +341,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         lTeam.putInt("totalKills", kills);
         lTeam.putInt("totalDeaths", deaths);
         lTeam.putInt("totalAssits", assists);
-        b.putString("queue", match.getQueueType());
 
         b.putBundle("team", lTeam);
 

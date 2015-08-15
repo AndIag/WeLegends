@@ -30,6 +30,7 @@ import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
         haveTeams       Boolean
             baron       Int
             drake       Int
+            vilemaw     Int  *Solo en 3x3
             haveBans    Boolean
                 0       BannedChampion
                 1       BannedChampion
@@ -158,6 +159,12 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
 
             if (item.getBoolean("haveTeams", false)) {
+                if (item.containsKey("vilemaw")) {
+                    h.textBaron.setText(String.valueOf(item.getInt("vilemaw")));
+                    h.imageBaron.setImageResource(R.drawable.vilemaw);
+                    h.textDragon.setVisibility(View.GONE);
+                    h.imageDragon.setVisibility(View.GONE);
+                }
                 h.textBaron.setText(String.valueOf(item.getInt("baron")));
                 h.textDragon.setText(String.valueOf(item.getInt("drake")));
                 if (isRanked && item.getBoolean("haveBans", false)) {

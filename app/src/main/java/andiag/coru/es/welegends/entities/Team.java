@@ -11,6 +11,7 @@ public class Team implements Serializable {
     private ArrayList<BannedChampion> bans;
     private int baronKills;
     private int dragonKills;
+    private int vilemawKills;
     private boolean firstBaron;
     private boolean firstBlood;
     private boolean firstDragon;
@@ -118,5 +119,29 @@ public class Team implements Serializable {
 
     public void setWinner(boolean winner) {
         this.winner = winner;
+    }
+
+    public int getBaronKills() {
+        return baronKills;
+    }
+
+    public void setBaronKills(int baronKills) {
+        this.baronKills = baronKills;
+    }
+
+    public int getDragonKills() {
+        return dragonKills;
+    }
+
+    public void setDragonKills(int dragonKills) {
+        this.dragonKills = dragonKills;
+    }
+
+    public int getVilemawKills() {
+        return vilemawKills;
+    }
+
+    public void setVilemawKills(int vilemawKills) {
+        this.vilemawKills = vilemawKills;
     }
 }

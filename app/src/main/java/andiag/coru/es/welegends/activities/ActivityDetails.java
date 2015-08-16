@@ -36,7 +36,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
     protected boolean isLoading = false;
     private ActivityDetails thisActivity;
-    private long matchId, summonerId;
+    private long matchId;
     private int principalChampId;
     private boolean isWinner;
     private String region;
@@ -45,6 +45,14 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
     private synchronized void setCreatingTabs(boolean bool) {
         isCreatingTabs = bool;
+    }
+
+    public long getMatchId() {
+        return matchId;
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     @Override
@@ -95,7 +103,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         //super.onSaveInstanceState(outState);
         outState.putLong("matchId", matchId);
         outState.putString("region", region);
-        outState.putLong("summonerId", summonerId);
         outState.putInt("principalChamp", principalChampId);
         outState.putBoolean("isWinner", isWinner);
         outState.putSerializable("match", match);
@@ -106,7 +113,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         if (savedInstanceState != null) {
             matchId = savedInstanceState.getLong("matchId");
             region = savedInstanceState.getString("region");
-            summonerId = savedInstanceState.getLong("summonerId");
             principalChampId = savedInstanceState.getInt("principalChamp");
             isWinner = savedInstanceState.getBoolean("isWinner");
             match = (Match) savedInstanceState.getSerializable("match");
@@ -116,7 +122,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             if (extras != null) {
                 matchId = extras.getLong("matchId");
                 region = extras.getString("region");
-                summonerId = extras.getLong("summonerId");
                 principalChampId = extras.getInt("principalChamp");
                 isWinner = extras.getBoolean("isWinner");
                 getMatchDetails();

@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
@@ -217,6 +219,21 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
         public VHItem(View itemView) {
             super(itemView);
             this.v = itemView;
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ActivityDetails.class);
+                    Participant participant = (Participant) getItem(getAdapterPosition()).getSerializable("participant");
+                    if (participant != null) {
+                        i.putExtra("region", ((ActivityDetails) context).getRegion());
+                        i.putExtra("matchId", ((ActivityDetails) context).getMatchId());
+                        i.putExtra("principalChamp", participant.getChampionId());
+                        i.putExtra("isWinner", participant.getStats().isWinner());
+                        context.startActivity(i);
+                        ((Activity) context).finish();
+                    }
+                }
+            });
             textCS = (TextView) v.findViewById(R.id.textCS);
             textKDA = (TextView) v.findViewById(R.id.textKDA);
             textGold = (TextView) v.findViewById(R.id.textGold);

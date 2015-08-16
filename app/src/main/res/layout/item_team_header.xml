@@ -26,7 +26,7 @@
             android:id="@+id/imageBanned1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/default_champion" />
+            android:src="@drawable/default_champion_header" />
 
         <TextView
             android:id="@+id/textBanned1"
@@ -49,7 +49,7 @@
             android:layout_marginLeft="50dp"
             android:layout_toEndOf="@+id/imageBanned1"
             android:layout_toRightOf="@+id/imageBanned1"
-            android:src="@drawable/default_champion" />
+            android:src="@drawable/default_champion_header" />
 
         <TextView
             android:id="@+id/textBanned2"
@@ -73,7 +73,7 @@
             android:layout_toEndOf="@+id/imageBanned2"
             android:layout_toRightOf="@+id/imageBanned2"
             android:layout_weight="1"
-            android:src="@drawable/default_champion" />
+            android:src="@drawable/default_champion_header" />
 
         <TextView
             android:id="@+id/textBanned3"

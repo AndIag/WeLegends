@@ -119,7 +119,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                 h.textCS.setText(String.valueOf(participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled()));
                 h.textName.setText(ChampionsHandler.getChampName(p.getChampionId()));
 
-                h.imageChamp.setErrorImageResId(R.drawable.default_champion);
+                h.imageChamp.setErrorImageResId(R.drawable.default_champion_error);
                 h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
                 h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                                 + ChampionsHandler.getServerVersion((Activity) context)
@@ -181,7 +181,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
             h.textBanned1.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
-            h.imageBanned1.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned1.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned1.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned1.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)
@@ -190,7 +190,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 4 || bannedChampion.getPickTurn() == 3)) {
             h.textBanned2.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
-            h.imageBanned2.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned2.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned2.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned2.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)
@@ -199,7 +199,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 6 || bannedChampion.getPickTurn() == 5)) {
             h.textBanned3.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
-            h.imageBanned3.setErrorImageResId(R.drawable.default_champion);
+            h.imageBanned3.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned3.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned3.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)

@@ -141,7 +141,7 @@ public class ActivityChampionStatsDetails extends Activity {
         death = stats.getFloat("death");
         assist = stats.getFloat("assist");
 
-        imageView.setErrorImageResId(R.drawable.default_champion);
+        imageView.setErrorImageResId(R.drawable.default_champion_error);
         imageView.setDefaultImageResId(R.drawable.default_champion);
         imageView.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + stats.getLong("summonerProfileId"), imageLoader);
 

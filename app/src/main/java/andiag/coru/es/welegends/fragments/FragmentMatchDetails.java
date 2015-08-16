@@ -94,7 +94,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         textGold.setText(String.format("%.1f", ((float) data.getLong("gold")) / 1000) + "k");
         textGold.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.GOLD, data.getLong("gold"))));
 
-        imageChampion.setErrorImageResId(R.drawable.default_champion);
+        imageChampion.setErrorImageResId(R.drawable.default_champion_error);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
         imageChampion.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                         + ChampionsHandler.getServerVersion(getActivity())
@@ -251,7 +251,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             case 5:
                 return R.drawable.role_assassin;
             default:
-                return R.drawable.default_champion;
+                return R.drawable.default_champion_header;
         }
     }
 

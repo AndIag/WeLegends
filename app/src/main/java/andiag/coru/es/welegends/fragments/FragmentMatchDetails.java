@@ -251,7 +251,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             case 5:
                 return R.drawable.role_assassin;
             default:
-                return R.drawable.default_champion_header;
+                return R.drawable.default_champion_error;
         }
     }
 

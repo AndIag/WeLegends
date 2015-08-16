@@ -65,42 +65,42 @@ android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem2"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem3"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem4"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem5"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/imageItem6"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/default_champion_header" />
+                android:src="@drawable/default_champion" />
 
         </LinearLayout>
 

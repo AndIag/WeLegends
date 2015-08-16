@@ -278,7 +278,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                     data.putInt("matchType", android.R.drawable.ic_menu_compass);
                 }
                 if (g.getSubType().contains("BOT")) {
-                    data.putInt("matchType", android.R.drawable.arrow_up_float);
+                    data.putInt("matchType", R.drawable.bot);
                 }
                 bundles.add(data);
             }

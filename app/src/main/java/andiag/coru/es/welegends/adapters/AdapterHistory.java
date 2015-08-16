@@ -80,7 +80,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vMap.setText(bundle.getInt("mapName"));
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
-        holder.vImageChamp.setErrorImageResId(R.drawable.default_champion);
+        holder.vImageChamp.setErrorImageResId(R.drawable.default_champion_error);
         holder.vImageChamp.setDefaultImageResId(R.drawable.default_champion);
         holder.vImageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                         + ChampionsHandler.getServerVersion((Activity) context)

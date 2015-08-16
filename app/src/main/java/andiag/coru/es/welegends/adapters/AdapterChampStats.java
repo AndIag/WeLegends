@@ -119,7 +119,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
             h.textGold.setText(String.format("%.1f", item.getFloat("gold") / (totalGames * 1000)) + "k");
 
             h.imageChamp.setErrorImageResId(R.drawable.default_champion);
-            h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
+            h.imageChamp.setDefaultImageResId(R.drawable.default_champion_error);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
                             + ChampionsHandler.getServerVersion((Activity) context)
                             + "/img/champion/" + item.getString("key") + ".png",
@@ -133,11 +133,12 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
                     + "/" + String.format("%.1f", death / totalGames)
                     + "/" + String.format("%.1f", assist / totalGames));
 
-            h.textPercent.setText(String.format("%.2f", (item.getFloat("victories")/totalGames) * 100) + "%");
+            h.textPercent.setText(String.format("%.2f", (item.getFloat("victories") / totalGames) * 100) + "%");
 
             String championImg = item.getString("key")+"_1.jpg";
 
-            h.background.setErrorImageResId(R.drawable.gnar_0);
+            h.background.setDefaultImageResId(R.drawable.default_champion_header);
+            h.background.setErrorImageResId(R.drawable.default_champion_header_error);
             h.background.setImageUrl("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,imageLoader);
         }
     }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App, Activityes, Fragments and Dialogs Names -->
+    <string name="app_name">WeLegends</string>
+    <string name="title_activity_activity_summoner">Buscar Invocador</string>
+    <string name="title_activity_activity_details">Estadísticas</string>
+    <string name="title_activity_activity_about">Acerca De</string>
+    <string name="title_activity_champion_stats_details">ActivityChampionStatsDetails</string>
+
+    <!-- Sections -->
+    <string name="section_ranked">CLASIFICATORIA</string>
+    <string name="section_summoner">INVOCADOR</string>
+    <string name="section_history">HISTORIAL</string>
+    <string name="section_champs">ESTADÍSTICAS</string>
+    <string name="title_section_champion">Campeón</string>
+    <string name="title_section_victory_team">Vencedor</string>
+    <string name="title_section_defeat_team">Perdedor</string>
+
+    <!-- SubSections -->
+    <string name="queue_solo">Solo/Duo</string>
+    <string name="queue_team5">Equipo 5vs5</string>
+    <string name="queue_team3">Equipo 3vs3</string>
+    <string name="region_prompt">Seleccione una región: </string>
+
+    <!-- Actions -->
+    <string name="action_settings">Configuración</string>
+    <string name="go">Buscar</string>
+    <string name="action_about">Acerca de</string>
+
+    <!-- Errors -->
+    <string name="timeout">Error Tiempo de Espera</string>
+    <string name="error500">Error de Servidor</string>
+    <string name="error404">No Encontrado</string>
+    <string name="summonerHistoryError">ERROR: Cargando Historial de Invocadores</string>
+    <string name="voidSummonerError">ERROR: Cargando un Invocador NULO</string>
+    <string name="unknowkError">Error Desconocido</string>
+    <string name="networkUnavailable">Red Inalcanzable</string>
+
+    <!-- Messages -->
+    <string name="checkingVersion">Comprobando Versión del Servidor</string>
+    <string name="loadNames">Cargando Campeones</string>
+    <string name="working">Trabajando…</string>
+    <string name="searching_summoner">Buscando Invocador…</string>
+
+    <!-- Map Names -->
+    <string name="rift">Grieta del Invocador</string>
+    <string name="tt">Bosque Retorcido</string>
+    <string name="cs">Cicatriz de Cristal</string>
+    <string name="ha">Abismo de los Lamentos</string>
+    <string name="butcher">Puente del Carnicero</string>
+
+    <!-- Libraries Description -->
+    <string name="volley">Librería asincrona introducida para hacer las conexiones web mucho mas rapidas y fiables sin escribir toneladas de codigo.</string>
+    <string name="gson">Gson es una librería usada para convertir objetos en representaciones JSON y viceversa.</string>
+    <string name="obserbabl_escroll_view">Libreria que permite interactuar con la Barra de Herramientas de Android. Perfecta para implementar vistas para aplicaciones con Material Design.</string>
+    <string name="recyclerview_animators">Librería para añadir animaciones a los RecyclerView facilmente.</string>
+    <string name="smart_tab_layout">ViewPager personalizado que proporciona feedback continuo mientras haces scroll.</string>
+
+    <!-- Other Shit -->
+    <string name="summoner">Invocarod:</string>
+    <string name="hint_summoner">Nombre de Invocador</string>
+    <string name="earnedGold">Oro por minuto:</string>
+    <string name="farmedCs">Minions por minuto:</string>
+    <string name="killingSprees">Mayor racha de asesinatos:</string>
+    <string name="healDone">Curación hecha:</string>
+    <string name="magicDamageDealt">Daño mágico infligido:</string>
+    <string name="physicalDamageDealt">Daño fisico infligido:</string>
+    <string name="totalDamageDealt">Daño total hecho:</string>
+    <string name="totalDamageTaken">Daño total recibido:</string>
+    <string name="level">Nivel</string>
+    <string name="penta">Pentakills</string>
+    <string name="quadra">Asesinatos Quadruples</string>
+    <string name="triple">Asesinatos Triples</string>
+    <string name="doble">Asesinatos Dobles</string>
+    <string name="single">Asesinatos</string>
+    <string name="turrets">Torretas destruidas</string>
+    <string name="average_damage_dealt">Daño hecho</string>
+    <string name="average_damage_taken">Daño recibido</string>
+    <string name="victory_team">Ganador</string>
+    <string name="defeat_team">Perdedor</string>
+
+    <!-- Stats -->
+    <string name="stat_perfect">Perfecto</string>
+    <string name="stat_good">Bueno</string>
+    <string name="stat_regular">Regular</string>
+    <string name="stat_bad">Malo</string>
+    <string name="jungle">Jungla</string>
+    <string name="mid">Mid</string>
+    <string name="top">Top</string>
+    <string name="carry">Carry</string>
+    <string name="support">Support</string>
+    <string name="bot">Bot</string>
+
+</resources>

@@ -124,8 +124,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         setItemImage(imgIt6, data.getLong("item5"));
 
         float minDuration = ((float) data.getLong("duration")) / 60;
-        textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration) + "g/min");
-        textCsPerMin.setText(String.format("%.1f", ((float) data.getLong("cs")) / minDuration) + "cs/min");
+        textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration));
+        textCsPerMin.setText(String.format("%.1f", ((float) data.getLong("cs")) / minDuration));
         textDamageTaken.setText(String.valueOf(data.getLong("damageTaken")));
         textDamageDealt.setText(String.valueOf(data.getLong("damageDealt")));
         textHeal.setText(String.valueOf(data.getLong("healDone")));

@@ -229,6 +229,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                         i.putExtra("matchId", ((ActivityDetails) context).getMatchId());
                         i.putExtra("principalChamp", participant.getChampionId());
                         i.putExtra("isWinner", participant.getStats().isWinner());
+                        i.putExtra("match", ((ActivityDetails) context).getMatch());
                         context.startActivity(i);
                         ((Activity) context).finish();
                     }

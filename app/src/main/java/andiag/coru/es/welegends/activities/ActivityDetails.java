@@ -55,6 +55,10 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return region;
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
     @Override
     protected void createTabs() {
         if (!isCreatingTabs) {
@@ -124,7 +128,12 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 region = extras.getString("region");
                 principalChampId = extras.getInt("principalChamp");
                 isWinner = extras.getBoolean("isWinner");
-                getMatchDetails();
+                if (extras.containsKey("match")) {
+                    match = (Match) extras.getSerializable("match");
+                    notifyFragments();
+                } else {
+                    getMatchDetails();
+                }
             }
         }
     }

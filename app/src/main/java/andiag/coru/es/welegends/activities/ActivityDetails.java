@@ -215,6 +215,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         if (participant != null) {
             b = new Bundle();
             participantStats = participant.getStats();
+            b.putString("version", match.getMatchVersion());
             b.putInt("championId", participant.getChampionId());
             b.putString("role", participant.getTimeline().getRole());
             b.putString("lane", participant.getTimeline().getLane());

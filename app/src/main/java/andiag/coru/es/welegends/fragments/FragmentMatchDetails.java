@@ -21,6 +21,7 @@ import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
+            String  "version"
             Int     "championId"
             Long    "duration"
             String  "role"
@@ -55,6 +56,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     private ImageView imageRole;
     private Bundle data;
     private ImageLoader imageLoader;
+    private String version;
 
     public FragmentMatchDetails() {
         // Required empty public constructor
@@ -75,6 +77,18 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     }
 
     private void setDataOnView() {
+        String badVersion = data.getString("version");
+        if (badVersion != null) {
+            String[] parts = badVersion.split("\\.");
+            if (parts.length >= 2) {
+                version = parts[0] + "." + parts[1] + ".1";
+            } else {
+                version = ChampionsHandler.getServerVersion(getActivity());
+            }
+        } else {
+            version = ChampionsHandler.getServerVersion(getActivity());
+        }
+
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
         textChampName.setText(ChampionsHandler.getChampName(data.getInt("championId")));
@@ -128,7 +142,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             imgView.setErrorImageResId(R.drawable.default_item_error);
             imgView.setDefaultImageResId(R.drawable.default_item);
             imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
-                            ChampionsHandler.getServerVersion(getActivity()) + "/img/item/" + id + ".png",
+                            version + "/img/item/" + id + ".png",
                     imageLoader);
         }
     }

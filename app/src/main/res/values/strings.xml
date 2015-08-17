@@ -3,9 +3,7 @@
     <!-- App, Activityes, Fragments and Dialogs Names -->
     <string name="app_name">WeLegends</string>
     <string name="title_activity_activity_summoner">Find Summoner</string>
-    <string name="title_activity_match_detail">Match Details</string>
-    <string name="title_activity_activity_main">ActivityMain</string>
-    <string name="title_activity_activity_details">ActivityDetails</string>
+    <string name="title_activity_activity_details">Champion Details</string>
     <string name="title_activity_activity_about">About</string>
     <string name="title_activity_champion_stats_details">ActivityChampionStatsDetails</string>
 

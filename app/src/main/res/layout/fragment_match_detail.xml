@@ -35,7 +35,6 @@ android:layout_height="match_parent"
             android:layout_below="@id/imageChampion"
             android:background="@android:color/black"
             android:gravity="center"
-            android:text="Ekko"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
 
@@ -478,8 +477,8 @@ android:layout_height="match_parent"
             android:layout_alignRight="@+id/linearNames"
             android:layout_alignEnd="@+id/linearNames"
             android:src="@drawable/role_support"
-            android:layout_toRightOf="@+id/imageChampion"
-            android:layout_toEndOf="@+id/imageChampion" />
+            android:layout_toEndOf="@+id/imageSpell1"
+            android:layout_toRightOf="@+id/imageSpell1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -488,10 +487,11 @@ android:layout_height="match_parent"
             android:id="@+id/textRole"
             android:gravity="center"
             android:layout_below="@+id/imageRole"
-            android:layout_toRightOf="@+id/imageChampion"
             android:layout_above="@+id/linearNames"
             android:layout_alignRight="@+id/linearNames"
-            android:layout_alignEnd="@+id/linearNames" />
+            android:layout_alignEnd="@+id/linearNames"
+            android:layout_toRightOf="@+id/imageSpell2"
+            android:layout_toEndOf="@+id/imageSpell2" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -559,6 +559,25 @@ android:layout_height="match_parent"
                 android:text="@string/stat_bad" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageSpell1"
+            android:layout_alignTop="@+id/imageRole"
+            android:layout_toRightOf="@+id/imageChampion"
+            android:layout_toEndOf="@+id/imageChampion"
+            android:layout_marginLeft="5dp" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageSpell2"
+            android:layout_below="@+id/imageSpell1"
+            android:layout_toRightOf="@+id/imageChampion"
+            android:layout_toEndOf="@+id/imageChampion"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp" />
 
     </RelativeLayout>
 

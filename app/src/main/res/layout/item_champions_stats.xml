@@ -39,7 +39,6 @@
             android:layout_marginLeft="20dp"
             android:layout_toEndOf="@+id/imageView6"
             android:layout_toRightOf="@+id/imageView6"
-            android:text="24/7/48"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -49,7 +48,6 @@
             android:layout_alignLeft="@+id/textKDA"
             android:layout_alignStart="@+id/textKDA"
             android:layout_centerVertical="true"
-            android:text="30/min"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -60,7 +58,6 @@
             android:layout_alignStart="@+id/textGold"
             android:layout_alignTop="@+id/imageView8"
             android:layout_marginTop="5dp"
-            android:text="7/min"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
@@ -124,7 +121,6 @@
             android:layout_alignTop="@+id/textKDA"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:text="30"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -136,7 +132,6 @@
             android:layout_alignStart="@+id/textV"
             android:layout_alignTop="@+id/imageView10"
             android:gravity="center"
-            android:text="23"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </RelativeLayout>

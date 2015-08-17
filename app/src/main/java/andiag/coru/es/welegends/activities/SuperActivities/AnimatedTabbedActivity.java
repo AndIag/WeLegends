@@ -25,7 +25,6 @@ import com.nineoldandroids.view.ViewHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.utils.ViewServer;
 
 /**
  * Created by Iago on 12/07/2015.
@@ -177,7 +176,6 @@ public class AnimatedTabbedActivity extends TabbedActivity implements Observable
         mInterceptionLayout = (TouchInterceptionFrameLayout) findViewById(R.id.container);
         mInterceptionLayout.setScrollInterceptionListener(mInterceptionListener);
 
-        ViewServer.get(this).addWindow(this);
     }
 
     protected int getActionBarSize() {

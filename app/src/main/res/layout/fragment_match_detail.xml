@@ -177,7 +177,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="15"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -186,7 +185,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="5"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -195,7 +193,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="10"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -204,7 +201,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="5"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -213,7 +209,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="266"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -222,7 +217,6 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="16.5k"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -476,7 +470,6 @@ android:layout_height="match_parent"
             android:layout_alignTop="@+id/imageChampion"
             android:layout_alignRight="@+id/linearNames"
             android:layout_alignEnd="@+id/linearNames"
-            android:src="@drawable/role_support"
             android:layout_toEndOf="@+id/imageSpell1"
             android:layout_toRightOf="@+id/imageSpell1" />
 

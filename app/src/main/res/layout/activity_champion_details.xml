@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Jinx"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primary" />
 
@@ -50,8 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center"
-            android:text="15" />
+            android:gravity="center" />
 
         <TextView
             android:layout_width="0dp"
@@ -65,8 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center"
-            android:text="3" />
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="0dp"
@@ -80,8 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center"
-            android:text="12" />
+            android:gravity="center" />
 
         <TextView
             android:layout_width="0dp"
@@ -95,8 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="center"
-            android:text="5.12" />
+            android:gravity="center"/>
     </LinearLayout>
 
     <ImageView
@@ -115,8 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView14"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_toRightOf="@+id/imageView14"
-        android:text="20k" />
+        android:layout_toRightOf="@+id/imageView14" />
 
     <ImageView
         android:id="@+id/imageView15"
@@ -136,8 +130,7 @@
         android:layout_alignBottom="@+id/imageView15"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@+id/imageView15"
-        android:layout_toRightOf="@+id/imageView15"
-        android:text="250cs" />
+        android:layout_toRightOf="@+id/imageView15" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
@@ -388,7 +381,6 @@
         android:layout_alignStart="@+id/imageView14"
         android:layout_below="@+id/imageView14"
         android:gravity="center"
-        android:text="48%"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@dimen/abc_text_size_headline_material"
         android:textStyle="bold" />

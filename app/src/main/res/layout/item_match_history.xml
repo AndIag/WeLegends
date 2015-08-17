@@ -155,7 +155,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="SUMMONER RIFT"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/button_text" />
 

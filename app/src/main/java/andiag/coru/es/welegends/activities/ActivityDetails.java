@@ -28,7 +28,6 @@ import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.fragments.NotifycableFragment;
 import andiag.coru.es.welegends.utils.MyNetworkError;
-import andiag.coru.es.welegends.utils.ViewServer;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
 
@@ -161,13 +160,11 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ViewServer.get(this).setFocusedWindow(this);
     }
 
     @Override

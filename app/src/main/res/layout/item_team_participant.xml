@@ -52,7 +52,6 @@
             android:id="@+id/textKDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24/7/48"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:gravity="center_vertical"
             android:layout_alignTop="@+id/imageView6"
@@ -68,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textKDA"
             android:layout_alignStart="@+id/textKDA"
-            android:text="30/min"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_alignTop="@+id/imageView7"
             android:layout_alignBottom="@+id/imageView7"
@@ -82,7 +80,6 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textGold"
             android:layout_alignStart="@+id/textGold"
-            android:text="7/min"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_alignTop="@+id/imageView8"
             android:layout_alignBottom="@+id/imageView8"
@@ -122,14 +119,12 @@
             android:id="@+id/imageSpell1"
             android:layout_alignTop="@+id/imgChamp"
             android:layout_toRightOf="@+id/imgChamp"
-            android:layout_toEndOf="@+id/imgChamp"
-            android:src="@drawable/flash" />
+            android:layout_toEndOf="@+id/imgChamp" />
 
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:id="@+id/imageSpell2"
-            android:src="@drawable/heal"
             android:layout_alignBottom="@+id/imgChamp"
             android:layout_alignLeft="@+id/imageSpell1"
             android:layout_alignStart="@+id/imageSpell1" />

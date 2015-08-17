@@ -14,7 +14,6 @@ import andiag.coru.es.welegends.fragments.FragmentChampStats;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
 import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
 import andiag.coru.es.welegends.fragments.FragmentRankeds;
-import andiag.coru.es.welegends.utils.ViewServer;
 
 public class ActivityMain extends AnimatedTabbedActivity {
 
@@ -157,13 +156,11 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ViewServer.get(this).setFocusedWindow(this);
     }
 
     @Override

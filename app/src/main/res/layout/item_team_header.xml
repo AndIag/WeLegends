@@ -9,7 +9,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="Victory Team"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/winDarker" />
 
@@ -118,7 +117,6 @@
         android:layout_toEndOf="@+id/imageBaron"
         android:layout_toRightOf="@+id/imageBaron"
         android:gravity="center"
-        android:text="2"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -131,7 +129,6 @@
         android:layout_toLeftOf="@+id/imageDragon"
         android:layout_toStartOf="@+id/imageDragon"
         android:gravity="center"
-        android:text="2"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -140,7 +137,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textDragon"
         android:layout_centerHorizontal="true"
-        android:text="68/25/36"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

@@ -326,7 +326,8 @@
                 android:padding="3dip"
                 android:text="@string/average_damage_dealt"
                 android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:id="@+id/" />
 
             <TextView
                 android:id="@+id/textDamageDealt"

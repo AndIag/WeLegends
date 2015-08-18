@@ -33,7 +33,6 @@ import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
 import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.entities.utils.Item;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import andiag.coru.es.welegends.utils.static_data.APIHandler;
@@ -284,7 +283,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private Bundle getProfileBundle(){
-        if(activityMain==null) return null;
+        if(!isAdded()) return null;
         Bundle b = new Bundle();
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());

@@ -103,9 +103,11 @@ public abstract class ChampionsHandler {
     }
 
     public static String getServerVersion(Activity activity) {
-        settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
-        if (settings != null)
-            return settings.getString("version", "0");
+        if(activity!=null) {
+            settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
+            if (settings != null)
+                return settings.getString("version", "0");
+        }
         return "5.15.1";
     }
 

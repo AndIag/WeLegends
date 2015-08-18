@@ -1,6 +1,5 @@
 package andiag.coru.es.welegends.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -121,7 +120,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
             h.imageChamp.setErrorImageResId(R.drawable.default_champion);
             h.imageChamp.setDefaultImageResId(R.drawable.default_champion_error);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + ChampionsHandler.getServerVersion()
                             + "/img/champion/" + item.getString("key") + ".png",
                     imageLoader);
         } else if (holder instanceof VHHeader) {

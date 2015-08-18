@@ -23,9 +23,6 @@ public abstract class ChampionsHandler {
     private static ChampionListDto champions;
     private static SharedPreferences settings;
 
-    private static ContextWrapper cw;
-    private static File directory;
-
     public static ChampionListDto getChampions() {
         return champions;
     }
@@ -102,11 +99,9 @@ public abstract class ChampionsHandler {
 
     }
 
-    public static String getServerVersion(Activity activity) {
-        if(activity!=null) {
-            settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
-            if (settings != null)
-                return settings.getString("version", "0");
+    public static String getServerVersion() {
+        if(champions!=null && champions.getVersion()!=null){
+            return champions.getVersion();
         }
         return "5.15.1";
     }

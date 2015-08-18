@@ -1,6 +1,5 @@
 package andiag.coru.es.welegends.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,7 +82,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vImageChamp.setErrorImageResId(R.drawable.default_champion_error);
         holder.vImageChamp.setDefaultImageResId(R.drawable.default_champion);
         holder.vImageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + ChampionsHandler.getServerVersion((Activity) context)
+                        + ChampionsHandler.getServerVersion()
                         + "/img/champion/" + bundle.getString("champKey") + ".png",
                 imageLoader);
 

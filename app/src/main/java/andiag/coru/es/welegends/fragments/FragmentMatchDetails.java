@@ -85,10 +85,10 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             if (parts.length >= 2) {
                 version = parts[0] + "." + parts[1] + ".1";
             } else {
-                version = ChampionsHandler.getServerVersion(getActivity());
+                version = ChampionsHandler.getServerVersion();
             }
         } else {
-            version = ChampionsHandler.getServerVersion(getActivity());
+            version = ChampionsHandler.getServerVersion();
         }
 
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
@@ -113,7 +113,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         imageChampion.setErrorImageResId(R.drawable.default_champion_error);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
         imageChampion.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + ChampionsHandler.getServerVersion(getActivity())
+                        + ChampionsHandler.getServerVersion()
                         + "/img/champion/" + ChampionsHandler.getChampKey(data.getInt("championId")) + ".png",
                 imageLoader);
 

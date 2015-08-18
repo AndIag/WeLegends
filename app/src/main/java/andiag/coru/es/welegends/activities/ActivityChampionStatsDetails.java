@@ -75,7 +75,7 @@ public class ActivityChampionStatsDetails extends Activity {
         assist = stats.getFloat("assist");
 
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                + ChampionsHandler.getServerVersion(this)
+                + ChampionsHandler.getServerVersion()
                 + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
 
         tname.setText(stats.getString("name"));

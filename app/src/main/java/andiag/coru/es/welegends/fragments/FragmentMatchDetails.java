@@ -70,9 +70,10 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     @Override
     public void notifyFragment() {
         data = activityMain.getData(0);
-        if (data != null) {
+        if (isAdded() && data != null) {
             setDataOnView();
         } else {
+            if (isAdded())
             Toast.makeText(activityMain, getString(R.string.unknowkError), Toast.LENGTH_LONG).show();
         }
     }

@@ -399,7 +399,8 @@
         android:layout_below="@id/tableLayout2"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_alignParentLeft="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
 
         <Button
             android:layout_width="0dp"

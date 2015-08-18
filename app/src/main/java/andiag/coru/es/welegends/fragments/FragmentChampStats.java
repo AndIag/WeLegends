@@ -37,7 +37,7 @@ import andiag.coru.es.welegends.adapters.AdapterChampStats;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
@@ -162,12 +162,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
         final Gson gson = new Gson();
         changeRefreshingValue(true);
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(activityMain);
-        }
-
-        request = handler.getServer() + region + handler.getStats() + summoner_id;
+        request = API.getServer() + region + API.getStats() + summoner_id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

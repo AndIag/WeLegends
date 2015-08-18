@@ -29,7 +29,7 @@ import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.fragments.NotifycableFragment;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 
 public class ActivityDetails extends AnimatedTabbedActivity {
 
@@ -410,12 +410,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
         final Gson gson = new Gson();
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(this);
-        }
-
-        String request = handler.getServer() + region.toLowerCase() + handler.getMatch() + matchId;
+        String request = API.getServer() + region.toLowerCase() + API.getMatch() + matchId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

@@ -16,7 +16,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 
 /**
  * Created by Andy on 07/07/2015.
@@ -26,13 +26,10 @@ public class AdapterSummoner extends BaseAdapter {
     private ArrayList<SummonerHistoryDto> summoners = new ArrayList<>();
     private LayoutInflater inflater;
     private ImageLoader imageLoader;
-    private APIHandler apiHandler;
-
 
     public AdapterSummoner(ActivitySummoner context) {
         inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
-        apiHandler = APIHandler.getInstance(context);
     }
 
     public void updateSummoners(ArrayList<SummonerHistoryDto> summoners) {
@@ -65,7 +62,7 @@ public class AdapterSummoner extends BaseAdapter {
         CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);
         networkImg.setErrorImageResId(R.drawable.default_champion_error);
         networkImg.setDefaultImageResId(R.drawable.default_champion);
-        networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getSummoner().getProfileIconId(), imageLoader);
+        networkImg.setImageUrl(API.getServer() + API.getProfileicon() + summoner.getSummoner().getProfileIconId(), imageLoader);
 
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 

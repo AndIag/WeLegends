@@ -35,7 +35,7 @@ import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
@@ -48,7 +48,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private final Gson gson = new Gson();
     private View rootView;
     private ImageLoader imageLoader;
-    private APIHandler apiHandler;
     private AdapterPlayerStats adapter;
     private ScaleInAnimationAdapter scaleAdapter;
     private ObservableRecyclerView recyclerView;
@@ -62,7 +61,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
-        apiHandler = APIHandler.getInstance();
     }
 
     public static FragmentPlayerStats newInstance(String region, Summoner summoner) {
@@ -138,12 +136,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (apiHandler == null) {
-            apiHandler = APIHandler.getInstance();
-            if (apiHandler == null) {
-                apiHandler = APIHandler.getInstance(activityMain);
-            }
-        }
         if (imageLoader == null) {
             imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
         }
@@ -174,7 +166,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
         if (summoner != null) {
-            //networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId(), imageLoader);
+            //networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getProfileicon() + summoner.getProfileIconId(), imageLoader);
             //txtName.setText(summoner.getName());
             //txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
 
@@ -288,7 +280,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());
         b.putString("server", region.toUpperCase());
-        b.putString("url",apiHandler.getServer() + apiHandler.getIcon() + summoner.getProfileIconId());
+        b.putString("url", API.getServer() + API.getProfileicon() + summoner.getProfileIconId());
         b.putInt("type", AdapterPlayerStats.TYPE_HEADER);
         return b;
     }
@@ -318,12 +310,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(activityMain);
-        }
-
-        request = handler.getServer() + region.toLowerCase() + handler.getLeagues() + summoner.getId();
+        request = API.getServer() + region.toLowerCase() + API.getLeagues() + summoner.getId();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

@@ -41,7 +41,7 @@ import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -228,12 +228,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(activityMain);
-        }
-
-        request = handler.getServer() + region.toLowerCase() + handler.getMatchHistory() + summoner_id + "/" + BEGININDEX + "/" + ENDINDEX;
+        request = API.getServer() + region.toLowerCase() + API.getMatchHistory() + summoner_id + "/" + BEGININDEX + "/" + ENDINDEX;
         incrementIndexes();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,

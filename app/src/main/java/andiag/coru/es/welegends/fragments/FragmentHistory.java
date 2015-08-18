@@ -36,7 +36,7 @@ import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -179,12 +179,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(activityMain);
-        }
-
-        request = handler.getServer() + region + handler.getRecent_games() + summoner_id;
+        request = API.getServer() + region + API.getRecentGames() + summoner_id;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

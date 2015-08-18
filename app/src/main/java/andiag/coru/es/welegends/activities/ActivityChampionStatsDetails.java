@@ -15,7 +15,7 @@ import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 
 public class ActivityChampionStatsDetails extends Activity {
 
@@ -115,8 +115,6 @@ public class ActivityChampionStatsDetails extends Activity {
 
         isHeader = true;
 
-        APIHandler apiHandler = APIHandler.getInstance(this);
-
         CircledNetworkImageView imageView = (CircledNetworkImageView) findViewById(R.id.imageView);
         TextView tname = (TextView) findViewById(R.id.textChamp);
         TextView tkills = (TextView) findViewById(R.id.textKills);
@@ -145,7 +143,7 @@ public class ActivityChampionStatsDetails extends Activity {
 
         imageView.setErrorImageResId(R.drawable.default_champion_error);
         imageView.setDefaultImageResId(R.drawable.default_champion);
-        imageView.setImageUrl(apiHandler.getServer() + apiHandler.getIcon() + stats.getLong("summonerProfileId"), imageLoader);
+        imageView.setImageUrl(API.getServer() + API.getProfileicon() + stats.getLong("summonerProfileId"), imageLoader);
 
         tname.setText(stats.getString("summonerName"));
 

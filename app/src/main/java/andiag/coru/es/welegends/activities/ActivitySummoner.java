@@ -38,7 +38,7 @@ import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.history.HistoryHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
@@ -216,12 +216,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         final Gson gson = new Gson();
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(this);
-        }
-
-        String url = handler.getServer() + region.toLowerCase() + handler.getSummoner() + summonerName;
+        String url = API.getServer() + region.toLowerCase() + API.getSummoner() + summonerName;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {

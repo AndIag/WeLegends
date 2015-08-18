@@ -1,5 +1,7 @@
 package andiag.coru.es.welegends.utils.static_data;
 
+import android.app.Activity;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.DefaultHashMap;
 

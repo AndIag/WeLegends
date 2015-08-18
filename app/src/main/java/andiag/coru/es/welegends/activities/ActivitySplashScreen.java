@@ -31,7 +31,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.APIHandler;
+import andiag.coru.es.welegends.utils.static_data.API;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -53,7 +53,6 @@ public class ActivitySplashScreen extends Activity {
         progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
         textView = (TextView) this.findViewById(R.id.loadingText);
 
-        APIHandler.getInstance(this);
         activity = this;
 
         getVersion();
@@ -86,12 +85,7 @@ public class ActivitySplashScreen extends Activity {
     private void getVersion() {
         final Gson gson = new Gson();
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(this);
-        }
-
-        request = handler.getServer() + handler.getVersions();
+        request = API.getServer() + API.getVersions();
 
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.checkingVersion));
@@ -134,12 +128,7 @@ public class ActivitySplashScreen extends Activity {
     private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
-        APIHandler handler = APIHandler.getInstance();
-        if (handler == null) {
-            handler = APIHandler.getInstance(this);
-        }
-
-        request = handler.getServer() + handler.getChampions();
+        request = API.getServer() + API.getChampions();
 
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.loadNames));

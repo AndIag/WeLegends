@@ -29,7 +29,7 @@
     <string name="farmedCs">Minions per minuto:</string>
     <string name="gson">GSON è una library utilizzata per convertire gli oggetti alle rappresentazioni JSON e viceversa.</string>
     <string name="ha">Abisso ululante</string>
-    <string name="hint_summoner">Nome dell'evocatore</string>
+    <string name="hint_summoner">Nome dell\'evocatore</string>
     <string name="jungle">Giungla</string>
     <string name="killingSprees">Serie più lunga di uccisioni:</string>
     <string name="level">Livello</string>
@@ -53,7 +53,7 @@
     <string name="stat_regular">Regolare</string>
     <string name="stat_perfect">Perfetto</string>
     <string name="single">Omicidi</string>
-    <string name="smart_tab_layout">Un ViewPager Tab Strip che vi offre un modo semplice per personalizzare l'aspetto.</string>
+    <string name="smart_tab_layout">Un ViewPager Tab Strip che vi offre un modo semplice per personalizzare l\'aspetto.</string>
     <string name="summonerHistoryError">ERRORE: Caricando partite</string>
     <string name="timeout">Timeout Error</string>
     <string name="title_activity_champion_stats_details">Dettagli campioni</string>

@@ -247,7 +247,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                                 new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         } catch (JSONException e) {
-                            activityMain.setUnranked();
+                            if(matchesHistoryList==null || matchesHistoryList.size()<=0) {
+                                activityMain.setUnranked();
+                            }
                             changeRefreshingValue(false);
                         }
                     }

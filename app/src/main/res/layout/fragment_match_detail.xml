@@ -490,13 +490,14 @@ android:layout_height="match_parent"
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
             android:layout_below="@+id/table"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <Button

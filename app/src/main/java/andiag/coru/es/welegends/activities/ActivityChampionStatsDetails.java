@@ -43,7 +43,7 @@ public class ActivityChampionStatsDetails extends Activity {
     * taken             int
     * */
     private ImageLoader imageLoader;
-    private boolean isHeader;
+    private boolean isHeader = false;
 
     private void loadNotHeaderView() {
         setContentView(R.layout.activity_champion_details);
@@ -112,6 +112,8 @@ public class ActivityChampionStatsDetails extends Activity {
 
     private void loadHeaderView() {
         setContentView(R.layout.activity_champion_details_header);
+
+        isHeader = true;
 
         APIHandler apiHandler = APIHandler.getInstance(this);
 
@@ -193,13 +195,15 @@ public class ActivityChampionStatsDetails extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-            outState.putBundle("champData", stats);
+        super.onSaveInstanceState(outState);
+        outState.putBundle("champData", stats);
+        outState.putBoolean("isHeader", isHeader);
     }
 
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             stats = savedInstanceState.getBundle("champData");
+            isHeader = savedInstanceState.getBoolean("isHeader", false);
         }else{
             Bundle extras = getIntent().getExtras();
             isHeader = extras.getBoolean("isHeader");

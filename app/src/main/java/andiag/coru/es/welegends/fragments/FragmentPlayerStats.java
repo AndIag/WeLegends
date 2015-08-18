@@ -200,6 +200,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private void setNotLVL30Info() {
         ArrayList<Bundle> stats = new ArrayList<>();
+        if(getProfileBundle()==null){
+            adapter.updateStats(stats);
+            scaleAdapter.notifyDataSetChanged();
+            return;
+        }
         stats.add(getProfileBundle());
 
         League l = new League();
@@ -220,18 +225,19 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         adapter.updateStats(stats);
         scaleAdapter.notifyDataSetChanged();
-        //setListViewHeightBasedOnItems(listView);
     }
 
     private void setInfoInView(){
         ArrayList<Bundle> stats = new ArrayList<>();
-
+        if(getProfileBundle()==null){
+            adapter.updateStats(stats);
+            scaleAdapter.notifyDataSetChanged();
+            return;
+        }
 
         stats.add(getProfileBundle());
 
         int pos5 = -1, pos3 = -1;
-
-        ArrayList<Item> groups = new ArrayList<>();
 
         Bundle index;
         for(League l : leagues){
@@ -278,6 +284,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private Bundle getProfileBundle(){
+        if(activityMain==null) return null;
         Bundle b = new Bundle();
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());

@@ -4,7 +4,7 @@
     <!-- App, Activityes, Fragments and Dialogs Names -->
     <string name="app_name">WeLegends</string>
     <string name="title_activity_activity_summoner">Buscar Invocador</string>
-    <string name="title_activity_activity_details">Estadísticas de campeón</string>
+    <string name="title_activity_activity_details">Detalles de partida</string>
     <string name="title_activity_activity_about">Acerca De</string>
     <string name="title_activity_champion_stats_details">Detalles de campeones</string>
 
@@ -77,7 +77,7 @@
     <string name="turrets">Torretas destruidas</string>
     <string name="average_damage_dealt">Daño hecho</string>
     <string name="average_damage_taken">Daño recibido</string>
-    <string name="victory_team">Ganador</string>
+    <string name="victory_team">Equipo Ganador</string>
     <string name="defeat_team">Equipo Perdedor</string>
 
     <!-- Stats -->

@@ -22,7 +22,7 @@
     <string name="support">Supporto</string>
     <string name="title_activity_activity_about">Informazioni su</string>
     <string name="title_activity_activity_summoner">Cercare Evocatore</string>
-    <string name="title_activity_activity_details">Statistiche dei campioni</string>
+    <string name="title_activity_activity_details">Dettagli partita</string>
     <string name="doble">Doublekills</string>
     <string name="earnedGold">Oro per minuto:</string>
     <string name="error500">Errore del Server</string>

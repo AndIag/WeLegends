@@ -215,7 +215,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         public RetrieveDataTask(RecentGamesDto recentGames) {
             this.recentGames = recentGames;
-            dateF = DateFormat.getDateInstance(DateFormat.MEDIUM, activityMain.getResources().getConfiguration().locale);
+            dateF = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,activityMain.getResources().getConfiguration().locale);
         }
 
         @Override

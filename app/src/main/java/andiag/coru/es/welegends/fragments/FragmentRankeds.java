@@ -323,7 +323,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         public RetrieveDataTask(ArrayList<Match> m) {
             this.matches = m;
-            dateF = DateFormat.getDateInstance(DateFormat.MEDIUM, activityMain.getResources().getConfiguration().locale);
+            dateF = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
         }
 
         @Override

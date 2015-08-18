@@ -18,10 +18,11 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageBackground"
-            android:layout_width="match_parent"
+            android:layout_width="450dp"
             android:layout_height="200dp"
+            android:scaleType="fitCenter"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"/>
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,14 +30,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textVictories"
             android:textColor="@color/win"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/textGlobalKDA"
-            android:layout_toStartOf="@+id/textGlobalKDA"
-            android:layout_below="@+id/imageBackground"
-            android:gravity="left|center_vertical"
-            android:layout_marginLeft="16dp" />
+            android:layout_alignBottom="@+id/imageBackground"
+            android:layout_toLeftOf="@+id/imageBackground"
+            android:layout_toStartOf="@+id/imageBackground"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,14 +44,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textDefeats"
             android:textColor="@color/posT4"
-            android:layout_alignParentBottom="true"
+            android:layout_alignBottom="@+id/textPercent"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/textPercent"
-            android:layout_toEndOf="@+id/textPercent"
-            android:layout_below="@+id/imageBackground"
-            android:gravity="center_vertical|right"
-            android:layout_marginRight="16dp" />
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageBackground"
+            android:layout_toEndOf="@+id/imageBackground"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"

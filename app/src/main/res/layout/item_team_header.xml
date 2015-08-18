@@ -36,7 +36,7 @@
             android:layout_alignRight="@+id/imageBanned1"
             android:layout_below="@id/imageBanned1"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/lose"
             android:textSize="11sp" />
 
         <andiag.coru.es.welegends.utils.CircledNetworkImageView
@@ -58,7 +58,7 @@
             android:layout_alignStart="@+id/imageBanned2"
             android:layout_below="@+id/imageBanned2"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/lose"
             android:textSize="11sp" />
 
         <andiag.coru.es.welegends.utils.CircledNetworkImageView
@@ -81,7 +81,7 @@
             android:layout_alignStart="@+id/imageBanned3"
             android:layout_below="@+id/imageBanned3"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/lose"
             android:textSize="11sp" />
 
     </RelativeLayout>

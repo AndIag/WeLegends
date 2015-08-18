@@ -124,7 +124,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                 h.imageChamp.setErrorImageResId(R.drawable.default_champion_error);
                 h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
                 h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                                + ChampionsHandler.getServerVersion((Activity) context)
+                                + ChampionsHandler.getServerVersion()
                                 + "/img/champion/" + ChampionsHandler.getChampKey(p.getChampionId()) + ".png",
                         imageLoader);
 
@@ -186,7 +186,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.imageBanned1.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned1.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned1.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + ChampionsHandler.getServerVersion()
                             + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
@@ -195,7 +195,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.imageBanned2.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned2.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned2.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + ChampionsHandler.getServerVersion()
                             + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
@@ -204,7 +204,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.imageBanned3.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned3.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned3.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion((Activity) context)
+                            + ChampionsHandler.getServerVersion()
                             + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
@@ -230,6 +230,8 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                         i.putExtra("principalChamp", participant.getChampionId());
                         i.putExtra("isWinner", participant.getStats().isWinner());
                         i.putExtra("match", ((ActivityDetails) context).getMatch());
+                        i.putExtra("prevIsWinner", ((ActivityDetails) context).isWinner());
+                        i.putExtra("prevPrincipalChamp", ((ActivityDetails) context).getPrincipalChampId());
                         context.startActivity(i);
                         ((Activity) context).finish();
                     }

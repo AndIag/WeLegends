@@ -37,7 +37,9 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private ActivityDetails thisActivity;
     private long matchId;
     private int principalChampId;
+    private int previousPrincipalChampId = -1;
     private boolean isWinner;
+    private boolean previousIsWinner;
     private String region;
     private Match match;
     private boolean isCreatingTabs = false;
@@ -56,6 +58,14 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
     public Match getMatch() {
         return match;
+    }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+
+    public int getPrincipalChampId() {
+        return principalChampId;
     }
 
     @Override
@@ -109,6 +119,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         outState.putInt("principalChamp", principalChampId);
         outState.putBoolean("isWinner", isWinner);
         outState.putSerializable("match", match);
+        outState.putBoolean("prevIsWinner", previousIsWinner);
+        outState.putInt("prevPrincipalChamp", previousPrincipalChampId);
     }
 
     //RetrieveData
@@ -119,6 +131,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             principalChampId = savedInstanceState.getInt("principalChamp");
             isWinner = savedInstanceState.getBoolean("isWinner");
             match = (Match) savedInstanceState.getSerializable("match");
+            previousIsWinner = savedInstanceState.getBoolean("prevIsWinner");
+            previousPrincipalChampId = savedInstanceState.getInt("prevPrincipalChamp");
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();
@@ -129,6 +143,8 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 isWinner = extras.getBoolean("isWinner");
                 if (extras.containsKey("match")) {
                     match = (Match) extras.getSerializable("match");
+                    previousIsWinner = extras.getBoolean("prevIsWinner");
+                    previousPrincipalChampId = extras.getInt("prevPrincipalChamp");
                     notifyFragments();
                 } else {
                     getMatchDetails();
@@ -170,6 +186,17 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(previousPrincipalChampId >=0){
+            Intent i = new Intent(this, ActivityDetails.class);
+            i.putExtra("region", region);
+            i.putExtra("matchId", matchId);
+            i.putExtra("principalChamp", previousPrincipalChampId);
+            i.putExtra("isWinner", previousIsWinner);
+            i.putExtra("match", match);
+            i.putExtra("prevIsWinner", true);
+            i.putExtra("prevPrincipalChamp", -1);
+            startActivity(i);
+        }
         this.finish();
     }
 

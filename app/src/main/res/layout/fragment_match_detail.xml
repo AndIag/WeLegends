@@ -46,8 +46,8 @@ android:layout_height="match_parent"
             android:layout_alignLeft="@+id/linearInfo"
             android:layout_alignRight="@+id/linearInfo"
             android:layout_alignStart="@+id/linearInfo"
-            android:layout_below="@id/linearInfo"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_below="@+id/leyLayout"
             android:orientation="horizontal">
 
             <com.android.volley.toolbox.NetworkImageView
@@ -218,6 +218,75 @@ android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/leyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignEnd="@+id/linearInfo"
+            android:layout_alignLeft="@+id/linearInfo"
+            android:layout_alignRight="@+id/linearInfo"
+            android:layout_alignStart="@+id/linearInfo"
+            android:layout_below="@+id/linearInfo"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_perfect" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_perfect" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_good" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_good" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_regular" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_regular" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1"
+                android:background="@color/stats_bad" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="@string/stat_bad" />
+
         </LinearLayout>
 
         <TableLayout
@@ -485,74 +554,6 @@ android:layout_height="match_parent"
             android:layout_alignEnd="@+id/linearNames"
             android:layout_toRightOf="@+id/imageSpell2"
             android:layout_toEndOf="@+id/imageSpell2" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="false"
-            android:layout_below="@+id/table"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1"
-                android:background="@color/stats_perfect" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="2.5"
-                android:gravity="center"
-                android:text="@string/stat_perfect" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1"
-                android:background="@color/stats_good" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="2.5"
-                android:gravity="center"
-                android:text="@string/stat_good" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1"
-                android:background="@color/stats_regular" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="2.5"
-                android:gravity="center"
-                android:text="@string/stat_regular" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="18dp"
-                android:layout_weight="1"
-                android:background="@color/stats_bad" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="2.5"
-                android:gravity="center"
-                android:text="@string/stat_bad" />
-
-        </LinearLayout>
 
         <ImageView
             android:layout_width="35dp"

@@ -21,7 +21,7 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
@@ -82,7 +82,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         holder.vImageChamp.setErrorImageResId(R.drawable.default_champion_error);
         holder.vImageChamp.setDefaultImageResId(R.drawable.default_champion);
         holder.vImageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + ChampionsHandler.getServerVersion()
+                        + Champions.getServerVersion()
                         + "/img/champion/" + bundle.getString("champKey") + ".png",
                 imageLoader);
 

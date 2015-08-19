@@ -28,10 +28,10 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.utils.MyNetworkError;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -97,9 +97,9 @@ public class ActivitySplashScreen extends Activity {
                         ArrayList<String> versions = gson.fromJson(response.toString()
                                 , new TypeToken<ArrayList<String>>() {
                         }.getType());
-                        if (versions != null && versions.get(0).equals(ChampionsHandler.getServerVersion())) {
+                        if (versions != null && versions.get(0).equals(Champions.getServerVersion())) {
                             try {
-                                ChampionsHandler.setChampions(null, activity); //Initialize champions with our static data
+                                Champions.setChampions(null, activity); //Initialize champions with our static data
                                 startActivity();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -138,7 +138,7 @@ public class ActivitySplashScreen extends Activity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            ChampionsHandler.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
+                            Champions.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
                             startActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();

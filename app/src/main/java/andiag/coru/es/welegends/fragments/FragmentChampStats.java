@@ -34,10 +34,10 @@ import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterChampStats;
-import andiag.coru.es.welegends.utils.MyNetworkError;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
@@ -275,8 +275,8 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
                     summonerBundle.putLong("summonerProfileId", activityMain.getSummoner().getProfileIconId());
                 }else{
                     m.putInt("champId", id);
-                    m.putString("key", ChampionsHandler.getChampKey(id));
-                    m.putString("name", ChampionsHandler.getChampName(id));
+                    m.putString("key", Champions.getChampKey(id));
+                    m.putString("name", Champions.getChampName(id));
                     bundles.add(m);
 
                     if ((totalGames) > maxGamesPlayed) {
@@ -287,8 +287,8 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
             }
 
             summonerBundle.putInt("champId", maxUsedChampId);
-            summonerBundle.putString("key", ChampionsHandler.getChampKey(maxUsedChampId));
-            summonerBundle.putString("name", ChampionsHandler.getChampName(maxUsedChampId));
+            summonerBundle.putString("key", Champions.getChampKey(maxUsedChampId));
+            summonerBundle.putString("name", Champions.getChampName(maxUsedChampId));
             bundles.add(0, summonerBundle);
             return bundles;
         }

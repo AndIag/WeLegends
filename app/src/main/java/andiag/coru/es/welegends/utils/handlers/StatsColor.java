@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.utils;
+package andiag.coru.es.welegends.utils.handlers;
 
 import andiag.coru.es.welegends.R;
 

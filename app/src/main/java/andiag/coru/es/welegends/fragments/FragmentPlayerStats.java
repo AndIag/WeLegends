@@ -33,9 +33,9 @@ import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
 import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.MyNetworkError;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**

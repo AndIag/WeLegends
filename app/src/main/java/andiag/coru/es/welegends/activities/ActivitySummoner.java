@@ -35,10 +35,10 @@ import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.MyNetworkError;
-import andiag.coru.es.welegends.utils.history.HistoryHandler;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
+import andiag.coru.es.welegends.utils.handlers.SummonerHistory;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 
@@ -106,7 +106,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         //Cargar el valor del historial de summoners
         try {
-            history = HistoryHandler.getHistory(this);
+            history = SummonerHistory.getHistory(this);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), getString(R.string.summonerHistoryError),
@@ -199,7 +199,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         //Guardar el valor del historial de summoners
         try {
-            HistoryHandler.setHistory(this, history);
+            SummonerHistory.setHistory(this, history);
         } catch (JSONException e) {
             e.printStackTrace();
         }

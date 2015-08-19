@@ -15,8 +15,8 @@ import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
+import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 
 /**
  * Created by Andy on 07/07/2015.

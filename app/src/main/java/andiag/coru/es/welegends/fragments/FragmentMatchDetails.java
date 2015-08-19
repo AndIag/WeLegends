@@ -16,10 +16,10 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
-import andiag.coru.es.welegends.utils.StatsColor;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.Images;
+import andiag.coru.es.welegends.utils.handlers.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /*
             String  "version"
@@ -85,15 +85,15 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             if (parts.length >= 2) {
                 version = parts[0] + "." + parts[1] + ".1";
             } else {
-                version = ChampionsHandler.getServerVersion();
+                version = Champions.getServerVersion();
             }
         } else {
-            version = ChampionsHandler.getServerVersion();
+            version = Champions.getServerVersion();
         }
 
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
-        textChampName.setText(ChampionsHandler.getChampName(data.getInt("championId")));
+        textChampName.setText(Champions.getChampName(data.getInt("championId")));
         textK.setText(String.valueOf(data.getLong("kills")));
         textK.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("kills"))));
         textD.setText(String.valueOf(data.getLong("deaths")));
@@ -113,8 +113,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         imageChampion.setErrorImageResId(R.drawable.default_champion_error);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
         imageChampion.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + ChampionsHandler.getServerVersion()
-                        + "/img/champion/" + ChampionsHandler.getChampKey(data.getInt("championId")) + ".png",
+                        + Champions.getServerVersion()
+                        + "/img/champion/" + Champions.getChampKey(data.getInt("championId")) + ".png",
                 imageLoader);
 
         setItemImage(imgTotem, data.getLong("item6"));
@@ -125,8 +125,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         setItemImage(imgIt5, data.getLong("item4"));
         setItemImage(imgIt6, data.getLong("item5"));
 
-        imageSpell.setImageResource(ImagesHandler.getSpell(data.getInt("spell1")));
-        imageSpell1.setImageResource(ImagesHandler.getSpell(data.getInt("spell2")));
+        imageSpell.setImageResource(Images.getSpell(data.getInt("spell1")));
+        imageSpell1.setImageResource(Images.getSpell(data.getInt("spell2")));
 
         float minDuration = ((float) data.getLong("duration")) / 60;
         textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration));

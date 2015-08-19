@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.utils.static_data;
+package andiag.coru.es.welegends.utils.handlers;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.DefaultHashMap;
@@ -6,7 +6,7 @@ import andiag.coru.es.welegends.utils.DefaultHashMap;
 /**
  * Created by Iago on 25/06/2015.
  */
-public abstract class NamesHandler {
+public abstract class Names {
 
     private static DefaultHashMap<Integer, Integer> mapsNames;
 

@@ -23,10 +23,10 @@ import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
-import andiag.coru.es.welegends.utils.StatsColor;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.Images;
+import andiag.coru.es.welegends.utils.handlers.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
 
 /*
         haveTeams       Boolean
@@ -119,17 +119,17 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                         + participantStats.getAssists());
                 h.textGold.setText(String.format("%.1f", (float) participantStats.getGoldEarned() / 1000) + "k");
                 h.textCS.setText(String.valueOf(participantStats.getMinionsKilled() + participantStats.getNeutralMinionsKilled()));
-                h.textName.setText(ChampionsHandler.getChampName(p.getChampionId()));
+                h.textName.setText(Champions.getChampName(p.getChampionId()));
 
                 h.imageChamp.setErrorImageResId(R.drawable.default_champion_error);
                 h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
                 h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                                + ChampionsHandler.getServerVersion()
-                                + "/img/champion/" + ChampionsHandler.getChampKey(p.getChampionId()) + ".png",
+                                + Champions.getServerVersion()
+                                + "/img/champion/" + Champions.getChampKey(p.getChampionId()) + ".png",
                         imageLoader);
 
-                h.imageSpell1.setImageResource(ImagesHandler.getSpell(p.getSpell1Id()));
-                h.imageSpell2.setImageResource(ImagesHandler.getSpell(p.getSpell2Id()));
+                h.imageSpell1.setImageResource(Images.getSpell(p.getSpell1Id()));
+                h.imageSpell2.setImageResource(Images.getSpell(p.getSpell2Id()));
             }
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
@@ -182,30 +182,30 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
-            h.textBanned1.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.textBanned1.setText(Champions.getChampName(bannedChampion.getChampionId()));
             h.imageBanned1.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned1.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned1.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion()
-                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                            + Champions.getServerVersion()
+                            + "/img/champion/" + Champions.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 4 || bannedChampion.getPickTurn() == 3)) {
-            h.textBanned2.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.textBanned2.setText(Champions.getChampName(bannedChampion.getChampionId()));
             h.imageBanned2.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned2.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned2.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion()
-                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                            + Champions.getServerVersion()
+                            + "/img/champion/" + Champions.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
         if (bannedChampion != null && (bannedChampion.getPickTurn() == 6 || bannedChampion.getPickTurn() == 5)) {
-            h.textBanned3.setText(ChampionsHandler.getChampName(bannedChampion.getChampionId()));
+            h.textBanned3.setText(Champions.getChampName(bannedChampion.getChampionId()));
             h.imageBanned3.setErrorImageResId(R.drawable.default_champion_error);
             h.imageBanned3.setDefaultImageResId(R.drawable.default_champion);
             h.imageBanned3.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion()
-                            + "/img/champion/" + ChampionsHandler.getChampKey(bannedChampion.getChampionId()) + ".png",
+                            + Champions.getServerVersion()
+                            + "/img/champion/" + Champions.getChampKey(bannedChampion.getChampionId()) + ".png",
                     imageLoader);
         }
     }

@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.utils.history;
+package andiag.coru.es.welegends.utils.handlers;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -19,7 +19,7 @@ import andiag.coru.es.welegends.entities.Summoner;
 /**
  * Created by Iago on 26/06/2015.
  */
-public abstract class HistoryHandler {
+public abstract class SummonerHistory {
 
     private static final String HISTORY_FILE_NAME = "History";
     private static final int MAX_SUMMONERS_IN_HISTORY = 5;

@@ -12,10 +12,10 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
-import andiag.coru.es.welegends.utils.StatsColor;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
 
 public class ActivityChampionStatsDetails extends Activity {
 
@@ -75,7 +75,7 @@ public class ActivityChampionStatsDetails extends Activity {
         assist = stats.getFloat("assist");
 
         imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                + ChampionsHandler.getServerVersion()
+                + Champions.getServerVersion()
                 + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
 
         tname.setText(stats.getString("name"));

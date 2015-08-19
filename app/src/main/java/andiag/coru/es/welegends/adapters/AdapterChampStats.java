@@ -18,7 +18,7 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
@@ -120,7 +120,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
             h.imageChamp.setErrorImageResId(R.drawable.default_champion);
             h.imageChamp.setDefaultImageResId(R.drawable.default_champion_error);
             h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + ChampionsHandler.getServerVersion()
+                            + Champions.getServerVersion()
                             + "/img/champion/" + item.getString("key") + ".png",
                     imageLoader);
         } else if (holder instanceof VHHeader) {

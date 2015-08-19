@@ -38,12 +38,12 @@ import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
-import andiag.coru.es.welegends.utils.MyNetworkError;
-import andiag.coru.es.welegends.utils.champions.ChampionsHandler;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.Images;
+import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
+import andiag.coru.es.welegends.utils.handlers.Names;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
-import andiag.coru.es.welegends.utils.static_data.API;
-import andiag.coru.es.welegends.utils.static_data.ImagesHandler;
-import andiag.coru.es.welegends.utils.static_data.NamesHandler;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
@@ -369,11 +369,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data = new Bundle();
                 data.putLong("matchId", m.getMatchId());
                 data.putInt("champId", champId);
-                data.putString("champName", ChampionsHandler.getChampName(champId));
-                data.putString("champKey", ChampionsHandler.getChampKey(champId));
+                data.putString("champName", Champions.getChampName(champId));
+                data.putString("champKey", Champions.getChampKey(champId));
                 data.putInt("mapId", mapid);
-                data.putInt("mapName", NamesHandler.getMapName(mapid));
-                data.putInt("mapImage", ImagesHandler.getMap(mapid));
+                data.putInt("mapName", Names.getMapName(mapid));
+                data.putInt("mapImage", Images.getMap(mapid));
                 data.putLong("kills", kills);
                 data.putLong("death", deaths);
                 data.putLong("assist", assists);

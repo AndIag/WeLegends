@@ -1,6 +1,4 @@
-package andiag.coru.es.welegends.utils;
-
-import android.widget.Toast;
+package andiag.coru.es.welegends.utils.handlers;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.TimeoutError;

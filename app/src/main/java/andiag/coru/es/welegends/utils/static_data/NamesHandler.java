@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.utils.static_data;
 
-import android.app.Activity;
-
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.DefaultHashMap;
 
@@ -27,6 +25,33 @@ public abstract class NamesHandler {
 
     public static Integer getMapName(int id) {
         return mapsNames.get(id);
+    }
+
+    public static String getPlatformId(String region) {
+        switch (region) {
+            case "BR":
+                return "BR1";
+            case "EUNE":
+                return "EUN1";
+            case "EUW":
+                return "EUW1";
+            case "KR":
+                return "KR";
+            case "LAN":
+                return "LA1";
+            case "LAS":
+                return "LA2";
+            case "NA":
+                return "NA1";
+            case "OCE":
+                return "OC1";
+            case "TR":
+                return "TR1";
+            case "RU":
+                return "RU";
+            default:
+                return "Null";
+        }
     }
 
 }

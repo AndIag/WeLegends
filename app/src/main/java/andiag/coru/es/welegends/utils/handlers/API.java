@@ -3,7 +3,7 @@ package andiag.coru.es.welegends.utils.handlers;
 /**
  * Created by Iago on 26/06/2015.
  */
-public class API {
+public abstract class API {
 
     private static final String SERVER = "https://andiag-prod.apigee.net/v1/welegends/";
     private static final String MATCH_HISTORY = "/matches/";

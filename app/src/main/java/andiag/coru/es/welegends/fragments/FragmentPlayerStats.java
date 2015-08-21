@@ -358,8 +358,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void isPlaying() {
-        changeRefreshingValue(true);
-
         String request = API.getWelegendsProxy() + region.toLowerCase() + API.getCurrengGame()
                 + Names.getPlatformId(region) + "/" + summoner.getId();
 
@@ -369,7 +367,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     public void onResponse(JSONObject response) {
                         isPlaying = true;
                         Log.d(summoner.getName(), "PLAYING");
-                        changeRefreshingValue(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -385,7 +382,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 if (isAdded()) {
                     Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 }
-                changeRefreshingValue(false);
             }
         });
 

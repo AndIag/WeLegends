@@ -5,7 +5,8 @@ package andiag.coru.es.welegends.utils.handlers;
  */
 public abstract class API {
 
-    private static final String SERVER = "https://andiag-prod.apigee.net/v1/welegends/";
+    private static final String WELEGENDS_PROXY = "https://andiag-prod.apigee.net/v1/welegends/";
+    private static final String DDRAGON_SERVER = "";
     private static final String MATCH_HISTORY = "/matches/";
     private static final String MATCH = "/match/";
     private static final String SUMMONER = "/summoner/";
@@ -13,11 +14,12 @@ public abstract class API {
     private static final String STATS = "/stats/";
     private static final String LEAGUES = "/leagues/";
     private static final String RECENT_GAMES = "/games/";
+    private static final String CURRENG_GAME = "/current/";
     private static final String CHAMPIONS = "/champion";
     private static final String VERSIONS = "/versions";
 
-    public static String getServer() {
-        return SERVER;
+    public static String getWelegendsProxy() {
+        return WELEGENDS_PROXY;
     }
 
     public static String getMatchHistory() {
@@ -54,5 +56,9 @@ public abstract class API {
 
     public static String getVersions() {
         return VERSIONS;
+    }
+
+    public static String getCurrengGame() {
+        return CURRENG_GAME;
     }
 }

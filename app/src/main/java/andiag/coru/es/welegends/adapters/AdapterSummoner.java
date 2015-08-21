@@ -62,7 +62,7 @@ public class AdapterSummoner extends BaseAdapter {
         CircledNetworkImageView networkImg = (CircledNetworkImageView) view.findViewById(R.id.networkSummImage);
         networkImg.setErrorImageResId(R.drawable.default_champion_error);
         networkImg.setDefaultImageResId(R.drawable.default_champion);
-        networkImg.setImageUrl(API.getServer() + API.getProfileicon() + summoner.getSummoner().getProfileIconId(), imageLoader);
+        networkImg.setImageUrl(API.getWelegendsProxy() + API.getProfileicon() + summoner.getSummoner().getProfileIconId(), imageLoader);
 
         TextView text = (TextView) view.findViewById(R.id.textSumm);
 

@@ -143,7 +143,7 @@ public class ActivityChampionStatsDetails extends Activity {
 
         imageView.setErrorImageResId(R.drawable.default_champion_error);
         imageView.setDefaultImageResId(R.drawable.default_champion);
-        imageView.setImageUrl(API.getServer() + API.getProfileicon() + stats.getLong("summonerProfileId"), imageLoader);
+        imageView.setImageUrl(API.getWelegendsProxy() + API.getProfileicon() + stats.getLong("summonerProfileId"), imageLoader);
 
         tname.setText(stats.getString("summonerName"));
 

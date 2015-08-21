@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
+import andiag.coru.es.welegends.utils.handlers.Names;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
@@ -57,7 +59,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private String region;
 
     private ArrayList<League> leagues = new ArrayList<>();
-    private String request;
+    private boolean isPlaying = false;
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -86,6 +88,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 public void onRefresh() {
                     leagues.clear();
                     getLeagues();
+                    isPlaying();
                 }
             });
         } else {
@@ -104,6 +107,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         outState.putString("region", region);
         outState.putSerializable("summoner", summoner);
         outState.putSerializable("leagues", leagues);
+        outState.putBoolean("isPlaying", isPlaying);
     }
 
     public void onRetrieveInstanceState(Bundle savedInstanceState) {
@@ -116,6 +120,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             leagues = (ArrayList<League>) savedInstanceState.getSerializable("leagues");
             summoner = (Summoner) savedInstanceState.getSerializable("summoner");
             region = savedInstanceState.getString("region");
+            isPlaying = savedInstanceState.getBoolean("isPlaying", false);
         }
     }
 
@@ -142,6 +147,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
             if (leagues.isEmpty()) {
                 getLeagues();
+                isPlaying();
             } else setInfoInView();
         }else{
             setNotLVL30Info();
@@ -166,14 +172,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
 
         if (summoner != null) {
-            //networkImg.setImageUrl(apiHandler.getServer() + apiHandler.getProfileicon() + summoner.getProfileIconId(), imageLoader);
-            //txtName.setText(summoner.getName());
-            //txtLevel.setText(getString(R.string.level)+" "+summoner.getSummonerLevel());
-
             if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
                 if (leagues != null && leagues.size() == 0) {
                     //Tenemos que cargar las ligas
                     getLeagues();
+                    isPlaying();
                 } else {
                     //Ya las teniamos cargadas
                     if (leagues == null) {
@@ -269,7 +272,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private Bundle getDividerBundle(String title){
         Bundle b = new Bundle();
-        b.putString("divider",title);
+        b.putString("divider", title);
         b.putInt("type", AdapterPlayerStats.TYPE_DIVIDER);
         return b;
     }
@@ -280,7 +283,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());
         b.putString("server", region.toUpperCase());
-        b.putString("url", API.getServer() + API.getProfileicon() + summoner.getProfileIconId());
+        b.putString("url", API.getWelegendsProxy() + API.getProfileicon() + summoner.getProfileIconId());
         b.putInt("type", AdapterPlayerStats.TYPE_HEADER);
         return b;
     }
@@ -295,11 +298,11 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         item.putString("losses",Integer.toString(entry.getLosses()));
         item.putString("lp",Integer.toString(entry.getLeaguePoints()));
         item.putString("name",entry.getPlayerOrTeamName());
-        item.putInt("type",AdapterPlayerStats.TYPE_ITEM);
+        item.putInt("type", AdapterPlayerStats.TYPE_ITEM);
 
         String imres = l.getTier() + entry.getDivision();
         int id = activityMain.getResources().getIdentifier(imres.toLowerCase(), "drawable", activityMain.getPackageName());
-        item.putInt("image",id);
+        item.putInt("image", id);
 
         return item;
 
@@ -310,7 +313,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        request = API.getServer() + region.toLowerCase() + API.getLeagues() + summoner.getId();
+        String request = API.getWelegendsProxy() + region.toLowerCase() + API.getLeagues() + summoner.getId();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {
@@ -343,6 +346,43 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     }
                 }
                 if(isAdded()) {
+                    Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                }
+                changeRefreshingValue(false);
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void isPlaying() {
+        changeRefreshingValue(true);
+
+        String request = API.getWelegendsProxy() + region.toLowerCase() + API.getCurrengGame()
+                + Names.getPlatformId(region) + "/" + summoner.getId();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        isPlaying = true;
+                        Log.d(summoner.getName(), "PLAYING");
+                        changeRefreshingValue(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null) {
+                    if (networkResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
+                        isPlaying = false;
+                        Log.d(summoner.getName(), "NOT PLAYING");
+                        return;
+                    }
+                }
+                if (isAdded()) {
                     Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 }
                 changeRefreshingValue(false);

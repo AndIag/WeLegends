@@ -28,7 +28,7 @@ public abstract class Names {
     }
 
     public static String getPlatformId(String region) {
-        switch (region) {
+        switch (region.toUpperCase()) {
             case "BR":
                 return "BR1";
             case "EUNE":

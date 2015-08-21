@@ -410,7 +410,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
         final Gson gson = new Gson();
 
-        String request = API.getServer() + region.toLowerCase() + API.getMatch() + matchId;
+        String request = API.getWelegendsProxy() + region.toLowerCase() + API.getMatch() + matchId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
                 new Response.Listener<JSONObject>() {

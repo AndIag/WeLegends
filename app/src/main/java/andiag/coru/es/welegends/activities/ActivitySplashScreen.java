@@ -85,7 +85,7 @@ public class ActivitySplashScreen extends Activity {
     private void getVersion() {
         final Gson gson = new Gson();
 
-        request = API.getServer() + API.getVersions();
+        request = API.getWelegendsProxy() + API.getVersions();
 
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.checkingVersion));
@@ -128,7 +128,7 @@ public class ActivitySplashScreen extends Activity {
     private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
-        request = API.getServer() + API.getChampions();
+        request = API.getWelegendsProxy() + API.getChampions();
 
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.loadNames));

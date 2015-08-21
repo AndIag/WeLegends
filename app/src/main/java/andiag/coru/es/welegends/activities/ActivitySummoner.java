@@ -216,7 +216,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         final Gson gson = new Gson();
 
-        String url = API.getServer() + region.toLowerCase() + API.getSummoner() + summonerName;
+        String url = API.getWelegendsProxy() + region.toLowerCase() + API.getSummoner() + summonerName;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, (String) null,
                 new Response.Listener<JSONObject>() {

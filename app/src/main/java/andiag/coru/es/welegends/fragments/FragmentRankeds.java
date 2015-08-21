@@ -228,7 +228,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        request = API.getServer() + region.toLowerCase() + API.getMatchHistory() + summoner_id + "/" + BEGININDEX + "/" + ENDINDEX;
+        request = API.getWelegendsProxy() + region.toLowerCase() + API.getMatchHistory() + summoner_id + "/" + BEGININDEX + "/" + ENDINDEX;
         incrementIndexes();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,

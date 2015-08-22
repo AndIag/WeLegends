@@ -101,7 +101,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.textDivName.setText(item.getString("divname"));
             h.textLosses.setText(item.getString("losses"));
             h.textWins.setText(item.getString("wins"));
-            h.textLP.setText(item.getString("lp" + "lp"));
+            h.textLP.setText(item.getString("lp")+ " LP");
             h.textTeamName.setText(item.getString("name"));
             h.imageRanked.setImageResource(item.getInt("image"));
 

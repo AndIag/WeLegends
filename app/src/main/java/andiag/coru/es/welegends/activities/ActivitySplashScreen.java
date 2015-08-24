@@ -85,12 +85,10 @@ public class ActivitySplashScreen extends Activity {
     private void getVersion() {
         final Gson gson = new Gson();
 
-        request = API.getWelegendsProxy() + API.getVersions();
-
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.checkingVersion));
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, request, (String) null,
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, API.getVersions(), (String) null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -128,12 +126,10 @@ public class ActivitySplashScreen extends Activity {
     private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
-        request = API.getWelegendsProxy() + API.getChampions();
-
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.loadNames));
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getAllChampsData(), (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -263,7 +263,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());
         b.putString("server", region.toUpperCase());
-        b.putString("url", API.getWelegendsProxy() + API.getProfileicon() + summoner.getProfileIconId());
+        b.putString("url", API.getProfileIcon(summoner.getProfileIconId()));
         b.putInt("type", AdapterPlayerStats.TYPE_HEADER);
         return b;
     }
@@ -300,9 +300,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     private void getLeagues() {
         if (summoner.getSummonerLevel() != 30) return;
 
-        String request = API.getWelegendsProxy() + region.toLowerCase() + API.getLeagues() + summoner.getId();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getLeagues(region, summoner.getId())
+                , (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -345,10 +344,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
     }
 
     private void isPlaying() {
-        String request = API.getWelegendsProxy() + region.toLowerCase() + API.getCurrengGame()
-                + Names.getPlatformId(region) + "/" + summoner.getId();
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET
+                , API.getCurrent(region, summoner.getId(), Names.getPlatformId(region)), (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -179,9 +179,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         changeRefreshingValue(true);
 
-        request = API.getWelegendsProxy() + region + API.getRecentGames() + summoner_id;
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getHistory(region, summoner_id), (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -13,7 +13,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
@@ -74,9 +73,7 @@ public class ActivityChampionStatsDetails extends Activity {
         death = stats.getFloat("death");
         assist = stats.getFloat("assist");
 
-        imageView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                + Champions.getServerVersion()
-                + "/img/champion/" + stats.getString("key") + ".png", imageLoader);
+        imageView.setImageUrl(API.getChampionIcon(stats.getString("key")), imageLoader);
 
         tname.setText(stats.getString("name"));
 
@@ -143,7 +140,7 @@ public class ActivityChampionStatsDetails extends Activity {
 
         imageView.setErrorImageResId(R.drawable.default_champion_error);
         imageView.setDefaultImageResId(R.drawable.default_champion);
-        imageView.setImageUrl(API.getWelegendsProxy() + API.getProfileicon() + stats.getLong("summonerProfileId"), imageLoader);
+        imageView.setImageUrl(API.getProfileIcon(stats.getLong("summonerProfileId")), imageLoader);
 
         tname.setText(stats.getString("summonerName"));
 

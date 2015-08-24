@@ -5,22 +5,11 @@ package andiag.coru.es.welegends.utils.handlers;
  */
 public abstract class API {
 
-    /*OLD*//**/
+    public static final String SPLASH = "_0.jpg";
+    public static final String SKIN = "_1.jpg";
+    //WeLegendsProxy
     private static final String WELEGENDS_PROXY = "https://andiag-prod.apigee.net/v1/welegends/";
-    private static final String DDRAGON_SERVER = "";
-    private static final String MATCH_HISTORY = "/matches/";
-    private static final String MATCH = "/match/";
-    private static final String SUMMONER = "/summoner/";
-    private static final String PROFILEICON = "/profileicon/";
-    private static final String STATS = "/stats/";
-    private static final String LEAGUES = "/leagues/";
-    private static final String RECENT_GAMES = "/games/";
-    private static final String CURRENG_GAME = "/current/";
-    private static final String CHAMPIONS = "/champion";
-    private static final String VERSIONS = "/versions";
-
-    /*NEW*//*           ESPERAR A ACABAR EL PROXY
-    private static final String WELEGENDS_PROXY = "https://andiag-prod.apigee.net/v1/welegends/";
+    //private static final String WELEGENDS_PROXY = "https://andiag-test.apigee.net/v1/welegends/";
     private static final String MATCH = "/match/";
     private static final String HISTORY = "/history";
     private static final String RANKEDS = "/rankeds/";
@@ -28,54 +17,18 @@ public abstract class API {
     private static final String SUMMONER = "/summoner/";
     private static final String LEAGUES = "/leagues";
     private static final String STATS = "/stats";
-    */
-    /*OLD*//**/
-    public static String getWelegendsProxy() {
-        return WELEGENDS_PROXY;
-    }
+    //Ddragon
+    private static final String DDRAGON_SERVER = "http://ddragon.leagueoflegends.com/cdn/";
+    private static final String CHAMPION_ICON = "/img/champion/";
+    private static final String CHAMPION_SPLASH = "/img/champion/splash/";
+    private static final String PROFILEICON = "/img/profileicon/";
+    private static final String ITEM = "/img/item/";
+    //Static
+    private static final String VERSION = "https://andiag-prod.apigee.net/v1/welegends/versions";
+    private static final String ALL_CHAMPS_DATA = "https://andiag-prod.apigee.net/v1/welegends/champion";
+    //Formats
+    private static final String PNG = ".png";
 
-    public static String getMatchHistory() {
-        return MATCH_HISTORY;
-    }
-
-    public static String getMatch() {
-        return MATCH;
-    }
-
-    public static String getSummoner() {
-        return SUMMONER;
-    }
-
-    public static String getProfileicon() {
-        return PROFILEICON;
-    }
-
-    public static String getStats() {
-        return STATS;
-    }
-
-    public static String getLeagues() {
-        return LEAGUES;
-    }
-
-    public static String getRecentGames() {
-        return RECENT_GAMES;
-    }
-
-    public static String getChampions() {
-        return CHAMPIONS;
-    }
-
-    public static String getVersions() {
-        return VERSIONS;
-    }
-
-    public static String getCurrengGame() {
-        return CURRENG_GAME;
-    }
-
-
-    /*NEW*//*           ESPERAR A ACABAR EL PROXY
     public static String getMatch(String region, long id){
         return WELEGENDS_PROXY + region + MATCH + id;
     }
@@ -103,5 +56,29 @@ public abstract class API {
     public static String getStats(String region, long id){
         return WELEGENDS_PROXY + region + SUMMONER + id+ STATS;
     }
-    */
+
+    public static String getChampionIcon(String champKey) {
+        return DDRAGON_SERVER + Champions.getServerVersion() + CHAMPION_ICON + champKey + PNG;
+    }
+
+    public static String getChampionImage(String champKey, String format) {
+        return DDRAGON_SERVER + CHAMPION_SPLASH + champKey + format;
+    }
+
+    public static String getProfileIcon(long iconId) {
+        return DDRAGON_SERVER + Champions.getServerVersion() + PROFILEICON + iconId + PNG;
+    }
+
+    public static String getItemImage(String version, long id) {
+        return DDRAGON_SERVER + version + ITEM + id + PNG;
+    }
+
+    public static String getAllChampsData() {
+        return ALL_CHAMPS_DATA;
+    }
+
+    public static String getVersions() {
+        return VERSION;
+    }
+
 }

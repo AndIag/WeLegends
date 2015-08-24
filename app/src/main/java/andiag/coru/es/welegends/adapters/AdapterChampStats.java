@@ -18,7 +18,7 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
-import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
@@ -119,10 +119,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             h.imageChamp.setErrorImageResId(R.drawable.default_champion);
             h.imageChamp.setDefaultImageResId(R.drawable.default_champion_error);
-            h.imageChamp.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                            + Champions.getServerVersion()
-                            + "/img/champion/" + item.getString("key") + ".png",
-                    imageLoader);
+            h.imageChamp.setImageUrl(API.getChampionIcon(item.getString("key")), imageLoader);
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
             h.textVictories.setText(String.valueOf((int) item.getFloat("victories")));
@@ -138,7 +135,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             h.background.setDefaultImageResId(R.drawable.default_champion_header);
             h.background.setErrorImageResId(R.drawable.default_champion_header_error);
-            h.background.setImageUrl("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championImg,imageLoader);
+            h.background.setImageUrl(API.getChampionImage(item.getString("key"), API.SKIN), imageLoader);
         }
     }
 

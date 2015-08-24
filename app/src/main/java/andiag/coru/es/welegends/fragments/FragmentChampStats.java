@@ -162,9 +162,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
         final Gson gson = new Gson();
         changeRefreshingValue(true);
 
-        request = API.getWelegendsProxy() + region + API.getStats() + summoner_id;
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request, (String) null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getStats(region, summoner_id), (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

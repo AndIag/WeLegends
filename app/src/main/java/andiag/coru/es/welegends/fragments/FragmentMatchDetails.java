@@ -16,6 +16,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.StatsColor;
@@ -112,9 +113,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
         imageChampion.setErrorImageResId(R.drawable.default_champion_error);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
-        imageChampion.setImageUrl("http://ddragon.leagueoflegends.com/cdn/"
-                        + Champions.getServerVersion()
-                        + "/img/champion/" + Champions.getChampKey(data.getInt("championId")) + ".png",
+        imageChampion.setImageUrl(API.getChampionIcon(Champions.getChampKey(data.getInt("championId"))),
                 imageLoader);
 
         setItemImage(imgTotem, data.getLong("item6"));
@@ -146,8 +145,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         if (id > 0) {
             imgView.setErrorImageResId(R.drawable.default_item_error);
             imgView.setDefaultImageResId(R.drawable.default_item);
-            imgView.setImageUrl("http://ddragon.leagueoflegends.com/cdn/" +
-                            version + "/img/item/" + id + ".png",
+            imgView.setImageUrl(API.getItemImage(version, id),
                     imageLoader);
         }
     }

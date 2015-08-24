@@ -87,8 +87,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 @Override
                 public void onRefresh() {
                     leagues.clear();
-                    getLeagues();
-                    isPlaying();
+                    load();
                 }
             });
         } else {
@@ -146,8 +145,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         }
         if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
             if (leagues.isEmpty()) {
-                getLeagues();
-                isPlaying();
+                load();
             } else setInfoInView();
         }else{
             setNotLVL30Info();
@@ -170,24 +168,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         recyclerView.setAdapter(scaleAdapter);
 
         recyclerView.setTouchInterceptionViewGroup((ViewGroup) activityMain.findViewById(R.id.container));
-
-        if (summoner != null) {
-            if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
-                if (leagues != null && leagues.size() == 0) {
-                    //Tenemos que cargar las ligas
-                    getLeagues();
-                    isPlaying();
-                } else {
-                    //Ya las teniamos cargadas
-                    if (leagues == null) {
-                        leagues = new ArrayList<>();
-                    }
-                    setInfoInView();
-                }
-            } else {
-                setNotLVL30Info();
-            }
-        }
 
         return rootView;
     }
@@ -308,10 +288,17 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     }
 
-    private void getLeagues() {
-        if (isLoading() || summoner.getSummonerLevel() != 30) return;
+    private void load() {
+        if (isLoading()) return;
 
         changeRefreshingValue(true);
+
+        getLeagues();
+        isPlaying();
+    }
+
+    private void getLeagues() {
+        if (summoner.getSummonerLevel() != 30) return;
 
         String request = API.getWelegendsProxy() + region.toLowerCase() + API.getLeagues() + summoner.getId();
 

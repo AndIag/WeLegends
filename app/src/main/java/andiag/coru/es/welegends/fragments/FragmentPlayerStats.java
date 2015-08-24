@@ -350,7 +350,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     public void onResponse(JSONObject response) {
                         isPlaying = true;
                         adapter.updatePlayerStatus(isPlaying);
-                        scaleAdapter.notifyDataSetChanged();
+                        scaleAdapter.notifyItemChanged(0);
                     }
                 }, new Response.ErrorListener() {
             @Override

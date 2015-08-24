@@ -52,7 +52,9 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void updatePlayerStatus(boolean b){
         this.playing = b;
-        if (stats != null) notifyDataSetChanged();
+        if (stats != null) notifyItemChanged(0);
+
+
     }
 
     @Override

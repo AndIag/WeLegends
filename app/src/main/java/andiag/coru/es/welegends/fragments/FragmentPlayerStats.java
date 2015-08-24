@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -350,7 +349,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         isPlaying = true;
-                        Log.d(summoner.getName(), "PLAYING");
+                        adapter.updatePlayerStatus(isPlaying);
+                        scaleAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -359,7 +359,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 if (networkResponse != null) {
                     if (networkResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
                         isPlaying = false;
-                        Log.d(summoner.getName(), "NOT PLAYING");
                         return;
                     }
                 }

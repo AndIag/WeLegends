@@ -29,6 +29,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ImageLoader imageLoader;
     // Data
     private List<Bundle> stats = new ArrayList<>();
+    private boolean playing = false;
 
     public AdapterPlayerStats(Context context) {
         this.context = context;
@@ -46,6 +47,11 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void clearStats() {
         stats.clear();
+        notifyDataSetChanged();
+    }
+
+    public void updatePlayerStatus(boolean b){
+        this.playing = b;
         notifyDataSetChanged();
     }
 
@@ -90,6 +96,13 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.playerIcon.setErrorImageResId(R.drawable.default_champion_error);
             h.playerIcon.setDefaultImageResId(R.drawable.default_champion);
             h.playerIcon.setImageUrl(item.getString("url"),imageLoader);
+            if (playing) {
+                h.textPlayerStatus.setText(context.getString(R.string.playing_true));
+                h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.win));
+            } else {
+                h.textPlayerStatus.setText(context.getString(R.string.playing_false));
+                h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.lose));
+            }
 
         } else if (holder instanceof VHDivider) {
             VHDivider h = (VHDivider) holder;
@@ -153,7 +166,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        TextView textSumName,textServer,textLevel;
+        TextView textSumName,textServer,textLevel,textPlayerStatus;
         CircledNetworkImageView playerIcon;
         View view;
 
@@ -164,6 +177,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             textSumName = (TextView) view.findViewById(R.id.textName);
             textServer = (TextView) view.findViewById(R.id.textServer);
             textLevel = (TextView) view.findViewById(R.id.textLevel);
+            textPlayerStatus = (TextView) view.findViewById(R.id.textPlaying);
         }
     }
 }

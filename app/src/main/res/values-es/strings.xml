@@ -91,5 +91,7 @@
     <string name="carry">Carry</string>
     <string name="support">Support</string>
     <string name="bot">Bot</string>
+    <string name="playing_true">In Game</string>
+    <string name="playing_false">Not Playing</string>
 
 </resources>

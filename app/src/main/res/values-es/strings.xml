@@ -91,7 +91,20 @@
     <string name="carry">Carry</string>
     <string name="support">Support</string>
     <string name="bot">Bot</string>
-    <string name="playing_true">In Game</string>
-    <string name="playing_false">Not Playing</string>
+    <string name="playing_true">En Partida</string>
+    <string name="playing_false">No En Partida</string>
+
+    <string-array name="region_array">
+        <item>EUW</item>
+        <item>KR</item>
+        <item>LAN</item>
+        <item>LAS</item>
+        <item>OCE</item>
+        <item>RU</item>
+        <item>EUNE</item>
+        <item>TR</item>
+        <item>NA</item>
+        <item>BR</item>
+    </string-array>
 
 </resources>

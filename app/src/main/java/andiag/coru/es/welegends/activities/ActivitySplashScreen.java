@@ -38,7 +38,6 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
  */
 public class ActivitySplashScreen extends Activity {
 
-    private String request;
     private ProgressBar progressBar;
     private TextView textView;
     private Activity activity;

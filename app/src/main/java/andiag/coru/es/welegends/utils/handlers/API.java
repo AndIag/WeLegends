@@ -8,8 +8,8 @@ public abstract class API {
     public static final String SPLASH = "_0.jpg";
     public static final String SKIN = "_1.jpg";
     //WeLegendsProxy
-    private static final String WELEGENDS_PROXY = "https://andiag-prod.apigee.net/v1/welegends/";
-    //private static final String WELEGENDS_PROXY = "https://andiag-test.apigee.net/v1/welegends/";
+    private static final String WELEGENDS_PROXY = "http://andiag-prod.apigee.net/v1/welegends/";
+    //private static final String WELEGENDS_PROXY = "http://andiag-test.apigee.net/v1/welegends/";
     private static final String MATCH = "/match/";
     private static final String HISTORY = "/history";
     private static final String RANKEDS = "/rankeds/";
@@ -24,8 +24,8 @@ public abstract class API {
     private static final String PROFILEICON = "/img/profileicon/";
     private static final String ITEM = "/img/item/";
     //Static
-    private static final String VERSION = "https://andiag-prod.apigee.net/v1/welegends/versions";
-    private static final String ALL_CHAMPS_DATA = "https://andiag-prod.apigee.net/v1/welegends/champion";
+    private static final String VERSION = "http://andiag-prod.apigee.net/v1/welegends/versions";
+    private static final String ALL_CHAMPS_DATA = "http://andiag-prod.apigee.net/v1/welegends/champion";
     //Formats
     private static final String PNG = ".png";
 

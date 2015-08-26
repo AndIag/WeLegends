@@ -167,10 +167,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
 
-        //if(savedInstanceState!=null) notifyFragments();
-
-        setAnimation();
-
     }
 
     @Override
@@ -181,6 +177,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     @Override
     public void onResume() {
         super.onResume();
+        setAnimation();
     }
 
     @Override

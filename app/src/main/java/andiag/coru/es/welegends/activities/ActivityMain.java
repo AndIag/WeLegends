@@ -148,9 +148,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
         //GETTING DATA AND SET TABS TO VIEW PAGER
         onRetrieveInstanceState(savedInstanceState);
         createTabs();
-
-        setAnimation();
-
     }
 
     @Override
@@ -161,6 +158,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
     @Override
     public void onResume() {
         super.onResume();
+        setAnimation();
     }
 
     @Override

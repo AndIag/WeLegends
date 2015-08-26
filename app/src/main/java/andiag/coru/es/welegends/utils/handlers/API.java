@@ -26,6 +26,7 @@ public abstract class API {
     //Static
     private static final String VERSION = "http://andiag-prod.apigee.net/v1/welegends/versions";
     private static final String ALL_CHAMPS_DATA = "http://andiag-prod.apigee.net/v1/welegends/champion";
+    private static final String ALL_SUMMONER_SPEELS = "http://andiag-prod.apigee.net/v1/welegends/summoner-spell";
     //Formats
     private static final String PNG = ".png";
 
@@ -75,6 +76,10 @@ public abstract class API {
 
     public static String getAllChampsData() {
         return ALL_CHAMPS_DATA;
+    }
+
+    public static String getAllSummonerSpeels() {
+        return ALL_SUMMONER_SPEELS;
     }
 
     public static String getVersions() {

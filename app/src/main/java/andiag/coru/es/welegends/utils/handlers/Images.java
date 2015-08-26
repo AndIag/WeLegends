@@ -26,7 +26,7 @@ public abstract class Images {
     }
 
     private static void initializeSpells() {
-        spells = new DefaultHashMap<>(R.drawable.default_champion_header);
+        spells = new DefaultHashMap<>(R.drawable.default_item_error);
         spells.put(1, R.drawable.cleanse);
         spells.put(2, R.drawable.clairvoyance);
         spells.put(3, R.drawable.exhaust);

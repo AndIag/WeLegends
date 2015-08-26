@@ -71,6 +71,19 @@
     <string name="voidSummonerError">ERRORE: Caricando NULL Evocatore</string>
     <string name="working">Lavorando...</string>
     <string name="volley">Library asincrona introdotta per fare le chiamate di rete molto più facile e veloce senza scrivere tonnellate di codice.</string>
-    <string name="playing_true">In Game</string>
-    <string name="playing_false">Not Playing</string>
+    <string name="playing_true">In Partita</string>
+    <string name="playing_false">No in partita</string>
+
+    <string-array name="region_array">
+        <item>EUW</item>
+        <item>KR</item>
+        <item>LAN</item>
+        <item>LAS</item>
+        <item>OCE</item>
+        <item>RU</item>
+        <item>EUNE</item>
+        <item>TR</item>
+        <item>NA</item>
+        <item>BR</item>
+    </string-array>
 </resources>

@@ -94,4 +94,18 @@
     <string name="playing_true">In Game</string>
     <string name="playing_false">Not Playing</string>
 
+
+    <string-array name="region_array">
+        <item>EUW</item>
+        <item>KR</item>
+        <item>LAN</item>
+        <item>LAS</item>
+        <item>OCE</item>
+        <item>RU</item>
+        <item>EUNE</item>
+        <item>TR</item>
+        <item>NA</item>
+        <item>BR</item>
+    </string-array>
+
 </resources>

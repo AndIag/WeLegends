@@ -8,7 +8,6 @@ import andiag.coru.es.welegends.utils.DefaultHashMap;
  */
 public abstract class Images {
 
-    private static DefaultHashMap<Integer, Integer> spells;
     private static DefaultHashMap<Integer, Integer> maps;
 
     static {
@@ -22,10 +21,6 @@ public abstract class Images {
         maps.put(8, R.drawable.crystal_scar);
         maps.put(12, R.drawable.howling_abyss1);//Puede que este mal
         maps.put(14, R.drawable.butcher);
-    }
-
-    public static Integer getSpell(int id) {
-        return spells.get(id);
     }
 
     public static Integer getMap(int id) {

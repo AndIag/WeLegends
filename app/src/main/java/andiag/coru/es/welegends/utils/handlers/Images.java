@@ -12,7 +12,6 @@ public abstract class Images {
     private static DefaultHashMap<Integer, Integer> maps;
 
     static {
-        initializeSpells();
         initializeMaps();
     }
 
@@ -23,23 +22,6 @@ public abstract class Images {
         maps.put(8, R.drawable.crystal_scar);
         maps.put(12, R.drawable.howling_abyss1);//Puede que este mal
         maps.put(14, R.drawable.butcher);
-    }
-
-    private static void initializeSpells() {
-        spells = new DefaultHashMap<>(R.drawable.default_item_error);
-        spells.put(1, R.drawable.cleanse);
-        spells.put(2, R.drawable.clairvoyance);
-        spells.put(3, R.drawable.exhaust);
-        spells.put(4, R.drawable.flash);
-        spells.put(6, R.drawable.ghost);
-        spells.put(7, R.drawable.heal);
-        spells.put(10, R.drawable.revive);
-        spells.put(11, R.drawable.smite);
-        spells.put(12, R.drawable.teleport);
-        spells.put(13, R.drawable.clarity);
-        spells.put(14, R.drawable.ignite);
-        spells.put(17, R.drawable.garrison);
-        spells.put(21, R.drawable.barrier);
     }
 
     public static Integer getSpell(int id) {

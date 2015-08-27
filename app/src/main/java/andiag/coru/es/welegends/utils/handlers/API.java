@@ -1,5 +1,7 @@
 package andiag.coru.es.welegends.utils.handlers;
 
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
+
 /**
  * Created by Iago on 26/06/2015.
  */
@@ -23,10 +25,11 @@ public abstract class API {
     private static final String CHAMPION_SPLASH = "/img/champion/splash/";
     private static final String PROFILEICON = "/img/profileicon/";
     private static final String ITEM = "/img/item/";
+    private static final String SUMMONER_SPELL = "/img/spell/";
     //Static
     private static final String VERSION = "http://andiag-prod.apigee.net/v1/welegends/versions";
     private static final String ALL_CHAMPS_DATA = "http://andiag-prod.apigee.net/v1/welegends/champion";
-    private static final String ALL_SUMMONER_SPEELS = "http://andiag-prod.apigee.net/v1/welegends/summoner-spell";
+    private static final String ALL_SUMMONER_SPELLS = "http://andiag-prod.apigee.net/v1/welegends/summoner-spell";
     //Formats
     private static final String PNG = ".png";
 
@@ -74,12 +77,16 @@ public abstract class API {
         return DDRAGON_SERVER + version + ITEM + id + PNG;
     }
 
+    public static String getSummonerSpellImage(String version, String key) {
+        return DDRAGON_SERVER + version + SUMMONER_SPELL + key + PNG;
+    }
+
     public static String getAllChampsData() {
         return ALL_CHAMPS_DATA;
     }
 
-    public static String getAllSummonerSpeels() {
-        return ALL_SUMMONER_SPEELS;
+    public static String getAllSummonerSpells() {
+        return ALL_SUMMONER_SPELLS;
     }
 
     public static String getVersions() {

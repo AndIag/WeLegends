@@ -38,8 +38,9 @@
     <string name="networkUnavailable">Red no está disponible</string>
 
     <!-- Messages -->
-    <string name="checkingVersion">Comprobando versión del servidor...</string>
-    <string name="loadNames">Cargando campeones...</string>
+    <string name="checkingVersion">Comprobando versión del servidor…</string>
+    <string name="loadNames">Cargando campeones…</string>
+    <string name="loadSpells">Cargando hechizos…</string>
     <string name="working">Trabajando…</string>
     <string name="searching_summoner">Buscando invocador…</string>
 

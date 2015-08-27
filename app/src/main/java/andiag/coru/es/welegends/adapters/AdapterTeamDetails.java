@@ -24,9 +24,9 @@ import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.StatsColor;
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
+import andiag.coru.es.welegends.utils.handlers.spells.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
@@ -127,8 +127,15 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                 h.imageChamp.setImageUrl(API.getChampionIcon(Champions.getChampKey(p.getChampionId())),
                         imageLoader);
 
-                h.imageSpell1.setImageResource(Images.getSpell(p.getSpell1Id()));
-                h.imageSpell2.setImageResource(Images.getSpell(p.getSpell2Id()));
+                h.imageSpell1.setErrorImageResId(R.drawable.default_champion_error);
+                h.imageSpell1.setDefaultImageResId(R.drawable.default_champion);
+                h.imageSpell1.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion(), Spells.getSpellKey(p.getSpell1Id())),
+                        imageLoader);
+
+                h.imageSpell2.setErrorImageResId(R.drawable.default_champion_error);
+                h.imageSpell2.setDefaultImageResId(R.drawable.default_champion);
+                h.imageSpell2.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion(), Spells.getSpellKey(p.getSpell2Id())),
+                        imageLoader);
             }
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
@@ -205,8 +212,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     class VHItem extends RecyclerView.ViewHolder {
         TextView textKDA,textGold,textCS,textName;
-        NetworkImageView imageChamp;
-        ImageView imageSpell1,imageSpell2;
+        NetworkImageView imageChamp, imageSpell1, imageSpell2;
         View v;
 
         public VHItem(View itemView) {
@@ -235,8 +241,8 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             textGold = (TextView) v.findViewById(R.id.textGold);
             textName = (TextView) v.findViewById(R.id.textName);
             imageChamp = (NetworkImageView) v.findViewById(R.id.imgChamp);
-            imageSpell1 = (ImageView) v.findViewById(R.id.imageSpell1);
-            imageSpell2 = (ImageView) v.findViewById(R.id.imageSpell2);
+            imageSpell1 = (NetworkImageView) v.findViewById(R.id.imageSpell1);
+            imageSpell2 = (NetworkImageView) v.findViewById(R.id.imageSpell2);
         }
     }
 

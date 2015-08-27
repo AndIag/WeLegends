@@ -28,10 +28,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="left|top"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
-            android:transitionName="imageChampion"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:transitionName="imageChampion" />
 
         <TextView
             android:id="@+id/textName"
@@ -42,56 +42,56 @@
             android:layout_alignRight="@+id/imgChamp"
             android:layout_alignStart="@+id/imgChamp"
             android:layout_below="@+id/imgChamp"
+            android:layout_marginBottom="5dp"
             android:background="@android:color/black"
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/button_text"
-            android:layout_marginBottom="5dp" />
+            android:textColor="@color/button_text" />
 
         <TextView
             android:id="@+id/textKDA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:gravity="center_vertical"
+            android:layout_above="@+id/imageView7"
             android:layout_alignTop="@+id/imageView6"
-            android:layout_toRightOf="@+id/imageView6"
-            android:layout_toEndOf="@+id/imageView6"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="56dp"
-            android:layout_above="@+id/imageView7" />
+            android:layout_toEndOf="@+id/imageView6"
+            android:layout_toRightOf="@+id/imageView6"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textGold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textKDA"
-            android:layout_alignStart="@+id/textKDA"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_alignTop="@+id/imageView7"
             android:layout_alignBottom="@+id/imageView7"
-            android:layout_alignRight="@+id/textKDA"
             android:layout_alignEnd="@+id/textKDA"
-            android:gravity="center_vertical" />
+            android:layout_alignLeft="@+id/textKDA"
+            android:layout_alignRight="@+id/textKDA"
+            android:layout_alignStart="@+id/textKDA"
+            android:layout_alignTop="@+id/imageView7"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textCS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView8"
             android:layout_alignLeft="@+id/textGold"
             android:layout_alignStart="@+id/textGold"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_alignTop="@+id/imageView8"
-            android:layout_alignBottom="@+id/imageView8"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/icon_sword"
             android:layout_alignTop="@+id/imgChamp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/icon_sword" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -113,18 +113,18 @@
             android:layout_marginTop="2dp"
             android:src="@drawable/icon_minion" />
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageSpell1"
-            android:layout_alignTop="@+id/imgChamp"
-            android:layout_toRightOf="@+id/imgChamp"
-            android:layout_toEndOf="@+id/imgChamp" />
-
-        <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_alignTop="@+id/imgChamp"
+            android:layout_toEndOf="@+id/imgChamp"
+            android:layout_toRightOf="@+id/imgChamp" />
+
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageSpell2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignBottom="@+id/imgChamp"
             android:layout_alignLeft="@+id/imageSpell1"
             android:layout_alignStart="@+id/imageSpell1" />

@@ -13,7 +13,7 @@
     <string name="bot">Bot</string>
     <string name="butcher">Ponte del Massacro</string>
     <string name="carry">Carry</string>
-    <string name="checkingVersion">Controllo della versione server...</string>
+    <string name="checkingVersion">Controllo della versione server…</string>
     <string name="cs">Valle dei Cristalli</string>
     <string name="mid">Mid</string>
     <string name="networkUnavailable">Rete non è disponibile</string>
@@ -33,7 +33,8 @@
     <string name="jungle">Giungla</string>
     <string name="killingSprees">Serie più lunga di uccisioni:</string>
     <string name="level">Livello</string>
-    <string name="loadNames">Caricamento campioni...</string>
+    <string name="loadNames">Caricamento campioni…</string>
+    <string name="loadSpells">Caricamento incantesimi…</string>
     <string name="magicDamageDealt">Danno magico inflitto:</string>
     <string name="obserbabl_escroll_view">Library per interagire con Android Toolbar e utile per implementare aspetto grafico di applicazioni Material Design.</string>
     <string name="penta">Pentakills</string>
@@ -45,7 +46,7 @@
     <string name="recyclerview_animators">Library per creare facilmente RecyclerView con animazioni.</string>
     <string name="region_prompt">Scegli una regione:</string>
     <string name="rift">Landa degli Evocatori</string>
-    <string name="searching_summoner">Cercando evocatore...</string>
+    <string name="searching_summoner">Cercando evocatore…</string>
     <string name="section_history">PARTITE</string>
     <string name="healDone">Danno totale curato:</string>
     <string name="stat_good">Bene</string>

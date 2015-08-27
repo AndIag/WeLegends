@@ -39,10 +39,10 @@ import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.handlers.Names;
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 

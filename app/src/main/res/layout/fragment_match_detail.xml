@@ -46,8 +46,8 @@ android:layout_height="match_parent"
             android:layout_alignLeft="@+id/linearInfo"
             android:layout_alignRight="@+id/linearInfo"
             android:layout_alignStart="@+id/linearInfo"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_below="@+id/leyLayout"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="horizontal">
 
             <com.android.volley.toolbox.NetworkImageView
@@ -224,16 +224,16 @@ android:layout_height="match_parent"
             android:id="@+id/leyLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/linearInfo"
+            android:layout_alignLeft="@+id/linearInfo"
             android:layout_alignParentBottom="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
-            android:layout_alignEnd="@+id/linearInfo"
-            android:layout_alignLeft="@+id/linearInfo"
             android:layout_alignRight="@+id/linearInfo"
             android:layout_alignStart="@+id/linearInfo"
             android:layout_below="@+id/linearInfo"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
 
             <Button
                 android:layout_width="0dp"
@@ -295,12 +295,12 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearItems"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
             android:shrinkColumns="*"
-            android:stretchColumns="*"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin">
+            android:stretchColumns="*">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -533,46 +533,46 @@ android:layout_height="match_parent"
         </TableLayout>
 
         <ImageView
+            android:id="@+id/imageRole"
             android:layout_width="40dp"
             android:layout_height="60dp"
-            android:id="@+id/imageRole"
-            android:layout_alignTop="@+id/imageChampion"
-            android:layout_alignRight="@+id/linearNames"
             android:layout_alignEnd="@+id/linearNames"
+            android:layout_alignRight="@+id/linearNames"
+            android:layout_alignTop="@+id/imageChampion"
             android:layout_toEndOf="@+id/imageSpell1"
             android:layout_toRightOf="@+id/imageSpell1" />
 
         <TextView
+            android:id="@+id/textRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textRole"
-            android:gravity="center"
-            android:layout_below="@+id/imageRole"
             android:layout_above="@+id/linearNames"
-            android:layout_alignRight="@+id/linearNames"
             android:layout_alignEnd="@+id/linearNames"
+            android:layout_alignRight="@+id/linearNames"
+            android:layout_below="@+id/imageRole"
+            android:layout_toEndOf="@+id/imageSpell2"
             android:layout_toRightOf="@+id/imageSpell2"
-            android:layout_toEndOf="@+id/imageSpell2" />
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageSpell1"
-            android:layout_alignTop="@+id/imageRole"
-            android:layout_toRightOf="@+id/imageChampion"
-            android:layout_toEndOf="@+id/imageChampion"
-            android:layout_marginLeft="5dp" />
-
-        <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:id="@+id/imageSpell2"
-            android:layout_below="@+id/imageSpell1"
-            android:layout_toRightOf="@+id/imageChampion"
-            android:layout_toEndOf="@+id/imageChampion"
+            android:layout_alignTop="@+id/imageRole"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp" />
+            android:layout_toEndOf="@+id/imageChampion"
+            android:layout_toRightOf="@+id/imageChampion" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/imageSpell2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/imageSpell1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/imageChampion"
+            android:layout_toRightOf="@+id/imageChampion" />
 
     </RelativeLayout>
 

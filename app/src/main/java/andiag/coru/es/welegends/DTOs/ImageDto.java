@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.DTOs.championsDTOs;
+package andiag.coru.es.welegends.DTOs;
 
 import java.io.Serializable;
 

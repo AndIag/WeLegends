@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +27,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
+import andiag.coru.es.welegends.utils.handlers.champions.ChampionListDto;
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
+import andiag.coru.es.welegends.utils.handlers.spells.Spells;
+import andiag.coru.es.welegends.utils.handlers.spells.SummonerSpellListDto;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**
@@ -41,6 +44,15 @@ public class ActivitySplashScreen extends Activity {
     private ProgressBar progressBar;
     private TextView textView;
     private Activity activity;
+    private boolean isStarted = false;
+
+    private synchronized boolean isStarted() {
+        if (!isStarted) {
+            isStarted = true;
+            return false;
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +88,11 @@ public class ActivitySplashScreen extends Activity {
     }
 
     public void startActivity() {
-        Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
-        startActivity(mainIntent);
-        finish();
+        if (!isStarted()) {
+            Intent mainIntent = new Intent().setClass(ActivitySplashScreen.this, ActivitySummoner.class);
+            startActivity(mainIntent);
+            finish();
+        }
     }
 
     private void getVersion() {
@@ -97,6 +111,7 @@ public class ActivitySplashScreen extends Activity {
                         if (versions != null && versions.get(0).equals(Champions.getServerVersion())) {
                             try {
                                 Champions.setChampions(null, activity); //Initialize champions with our static data
+                                Spells.setSpells(null, activity);
                                 startActivity();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -107,6 +122,7 @@ public class ActivitySplashScreen extends Activity {
                         } else {
                             //Get champions from server
                             getChampionsFromServer();
+                            getSpellsFromServer();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -125,6 +141,8 @@ public class ActivitySplashScreen extends Activity {
     private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
+        Log.d("getChampions", "Champions");
+
         progressBar.setVisibility(View.VISIBLE);
         textView.setText(getResources().getString(R.string.loadNames));
 
@@ -134,6 +152,41 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONObject response) {
                         try {
                             Champions.setChampions(gson.fromJson(response.toString(), ChampionListDto.class), activity);
+                            startActivity();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(activity, getResources().getString(R.string.error500)
+                                    , Toast.LENGTH_LONG).show();
+                            ActivitySplashScreen.this.finish();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(activity, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
+                ActivitySplashScreen.this.finish();
+            }
+        });
+
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        VolleyHelper.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void getSpellsFromServer() {
+        final Gson gson = new Gson();
+
+        Log.d("getSpells", "SPELLS");
+
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setText(getResources().getString(R.string.loadSpells));
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getAllSummonerSpells(), (String) null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Spells.setSpells(gson.fromJson(response.toString(), SummonerSpellListDto.class), activity);
                             startActivity();
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -1,27 +1,24 @@
-package andiag.coru.es.welegends.DTOs.championsDTOs;
+package andiag.coru.es.welegends.utils.handlers.spells;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * Created by Iago on 25/07/2015.
+ * Created by iagoc on 27/08/2015.
  */
-public class ChampionListDto implements Serializable {
-    private HashMap<Integer, ChampionDto> data;
+public class SummonerSpellListDto implements Serializable {
+    private HashMap<Integer, SummonerSpellDto> data;
     private String type;
     private String version;
 
-    //private String format;
-    //private HashMap<String, String> keys;
-
-    public ChampionListDto() {
+    public SummonerSpellListDto() {
     }
 
-    public HashMap<Integer, ChampionDto> getData() {
+    public HashMap<Integer, SummonerSpellDto> getData() {
         return data;
     }
 
-    public void setData(HashMap<Integer, ChampionDto> data) {
+    public void setData(HashMap<Integer, SummonerSpellDto> data) {
         this.data = data;
     }
 

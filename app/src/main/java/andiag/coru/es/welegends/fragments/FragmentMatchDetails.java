@@ -17,9 +17,9 @@ import com.android.volley.toolbox.NetworkImageView;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.StatsColor;
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
+import andiag.coru.es.welegends.utils.handlers.spells.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
@@ -54,8 +54,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     private static ActivityDetails activityMain;
     private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin, textChampName;
     private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree, textRole;
-    private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion;
-    private ImageView imageRole, imageSpell, imageSpell1;
+    private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion, imageSpell, imageSpell1;
+    private ImageView imageRole;
     private Bundle data;
     private ImageLoader imageLoader;
     private String version;
@@ -124,8 +124,15 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         setItemImage(imgIt5, data.getLong("item4"));
         setItemImage(imgIt6, data.getLong("item5"));
 
-        imageSpell.setImageResource(Images.getSpell(data.getInt("spell1")));
-        imageSpell1.setImageResource(Images.getSpell(data.getInt("spell2")));
+        imageSpell.setErrorImageResId(R.drawable.default_champion_error);
+        imageSpell.setDefaultImageResId(R.drawable.default_champion);
+        imageSpell.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion()
+                , Spells.getSpellKey(data.getInt("spell1"))), imageLoader);
+
+        imageSpell1.setErrorImageResId(R.drawable.default_champion_error);
+        imageSpell1.setDefaultImageResId(R.drawable.default_champion);
+        imageSpell1.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion()
+                , Spells.getSpellKey(data.getInt("spell2"))), imageLoader);
 
         float minDuration = ((float) data.getLong("duration")) / 60;
         textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration));
@@ -218,8 +225,8 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         textPhyDealt = (TextView) view.findViewById(R.id.textPhysicalDamageDealt);
         textMagDealt = (TextView) view.findViewById(R.id.textMagicDamageDealt);
         textKillingSpree = (TextView) view.findViewById(R.id.textKillingSprees);
-        imageSpell = (ImageView) view.findViewById((R.id.imageSpell1));
-        imageSpell1 = (ImageView) view.findViewById((R.id.imageSpell2));
+        imageSpell = (NetworkImageView) view.findViewById((R.id.imageSpell1));
+        imageSpell1 = (NetworkImageView) view.findViewById((R.id.imageSpell2));
 
         return view;
     }

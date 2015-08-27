@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.utils.handlers;
+package andiag.coru.es.welegends.utils.handlers.champions;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -10,20 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionDto;
-import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
-
 /**
  * Created by Iago on 25/07/2015.
  */
 public abstract class Champions {
-    private static final String HISTORY_FILE_NAME = "ChampionsData";
+    private static final String FILE_NAME = "ChampionsData";
     private static ChampionListDto champions;
     private static SharedPreferences settings;
-
-    public static ChampionListDto getChampions() {
-        return champions;
-    }
 
     public static void setChampions(ChampionListDto c, Activity activity) throws JSONException {
         if (c != null) {
@@ -37,7 +30,7 @@ public abstract class Champions {
     private static void retrieveChampionsFromFile(Activity activity) throws JSONException {
         HashMap<Integer, ChampionDto> hash = new HashMap<>();
         champions = new ChampionListDto();
-        settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
+        settings = activity.getSharedPreferences(FILE_NAME, 0);
 
         Map<String, String> map = (Map<String, String>) settings.getAll();
 
@@ -71,7 +64,7 @@ public abstract class Champions {
     }
 
     private static void saveChampionsInFile(Activity activity) throws JSONException {
-        settings = activity.getSharedPreferences(HISTORY_FILE_NAME, 0);
+        settings = activity.getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
 
         editor.clear();

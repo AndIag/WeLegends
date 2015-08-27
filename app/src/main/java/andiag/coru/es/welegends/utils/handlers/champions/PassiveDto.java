@@ -1,6 +1,8 @@
-package andiag.coru.es.welegends.DTOs.championsDTOs;
+package andiag.coru.es.welegends.utils.handlers.champions;
 
 import java.io.Serializable;
+
+import andiag.coru.es.welegends.DTOs.ImageDto;
 
 /**
  * Created by Iago on 25/07/2015.

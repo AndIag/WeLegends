@@ -37,8 +37,9 @@
     <string name="networkUnavailable">Network is unavailable</string>
 
     <!-- Messages -->
-    <string name="checkingVersion">Checking server version...</string>
-    <string name="loadNames">Loading champ names...</string>
+    <string name="checkingVersion">Checking server version…</string>
+    <string name="loadNames">Loading champ names…</string>
+    <string name="loadSpells">Loading summoner spells…</string>
     <string name="working">Working…</string>
     <string name="searching_summoner">Searching summoner…</string>
 

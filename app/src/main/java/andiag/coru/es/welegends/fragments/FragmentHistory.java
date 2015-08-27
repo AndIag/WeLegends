@@ -34,10 +34,10 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
 import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.handlers.Names;
+import andiag.coru.es.welegends.utils.handlers.champions.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 

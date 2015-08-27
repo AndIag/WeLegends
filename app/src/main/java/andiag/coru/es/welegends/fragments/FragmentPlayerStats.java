@@ -86,7 +86,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                 @Override
                 public void onRefresh() {
                     leagues.clear();
-                    load();
+                    getLeagues();
                 }
             });
         } else {
@@ -142,9 +142,10 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         if (imageLoader == null) {
             imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
         }
+        isPlaying();
         if (summoner.getSummonerLevel() == 30 && !activityMain.isUnranked()) {
             if (leagues.isEmpty()) {
-                load();
+                getLeagues();
             } else setInfoInView();
         }else{
             setNotLVL30Info();
@@ -285,15 +286,6 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
         return item;
 
-    }
-
-    private void load() {
-        if (isLoading()) return;
-
-        changeRefreshingValue(true);
-
-        getLeagues();
-        isPlaying();
     }
 
     private void getLeagues() {

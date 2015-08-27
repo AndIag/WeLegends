@@ -16,9 +16,12 @@ public abstract class Names {
 
     public static void initializeMapNames() {
         mapsNames = new DefaultHashMap<>(R.string.error404);
-        mapsNames.put(11, R.string.rift);
-        mapsNames.put(10, R.string.tt);
+        mapsNames.put(1, R.string.rift);
+        mapsNames.put(2, R.string.rift);
+        mapsNames.put(4, R.string.tt);
         mapsNames.put(8, R.string.cs);
+        mapsNames.put(10, R.string.tt);
+        mapsNames.put(11, R.string.rift);
         mapsNames.put(12, R.string.ha);//Puede que este mal
         mapsNames.put(14, R.string.butcher);
     }

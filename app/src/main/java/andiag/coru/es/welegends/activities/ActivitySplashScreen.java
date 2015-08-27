@@ -34,6 +34,7 @@ import andiag.coru.es.welegends.utils.handlers.champions.ChampionListDto;
 import andiag.coru.es.welegends.utils.handlers.champions.Champions;
 import andiag.coru.es.welegends.utils.handlers.spells.Spells;
 import andiag.coru.es.welegends.utils.handlers.spells.SummonerSpellListDto;
+import andiag.coru.es.welegends.utils.handlers.version.Version;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**
@@ -108,21 +109,24 @@ public class ActivitySplashScreen extends Activity {
                         ArrayList<String> versions = gson.fromJson(response.toString()
                                 , new TypeToken<ArrayList<String>>() {
                         }.getType());
-                        if (versions != null && versions.get(0).equals(Champions.getServerVersion())) {
-                            try {
+                        try {
+                            if (versions != null && versions.get(0).equals(Version.getVersion(activity))) {
                                 Champions.setChampions(null, activity); //Initialize champions with our static data
                                 Spells.setSpells(null, activity);
                                 startActivity();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(activity, getResources().getString(R.string.error500)
-                                        , Toast.LENGTH_LONG).show();
-                                ActivitySplashScreen.this.finish();
+                            } else {
+                                //Get champions from server
+                                if (versions != null) {
+                                    Version.setVersion(versions.get(0), activity);
+                                }
+                                getChampionsFromServer();
+                                getSpellsFromServer();
                             }
-                        } else {
-                            //Get champions from server
-                            getChampionsFromServer();
-                            getSpellsFromServer();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(activity, getResources().getString(R.string.error500)
+                                    , Toast.LENGTH_LONG).show();
+                            ActivitySplashScreen.this.finish();
                         }
                     }
                 }, new Response.ErrorListener() {

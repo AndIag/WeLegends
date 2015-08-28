@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
-import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
+import andiag.coru.es.welegends.entities.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.entities.Summoner;
 
 /**

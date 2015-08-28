@@ -28,15 +28,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.AggregatedStatsDto;
-import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.ChampionStatsDto;
-import andiag.coru.es.welegends.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterChampStats;
+import andiag.coru.es.welegends.entities.DTOs.rankedStatsDTOs.AggregatedStatsDto;
+import andiag.coru.es.welegends.entities.DTOs.rankedStatsDTOs.ChampionStatsDto;
+import andiag.coru.es.welegends.entities.DTOs.rankedStatsDTOs.RankedStatsDto;
 import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.champions.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 

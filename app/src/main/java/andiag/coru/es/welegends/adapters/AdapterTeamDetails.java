@@ -24,9 +24,9 @@ import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.Spells;
 import andiag.coru.es.welegends.utils.handlers.StatsColor;
-import andiag.coru.es.welegends.utils.handlers.champions.Champions;
-import andiag.coru.es.welegends.utils.handlers.spells.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*

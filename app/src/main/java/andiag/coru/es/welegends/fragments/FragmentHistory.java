@@ -28,16 +28,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import andiag.coru.es.welegends.DTOs.recentGamesDTOs.GameDto;
-import andiag.coru.es.welegends.DTOs.recentGamesDTOs.RecentGamesDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
+import andiag.coru.es.welegends.entities.DTOs.normalGamesDTOs.GameDto;
+import andiag.coru.es.welegends.entities.DTOs.normalGamesDTOs.RecentGamesDto;
 import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.handlers.Names;
-import andiag.coru.es.welegends.utils.handlers.champions.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 

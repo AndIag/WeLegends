@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.utils.handlers;
 
-import andiag.coru.es.welegends.utils.handlers.champions.Champions;
-
 /**
  * Created by Iago on 26/06/2015.
  */

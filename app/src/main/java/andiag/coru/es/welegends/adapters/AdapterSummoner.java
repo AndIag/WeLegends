@@ -11,9 +11,9 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
-import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
+import andiag.coru.es.welegends.entities.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;

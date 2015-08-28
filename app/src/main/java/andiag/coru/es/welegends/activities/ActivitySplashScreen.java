@@ -28,13 +28,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.entities.DTOs.championsDTOs.ChampionListDto;
+import andiag.coru.es.welegends.entities.DTOs.summonerSpellsDTOs.SummonerSpellListDto;
 import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.champions.ChampionListDto;
-import andiag.coru.es.welegends.utils.handlers.champions.Champions;
-import andiag.coru.es.welegends.utils.handlers.spells.Spells;
-import andiag.coru.es.welegends.utils.handlers.spells.SummonerSpellListDto;
-import andiag.coru.es.welegends.utils.handlers.version.Version;
+import andiag.coru.es.welegends.utils.handlers.Spells;
+import andiag.coru.es.welegends.utils.handlers.Version;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**

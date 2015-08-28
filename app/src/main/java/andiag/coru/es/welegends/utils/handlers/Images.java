@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.utils.handlers;
 
-import android.util.Log;
-
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.utils.DefaultHashMap;
 
@@ -29,7 +27,6 @@ public abstract class Images {
     }
 
     public static Integer getMap(int id) {
-        Log.d("Map", String.valueOf(id));
         return maps.get(id);
     }
 }

@@ -8,14 +8,17 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -44,6 +47,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     private static ActivityMain activityMain;
     private static Activity thisActivity;
+    EditText editText;
     private String region;
     private boolean isLoading = false;
     private ArrayList<SummonerHistoryDto> history;
@@ -76,6 +80,18 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
         thisActivity = this;
 
+        editText = (EditText) findViewById(R.id.editTextSummoner);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN))) {
+                    onClickFindSummoner(v);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         getWindow().setBackgroundDrawable(null);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -102,9 +118,6 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     @Override
     protected void onResume() {
         super.onResume();
-
-
-        //Cargar el valor del historial de summoners
         try {
             history = SummonerHistory.getHistory(this);
         } catch (JSONException e) {
@@ -113,10 +126,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
                     Toast.LENGTH_LONG).show();
             history = new ArrayList<>();
         }
-
         adapter.updateSummoners(history);
-
-
     }
 
     @Override
@@ -160,13 +170,11 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         return isAvailable;
     }
 
-    public void onClickSummonerHistory(View v) {
-
-        if (isNetworkAvailable()) {
-            EditText editText = (EditText) findViewById(R.id.editTextSummoner);
+    public void onClickFindSummoner(View v) {
+        if (isNetworkAvailable() && editText != null) {
             String summoner = editText.getText().toString();
             summoner = summoner.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
-            if ((!(summoner == "")) && (!(summoner == null))) {
+            if ((!(summoner == null)) && (!(summoner == ""))) {
                 getSummonerId(summoner);
             } else {
                 Toast.makeText(getApplicationContext(), getString(R.string.voidSummonerError),

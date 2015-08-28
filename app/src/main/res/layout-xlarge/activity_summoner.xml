@@ -32,6 +32,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:hint="@string/hint_summoner"
+        android:singleLine="true"
         android:textColor="@color/primary"
         android:textColorHint="@color/secondary_text" />
 
@@ -43,7 +44,7 @@
         android:layout_alignStart="@+id/spinnerRegions"
         android:layout_below="@+id/spinnerRegions"
         android:elevation="10dp"
-        android:onClick="onClickSummonerHistory"
+        android:onClick="onClickFindSummoner"
         android:text="@string/go"
         android:textColor="@color/button_text" />
 

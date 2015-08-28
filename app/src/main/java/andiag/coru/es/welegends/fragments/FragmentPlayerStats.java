@@ -147,7 +147,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             if (leagues.isEmpty()) {
                 getLeagues();
             } else setInfoInView();
-        }else{
+        } else {
             setNotLVL30Info();
         }
     }
@@ -174,7 +174,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private void setNotLVL30Info() {
         ArrayList<Bundle> stats = new ArrayList<>();
-        if(getProfileBundle()==null){
+        if (getProfileBundle() == null) {
             adapter.updateStats(stats);
             scaleAdapter.notifyDataSetChanged();
             return;
@@ -201,9 +201,9 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         scaleAdapter.notifyDataSetChanged();
     }
 
-    private void setInfoInView(){
+    private void setInfoInView() {
         ArrayList<Bundle> stats = new ArrayList<>();
-        if(getProfileBundle()==null){
+        if (getProfileBundle() == null) {
             adapter.updateStats(stats);
             scaleAdapter.notifyDataSetChanged();
             return;
@@ -214,8 +214,8 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         int pos5 = -1, pos3 = -1;
 
         Bundle index;
-        for(League l : leagues){
-            switch (l.getQueue()){
+        for (League l : leagues) {
+            switch (l.getQueue()) {
                 case "RANKED_SOLO_5x5":
 
                     stats.add(getDividerBundle("Solo"));
@@ -228,7 +228,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                         stats.add(index);
                         pos3 = stats.indexOf(index);
                     }
-                    if((pos3+1)<=pos5) pos5++;
+                    if ((pos3 + 1) <= pos5) pos5++;
 
                     stats.add(pos3 + 1, getItemBundle(l));
                     break;
@@ -238,7 +238,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                         stats.add(index);
                         pos5 = stats.indexOf(index);
                     }
-                    if((pos5+1)<=pos3) pos3++;
+                    if ((pos5 + 1) <= pos3) pos3++;
 
                     stats.add(pos5 + 1, getItemBundle(l));
                     break;
@@ -250,15 +250,15 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         scaleAdapter.setFirstOnly(false);
     }
 
-    private Bundle getDividerBundle(String title){
+    private Bundle getDividerBundle(String title) {
         Bundle b = new Bundle();
         b.putString("divider", title);
         b.putInt("type", AdapterPlayerStats.TYPE_DIVIDER);
         return b;
     }
 
-    private Bundle getProfileBundle(){
-        if(!isAdded()) return null;
+    private Bundle getProfileBundle() {
+        if (!isAdded()) return null;
         Bundle b = new Bundle();
         b.putString("level", getString(R.string.level) + " " + summoner.getSummonerLevel());
         b.putString("summoner", summoner.getName());
@@ -268,16 +268,16 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
         return b;
     }
 
-    private Bundle getItemBundle(League l){
+    private Bundle getItemBundle(League l) {
 
         Bundle item = new Bundle();
         Entry entry = l.getEntries().get(0);
         item.putString("division", l.getTier() + " " + entry.getDivision());
-        item.putString("divname",l.getName());
-        item.putString("wins",Integer.toString(entry.getWins()));
-        item.putString("losses",Integer.toString(entry.getLosses()));
-        item.putString("lp",Integer.toString(entry.getLeaguePoints()));
-        item.putString("name",entry.getPlayerOrTeamName());
+        item.putString("divname", l.getName());
+        item.putString("wins", Integer.toString(entry.getWins()));
+        item.putString("losses", Integer.toString(entry.getLosses()));
+        item.putString("lp", Integer.toString(entry.getLeaguePoints()));
+        item.putString("name", entry.getPlayerOrTeamName());
         item.putInt("type", AdapterPlayerStats.TYPE_ITEM);
 
         String imres = l.getTier() + entry.getDivision();
@@ -316,13 +316,13 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
-                    if (networkResponse.statusCode== HttpStatus.SC_NOT_FOUND){
+                    if (networkResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
                         setNotLVL30Info();
                         changeRefreshingValue(false);
                         return;
                     }
                 }
-                if(isAdded()) {
+                if (isAdded()) {
                     Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 }
                 changeRefreshingValue(false);

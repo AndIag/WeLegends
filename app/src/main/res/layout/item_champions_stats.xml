@@ -108,12 +108,12 @@
             android:id="@+id/textD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textCS"
             android:layout_alignLeft="@+id/textV"
             android:layout_alignStart="@+id/textV"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/lose"
-            android:layout_alignBottom="@+id/textCS"
             android:textSize="18sp" />
 
     </RelativeLayout>

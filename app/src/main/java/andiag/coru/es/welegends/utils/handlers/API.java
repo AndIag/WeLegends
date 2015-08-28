@@ -33,32 +33,32 @@ public abstract class API {
     //Formats
     private static final String PNG = ".png";
 
-    public static String getMatch(String region, long id){
+    public static String getMatch(String region, long id) {
         return WELEGENDS_PROXY + region + MATCH + id;
     }
 
-    public static String getHistory(String region, long id){
+    public static String getHistory(String region, long id) {
         return WELEGENDS_PROXY + region + MATCH + id + HISTORY;
     }
 
-    public static String getRankeds(String region, long id, int beginIndex, int endindex){
+    public static String getRankeds(String region, long id, int beginIndex, int endindex) {
         return WELEGENDS_PROXY + region + MATCH + id + RANKEDS + beginIndex + "/" + endindex;
     }
 
-    public static String getCurrent(String region, long id, String platform){
+    public static String getCurrent(String region, long id, String platform) {
         return WELEGENDS_PROXY + region + MATCH + id + CURRENT + platform;
     }
 
-    public static String getSummonerId(String region, String id){
+    public static String getSummonerId(String region, String id) {
         return WELEGENDS_PROXY + region + SUMMONER + id;
     }
 
-    public static String getLeagues(String region, long id){
+    public static String getLeagues(String region, long id) {
         return WELEGENDS_PROXY + region + SUMMONER + id + LEAGUES;
     }
 
-    public static String getStats(String region, long id){
-        return WELEGENDS_PROXY + region + SUMMONER + id+ STATS;
+    public static String getStats(String region, long id) {
+        return WELEGENDS_PROXY + region + SUMMONER + id + STATS;
     }
 
     public static String getChampionIcon(String champKey) {

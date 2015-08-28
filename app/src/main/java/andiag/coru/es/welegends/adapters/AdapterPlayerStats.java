@@ -50,7 +50,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    public void updatePlayerStatus(boolean b){
+    public void updatePlayerStatus(boolean b) {
         this.playing = b;
         if (stats != null) notifyItemChanged(0);
 
@@ -97,7 +97,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.textServer.setText(item.getString("server"));
             h.playerIcon.setErrorImageResId(R.drawable.default_champion_error);
             h.playerIcon.setDefaultImageResId(R.drawable.default_champion);
-            h.playerIcon.setImageUrl(item.getString("url"),imageLoader);
+            h.playerIcon.setImageUrl(item.getString("url"), imageLoader);
             if (playing) {
                 h.textPlayerStatus.setText(context.getString(R.string.playing_true));
                 h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.win));
@@ -116,7 +116,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.textDivName.setText(item.getString("divname"));
             h.textLosses.setText(item.getString("losses"));
             h.textWins.setText(item.getString("wins"));
-            h.textLP.setText(item.getString("lp")+ " LP");
+            h.textLP.setText(item.getString("lp") + " LP");
             h.textTeamName.setText(item.getString("name"));
             h.imageRanked.setImageResource(item.getInt("image"));
 
@@ -139,7 +139,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHItem extends RecyclerView.ViewHolder {
-        TextView textTeamName,textDivision,textDivName,textLP,textWins,textLosses;
+        TextView textTeamName, textDivision, textDivName, textLP, textWins, textLosses;
         ImageView imageRanked;
         View v;
 
@@ -152,7 +152,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             textLP = (TextView) v.findViewById(R.id.textLP);
             textWins = (TextView) v.findViewById(R.id.textWins);
             textLosses = (TextView) v.findViewById(R.id.textLosses);
-            imageRanked =(ImageView) v.findViewById(R.id.imageRanked);
+            imageRanked = (ImageView) v.findViewById(R.id.imageRanked);
         }
     }
 
@@ -160,7 +160,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
         View v;
         TextView divider;
 
-        public VHDivider(View itemView){
+        public VHDivider(View itemView) {
             super(itemView);
             this.v = itemView;
             divider = (TextView) v.findViewById(R.id.textGroup);
@@ -168,13 +168,13 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        TextView textSumName,textServer,textLevel,textPlayerStatus;
+        TextView textSumName, textServer, textLevel, textPlayerStatus;
         CircledNetworkImageView playerIcon;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
-            this.view=itemView;
+            this.view = itemView;
             playerIcon = (CircledNetworkImageView) view.findViewById(R.id.imageSummoner);
             textSumName = (TextView) view.findViewById(R.id.textName);
             textServer = (TextView) view.findViewById(R.id.textServer);

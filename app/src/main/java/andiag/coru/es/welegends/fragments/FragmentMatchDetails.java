@@ -75,7 +75,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
             setDataOnView();
         } else {
             if (isAdded())
-            Toast.makeText(activityMain, getString(R.string.unknowkError), Toast.LENGTH_LONG).show();
+                Toast.makeText(activityMain, getString(R.string.unknowkError), Toast.LENGTH_LONG).show();
         }
     }
 

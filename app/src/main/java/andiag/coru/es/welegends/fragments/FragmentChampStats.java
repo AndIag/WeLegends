@@ -109,7 +109,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
         if (rankedStatsDto == null) {
             getChamps();
         } else {
-            if(adapter.needReload()) {
+            if (adapter.needReload()) {
                 adapter.clearChamps();
                 scaleAdapter.notifyDataSetChanged();
                 new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -167,7 +167,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         rankedStatsDto = gson.fromJson(response.toString(), RankedStatsDto.class);
-                        if(rankedStatsDto!=null) {
+                        if (rankedStatsDto != null) {
                             new RetrieveDataTask(rankedStatsDto).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                     }
@@ -185,7 +185,7 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
                         return;
                     }
                 }
-                if(isAdded()) {
+                if (isAdded()) {
                     Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 }
                 changeRefreshingValue(false);
@@ -260,18 +260,18 @@ public class FragmentChampStats extends SwipeRefreshLayoutFragment {
                 m.putFloat("gold", aggregatedStatsDto.getTotalGoldEarned());
                 m.putInt("penta", aggregatedStatsDto.getTotalPentaKills());
                 m.putInt("quadra", aggregatedStatsDto.getTotalQuadraKills());
-                m.putInt("triple",aggregatedStatsDto.getTotalTripleKills());
+                m.putInt("triple", aggregatedStatsDto.getTotalTripleKills());
                 m.putInt("double", aggregatedStatsDto.getTotalDoubleKills());
                 m.putInt("turrets", aggregatedStatsDto.getTotalTurretsKilled());
-                m.putInt("dealt",aggregatedStatsDto.getTotalDamageDealt());
-                m.putInt("taken",aggregatedStatsDto.getTotalDamageTaken());
+                m.putInt("dealt", aggregatedStatsDto.getTotalDamageDealt());
+                m.putInt("taken", aggregatedStatsDto.getTotalDamageTaken());
 
 
                 if (id == 0) { //Summoner Data
                     summonerBundle = m;
                     summonerBundle.putString("summonerName", activityMain.getSummoner().getName());
                     summonerBundle.putLong("summonerProfileId", activityMain.getSummoner().getProfileIconId());
-                }else{
+                } else {
                     m.putInt("champId", id);
                     m.putString("key", Champions.getChampKey(id));
                     m.putString("name", Champions.getChampName(id));

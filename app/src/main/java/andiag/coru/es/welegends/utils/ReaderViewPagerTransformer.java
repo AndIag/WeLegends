@@ -7,23 +7,16 @@ import android.view.View;
  * Created by andyq on 21/07/2015.
  */
 public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
-    public static enum TransformType {
-        FLOW,
-        DEPTH,
-        ZOOM,
-        SLIDE_OVER
-    }
-    private final TransformType mTransformType;
-
-    public ReaderViewPagerTransformer(TransformType transformType) {
-        mTransformType = transformType;
-    }
-
     private static final float MIN_SCALE_DEPTH = 0.75f;
     private static final float MIN_SCALE_ZOOM = 0.85f;
     private static final float MIN_ALPHA_ZOOM = 0.5f;
     private static final float SCALE_FACTOR_SLIDE = 0.85f;
     private static final float MIN_ALPHA_SLIDE = 0.35f;
+    private final TransformType mTransformType;
+
+    public ReaderViewPagerTransformer(TransformType transformType) {
+        mTransformType = transformType;
+    }
 
     public void transformPage(View page, float position) {
         final float alpha;
@@ -95,5 +88,12 @@ public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
         page.setTranslationX(translationX);
         page.setScaleX(scale);
         page.setScaleY(scale);
+    }
+
+    public static enum TransformType {
+        FLOW,
+        DEPTH,
+        ZOOM,
+        SLIDE_OVER
     }
 }

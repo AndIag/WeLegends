@@ -58,8 +58,8 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     // OUTSIDE METHODS
 
-    public boolean needReload(){
-        return champList.size()==0;
+    public boolean needReload() {
+        return champList.size() == 0;
     }
 
     public void updateChamps(List<Bundle> cL) {
@@ -114,7 +114,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
                     + "/" + String.format("%.1f", death / totalGames)
                     + "/" + String.format("%.1f", assist / totalGames));
 
-            h.textCS.setText(String.format("%.1f", item.getFloat("cs")/totalGames));
+            h.textCS.setText(String.format("%.1f", item.getFloat("cs") / totalGames));
             h.textGold.setText(String.format("%.1f", item.getFloat("gold") / (totalGames * 1000)) + "k");
 
             h.imageChamp.setErrorImageResId(R.drawable.default_champion);
@@ -131,7 +131,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             h.textPercent.setText(String.format("%.2f", (item.getFloat("victories") / totalGames) * 100) + "%");
 
-            String championImg = item.getString("key")+"_1.jpg";
+            String championImg = item.getString("key") + "_1.jpg";
 
             h.background.setDefaultImageResId(R.drawable.default_champion_header);
             h.background.setErrorImageResId(R.drawable.default_champion_header_error);
@@ -162,7 +162,7 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class VHItem extends RecyclerView.ViewHolder {
         protected CardView cardView;
-        TextView textKDA,textGold,textCS,textV,textD;
+        TextView textKDA, textGold, textCS, textV, textD;
         NetworkImageView imageChamp;
         View v;
 
@@ -190,13 +190,13 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class VHHeader extends RecyclerView.ViewHolder {
         protected CardView cardView;
-        TextView textVictories,textDefeats,textGlobalKDA,textPercent;
+        TextView textVictories, textDefeats, textGlobalKDA, textPercent;
         NetworkImageView background;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
-            this.view=itemView;
+            this.view = itemView;
             cardView = (CardView) view.findViewById(R.id.cardView);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -19,9 +19,9 @@ public abstract class MyNetworkError {
         int message = R.string.unknowkError;
         if (error.networkResponse == null) {
             if (error.getClass().equals(TimeoutError.class)) {
-                message =  R.string.timeout;
+                message = R.string.timeout;
             }
-        }else{
+        } else {
             networkResponse = error.networkResponse;
 
             switch (networkResponse.statusCode) {

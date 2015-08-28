@@ -31,13 +31,13 @@ public class ActivityMain extends AnimatedTabbedActivity {
         return summoner;
     }
 
-    public void setUnranked(){
-        isUnranked=true;
+    public void setUnranked() {
+        isUnranked = true;
         createTabs();
         reloadActionBar();
     }
 
-    public boolean isUnranked(){
+    public boolean isUnranked() {
         return isUnranked;
     }
 

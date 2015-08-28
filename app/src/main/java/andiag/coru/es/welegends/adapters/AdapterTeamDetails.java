@@ -211,7 +211,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHItem extends RecyclerView.ViewHolder {
-        TextView textKDA,textGold,textCS,textName;
+        TextView textKDA, textGold, textCS, textName;
         NetworkImageView imageChamp, imageSpell1, imageSpell2;
         View v;
 

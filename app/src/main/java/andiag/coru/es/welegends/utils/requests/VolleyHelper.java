@@ -18,28 +18,28 @@ public class VolleyHelper {
     private ImageLoader imageLoader;
     private Context context;
 
-    private VolleyHelper(Context context){
+    private VolleyHelper(Context context) {
         this.context = context;
         requestQueue = getRequestQueue();
         imageLoader = getImageLoader();
     }
 
-    public static synchronized VolleyHelper getInstance(Context context){
-        if(INSTANCE == null){
+    public static synchronized VolleyHelper getInstance(Context context) {
+        if (INSTANCE == null) {
             INSTANCE = new VolleyHelper(context);
         }
         return INSTANCE;
     }
 
-    public RequestQueue getRequestQueue(){
-        if(requestQueue == null){
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;
     }
 
     public ImageLoader getImageLoader() {
-        if (imageLoader == null){
+        if (imageLoader == null) {
             imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
                 private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(50);
 

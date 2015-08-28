@@ -120,7 +120,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
         protected ImageView isRanked;
         protected NetworkImageView vImageChamp;
         protected View view;
-        protected RelativeLayout relativeLayout,relativeImage;
+        protected RelativeLayout relativeLayout, relativeImage;
         protected CardView cardView;
         protected int position;
 
@@ -155,9 +155,6 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             relativeImage = (RelativeLayout) v.findViewById(R.id.RelativeLayoutImage);
         }
     }
-
-
-
 
 
 }

@@ -183,7 +183,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(previousPrincipalChampId >=0){
+        if (previousPrincipalChampId >= 0) {
             Intent i = new Intent(this, ActivityDetails.class);
             i.putExtra("region", region);
             i.putExtra("matchId", matchId);

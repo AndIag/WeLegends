@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/gradient_profile">
 
-        <andiag.coru.es.welegends.utils.CircledNetworkImageView
-            android:id="@+id/imageSummoner"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-        <TextView
-            android:id="@+id/textName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/imageSummoner"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_toRightOf="@+id/imageSummoner"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textName"
-            android:layout_alignLeft="@+id/textName"
-            android:layout_alignRight="@+id/textName"
-            android:layout_alignStart="@+id/textName"
-            android:layout_below="@+id/textName"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:typeface="serif" />
-
-        <TextView
-            android:id="@+id/textLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textServer"
-            android:layout_alignLeft="@+id/textServer"
-            android:layout_alignRight="@+id/textServer"
-            android:layout_alignStart="@+id/textServer"
-            android:layout_below="@+id/textServer"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/white"
-            android:typeface="serif" />
+    <andiag.coru.es.welegends.utils.CircledNetworkImageView
+        android:id="@+id/imageSummoner"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin" />
 
     <TextView
+        android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/textPlaying"
-        android:layout_below="@+id/textLevel"
-        android:layout_alignLeft="@+id/textLevel"
-        android:layout_alignStart="@+id/textLevel"
-        android:layout_alignRight="@+id/textLevel"
-        android:layout_alignEnd="@+id/textLevel"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageSummoner"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@+id/imageSummoner"
         android:gravity="center"
-        android:textColor="@color/win"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textName"
+        android:layout_alignLeft="@+id/textName"
+        android:layout_alignRight="@+id/textName"
+        android:layout_alignStart="@+id/textName"
+        android:layout_below="@+id/textName"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textServer"
+        android:layout_alignLeft="@+id/textServer"
+        android:layout_alignRight="@+id/textServer"
+        android:layout_alignStart="@+id/textServer"
+        android:layout_below="@+id/textServer"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textPlaying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textLevel"
+        android:layout_alignLeft="@+id/textLevel"
+        android:layout_alignRight="@+id/textLevel"
+        android:layout_alignStart="@+id/textLevel"
+        android:layout_below="@+id/textLevel"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/win" />
 
 </RelativeLayout>

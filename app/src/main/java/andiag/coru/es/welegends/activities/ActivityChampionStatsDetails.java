@@ -102,8 +102,8 @@ public class ActivityChampionStatsDetails extends Activity {
         tPenta.setText(String.valueOf(stats.getInt("penta")));
         tTurrets.setText(String.valueOf(stats.getInt("turrets")));
 
-        tDealt.setText(String.format("%.0f",stats.getInt("dealt")/totalGames));
-        tTaken.setText(String.format("%.0f",stats.getInt("taken") / totalGames));
+        tDealt.setText(String.format("%.0f", stats.getInt("dealt") / totalGames));
+        tTaken.setText(String.format("%.0f", stats.getInt("taken") / totalGames));
 
     }
 
@@ -174,16 +174,16 @@ public class ActivityChampionStatsDetails extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         onRetrieveInstanceState(savedInstanceState);
 
         imageLoader = VolleyHelper.getInstance(this).getImageLoader();
 
-        if(!isHeader){
+        if (!isHeader) {
             loadNotHeaderView();
         }
-        if(isHeader){
+        if (isHeader) {
             loadHeaderView();
         }
     }
@@ -199,7 +199,7 @@ public class ActivityChampionStatsDetails extends Activity {
         if (savedInstanceState != null) {
             stats = savedInstanceState.getBundle("champData");
             isHeader = savedInstanceState.getBoolean("isHeader", false);
-        }else{
+        } else {
             Bundle extras = getIntent().getExtras();
             isHeader = extras.getBoolean("isHeader");
             stats = extras.getBundle("champData");

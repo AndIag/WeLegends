@@ -189,7 +189,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(isAdded()) {
+                if (isAdded()) {
                     Toast.makeText(activityMain, getString(MyNetworkError.parseVolleyError(error)), Toast.LENGTH_LONG).show();
                 }
                 changeRefreshingValue(false);
@@ -208,7 +208,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
 
         public RetrieveDataTask(RecentGamesDto recentGames) {
             this.recentGames = recentGames;
-            dateF = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,activityMain.getResources().getConfiguration().locale);
+            dateF = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
         }
 
         @Override

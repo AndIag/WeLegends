@@ -26,7 +26,7 @@ public class TabbedActivity extends ActionBarActivity {
 
     protected void createTabs() {
         tabs.clear();
-        if(mPagerAdapter!=null) {
+        if (mPagerAdapter != null) {
             mPagerAdapter.clear();
         }
     }
@@ -35,7 +35,7 @@ public class TabbedActivity extends ActionBarActivity {
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tabs);
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
-        mPager.setPageTransformer(true,new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
+        mPager.setPageTransformer(true, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class TabbedActivity extends ActionBarActivity {
             this.tabs = tabs;
         }
 
-        public void clear(){
+        public void clear() {
             tabs.clear();
         }
 
@@ -147,9 +147,9 @@ public class TabbedActivity extends ActionBarActivity {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
-            FragmentManager manager = ((Fragment)object).getFragmentManager();
+            FragmentManager manager = ((Fragment) object).getFragmentManager();
             android.support.v4.app.FragmentTransaction trans = manager.beginTransaction();
-            trans.remove((Fragment)object);
+            trans.remove((Fragment) object);
             trans.commit();
         }
 

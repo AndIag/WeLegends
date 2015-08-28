@@ -47,7 +47,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
 
     private static ActivityMain activityMain;
     private static Activity thisActivity;
-    EditText editText;
+    private EditText editText;
     private String region;
     private boolean isLoading = false;
     private ArrayList<SummonerHistoryDto> history;
@@ -56,19 +56,19 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
     private ProgressDialog progressDialog;
 
     public static void setActivityMain(ActivityMain a) {
-        if(a==null && activityMain!=null){
+        if (a == null && activityMain != null) {
             activityMain.finish();
         }
         activityMain = a;
     }
 
-    private void showProgressDialog(){
+    private void showProgressDialog() {
         progressDialog = ProgressDialog.show(this, getResources().getString(R.string.working)
                 , getResources().getString(R.string.searching_summoner), true, false);
     }
 
-    private void dismissProgressDialog(){
-        if(progressDialog!=null && progressDialog.isShowing()){
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
@@ -216,7 +216,7 @@ public class ActivitySummoner extends ActionBarActivity implements AdapterView.O
         isLoading = false;
     }
 
-    private void getSummonerId(final String summonerName){
+    private void getSummonerId(final String summonerName) {
         if (isLoading) return;
 
         showProgressDialog();

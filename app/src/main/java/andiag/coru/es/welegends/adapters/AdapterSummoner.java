@@ -28,7 +28,7 @@ public class AdapterSummoner extends BaseAdapter {
     private ImageLoader imageLoader;
 
     public AdapterSummoner(ActivitySummoner context) {
-        inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageLoader = VolleyHelper.getInstance(context).getImageLoader();
     }
 
@@ -55,7 +55,7 @@ public class AdapterSummoner extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         SummonerHistoryDto summoner = summoners.get(i);
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(R.layout.item_summoner_history, null);
         }
 

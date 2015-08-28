@@ -23,7 +23,9 @@ import java.lang.reflect.InvocationTargetException;
 public class CircledNetworkImageView extends ImageView {
     public boolean mCircled;
 
-    /** The URL of the network image to load */
+    /**
+     * The URL of the network image to load
+     */
     private String mUrl;
 
     /**
@@ -36,10 +38,14 @@ public class CircledNetworkImageView extends ImageView {
      */
     private int mErrorImageId;
 
-    /** Local copy of the ImageLoader. */
+    /**
+     * Local copy of the ImageLoader.
+     */
     private ImageLoader mImageLoader;
 
-    /** Current ImageContainer. (either in-flight or finished) */
+    /**
+     * Current ImageContainer. (either in-flight or finished)
+     */
     private ImageContainer mImageContainer;
 
     public CircledNetworkImageView(Context context) {
@@ -55,15 +61,42 @@ public class CircledNetworkImageView extends ImageView {
     }
 
     /**
+     * Method used to circle a bitmap.
+     *
+     * @param bitmap The bitmap to circle
+     * @return The circled bitmap
+     */
+    public static Bitmap getCircleBitmap(Bitmap bitmap) {
+        int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap output = Bitmap.createBitmap(size,
+                size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        BitmapShader shader;
+        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,
+                Shader.TileMode.CLAMP);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+
+        RectF rect = new RectF(0, 0, size, size);
+        int radius = size / 2;
+        canvas.drawRoundRect(rect, radius, radius, paint);
+        return output;
+    }
+
+    /**
      * Sets URL of the image that should be loaded into this view. Note that calling this will
      * immediately either set the cached image (if available) or the default image specified by
      * {@link CircledNetworkImageView#setDefaultImageResId(int)} on the view.
-     *
+     * <p/>
      * NOTE: If applicable, {@link CircledNetworkImageView#setDefaultImageResId(int)} and
      * {@link CircledNetworkImageView#setErrorImageResId(int)} should be called prior to calling
      * this function.
      *
-     * @param url The URL that should be loaded into this ImageView.
+     * @param url         The URL that should be loaded into this ImageView.
      * @param imageLoader ImageLoader that will be used to make the request.
      */
     public void setImageUrl(String url, ImageLoader imageLoader) {
@@ -91,6 +124,7 @@ public class CircledNetworkImageView extends ImageView {
 
     /**
      * Loads the image for the view if it isn't already loaded.
+     *
      * @param isInLayoutPass True if this was invoked from a layout pass, false otherwise.
      */
     private void loadImageIfNecessary(final boolean isInLayoutPass) {
@@ -202,6 +236,7 @@ public class CircledNetworkImageView extends ImageView {
         mCircled = false;
         super.setImageBitmap(bm);
     }
+
     /**
      * In case the bitmap is manually changed, we make sure to
      * circle it on the next onDraw
@@ -243,13 +278,13 @@ public class CircledNetworkImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         //Let's circle the image
-        if ( !mCircled && getDrawable() != null) {
+        if (!mCircled && getDrawable() != null) {
             Drawable d = getDrawable();
             try {
                 //We use reflection here in case that the drawable isn't a
                 //BitmapDrawable but it contains a public getBitmap method.
                 Bitmap bitmap = (Bitmap) d.getClass().getMethod("getBitmap").invoke(d);
-                if(bitmap != null){
+                if (bitmap != null) {
                     Bitmap circleBitmap = getCircleBitmap(bitmap);
                     setImageBitmap(circleBitmap);
                 }
@@ -266,33 +301,6 @@ public class CircledNetworkImageView extends ImageView {
             mCircled = true;
         }
         super.onDraw(canvas);
-    }
-
-    /**
-     * Method used to circle a bitmap.
-     *
-     * @param bitmap The bitmap to circle
-     * @return The circled bitmap
-     */
-    public static Bitmap getCircleBitmap(Bitmap bitmap) {
-        int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
-
-        Bitmap output = Bitmap.createBitmap(size,
-                size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        BitmapShader shader;
-        shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,
-                Shader.TileMode.CLAMP);
-
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setShader(shader);
-
-        RectF rect = new RectF(0, 0 ,size,size);
-        int radius = size/2;
-        canvas.drawRoundRect(rect, radius,radius, paint);
-        return output;
     }
 
 }

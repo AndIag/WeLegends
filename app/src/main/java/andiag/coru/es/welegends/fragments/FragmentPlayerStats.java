@@ -30,6 +30,7 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
+import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
@@ -59,6 +60,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private ArrayList<League> leagues = new ArrayList<>();
     private boolean isPlaying = false;
+    private CurrentGameInfo currentGameInfo;
 
     public FragmentPlayerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
@@ -341,6 +343,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         isPlaying = true;
+                        currentGameInfo = gson.fromJson(response.toString(), CurrentGameInfo.class);
                         adapter.updatePlayerStatus(isPlaying);
                         scaleAdapter.notifyItemChanged(0);
                     }

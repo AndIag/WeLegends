@@ -22,6 +22,7 @@ import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Names;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA
@@ -42,6 +43,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
         * startDate         String
         * duration          String
         * matchType         int(Resource)
+        * queueType         String
         * */
 
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryViewHolder> {
@@ -76,7 +78,12 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
                 + bundle.getLong("death") + "/" + bundle.getLong("assist"));
         holder.vStartDate.setText(bundle.getString("startDate"));
         holder.vDuration.setText(bundle.getString("duration"));
-        holder.vMap.setText(bundle.getInt("mapName"));
+        int matchMode = Names.getGameMode(bundle.getString("queueType"));
+        if (matchMode >= 0) {
+            holder.vMap.setText(context.getString(matchMode));
+        } else {
+            holder.vMap.setText(bundle.getString("queueType"));
+        }
         holder.relativeImage.setBackgroundResource(bundle.getInt("mapImage"));
         holder.vChampName.setText(bundle.getString("champName"));
         holder.vImageChamp.setErrorImageResId(R.drawable.default_champion_error);

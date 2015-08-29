@@ -267,6 +267,7 @@ public class FragmentHistory extends SwipeRefreshLayoutFragment {
                 data.putBoolean("winner", winner);
                 data.putString("startDate", date_s);
                 data.putString("duration", d);
+                data.putString("queueType", g.getSubType());
                 if (g.getSubType().contains("RANKED") && !(g.getSubType().contains("UNRANKED"))) {
                     data.putInt("matchType", android.R.drawable.ic_menu_compass);
                 }

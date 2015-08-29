@@ -30,6 +30,51 @@ public abstract class Names {
         return mapsNames.get(id);
     }
 
+    public static int getGameMode(String mode) {
+        if (mode == null) {
+            return -1;
+        }
+        if (mode.contains("BOT")) return R.string.bot_game;
+        if (mode.contains("RANKED")) {
+            if (mode.contains("5x5")) {
+                if (mode.contains("SOLO")) return R.string.ranked_solo5x5;
+                if (mode.contains("PREMADE")) return R.string.ranked_premade;
+                if (mode.contains("TEAM")) return R.string.ranked_team;
+            }
+            if (mode.contains("3x3")) {
+                if (mode.contains("PREMADE")) return R.string.ranked_premade;
+                if (mode.contains("TEAM")) return R.string.ranked_team;
+            }
+        }
+        if (mode.contains("NORMAL")) {
+            if (mode.contains("DRAFT")) return R.string.normal_draft;
+            return R.string.normal_game;
+        }
+        if (mode.contains("ODIN")) {
+            if (mode.contains("DRAFT")) return R.string.odin_draft;
+            return R.string.odin_game;
+        }
+        if (mode.contains("GROUP_FINDER")) return R.string.group_finder;
+        if (mode.contains("ARAM")) {
+            if (mode.contains("BILGEWATER")) return R.string.bilgewater_aram_game;
+            return R.string.aram_game;
+        }
+        if (mode.contains("BILGEWATER")) return R.string.bilgewater_game;
+        if (mode.contains("URF")) return R.string.urf_game;
+        if (mode.contains("FIRSTBLOOD")) return R.string.firstblood_game;
+        if (mode.contains("ONEFORALL")) {
+            if (mode.contains("MIRRORMODE")) return R.string.oneforall_mirror_game;
+            return R.string.oneforall_game;
+        }
+        if (mode.contains("HEXAKILL")) return R.string.hexakill_game;
+        if (mode.contains("KING_PORO")) return R.string.king_poro_game;
+        if (mode.contains("COUNTER_PICK")) return R.string.counter_pick_game;
+        if (mode.contains("ASCENSION")) return R.string.ascension;
+        if (mode.equals("SR_6x6")) return R.string.rift6x6;
+        if (mode.equals("NONE")) return R.string.custom_game;
+        return -1;
+    }
+
     public static String getPlatformId(String region) {
         switch (region.toUpperCase()) {
             case "BR":

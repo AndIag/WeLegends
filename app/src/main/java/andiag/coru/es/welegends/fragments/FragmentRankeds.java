@@ -384,6 +384,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 data.putString("startDate", date_s);
                 data.putString("duration", d);
                 data.putInt("matchType", android.R.drawable.ic_menu_compass);
+                data.putString("queueType", m.getQueueType());
                 bundles.add(data);
             }
             return bundles;

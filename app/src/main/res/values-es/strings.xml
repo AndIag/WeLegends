@@ -107,5 +107,22 @@
         <item>NA</item>
         <item>BR</item>
     </string-array>
+    <string name="aram_game">ARAM</string>
+    <string name="ascension">Ascension</string>
+    <string name="bilgewater_aram_game"></string>
+    <string name="firstblood_game">Primera Sangre</string>
+    <string name="group_finder">Buscador de Equipos</string>
+    <string name="hexakill_game">Hexakill</string>
+    <string name="king_poro_game">Rey Poro</string>
+    <string name="normal_game">Normal</string>
+    <string name="odin_draft"></string>
+    <string name="odin_game">Dominion</string>
+    <string name="oneforall_game">Todos para Uno</string>
+    <string name="oneforall_mirror_game">Todos para Uno Espejo</string>
+    <string name="ranked_premade">Clasificatoria Duo</string>
+    <string name="ranked_solo5x5">Clasificatoria Solo</string>
+    <string name="ranked_team">Clasificatoria Equipo</string>
+    <string name="rift6x6">Grieta del Invocador</string>
+    <string name="urf_game">URF</string>
 
 </resources>

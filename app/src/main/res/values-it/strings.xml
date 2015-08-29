@@ -87,4 +87,6 @@
         <item>NA</item>
         <item>BR</item>
     </string-array>
+    <string name="aram_game">ARAM</string>
+    <string name="urf_game">URF</string>
 </resources>

@@ -131,5 +131,7 @@
     <string name="ascension">Ascension</string>
     <string name="rift6x6">Summoner\'s Rift</string>
     <string name="custom_game">Custom</string>
+    <string name="title_section_my_team">My Team</string>
+    <string name="title_section_enemy_team">Enemy Team</string>
 
 </resources>

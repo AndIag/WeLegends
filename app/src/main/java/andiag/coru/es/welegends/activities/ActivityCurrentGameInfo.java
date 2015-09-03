@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
 import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
+import andiag.coru.es.welegends.fragments.FragmentCurrentGameTeam;
 
 /**
  * Created by iagoc on 03/09/2015.
@@ -17,13 +18,44 @@ import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
 public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
 
     private ActivityCurrentGameInfo thisActivity;
+
     private CurrentGameInfo currentGameInfo;
+    private long summonerId;
+
+    private boolean isCreatingTabs = false;
+
+    private synchronized void setCreatingTabs(boolean bool) {
+        isCreatingTabs = bool;
+    }
 
     @Override
     protected void createTabs() {
-        super.createTabs();
+        if (!isCreatingTabs) {
+            setCreatingTabs(true);
+            super.createTabs();
+            int pos = 0;
+            Tab tab;
 
-        setPager();
+            tab = new Tab();
+            tab.setFragment(FragmentCurrentGameTeam.newInstance(true));
+            tab.setName(getString(R.string.title_section_my_team));
+            tab.setActionBarColors(getResources().getColor(R.color.posT0));
+            tab.setToolBarColors(getResources().getColor(R.color.pos0));
+
+            tabs.add(pos, tab);
+            pos++;
+
+            tab = new Tab();
+            tab.setFragment(FragmentCurrentGameTeam.newInstance(false));
+            tab.setName(getString(R.string.title_section_enemy_team));
+            tab.setActionBarColors(getResources().getColor(R.color.posT1));
+            tab.setToolBarColors(getResources().getColor(R.color.pos1));
+
+            tabs.add(pos, tab);
+
+            setPager();
+            setCreatingTabs(false);
+        }
     }
 
     //SaveData
@@ -31,17 +63,20 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("currentGame", currentGameInfo);
+        outState.putLong("summonerId", summonerId);
     }
 
     //RetrieveData
     protected void onRetrieveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             currentGameInfo = (CurrentGameInfo) savedInstanceState.getSerializable("currentGame");
+            summonerId = savedInstanceState.getLong("summonerId");
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 currentGameInfo = (CurrentGameInfo) extras.getSerializable("currentGame");
+                summonerId = extras.getLong("summonerId");
             }
         }
     }
@@ -103,5 +138,4 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

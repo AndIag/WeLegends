@@ -209,6 +209,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
         if (currentGameInfo != null) {
             Intent i = new Intent(this, ActivityCurrentGameInfo.class);
             i.putExtra("currentGame", currentGameInfo);
+            i.putExtra("summonerId", summoner.getId());
             startActivity(i);
         } else {
             Toast.makeText(this, getString(R.string.nothingToShow), Toast.LENGTH_LONG).show();

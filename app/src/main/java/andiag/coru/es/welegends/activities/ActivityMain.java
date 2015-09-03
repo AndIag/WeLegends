@@ -6,14 +6,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
+import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentChampStats;
 import andiag.coru.es.welegends.fragments.FragmentHistory;
-import andiag.coru.es.welegends.fragments.FragmentPlayerStats;
 import andiag.coru.es.welegends.fragments.FragmentRankeds;
+import andiag.coru.es.welegends.fragments.FragmentSummonerStats;
 
 public class ActivityMain extends AnimatedTabbedActivity {
 
@@ -22,6 +25,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
     private String region;
     private boolean isUnranked = false;
     private boolean isCreatingTabs = false;
+    private CurrentGameInfo currentGameInfo;
 
     public String getRegion() {
         return region;
@@ -29,6 +33,10 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
     public Summoner getSummoner() {
         return summoner;
+    }
+
+    public void setCurrentGameInfo(CurrentGameInfo currentGameInfo) {
+        this.currentGameInfo = currentGameInfo;
     }
 
     public void setUnranked() {
@@ -64,7 +72,7 @@ public class ActivityMain extends AnimatedTabbedActivity {
             } else {
                 tabName = getString(R.string.section_summoner).toUpperCase();
             }
-            tab.setFragment(FragmentPlayerStats.newInstance(region, summoner));
+            tab.setFragment(FragmentSummonerStats.newInstance(region, summoner));
             tab.setName(tabName.toUpperCase());
             tab.setActionBarColors(getResources().getColor(R.color.posT0));
             tab.setToolBarColors(getResources().getColor(R.color.pos0));
@@ -117,6 +125,9 @@ public class ActivityMain extends AnimatedTabbedActivity {
         outState.putSerializable("summoner", summoner);
         outState.putString("region", region);
         outState.putBoolean("isUnranked", isUnranked);
+        if (currentGameInfo != null) {
+            outState.putSerializable("currentGame", currentGameInfo);
+        }
     }
 
     //RetrieveData
@@ -125,6 +136,9 @@ public class ActivityMain extends AnimatedTabbedActivity {
             summoner = (Summoner) savedInstanceState.getSerializable("summoner");
             region = savedInstanceState.getString("region");
             isUnranked = savedInstanceState.getBoolean("isUnranked");
+            if (savedInstanceState.containsKey("currentGame")) {
+                currentGameInfo = (CurrentGameInfo) savedInstanceState.getSerializable("currentGame");
+            }
         } else {
             Intent intent = getIntent();
             Bundle extras = intent.getExtras();
@@ -191,4 +205,13 @@ public class ActivityMain extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onClickCurrentGame(View view) {
+        if (currentGameInfo != null) {
+            Intent i = new Intent(this, ActivityCurrentGameInfo.class);
+            i.putExtra("currentGame", currentGameInfo);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, getString(R.string.nothingToShow), Toast.LENGTH_LONG).show();
+        }
+    }
 }

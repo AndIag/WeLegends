@@ -35,6 +35,7 @@
     <string name="voidSummonerError">ERROR: Loading a NULL Summoner</string>
     <string name="unknowkError">Unknown Error</string>
     <string name="networkUnavailable">Network is unavailable</string>
+    <string name="nothingToShow">Nothing to show</string>
 
     <!-- Messages -->
     <string name="checkingVersion">Checking server version…</string>

@@ -113,7 +113,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     //SaveData
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
         outState.putLong("matchId", matchId);
         outState.putString("region", region);
         outState.putInt("principalChamp", principalChampId);

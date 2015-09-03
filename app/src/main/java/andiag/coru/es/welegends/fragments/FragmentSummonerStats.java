@@ -43,7 +43,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 /**
  * Created by Iago on 11/07/2015.
  */
-public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
+public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
 
     private static ActivityMain activityMain;
     //NEEDED METHODS
@@ -60,19 +60,18 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
 
     private ArrayList<League> leagues = new ArrayList<>();
     private boolean isPlaying = false;
-    private CurrentGameInfo currentGameInfo;
 
-    public FragmentPlayerStats() {
+    public FragmentSummonerStats() {
         imageLoader = VolleyHelper.getInstance(getActivity()).getImageLoader();
     }
 
-    public static FragmentPlayerStats newInstance(String region, Summoner summoner) {
-        FragmentPlayerStats fragmentPlayerStats = new FragmentPlayerStats();
+    public static FragmentSummonerStats newInstance(String region, Summoner summoner) {
+        FragmentSummonerStats fragmentSummonerStats = new FragmentSummonerStats();
         Bundle args = new Bundle();
         args.putSerializable("summoner", summoner);
         args.putString("region", region);
-        fragmentPlayerStats.setArguments(args);
-        return fragmentPlayerStats;
+        fragmentSummonerStats.setArguments(args);
+        return fragmentSummonerStats;
     }
 
     public void setSummoner(Summoner summoner) {
@@ -343,7 +342,7 @@ public class FragmentPlayerStats extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         isPlaying = true;
-                        currentGameInfo = gson.fromJson(response.toString(), CurrentGameInfo.class);
+                        activityMain.setCurrentGameInfo(gson.fromJson(response.toString(), CurrentGameInfo.class));
                         adapter.updatePlayerStatus(isPlaying);
                         scaleAdapter.notifyItemChanged(0);
                     }

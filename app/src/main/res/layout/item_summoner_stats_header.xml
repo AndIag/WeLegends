@@ -67,7 +67,9 @@
         android:layout_alignRight="@+id/textLevel"
         android:layout_alignStart="@+id/textLevel"
         android:layout_below="@+id/textLevel"
+        android:clickable="true"
         android:gravity="center"
+        android:onClick="onClickCurrentGame"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/win" />
 

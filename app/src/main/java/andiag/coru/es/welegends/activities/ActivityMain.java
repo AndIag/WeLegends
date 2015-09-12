@@ -207,10 +207,13 @@ public class ActivityMain extends AnimatedTabbedActivity {
 
     public void onClickCurrentGame(View view) {
         if (currentGameInfo != null) {
+            /*
             Intent i = new Intent(this, ActivityCurrentGameInfo.class);
             i.putExtra("currentGame", currentGameInfo);
             i.putExtra("summonerId", summoner.getId());
             startActivity(i);
+            */
+            Toast.makeText(this, "CLICKED", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, getString(R.string.nothingToShow), Toast.LENGTH_LONG).show();
         }

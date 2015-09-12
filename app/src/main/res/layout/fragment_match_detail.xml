@@ -575,6 +575,15 @@
                 android:layout_toEndOf="@+id/imageChampion"
                 android:layout_toRightOf="@+id/imageChampion" />
 
+            <TextView
+                android:id="@+id/textDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/imageRole"
+                android:layout_alignRight="@+id/imageRole"
+                android:layout_alignTop="@+id/imageRole"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
         </RelativeLayout>
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

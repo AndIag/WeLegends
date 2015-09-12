@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.concurrent.TimeUnit;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.utils.handlers.API;
@@ -53,7 +55,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
     private static ActivityDetails activityMain;
     private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin, textChampName;
-    private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree, textRole;
+    private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree, textRole, textDuration;
     private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion, imageSpell, imageSpell1;
     private ImageView imageRole;
     private Bundle data;
@@ -91,6 +93,11 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         } else {
             version = Champions.getServerVersion();
         }
+
+        long duration = data.getLong("duration");
+        textDuration.setText(String.format("%d' %d''",
+                TimeUnit.SECONDS.toMinutes(duration),
+                duration - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))));
 
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
@@ -209,6 +216,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         textKDA = (TextView) view.findViewById(R.id.textKDA);
         textCS = (TextView) view.findViewById(R.id.textCS);
         textGold = (TextView) view.findViewById(R.id.textGold);
+        textDuration = (TextView) view.findViewById(R.id.textDuration);
         imageChampion = (NetworkImageView) view.findViewById(R.id.imageChampion);
         imgTotem = (NetworkImageView) view.findViewById(R.id.imageTotem);
         imgIt1 = (NetworkImageView) view.findViewById(R.id.imageItem1);

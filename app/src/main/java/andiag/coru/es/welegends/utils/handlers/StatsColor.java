@@ -56,5 +56,9 @@ public abstract class StatsColor {
         return color;
     }
 
+    public static void getDeathColor(float value, long matchDuration) {
+
+    }
+
 
 }

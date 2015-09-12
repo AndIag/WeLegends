@@ -102,21 +102,26 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
         textChampName.setText(Champions.getChampName(data.getInt("championId")));
-        textK.setText(String.valueOf(data.getLong("kills")));
-        textK.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("kills"))));
-        textD.setText(String.valueOf(data.getLong("deaths")));
-        textD.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.DEATHS, data.getLong("deaths"))));
-        textA.setText(String.valueOf(data.getLong("assists")));
-        textA.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KILLS, data.getLong("assists"))));
         long deaths = data.getLong("deaths");
         if (deaths == 0) deaths = 1;
         float kda = ((float) data.getLong("kills") + (float) data.getLong("assists")) / deaths;
         textKDA.setText(String.format("%.1f", kda));
-        textKDA.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
+        textKDA.setTextColor(activityMain.getResources().getColor(StatsColor.getKDAColor(kda)));
+
+        textK.setText(String.valueOf(data.getLong("kills")));
+        textK.setTextColor(activityMain.getResources().getColor(StatsColor.getKDAColor(kda)));
+        textD.setText(String.valueOf(data.getLong("deaths")));
+        textD.setTextColor(activityMain.getResources().getColor(StatsColor.getDeathColor(data.getLong("deaths"), duration)));
+        textA.setText(String.valueOf(data.getLong("assists")));
+        textA.setTextColor(activityMain.getResources().getColor(StatsColor.getKDAColor(kda)));
+
         textCS.setText(String.valueOf(data.getLong("cs")));
-        textCS.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.CS, data.getLong("cs"))));
+        textCS.setTextColor(activityMain.getResources().getColor(StatsColor.getCSColor(data.getLong("cs"),
+                duration, getRole(data.getString("role"), data.getString("lane")))));
+
         textGold.setText(String.format("%.1f", ((float) data.getLong("gold")) / 1000) + "k");
-        textGold.setTextColor(activityMain.getResources().getColor(StatsColor.getColor(StatsColor.GOLD, data.getLong("gold"))));
+        textGold.setTextColor(activityMain.getResources().getColor(StatsColor.getGoldColor(data.getLong("gold"),
+                duration, getRole(data.getString("role"), data.getString("lane")))));
 
         imageChampion.setErrorImageResId(R.drawable.default_champion_error);
         imageChampion.setDefaultImageResId(R.drawable.default_champion);
@@ -143,7 +148,11 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
         float minDuration = ((float) data.getLong("duration")) / 60;
         textGoldPerMin.setText(String.format("%.1f", ((float) data.getLong("gold")) / minDuration));
+        textGoldPerMin.setTextColor(activityMain.getResources().getColor(StatsColor.getGoldColor(data.getLong("gold"),
+                duration, getRole(data.getString("role"), data.getString("lane")))));
         textCsPerMin.setText(String.format("%.1f", ((float) data.getLong("cs")) / minDuration));
+        textCsPerMin.setTextColor(activityMain.getResources().getColor(StatsColor.getCSColor(data.getLong("cs"),
+                duration, getRole(data.getString("role"), data.getString("lane")))));
         textDamageTaken.setText(String.valueOf(data.getLong("damageTaken")));
         textDamageDealt.setText(String.valueOf(data.getLong("damageDealt")));
         textHeal.setText(String.valueOf(data.getLong("healDone")));

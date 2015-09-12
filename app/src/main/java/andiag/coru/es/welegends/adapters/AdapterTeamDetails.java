@@ -153,7 +153,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             float kda = ((float) item.getInt("totalKills") + (float) item.getInt("totalAssits"))
                     / (float) item.getInt("totalDeaths");
-            h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getColor(StatsColor.KDA, kda)));
+            h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getKDAColor(kda)));
 
             if (item.getBoolean("haveTeams", false)) {
                 if (item.containsKey("vilemaw")) {

@@ -22,6 +22,7 @@ import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
@@ -30,20 +31,14 @@ import andiag.coru.es.welegends.utils.handlers.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /*
-        haveTeams       Boolean
-            baron       Int
-            drake       Int
-            vilemaw     Int  *Solo en 3x3
-            haveBans    Boolean
-                0       BannedChampion
-                1       BannedChampion
-                2       BannedChampion
-        totalKills      Int
-        totalDeaths     Int
-        totalAssits     Int
-        queue           String
-    participant         Participant
- */
+        team            Team
+        totalKills      int
+        totalDeaths     int
+        totalAssists    int
+        type            queueType
+
+        participant     Participant
+*/
 
 public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0;
@@ -140,6 +135,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
             int color;
+            Team team = (Team) item.getSerializable("team");
             if (isWinner) {
                 h.textBoolean.setText(context.getResources().getString(R.string.victory_team));
                 color = context.getResources().getColor(R.color.win);
@@ -149,25 +145,30 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             }
             h.textKDA.setText(item.getInt("totalKills") + "/"
-                    + item.getInt("totalDeaths") + "/" + item.getInt("totalAssits"));
+                    + item.getInt("totalDeaths") + "/" + item.getInt("totalAssists"));
 
-            float kda = ((float) item.getInt("totalKills") + (float) item.getInt("totalAssits"))
+            float kda = ((float) item.getInt("totalKills") + (float) item.getInt("totalAssists"))
                     / (float) item.getInt("totalDeaths");
             h.textKDA.setTextColor(context.getResources().getColor(StatsColor.getKDAColor(kda)));
 
-            if (item.getBoolean("haveTeams", false)) {
-                if (item.containsKey("vilemaw")) {
-                    h.textBaron.setText(String.valueOf(item.getInt("vilemaw")));
+            if (team != null) {
+                String type = item.getString("type");
+                if (type != null && type.contains("3x3")) {
+                    h.textBaron.setText(String.valueOf(team.getVilemawKills()));
                     h.imageBaron.setImageResource(R.drawable.vilemaw);
                     h.textDragon.setVisibility(View.GONE);
                     h.imageDragon.setVisibility(View.GONE);
+                } else {
+                    h.textBaron.setText(String.valueOf(team.getBaronKills()));
+                    h.textDragon.setText(String.valueOf(team.getDragonKills()));
+                    h.imageDragon.setColorFilter(color);
                 }
-                h.textBaron.setText(String.valueOf(item.getInt("baron")));
-                h.textDragon.setText(String.valueOf(item.getInt("drake")));
-                if (item.getBoolean("haveBans", false)) {
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("0"), h);
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("1"), h);
-                    putBannedChampionOnView((BannedChampion) item.getSerializable("2"), h);
+                h.imageBaron.setColorFilter(color);
+
+                if (team.getBans() != null) {
+                    for (BannedChampion bannedChampion : team.getBans()) {
+                        putBannedChampionOnView(bannedChampion, h);
+                    }
                 } else {
                     h.imageBanned1.setVisibility(View.GONE);
                     h.imageBanned2.setVisibility(View.GONE);
@@ -179,8 +180,6 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
 
             h.textBoolean.setTextColor(color);
-            h.imageBaron.setColorFilter(color);
-            h.imageDragon.setColorFilter(color);
 
         }
 

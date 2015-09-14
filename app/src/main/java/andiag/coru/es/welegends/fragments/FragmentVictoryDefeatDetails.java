@@ -11,23 +11,20 @@ import android.view.ViewGroup;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityDetails;
 import andiag.coru.es.welegends.adapters.AdapterTeamDetails;
-import andiag.coru.es.welegends.entities.Participant;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /*
-        team    Bundle
-        0       Participant
-        1       Participant
-        2       Participant
-        .
-        .
-        .
- */
+        team            Team
+        totalKills      int
+        totalDeaths     int
+        totalAssists    int
+
+        participant     Participant
+*/
 
 
 public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment implements NotifycableFragment {
@@ -40,7 +37,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     private AdapterTeamDetails adapter;
     private ScaleInAnimationAdapter scaleAdapter;
 
-    private Bundle data;
+    private ArrayList<Bundle> data;
     private boolean isWinner;
 
     public FragmentVictoryDefeatDetails() {
@@ -58,7 +55,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     public void notifyFragment() {
         data = getBundleData();
         if (data != null && adapter != null) {
-            adapter.updateTeamMembers(parseData());
+            adapter.updateTeamMembers(data);
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
         }
@@ -98,31 +95,12 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         return rootView;
     }
 
-    private ArrayList<Bundle> parseData() {
-        ArrayList<Bundle> arrayList = new ArrayList<>();
-        Participant p;
-        Bundle b;
-
-        Set<String> keys = data.keySet();
-        for (int i = 0; i < keys.size() - 1; i++) {
-            p = (Participant) data.getSerializable(String.valueOf(i));
-            b = new Bundle();
-            b.putSerializable("participant", p);
-            arrayList.add(b);
-        }
-
-        b = data.getBundle("team");
-        arrayList.add(0, b);
-
-        return arrayList;
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         data = getBundleData();
         if (data != null && adapter != null) {
-            adapter.updateTeamMembers(parseData());
+            adapter.updateTeamMembers(data);
             scaleAdapter.notifyDataSetChanged();
             changeRefreshingValue(false);
         }
@@ -141,11 +119,11 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
         changeRefreshingValue(true);
     }
 
-    private Bundle getBundleData() {
+    private ArrayList<Bundle> getBundleData() {
         if (isWinner) {
-            return activityMain.getData(1);
+            return activityMain.getWinnerTeam();
         } else {
-            return activityMain.getData(2);
+            return activityMain.getLosserTeam();
         }
     }
 

@@ -33,22 +33,6 @@ public class Team implements Serializable {
         this.bans = bans;
     }
 
-    public int getBaronkills() {
-        return baronKills;
-    }
-
-    public void setBaronkills(int baronKills) {
-        this.baronKills = baronKills;
-    }
-
-    public int getDragonkills() {
-        return dragonKills;
-    }
-
-    public void setDragonkills(int dragonKills) {
-        this.dragonKills = dragonKills;
-    }
-
     public boolean isFirstBaron() {
         return firstBaron;
     }

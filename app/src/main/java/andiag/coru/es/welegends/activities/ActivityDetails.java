@@ -17,9 +17,10 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
-import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Match;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
@@ -221,7 +222,86 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Bundle parseSummonerNormalData() {
+    public synchronized ArrayList<Bundle> getWinnerTeam() {
+        if (match == null) return null;
+
+        ArrayList<Bundle> list = new ArrayList<>();
+        Bundle b;
+        int kills = 0, deaths = 0, assists = 0;
+
+        for (Participant p : match.getParticipants()) {
+            if (p.getStats().isWinner()) {
+                b = new Bundle();
+                b.putSerializable("participant", p);
+                kills += p.getStats().getKills();
+                deaths += p.getStats().getDeaths();
+                assists += p.getStats().getAssists();
+                list.add(b);
+            }
+        }
+
+        b = new Bundle();
+
+        if (match.getTeams() != null) {
+            for (Team t : match.getTeams()) {
+                if (t.isWinner()) {
+                    b.putSerializable("team", t);
+                    break;
+                }
+            }
+        }
+
+        b.putInt("totalKills", kills);
+        b.putInt("totalDeaths", deaths);
+        b.putInt("totalAssists", assists);
+
+
+        list.add(0, b);
+        return list;
+    }
+
+    public synchronized ArrayList<Bundle> getLosserTeam() {
+        if (match == null) return null;
+
+        ArrayList<Bundle> list = new ArrayList<>();
+        Bundle b;
+        int kills = 0, deaths = 0, assists = 0;
+
+        for (Participant p : match.getParticipants()) {
+            if (!p.getStats().isWinner()) {
+                b = new Bundle();
+                b.putSerializable("participant", p);
+                kills += p.getStats().getKills();
+                deaths += p.getStats().getDeaths();
+                assists += p.getStats().getAssists();
+                list.add(b);
+            }
+        }
+
+        b = new Bundle();
+
+        if (match.getTeams() != null) {
+            for (Team t : match.getTeams()) {
+                if (!t.isWinner()) {
+                    b.putSerializable("team", t);
+                    break;
+                }
+            }
+        }
+
+        b.putString("type", match.getQueueType());
+        b.putInt("totalKills", kills);
+        b.putInt("totalDeaths", deaths);
+        b.putInt("totalAssists", assists);
+
+
+        list.add(0, b);
+        return list;
+    }
+
+    public synchronized Bundle getSummonerData() {
+        if (match == null) return null;
+
         Bundle b = null;
         Participant participant = null;
         ParticipantStats participantStats;
@@ -263,137 +343,6 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             b.putLong("healDone", participantStats.getTotalHeal());
         }
         return b;
-    }
-
-    private int matchType(String queurType) {
-        //We might need this if some type of mach have different structure
-        return 0;
-    }
-
-    private Bundle getDetailsData() {
-        if (match == null) return null;
-        switch (matchType(match.getQueueType())) {
-            case 0:
-                return parseSummonerNormalData();
-        }
-        return null;
-    }
-
-    private Bundle getWinnerTeamData() {
-        if (match == null) return null;
-        Bundle b = new Bundle();
-        Bundle wTeam = new Bundle();
-        Team winnerTeam = null;
-        int kills = 0, assists = 0, deaths = 0, participant = 0;
-
-        if (match.getTeams() != null) {
-            for (Team t : match.getTeams()) {
-                if (t.isWinner()) {
-                    winnerTeam = t;
-                    break;
-                }
-            }
-            if (winnerTeam != null) {
-                wTeam.putBoolean("haveTeams", true);
-                if (match.getQueueType().contains("3x3")) {
-                    wTeam.putInt("vilemaw", winnerTeam.getVilemawKills());
-                } else {
-                    wTeam.putInt("baron", winnerTeam.getBaronkills());
-                    wTeam.putInt("drake", winnerTeam.getDragonkills());
-                }
-                if (winnerTeam.getBans() != null) {
-                    wTeam.putBoolean("haveBans", true);
-                    for (BannedChampion c : winnerTeam.getBans()) {
-                        wTeam.putSerializable(String.valueOf(participant), c);
-                        participant++;
-                    }
-                    participant = 0;
-                }
-            }
-        }
-
-        for (Participant p : match.getParticipants()) {
-            if (p.getStats().isWinner()) {
-                b.putSerializable(String.valueOf(participant), p);
-                participant++;
-                kills += p.getStats().getKills();
-                deaths += p.getStats().getDeaths();
-                assists += p.getStats().getAssists();
-            }
-        }
-
-        wTeam.putInt("totalKills", kills);
-        wTeam.putInt("totalDeaths", deaths);
-        wTeam.putInt("totalAssits", assists);
-
-        b.putBundle("team", wTeam);
-
-        return b;
-    }
-
-    private Bundle getLosserTeamData() {
-        if (match == null) return null;
-        Bundle b = new Bundle();
-        Bundle lTeam = new Bundle();
-        Team losserTeam = null;
-        int kills = 0, assists = 0, deaths = 0, participant = 0;
-
-        if (match.getTeams() != null) {
-            for (Team t : match.getTeams()) {
-                if (!t.isWinner()) {
-                    losserTeam = t;
-                    break;
-                }
-            }
-            if (losserTeam != null) {
-                lTeam.putBoolean("haveTeams", true);
-                if (match.getQueueType().contains("3x3")) {
-                    lTeam.putInt("vilemaw", losserTeam.getVilemawKills());
-                } else {
-                    lTeam.putInt("baron", losserTeam.getBaronkills());
-                    lTeam.putInt("drake", losserTeam.getDragonkills());
-                }
-                if (losserTeam.getBans() != null) {
-                    lTeam.putBoolean("haveBans", true);
-                    for (BannedChampion c : losserTeam.getBans()) {
-                        lTeam.putSerializable(String.valueOf(participant), c);
-                        participant++;
-                    }
-                    participant = 0;
-                }
-            }
-        }
-
-        for (Participant p : match.getParticipants()) {
-            if (!p.getStats().isWinner()) {
-                b.putSerializable(String.valueOf(participant), p);
-                participant++;
-                kills += p.getStats().getKills();
-                deaths += p.getStats().getDeaths();
-                assists += p.getStats().getAssists();
-            }
-        }
-
-        lTeam.putInt("totalKills", kills);
-        lTeam.putInt("totalDeaths", deaths);
-        lTeam.putInt("totalAssits", assists);
-
-        b.putBundle("team", lTeam);
-
-        return b;
-    }
-
-    public synchronized Bundle getData(int fragment) {
-        switch (fragment) {
-            case 0:
-                return getDetailsData();
-            case 1:
-                return getWinnerTeamData();
-            case 2:
-                return getLosserTeamData();
-            default:
-                return null;
-        }
     }
 
     private void notifyFragments() {

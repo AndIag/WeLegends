@@ -131,8 +131,6 @@ public class AdapterChampStats extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             h.textPercent.setText(String.format("%.2f", (item.getFloat("victories") / totalGames) * 100) + "%");
 
-            String championImg = item.getString("key") + "_1.jpg";
-
             h.background.setDefaultImageResId(R.drawable.default_champion_header);
             h.background.setErrorImageResId(R.drawable.default_champion_header_error);
             h.background.setImageUrl(API.getChampionImage(item.getString("key"), API.SKIN), imageLoader);

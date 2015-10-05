@@ -318,6 +318,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             } else {
                 if (p.getChampionId() == principalChampId) {
                     participant = p;
+                    isWinner = p.getStats().isWinner();
                     break;
                 }
             }

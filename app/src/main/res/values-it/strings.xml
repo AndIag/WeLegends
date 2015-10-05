@@ -89,4 +89,5 @@
     </string-array>
     <string name="aram_game">ARAM</string>
     <string name="urf_game">URF</string>
+    <string name="bilgewater_aram_game"></string>
 </resources>

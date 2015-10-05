@@ -108,8 +108,6 @@
         <item>BR</item>
     </string-array>
     <string name="aram_game">ARAM</string>
-    <string name="ascension">Ascension</string>
-    <string name="bilgewater_aram_game"></string>
     <string name="firstblood_game">Primera Sangre</string>
     <string name="group_finder">Buscador de Equipos</string>
     <string name="hexakill_game">Hexakill</string>

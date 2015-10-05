@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -233,9 +233,9 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        JSONArray arrayMatches = null;
-                        MatchList matches = gson.fromJson(response.toString(), MatchList.class);
-                        new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        matchesHistoryList = gson.fromJson(response.toString(), MatchList.class);
+                        Log.d("PUTO RIOT", matchesHistoryList.toString());
+                        new RetrieveDataTask(matchesHistoryList).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }, new Response.ErrorListener() {
             @Override

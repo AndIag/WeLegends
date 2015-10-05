@@ -110,10 +110,8 @@
     <string name="aram_game">ARAM</string>
     <string name="firstblood_game">Primera Sangre</string>
     <string name="group_finder">Buscador de Equipos</string>
-    <string name="hexakill_game">Hexakill</string>
     <string name="king_poro_game">Rey Poro</string>
     <string name="normal_game">Normal</string>
-    <string name="odin_draft"></string>
     <string name="odin_game">Dominion</string>
     <string name="oneforall_game">Todos para Uno</string>
     <string name="oneforall_mirror_game">Todos para Uno Espejo</string>
@@ -122,5 +120,10 @@
     <string name="ranked_team">Clasificatoria Equipo</string>
     <string name="rift6x6">Grieta del Invocador</string>
     <string name="urf_game">URF</string>
+    <string name="ascension">Ascensión</string>
+    <string name="custom_game">Personalizada</string>
+    <string name="nothingToShow">Nada que mostrar</string>
+    <string name="title_section_my_team">Mi Equipo</string>
+    <string name="title_section_enemy_team">Equipo Enemigo</string>
 
 </resources>

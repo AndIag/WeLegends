@@ -109,25 +109,25 @@
     <string name="playing_false">Not Playing</string>
 
     <!-- Game Mode -->
-    <string name="bot_game">Bot Game</string>
+    <string name="bot_game" translatable="false">Bot Game</string>
     <string name="ranked_solo5x5">Ranked Solo</string>
     <string name="ranked_premade">Ranked Premade</string>
     <string name="ranked_team">Ranked Team</string>
-    <string name="normal_draft">Draft</string>
+    <string name="normal_draft" translatable="false">Draft</string>
     <string name="normal_game">Normal</string>
-    <string name="odin_draft">Draft Dominion</string>
+    <string name="odin_draft" translatable="false">Draft Dominion</string>
     <string name="odin_game">Dominion</string>
     <string name="group_finder">Group Finder</string>
     <string name="aram_game">ARAM</string>
-    <string name="bilgewater_game">Bilgewater</string>
-    <string name="bilgewater_aram_game">Bilgewater ARAM</string>
+    <string name="bilgewater_game" translatable="false">Bilgewater</string>
+    <string name="bilgewater_aram_game" translatable="false">Bilgewater ARAM</string>
     <string name="urf_game">URF</string>
     <string name="firstblood_game">FirstBlood</string>
     <string name="oneforall_mirror_game">MIRROR ONEFORALL</string>
     <string name="oneforall_game">ONEFORALL</string>
-    <string name="hexakill_game">Hexakill</string>
+    <string name="hexakill_game" translatable="false">Hexakill</string>
     <string name="king_poro_game">King Poro</string>
-    <string name="counter_pick_game">Counter Pick</string>
+    <string name="counter_pick_game" translatable="false">Counter Pick</string>
     <string name="ascension">Ascension</string>
     <string name="rift6x6">Summoner\'s Rift</string>
     <string name="custom_game">Custom</string>

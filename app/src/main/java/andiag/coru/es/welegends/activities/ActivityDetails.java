@@ -39,7 +39,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private long matchId;
     private int principalChampId;
     private int previousPrincipalChampId = -1;
-    private boolean isWinner;
+    private boolean isWinner, isRanked;
     private boolean previousIsWinner;
     private String region;
     private Match match;
@@ -119,6 +119,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         outState.putString("region", region);
         outState.putInt("principalChamp", principalChampId);
         outState.putBoolean("isWinner", isWinner);
+        outState.putBoolean("isRanked", isRanked);
         outState.putSerializable("match", match);
         outState.putBoolean("prevIsWinner", previousIsWinner);
         outState.putInt("prevPrincipalChamp", previousPrincipalChampId);
@@ -131,6 +132,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
             region = savedInstanceState.getString("region");
             principalChampId = savedInstanceState.getInt("principalChamp");
             isWinner = savedInstanceState.getBoolean("isWinner");
+            isRanked = savedInstanceState.getBoolean("isRanked");
             match = (Match) savedInstanceState.getSerializable("match");
             previousIsWinner = savedInstanceState.getBoolean("prevIsWinner");
             previousPrincipalChampId = savedInstanceState.getInt("prevPrincipalChamp");
@@ -142,6 +144,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 region = extras.getString("region");
                 principalChampId = extras.getInt("principalChamp");
                 isWinner = extras.getBoolean("isWinner");
+                isRanked = extras.getBoolean("isRanked");
                 if (extras.containsKey("match")) {
                     match = (Match) extras.getSerializable("match");
                     previousIsWinner = extras.getBoolean("prevIsWinner");
@@ -307,9 +310,16 @@ public class ActivityDetails extends AnimatedTabbedActivity {
         ParticipantStats participantStats;
 
         for (Participant p : match.getParticipants()) {
-            if (p.getChampionId() == principalChampId && p.getStats().isWinner() == isWinner) {
-                participant = p;
-                break;
+            if (!isRanked) {
+                if (p.getChampionId() == principalChampId && p.getStats().isWinner() == isWinner) {
+                    participant = p;
+                    break;
+                }
+            } else {
+                if (p.getChampionId() == principalChampId) {
+                    participant = p;
+                    break;
+                }
             }
         }
 

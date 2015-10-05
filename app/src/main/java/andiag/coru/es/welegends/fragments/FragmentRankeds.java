@@ -31,7 +31,7 @@ import java.util.Calendar;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
-import andiag.coru.es.welegends.adapters.AdapterHistory;
+import andiag.coru.es.welegends.adapters.AdapterRankedsHistory;
 import andiag.coru.es.welegends.entities.MatchList;
 import andiag.coru.es.welegends.entities.MatchReference;
 import andiag.coru.es.welegends.utils.handlers.API;
@@ -53,7 +53,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     //VIEW DATA
     private ScaleInAnimationAdapter scaleAdapter;
     private ObservableRecyclerView recyclerView;
-    private AdapterHistory recyclerAdapter;
+    private AdapterRankedsHistory recyclerAdapter;
     private GridLayoutManager layoutManager;
     //METRICS
     private DisplayMetrics outMetrics;
@@ -133,7 +133,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         onRetrieveInstanceState(savedInstanceState);
 
         if (recyclerAdapter == null) {
-            recyclerAdapter = new AdapterHistory(activityMain);
+            recyclerAdapter = new AdapterRankedsHistory(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(recyclerAdapter);
         }
 
@@ -311,14 +311,11 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         @Override
         protected void onPostExecute(ArrayList<Bundle> bundles) {
             super.onPostExecute(bundles);
-
-            /*  CAMBIAR EL ADAPTER
             if (recyclerAdapter != null) {
                 recyclerAdapter.updateHistory(bundles);
                 scaleAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
-            */
         }
     }
 }

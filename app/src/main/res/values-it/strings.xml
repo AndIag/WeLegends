@@ -89,5 +89,19 @@
     </string-array>
     <string name="aram_game">ARAM</string>
     <string name="urf_game">URF</string>
-    <string name="bilgewater_aram_game"></string>
+    <string name="ascension">Ascensione</string>
+    <string name="normal_game">Normale</string>
+    <string name="nothingToShow">Niente da vedere</string>
+    <string name="oneforall_game">Tutti per Uno</string>
+    <string name="oneforall_mirror_game">Tutti per Uno pecchio</string>
+    <string name="ranked_solo5x5">Ranked Solo</string>
+    <string name="ranked_team">Ranked Team</string>
+    <string name="ranked_premade">Ranked Duo</string>
+    <string name="rift6x6">Landa degli Evocatori</string>
+    <string name="title_section_enemy_team">Squadra Nemica</string>
+    <string name="title_section_my_team">Mia Squadra</string>
+    <string name="king_poro_game">Re Poro</string>
+    <string name="group_finder">Ricerca d\'squadra</string>
+    <string name="firstblood_game">Primo Sangue</string>
+    <string name="custom_game">Personalizzata</string>
 </resources>

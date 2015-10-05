@@ -9,14 +9,14 @@ android {
             applicationId 'andiag.coru.es.welegends.lite'
             minSdkVersion 16
             targetSdkVersion 22
-            versionCode 2
-            versionName "1.0.2"
+            versionCode 3
+            versionName "1.0.3"
         }
         pro {
             applicationId 'andiag.coru.es.welegends'
             minSdkVersion 16
             targetSdkVersion 22
-            versionCode 2
+            versionCode 1
             versionName "1.0.0"
         }
     }

@@ -116,7 +116,7 @@
     <string name="normal_draft" translatable="false">Draft</string>
     <string name="normal_game">Normal</string>
     <string name="odin_draft" translatable="false">Draft Dominion</string>
-    <string name="odin_game">Dominion</string>
+    <string name="odin_game" translatable="false">Dominion</string>
     <string name="group_finder">Group Finder</string>
     <string name="aram_game">ARAM</string>
     <string name="bilgewater_game" translatable="false">Bilgewater</string>

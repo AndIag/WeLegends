@@ -23,21 +23,17 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterHistory;
-import andiag.coru.es.welegends.entities.Match;
-import andiag.coru.es.welegends.entities.Participant;
-import andiag.coru.es.welegends.entities.ParticipantStats;
+import andiag.coru.es.welegends.entities.MatchList;
+import andiag.coru.es.welegends.entities.MatchReference;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Images;
@@ -68,7 +64,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     //BASIC DATA
     private String region;
     private long summoner_id;
-    private ArrayList<Match> matchesHistoryList;
+    private MatchList matchesHistoryList;
     //NEEDED METHODS
     private String request;
 
@@ -97,7 +93,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private void startIndex() {
         BEGININDEX = 0;
         ENDINDEX = INCREMENT;
-        matchesHistoryList = new ArrayList<>();
+        matchesHistoryList = new MatchList();
     }
 
     //SAVE AND RETRIEVE DATA
@@ -121,7 +117,7 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
             ENDINDEX = savedInstanceState.getInt("endIndex");
             summoner_id = savedInstanceState.getLong("summoner_id");
             region = savedInstanceState.getString("region");
-            matchesHistoryList = (ArrayList<Match>) savedInstanceState.getSerializable("matchesHistory");
+            matchesHistoryList = (MatchList) savedInstanceState.getSerializable("matchesHistory");
         }
     }
 
@@ -226,6 +222,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
     private void getSummonerHistory() {
         if (isLoading()) return;
 
+        final Gson gson = new Gson();
+
         changeRefreshingValue(true);
 
         request = API.getRankeds(region, summoner_id, BEGININDEX, ENDINDEX);
@@ -236,17 +234,8 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONArray arrayMatches = null;
-                        try {
-                            arrayMatches = response.getJSONArray("matches");
-                            if (arrayMatches != null) {
-                                new ParseDataTask(arrayMatches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        } catch (JSONException e) {
-                            if (matchesHistoryList == null || matchesHistoryList.size() <= 0) {
-                                activityMain.setUnranked();
-                            }
-                            changeRefreshingValue(false);
-                        }
+                        MatchList matches = gson.fromJson(response.toString(), MatchList.class);
+                        new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -264,59 +253,12 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         VolleyHelper.getInstance(activityMain).getRequestQueue().add(jsonObjectRequest);
     }
 
-    private class ParseDataTask extends AsyncTask<Void, Void, ArrayList<Match>> {
-
-        private final Gson gson = new Gson();
-        private JSONArray array;
-
-        public ParseDataTask(JSONArray array) {
-            this.array = array;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            changeRefreshingValue(true);
-        }
-
-        @Override
-        protected ArrayList<Match> doInBackground(Void... voids) {
-
-            ArrayList<Match> list = new ArrayList<>();
-
-            try {
-                Match match;
-                Object object;
-                for (int i = 0; i < array.length(); i++) {
-                    object = array.get(i);
-                    match = gson.fromJson(object.toString(), Match.class);
-                    list.add(match);
-                }
-                Collections.reverse(list);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                changeRefreshingValue(false);
-            }
-
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Match> matches) {
-            super.onPostExecute(matches);
-            if (matches != null && matches.size() > 0) {
-                matchesHistoryList.addAll(matches);
-                new RetrieveDataTask(matches).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        }
-    }
-
     private class RetrieveDataTask extends AsyncTask<Void, Void, ArrayList<Bundle>> {
 
-        private ArrayList<Match> matches;
+        private MatchList matches;
         private DateFormat dateF;
 
-        public RetrieveDataTask(ArrayList<Match> m) {
+        public RetrieveDataTask(MatchList m) {
             this.matches = m;
             dateF = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, activityMain.getResources().getConfiguration().locale);
         }
@@ -329,62 +271,38 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
 
         @Override
         protected ArrayList<Bundle> doInBackground(Void... voids) {
-            int mapid = 11, champId = 0;
-            long creation = 0, duration = 0;
-            long kills = 0, assists = 0, deaths = 0, minions = 0, lvl = 0, gold = 0;
-            boolean winner = false;
-            ParticipantStats stats;
+            int mapid = 11;
+            int champId = 0;
+            long creation = 0;
             Calendar date = Calendar.getInstance();
             Bundle data;
             ArrayList<Bundle> bundles = new ArrayList<>();
-            String d, date_s;
-            Participant p;
+            String date_s;
 
-            for (Match m : matches) {
-                mapid = m.getMapId();
-                creation = m.getMatchCreation();
-                duration = m.getMatchDuration();
+            for (MatchReference m : matches.getMatches()) {
+                if (m.getQueue().contains("3x3")) {
+                    mapid = 10;
+                } else {
+                    mapid = 11;
+                }
+                creation = m.getTimestamp();
 
-                p = m.getParticipants().get(0);
-                champId = p.getChampionId();
-                stats = p.getStats();
-
-                kills = stats.getKills();
-                deaths = stats.getDeaths();
-                assists = stats.getAssists();
-                lvl = stats.getChampLevel();
-                minions = stats.getMinionsKilled();
-                winner = stats.isWinner();
-                gold = stats.getGoldEarned();
-
-                d = String.format("%d' %d''",
-                        TimeUnit.SECONDS.toMinutes(duration),
-                        duration -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(duration))
-                );
+                champId = (int) m.getChampion();
 
                 date.setTimeInMillis(creation);
                 date_s = dateF.format(date.getTime());
 
                 data = new Bundle();
                 data.putLong("matchId", m.getMatchId());
-                data.putInt("champId", champId);
+                data.putLong("champId", champId);
                 data.putString("champName", Champions.getChampName(champId));
                 data.putString("champKey", Champions.getChampKey(champId));
                 data.putInt("mapId", mapid);
                 data.putInt("mapName", Names.getMapName(mapid));
                 data.putInt("mapImage", Images.getMap(mapid));
-                data.putLong("kills", kills);
-                data.putLong("death", deaths);
-                data.putLong("assist", assists);
-                data.putLong("lvl", lvl);
-                data.putLong("cs", minions);
-                data.putFloat("gold", gold);
-                data.putBoolean("winner", winner);
                 data.putString("startDate", date_s);
-                data.putString("duration", d);
                 data.putInt("matchType", android.R.drawable.ic_menu_compass);
-                data.putString("queueType", m.getQueueType());
+                data.putString("queueType", m.getQueue());
                 bundles.add(data);
             }
             return bundles;
@@ -393,11 +311,14 @@ public class FragmentRankeds extends SwipeRefreshLayoutFragment {
         @Override
         protected void onPostExecute(ArrayList<Bundle> bundles) {
             super.onPostExecute(bundles);
+
+            /*  CAMBIAR EL ADAPTER
             if (recyclerAdapter != null) {
                 recyclerAdapter.updateHistory(bundles);
                 scaleAdapter.notifyDataSetChanged();
             }
             changeRefreshingValue(false);
+            */
         }
     }
 }

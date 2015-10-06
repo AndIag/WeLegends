@@ -225,6 +225,7 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
                     if (participant != null) {
                         i.putExtra("region", ((ActivityDetails) context).getRegion());
                         i.putExtra("matchId", ((ActivityDetails) context).getMatchId());
+                        i.putExtra("isRanked", ((ActivityDetails) context).isRanked());
                         i.putExtra("principalChamp", participant.getChampionId());
                         i.putExtra("isWinner", participant.getStats().isWinner());
                         i.putExtra("match", ((ActivityDetails) context).getMatch());

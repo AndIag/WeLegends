@@ -39,7 +39,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     private long matchId;
     private int principalChampId;
     private int previousPrincipalChampId = -1;
-    private boolean isWinner, isRanked;
+    private boolean isWinner, isRanked = false;
     private boolean previousIsWinner;
     private String region;
     private Match match;
@@ -67,6 +67,10 @@ public class ActivityDetails extends AnimatedTabbedActivity {
 
     public int getPrincipalChampId() {
         return principalChampId;
+    }
+
+    public boolean isRanked() {
+        return isRanked;
     }
 
     @Override
@@ -144,7 +148,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
                 region = extras.getString("region");
                 principalChampId = extras.getInt("principalChamp");
                 isWinner = extras.getBoolean("isWinner");
-                isRanked = extras.getBoolean("isRanked");
+                isRanked = extras.getBoolean("isRanked", false);
                 if (extras.containsKey("match")) {
                     match = (Match) extras.getSerializable("match");
                     previousIsWinner = extras.getBoolean("prevIsWinner");

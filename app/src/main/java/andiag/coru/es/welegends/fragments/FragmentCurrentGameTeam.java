@@ -12,6 +12,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
+import andiag.coru.es.welegends.activities.ActivityCurrentGameInfo;
 import andiag.coru.es.welegends.adapters.AdapterCurrentGameTeams;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
@@ -20,7 +21,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
  */
 public class FragmentCurrentGameTeam extends Fragment {
 
-    private static ActivityChampionStatsDetails activityMain;
+    private static ActivityCurrentGameInfo activityMain;
 
     private ObservableRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -28,12 +29,12 @@ public class FragmentCurrentGameTeam extends Fragment {
     private AdapterCurrentGameTeams adapter;
     private ScaleInAnimationAdapter scaleAdapter;
 
-    private boolean isWinner;
+    private boolean myTab;
 
-    public static FragmentVictoryDefeatDetails newInstance(boolean type) {
-        FragmentVictoryDefeatDetails f = new FragmentVictoryDefeatDetails();
+    public static FragmentCurrentGameTeam newInstance(boolean type) {
+        FragmentCurrentGameTeam f = new FragmentCurrentGameTeam();
         Bundle arguments = new Bundle();
-        arguments.putBoolean("isWinner", type);
+        arguments.putBoolean("myTab", type);
         f.setArguments(arguments);
         return f;
     }
@@ -41,13 +42,13 @@ public class FragmentCurrentGameTeam extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activityMain = (ActivityChampionStatsDetails) activity;
+        activityMain = (ActivityCurrentGameInfo) activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isWinner = getArguments().getBoolean("isWinner");
+        myTab = getArguments().getBoolean("myTab");
         if (adapter == null) {
             adapter = new AdapterCurrentGameTeams(activityMain);
             scaleAdapter = new ScaleInAnimationAdapter(adapter);

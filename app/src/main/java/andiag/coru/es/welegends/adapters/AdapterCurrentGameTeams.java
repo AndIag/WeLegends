@@ -22,10 +22,22 @@ import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
+import andiag.coru.es.welegends.utils.handlers.Images;
+import andiag.coru.es.welegends.utils.handlers.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
-/**
- * Created by iagoc on 03/09/2015.
+/*
+        champId         int
+        summonerId      long
+        summonerName    string
+        spell1          int
+        spell2          int
+        mastery         serializable
+        runes           serializable
+
+
+
+        banned          serializable
  */
 public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -115,32 +127,43 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Bundle item = getItem(position);
         if (holder instanceof VHItem) {
+            final VHItem h = (VHItem) holder;
+
+            //h.buttonM.setVisibility(View.GONE);
+            //h.buttonR.setVisibility(View.GONE);
+
+            h.textSummName.setText(item.getString("summonerName"));
+            h.textChampName.setText(Champions.getChampName(item.getInt("champId")));
+
+            h.imageChamp.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageChamp.setDefaultImageResId(R.drawable.default_champion);
+            h.imageChamp.setImageUrl(API.getChampionIcon(Champions.getChampKey(item.getInt("champId"))),
+                    imageLoader);
+
+            h.imageSpell1.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageSpell1.setDefaultImageResId(R.drawable.default_champion);
+            h.imageSpell1.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion(), Spells.getSpellKey(item.getInt("spell1"))),
+                    imageLoader);
+
+            h.imageSpell2.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageSpell2.setDefaultImageResId(R.drawable.default_champion);
+            h.imageSpell2.setImageUrl(API.getSummonerSpellImage(Spells.getServerVersion(), Spells.getSpellKey(item.getInt("spell2"))),
+                    imageLoader);
 
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
 
-            Team team = (Team) item.getSerializable("team");
+            h.imageDragon.setVisibility(View.GONE);
+            h.imageBaron.setVisibility(View.GONE);
 
-            if (team != null) {
-
-                h.imageDragon.setVisibility(View.GONE);
-
-                h.imageBaron.setVisibility(View.GONE);
-
-                if (team.getBans() != null) {
-                    for (BannedChampion bannedChampion : team.getBans()) {
-                        putBannedChampionOnView(bannedChampion, h);
+            if(item.containsKey("banned")) {
+                ArrayList<BannedChampion> bans = (ArrayList<BannedChampion>) item.getSerializable("banned");
+                if (bans != null) {
+                    for(BannedChampion b : bans){
+                        putBannedChampionOnView(b, h);
                     }
-                } else {
-                    h.imageBanned1.setVisibility(View.GONE);
-                    h.imageBanned2.setVisibility(View.GONE);
-                    h.imageBanned3.setVisibility(View.GONE);
-                    h.textBanned1.setVisibility(View.GONE);
-                    h.textBanned2.setVisibility(View.GONE);
-                    h.textBanned3.setVisibility(View.GONE);
                 }
             }
-
         }
 
     }

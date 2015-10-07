@@ -3,13 +3,17 @@ package andiag.coru.es.welegends.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
 import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
+import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameParticipant;
 import andiag.coru.es.welegends.fragments.FragmentCurrentGameTeam;
 
 /**
@@ -134,4 +138,71 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private long getMyTeamId(){
+        for(CurrentGameParticipant p : currentGameInfo.getParticipants()){
+            if(p.getSummonerId()==summonerId){
+                return p.getTeamId();
+            }
+        }
+        return -1;
+    }
+
+    public synchronized ArrayList<Bundle> getMyTeamData(){
+        ArrayList<Bundle> list = new ArrayList<>();
+        Bundle b;
+        long teamid = getMyTeamId();
+        if(teamid>=0){
+            for(CurrentGameParticipant p : currentGameInfo.getParticipants()) {
+                if(p.getTeamId()==teamid) {
+                    b = new Bundle();
+                    b.putInt("champId", (int) p.getChampionId());
+                    b.putLong("summonerId", p.getSummonerId());
+                    b.putString("summonerName", p.getSummonerName());
+                    b.putInt("spell1", (int) p.getSpell1Id());
+                    b.putInt("spell2", (int) p.getSpell2Id());
+                    b.putSerializable("mastery", p.getMasteries());
+                    b.putSerializable("runes", p.getRunes());
+
+                    list.add(b);
+                }
+            }
+
+            b = new Bundle();
+            if(currentGameInfo.getBannedChampions()!=null)
+                b.putSerializable("banned", currentGameInfo.getBannedChampions());
+            b.putLong("mapId", currentGameInfo.getMapId());
+            list.add(0,b);
+        }
+        return list;
+    }
+
+    public synchronized ArrayList<Bundle> getEnemyTeamData(){
+        ArrayList<Bundle> list = new ArrayList<>();
+        Bundle b;
+        long teamid = getMyTeamId();
+        if(teamid>=0){
+            for(CurrentGameParticipant p : currentGameInfo.getParticipants()) {
+                if(p.getTeamId()!=teamid) {
+                    b = new Bundle();
+                    b.putInt("champId", (int) p.getChampionId());
+                    b.putLong("summonerId", p.getSummonerId());
+                    b.putString("summonerName", p.getSummonerName());
+                    b.putInt("spell1", (int) p.getSpell1Id());
+                    b.putInt("spell2", (int) p.getSpell2Id());
+                    b.putSerializable("mastery", p.getMasteries());
+                    b.putSerializable("runes", p.getRunes());
+
+                    list.add(b);
+                }
+            }
+
+            b = new Bundle();
+            if(currentGameInfo.getBannedChampions()!=null)
+                b.putSerializable("banned", currentGameInfo.getBannedChampions());
+            list.add(0,b);
+        }
+        return list;
+    }
+
 }

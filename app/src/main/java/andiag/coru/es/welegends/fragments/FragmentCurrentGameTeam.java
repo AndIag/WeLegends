@@ -60,6 +60,12 @@ public class FragmentCurrentGameTeam extends Fragment {
     public void onResume() {
         super.onResume();
 
+        if(myTab){
+            adapter.updateTeamMembers(activityMain.getMyTeamData());
+        }else{
+            adapter.updateTeamMembers(activityMain.getEnemyTeamData());
+        }
+
     }
 
     @Override //Si se ejecuta al cambiar 2 fragments para el lado

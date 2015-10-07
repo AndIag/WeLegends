@@ -35,8 +35,11 @@
             android:label="@string/title_activity_activity_about"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ActivityChampionStatsDetails"
-            android:label="@string/title_activity_champion_stats_details" />
+        android:name=".activities.ActivityChampionStatsDetails"
+        android:label="@string/title_activity_champion_stats_details" />
+        <activity
+            android:name=".activities.ActivityCurrentGameInfo"
+            android:label="@string/title_activity_current_info" />
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.handlers.Spells;
@@ -53,7 +53,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 */
 public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements NotifycableFragment {
 
-    private static ActivityDetails activityMain;
+    private static ActivityMatchDetails activityMain;
     private TextView textK, textD, textA, textKDA, textCS, textGold, textGoldPerMin, textCsPerMin, textChampName;
     private TextView textDamageDealt, textDamageTaken, textHeal, textPhyDealt, textMagDealt, textKillingSpree, textRole, textDuration;
     private NetworkImageView imgTotem, imgIt1, imgIt2, imgIt3, imgIt4, imgIt5, imgIt6, imageChampion, imageSpell, imageSpell1;
@@ -82,6 +82,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     }
 
     private void setDataOnView() {
+        //Get the server version for necesary for the image resources
         String badVersion = data.getString("version");
         if (badVersion != null) {
             String[] parts = badVersion.split("\\.");
@@ -101,7 +102,14 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
         textRole.setText(activityMain.getString(getNameToRole(getRole(data.getString("role"), data.getString("lane")))));
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
+
         textChampName.setText(Champions.getChampName(data.getInt("championId")));
+        if(activityMain.isWinner()){
+            textChampName.setBackgroundResource(R.color.win);
+        }else{
+            textChampName.setBackgroundResource(R.color.lose);
+        }
+
         long deaths = data.getLong("deaths");
         if (deaths == 0) deaths = 1;
         float kda = ((float) data.getLong("kills") + (float) data.getLong("assists")) / deaths;
@@ -110,8 +118,10 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
 
         textK.setText(String.valueOf(data.getLong("kills")));
         textK.setTextColor(activityMain.getResources().getColor(StatsColor.getKDAColor(kda)));
+
         textD.setText(String.valueOf(data.getLong("deaths")));
         textD.setTextColor(activityMain.getResources().getColor(StatsColor.getDeathColor(data.getLong("deaths"), duration)));
+
         textA.setText(String.valueOf(data.getLong("assists")));
         textA.setTextColor(activityMain.getResources().getColor(StatsColor.getKDAColor(kda)));
 
@@ -176,7 +186,7 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activityMain = (ActivityDetails) activity;
+        activityMain = (ActivityMatchDetails) activity;
     }
 
     @Override

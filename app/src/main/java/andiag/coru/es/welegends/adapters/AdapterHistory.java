@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Names;
@@ -139,7 +139,7 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.HistoryV
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context, ActivityDetails.class);
+                    Intent i = new Intent(context, ActivityMatchDetails.class);
                     i.putExtra("matchId", (historyList.get(position).getLong("matchId")));
                     i.putExtra("region", ((ActivityMain) context).getRegion());
                     i.putExtra("principalChamp", historyList.get(position).getInt("champId"));

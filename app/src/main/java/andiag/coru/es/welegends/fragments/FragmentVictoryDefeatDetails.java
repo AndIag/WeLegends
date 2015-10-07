@@ -13,7 +13,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.adapters.AdapterTeamDetails;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
@@ -29,7 +29,7 @@ import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment implements NotifycableFragment {
 
-    private static ActivityDetails activityMain;
+    private static ActivityMatchDetails activityMain;
 
     private ObservableRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -64,7 +64,7 @@ public class FragmentVictoryDefeatDetails extends SwipeRefreshLayoutFragment imp
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activityMain = (ActivityDetails) activity;
+        activityMain = (ActivityMatchDetails) activity;
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityDetails;
+import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
@@ -220,17 +220,17 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context, ActivityDetails.class);
+                    Intent i = new Intent(context, ActivityMatchDetails.class);
                     Participant participant = (Participant) getItem(getAdapterPosition()).getSerializable("participant");
                     if (participant != null) {
-                        i.putExtra("region", ((ActivityDetails) context).getRegion());
-                        i.putExtra("matchId", ((ActivityDetails) context).getMatchId());
-                        i.putExtra("isRanked", ((ActivityDetails) context).isRanked());
+                        i.putExtra("region", ((ActivityMatchDetails) context).getRegion());
+                        i.putExtra("matchId", ((ActivityMatchDetails) context).getMatchId());
+                        i.putExtra("isRanked", ((ActivityMatchDetails) context).isRanked());
                         i.putExtra("principalChamp", participant.getChampionId());
                         i.putExtra("isWinner", participant.getStats().isWinner());
-                        i.putExtra("match", ((ActivityDetails) context).getMatch());
-                        i.putExtra("prevIsWinner", ((ActivityDetails) context).isWinner());
-                        i.putExtra("prevPrincipalChamp", ((ActivityDetails) context).getPrincipalChampId());
+                        i.putExtra("match", ((ActivityMatchDetails) context).getMatch());
+                        i.putExtra("prevIsWinner", ((ActivityMatchDetails) context).isWinner());
+                        i.putExtra("prevPrincipalChamp", ((ActivityMatchDetails) context).getPrincipalChampId());
                         context.startActivity(i);
                         ((Activity) context).finish();
                     }

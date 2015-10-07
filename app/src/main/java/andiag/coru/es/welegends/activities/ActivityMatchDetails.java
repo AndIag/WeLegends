@@ -32,10 +32,10 @@ import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
-public class ActivityDetails extends AnimatedTabbedActivity {
+public class ActivityMatchDetails extends AnimatedTabbedActivity {
 
     protected boolean isLoading = false;
-    private ActivityDetails thisActivity;
+    private ActivityMatchDetails thisActivity;
     private long matchId;
     private int principalChampId;
     private int previousPrincipalChampId = -1;
@@ -192,7 +192,7 @@ public class ActivityDetails extends AnimatedTabbedActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (previousPrincipalChampId >= 0) {
-            Intent i = new Intent(this, ActivityDetails.class);
+            Intent i = new Intent(this, ActivityMatchDetails.class);
             i.putExtra("region", region);
             i.putExtra("matchId", matchId);
             i.putExtra("principalChamp", previousPrincipalChampId);

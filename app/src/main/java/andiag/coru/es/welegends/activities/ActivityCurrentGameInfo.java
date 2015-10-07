@@ -17,8 +17,6 @@ import andiag.coru.es.welegends.fragments.FragmentCurrentGameTeam;
  */
 public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
 
-    private ActivityCurrentGameInfo thisActivity;
-
     private CurrentGameInfo currentGameInfo;
     private long summonerId;
 
@@ -85,8 +83,6 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        thisActivity = this;
 
         //NEED THIS TO USE SETANIMATION METHOD
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));

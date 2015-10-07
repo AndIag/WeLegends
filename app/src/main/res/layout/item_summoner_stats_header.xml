@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_profile">
+    android:background="@drawable/gradient_profile"
+    android:clickable="true"
+    android:onClick="onClickCurrentGame">
 
     <andiag.coru.es.welegends.utils.CircledNetworkImageView
         android:id="@+id/imageSummoner"
@@ -67,9 +69,7 @@
         android:layout_alignRight="@+id/textLevel"
         android:layout_alignStart="@+id/textLevel"
         android:layout_below="@+id/textLevel"
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickCurrentGame"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/win" />
 

@@ -64,6 +64,39 @@
             android:layout_alignLeft="@+id/imageSpell1"
             android:layout_alignStart="@+id/imageSpell1" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Greenstorm21"
+            android:id="@+id/textSummonerName"
+            android:layout_alignTop="@+id/imageSpell1"
+            android:layout_toRightOf="@+id/imageSpell1"
+            android:layout_toLeftOf="@+id/buttonMasteries"
+            android:layout_toStartOf="@+id/buttonMasteries"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/buttonMasteries"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="M"
+            android:id="@+id/buttonMasteries"
+            android:layout_alignBottom="@+id/textName"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="R"
+            android:id="@+id/buttonRunes"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -6,16 +6,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.entities.BannedChampion;
+import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
+import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.handlers.Champions;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 /**
@@ -81,22 +87,83 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
         return teamMembers.get(position);
     }
 
+    private void putBannedChampionOnView(BannedChampion bannedChampion, VHHeader h) {
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 2 || bannedChampion.getPickTurn() == 1)) {
+            h.textBanned1.setText(Champions.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned1.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageBanned1.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned1.setImageUrl(API.getChampionIcon(Champions.getChampKey(bannedChampion.getChampionId())),
+                    imageLoader);
+        }
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 4 || bannedChampion.getPickTurn() == 3)) {
+            h.textBanned2.setText(Champions.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned2.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageBanned2.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned2.setImageUrl(API.getChampionIcon(Champions.getChampKey(bannedChampion.getChampionId())),
+                    imageLoader);
+        }
+        if (bannedChampion != null && (bannedChampion.getPickTurn() == 6 || bannedChampion.getPickTurn() == 5)) {
+            h.textBanned3.setText(Champions.getChampName(bannedChampion.getChampionId()));
+            h.imageBanned3.setErrorImageResId(R.drawable.default_champion_error);
+            h.imageBanned3.setDefaultImageResId(R.drawable.default_champion);
+            h.imageBanned3.setImageUrl(API.getChampionIcon(Champions.getChampKey(bannedChampion.getChampionId())),
+                    imageLoader);
+        }
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Bundle item = getItem(position);
         if (holder instanceof VHItem) {
 
         } else if (holder instanceof VHHeader) {
+            final VHHeader h = (VHHeader) holder;
+
+            Team team = (Team) item.getSerializable("team");
+
+            if (team != null) {
+
+                h.imageDragon.setVisibility(View.GONE);
+
+                h.imageBaron.setVisibility(View.GONE);
+
+                if (team.getBans() != null) {
+                    for (BannedChampion bannedChampion : team.getBans()) {
+                        putBannedChampionOnView(bannedChampion, h);
+                    }
+                } else {
+                    h.imageBanned1.setVisibility(View.GONE);
+                    h.imageBanned2.setVisibility(View.GONE);
+                    h.imageBanned3.setVisibility(View.GONE);
+                    h.textBanned1.setVisibility(View.GONE);
+                    h.textBanned2.setVisibility(View.GONE);
+                    h.textBanned3.setVisibility(View.GONE);
+                }
+            }
+
         }
 
     }
 
     class VHItem extends RecyclerView.ViewHolder {
+        TextView textSummName, textChampName;
+        NetworkImageView imageChamp,imageSpell1,imageSpell2;
+        Button buttonR,buttonM;
         View v;
 
         public VHItem(View itemView) {
             super(itemView);
             this.v = itemView;
+
+            textChampName = (TextView) v.findViewById(R.id.textName);
+            textSummName = (TextView) v.findViewById(R.id.textSummonerName);
+
+            imageChamp = (NetworkImageView) v.findViewById(R.id.imgChamp);
+            imageSpell1 = (NetworkImageView) v.findViewById(R.id.imageSpell1);
+            imageSpell2 = (NetworkImageView) v.findViewById(R.id.imageSpell2);
+
+            buttonM = (Button) v.findViewById(R.id.buttonMasteries);
+            buttonR = (Button) v.findViewById(R.id.buttonRunes);
         }
     }
 

@@ -211,6 +211,7 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
         }
 
         stats.add(getProfileBundle());
+        stats.add(getStatusBundle("Not playing"));
 
         int pos5 = -1, pos3 = -1;
 
@@ -255,6 +256,14 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
         Bundle b = new Bundle();
         b.putString("divider", title);
         b.putInt("type", AdapterPlayerStats.TYPE_DIVIDER);
+        b.putInt("color",getResources().getColor(R.color.posT4));
+        return b;
+    }
+
+    private Bundle getStatusBundle(String title) {
+        Bundle b = new Bundle();
+        b.putString("divider", title);
+        b.putInt("type", AdapterPlayerStats.TYPE_STATUS);
         return b;
     }
 

@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_ITEM = 1;
     public static final int TYPE_DIVIDER = 2;
+    public static final int TYPE_STATUS = 3;
+
     private Context context;
     private ImageLoader imageLoader;
     // Data
@@ -52,7 +55,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public void updatePlayerStatus(boolean b) {
         this.playing = b;
-        if (stats != null) notifyItemChanged(0);
+        if (stats != null) notifyItemChanged(1);
 
 
     }
@@ -81,6 +84,12 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
                     inflate(R.layout.item_summoner_stats_divider, parent, false);
             return new VHDivider(itemView);
 
+        } else if (viewType == TYPE_STATUS) {
+
+            View itemView = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.item_summoner_stats_status, parent, false);
+            return new VHDivider(itemView);
         }
 
         throw new RuntimeException("There is no type that matches the type " + viewType + " + make sure your using types correctly");
@@ -98,18 +107,22 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             h.playerIcon.setErrorImageResId(R.drawable.default_champion_error);
             h.playerIcon.setDefaultImageResId(R.drawable.default_champion);
             h.playerIcon.setImageUrl(item.getString("url"), imageLoader);
-            if (playing) {
-                h.textPlayerStatus.setText(context.getString(R.string.playing_true));
-                h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.win));
-                h.textPlayerStatus.setBackgroundResource(R.color.DimGray);
-            } else {
-                h.textPlayerStatus.setText(context.getString(R.string.playing_false));
-                h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.lose));
-            }
 
         } else if (holder instanceof VHDivider) {
             VHDivider h = (VHDivider) holder;
             h.divider.setText(item.getString("divider"));
+            //if (getItemViewType(position)==TYPE_STATUS) h.v.setBackgroundColor(item.getInt("color"));
+            if (getItemViewType(position)==TYPE_STATUS){
+                if (playing) {
+                    h.divider.setText(context.getString(R.string.playing_true));
+                    h.divider.setBackgroundColor(context.getResources().getColor(R.color.win));
+                } else {
+                    h.divider.setText(context.getString(R.string.playing_false));
+                    h.divider.setTextColor(context.getResources().getColor(R.color.lose));
+                }
+            }
+
+
 
         } else if (holder instanceof VHItem) {
             VHItem h = (VHItem) holder;
@@ -125,7 +138,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount(){
         return stats.size();
     }
 
@@ -158,12 +171,12 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class VHDivider extends RecyclerView.ViewHolder {
-        View v;
+        CardView v;
         TextView divider;
 
         public VHDivider(View itemView) {
             super(itemView);
-            this.v = itemView;
+            this.v = (CardView) itemView;
             divider = (TextView) v.findViewById(R.id.textGroup);
         }
     }

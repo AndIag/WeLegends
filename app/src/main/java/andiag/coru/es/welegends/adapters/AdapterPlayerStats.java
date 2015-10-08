@@ -112,12 +112,12 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             //if (getItemViewType(position)==TYPE_STATUS) h.v.setBackgroundColor(item.getInt("color"));
             if (getItemViewType(position)==TYPE_STATUS){
                 if (playing) {
+                    h.v.setClickable(true);
                     h.divider.setText(context.getString(R.string.playing_true));
                     h.v.setCardBackgroundColor(context.getResources().getColor(R.color.win));
-                    //h.v.setBackgroundColor(context.getResources().getColor(R.color.win));
                 } else {
+                    h.v.setClickable(false);
                     h.divider.setText(context.getString(R.string.playing_false));
-                    //h.v.setBackgroundColor(context.getResources().getColor(R.color.lose));
                     h.v.setCardBackgroundColor(context.getResources().getColor(R.color.lose));
                 }
             }

@@ -1,7 +1,9 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivityCurrentGameInfo;
 import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
@@ -131,6 +134,11 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
             h.buttonM.setVisibility(View.INVISIBLE);
             h.buttonR.setVisibility(View.INVISIBLE);
 
+            if (((ActivityCurrentGameInfo) context).getSummonerId() == item.getLong("summonerId")) {
+                h.v.setCardBackgroundColor(R.color.posT0);
+                h.textSummName.setTextColor(Color.WHITE);
+            }
+
             h.textSummName.setText(item.getString("summonerName"));
             h.textChampName.setText(Champions.getChampName(item.getInt("champId")));
 
@@ -185,11 +193,11 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
         TextView textSummName, textChampName;
         NetworkImageView imageChamp, imageSpell1, imageSpell2;
         Button buttonR, buttonM;
-        View v;
+        CardView v;
 
         public VHItem(View itemView) {
             super(itemView);
-            this.v = itemView;
+            this.v = (CardView) itemView;
 
             textChampName = (TextView) v.findViewById(R.id.textName);
             textSummName = (TextView) v.findViewById(R.id.textSummonerName);

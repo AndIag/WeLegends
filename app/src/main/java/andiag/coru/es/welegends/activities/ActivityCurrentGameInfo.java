@@ -29,6 +29,10 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
         isCreatingTabs = bool;
     }
 
+    public long getSummonerId() {
+        return summonerId;
+    }
+
     @Override
     protected void createTabs() {
         if (!isCreatingTabs) {

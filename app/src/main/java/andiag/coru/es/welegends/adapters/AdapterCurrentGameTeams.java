@@ -152,20 +152,30 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
         } else if (holder instanceof VHHeader) {
             final VHHeader h = (VHHeader) holder;
 
+            h.textDragon.setVisibility(View.GONE);
             h.imageDragon.setVisibility(View.GONE);
+            h.textBaron.setVisibility(View.GONE);
             h.imageBaron.setVisibility(View.GONE);
             h.textBoolean.setVisibility(View.GONE);
 
             if (item.containsKey("banned")) {
                 ArrayList<BannedChampion> bans = (ArrayList<BannedChampion>) item.getSerializable("banned");
-                if (bans != null) {
+                if (bans != null && bans.size() > 0) {
                     for (BannedChampion b : bans) {
                         if (b.getTeamId() == (int) item.getLong("teamId"))
                             putBannedChampionOnView(b, h);
                     }
+                } else {
+                    h.imageBanned1.setVisibility(View.GONE);
+                    h.imageBanned2.setVisibility(View.GONE);
+                    h.imageBanned3.setVisibility(View.GONE);
+                    h.textBanned1.setVisibility(View.GONE);
+                    h.textBanned2.setVisibility(View.GONE);
+                    h.textBanned3.setVisibility(View.GONE);
+                    h.bans.setVisibility(View.GONE);
+                    h.biglayout.setVisibility(View.GONE);
+                    h.view.setVisibility(View.GONE);
                 }
-            } else {
-                h.bans.setVisibility(View.GONE);
             }
         }
 
@@ -194,17 +204,18 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
     }
 
     class VHHeader extends RecyclerView.ViewHolder {
-        TextView textBoolean;
+        TextView textBoolean, textBaron, textDragon;
         TextView textBanned1, textBanned2, textBanned3;
         CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon, imageBaron;
-        RelativeLayout bans;
+        RelativeLayout bans, biglayout;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view = itemView;
             bans = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+            biglayout = (RelativeLayout) view.findViewById(R.id.biglayout);
             textBoolean = (TextView) view.findViewById(R.id.textBoolean);
             imageBaron = (ImageView) view.findViewById(R.id.imageBaron);
             imageDragon = (ImageView) view.findViewById(R.id.imageDragon);
@@ -214,6 +225,8 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
             textBanned1 = (TextView) view.findViewById(R.id.textBanned1);
             textBanned2 = (TextView) view.findViewById(R.id.textBanned2);
             textBanned3 = (TextView) view.findViewById(R.id.textBanned3);
+            textBaron = (TextView) view.findViewById(R.id.textBaron);
+            textDragon = (TextView) view.findViewById(R.id.textDragon);
 
 
             (view.findViewById(R.id.textKDA)).setVisibility(View.GONE);

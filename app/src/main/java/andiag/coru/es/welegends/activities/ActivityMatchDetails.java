@@ -258,6 +258,7 @@ public class ActivityMatchDetails extends AnimatedTabbedActivity {
             }
         }
 
+        b.putString("type", match.getQueueType());
         b.putInt("totalKills", kills);
         b.putInt("totalDeaths", deaths);
         b.putInt("totalAssists", assists);

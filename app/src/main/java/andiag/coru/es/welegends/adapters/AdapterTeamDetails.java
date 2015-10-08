@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -251,11 +253,13 @@ public class AdapterTeamDetails extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView textBanned1, textBanned2, textBanned3;
         CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon, imageBaron;
+        RelativeLayout bans;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view = itemView;
+            bans = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             textBoolean = (TextView) view.findViewById(R.id.textBoolean);
             textKDA = (TextView) view.findViewById(R.id.textKDA);
             textBaron = (TextView) view.findViewById(R.id.textBaron);

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -155,6 +156,7 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
 
             h.imageDragon.setVisibility(View.GONE);
             h.imageBaron.setVisibility(View.GONE);
+            h.textBoolean.setVisibility(View.GONE);
 
             if(item.containsKey("banned")) {
                 ArrayList<BannedChampion> bans = (ArrayList<BannedChampion>) item.getSerializable("banned");
@@ -164,6 +166,8 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
                             putBannedChampionOnView(b, h);
                     }
                 }
+            }else{
+                h.bans.setVisibility(View.GONE);
             }
         }
 
@@ -196,11 +200,13 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
         TextView textBanned1, textBanned2, textBanned3;
         CircledNetworkImageView imageBanned1, imageBanned2, imageBanned3;
         ImageView imageDragon, imageBaron;
+        RelativeLayout bans;
         View view;
 
         public VHHeader(View itemView) {
             super(itemView);
             this.view = itemView;
+            bans = (RelativeLayout) view.findViewById(R.id.relativeLayout);
             textBoolean = (TextView) view.findViewById(R.id.textBoolean);
             imageBaron = (ImageView) view.findViewById(R.id.imageBaron);
             imageDragon = (ImageView) view.findViewById(R.id.imageDragon);

@@ -104,9 +104,9 @@ public class FragmentMatchDetails extends SwipeRefreshLayoutFragment implements 
         imageRole.setImageResource(getImageToRole(getRole(data.getString("role"), data.getString("lane"))));
 
         textChampName.setText(Champions.getChampName(data.getInt("championId")));
-        if(activityMain.isWinner()){
+        if (activityMain.isWinner()) {
             textChampName.setBackgroundResource(R.color.win);
-        }else{
+        } else {
             textChampName.setBackgroundResource(R.color.lose);
         }
 

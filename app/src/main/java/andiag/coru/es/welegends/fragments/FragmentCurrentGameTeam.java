@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
 import andiag.coru.es.welegends.activities.ActivityCurrentGameInfo;
 import andiag.coru.es.welegends.adapters.AdapterCurrentGameTeams;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
@@ -60,9 +59,9 @@ public class FragmentCurrentGameTeam extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(myTab){
+        if (myTab) {
             adapter.updateTeamMembers(activityMain.getMyTeamData());
-        }else{
+        } else {
             adapter.updateTeamMembers(activityMain.getEnemyTeamData());
         }
 

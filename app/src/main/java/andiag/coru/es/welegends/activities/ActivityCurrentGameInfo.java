@@ -3,7 +3,6 @@ package andiag.coru.es.welegends.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,22 +138,22 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private long getMyTeamId(){
-        for(CurrentGameParticipant p : currentGameInfo.getParticipants()){
-            if(p.getSummonerId()==summonerId){
+    private long getMyTeamId() {
+        for (CurrentGameParticipant p : currentGameInfo.getParticipants()) {
+            if (p.getSummonerId() == summonerId) {
                 return p.getTeamId();
             }
         }
         return -1;
     }
 
-    public synchronized ArrayList<Bundle> getMyTeamData(){
+    public synchronized ArrayList<Bundle> getMyTeamData() {
         ArrayList<Bundle> list = new ArrayList<>();
         Bundle b;
         long teamid = getMyTeamId();
-        if(teamid>=0){
-            for(CurrentGameParticipant p : currentGameInfo.getParticipants()) {
-                if(p.getTeamId()==teamid) {
+        if (teamid >= 0) {
+            for (CurrentGameParticipant p : currentGameInfo.getParticipants()) {
+                if (p.getTeamId() == teamid) {
                     b = new Bundle();
                     b.putInt("champId", (int) p.getChampionId());
                     b.putLong("summonerId", p.getSummonerId());
@@ -169,23 +168,23 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
             }
 
             b = new Bundle();
-            if(currentGameInfo.getBannedChampions()!=null)
+            if (currentGameInfo.getBannedChampions() != null)
                 b.putSerializable("banned", currentGameInfo.getBannedChampions());
             b.putLong("teamId", teamid);
-            list.add(0,b);
+            list.add(0, b);
         }
         return list;
     }
 
-    public synchronized ArrayList<Bundle> getEnemyTeamData(){
+    public synchronized ArrayList<Bundle> getEnemyTeamData() {
         ArrayList<Bundle> list = new ArrayList<>();
         Bundle b;
         long teamid = getMyTeamId();
         long notMyteam = -1;
-        if(teamid>=0){
-            for(CurrentGameParticipant p : currentGameInfo.getParticipants()) {
-                if(p.getTeamId()!=teamid) {
-                    if(notMyteam<0) notMyteam = p.getTeamId();
+        if (teamid >= 0) {
+            for (CurrentGameParticipant p : currentGameInfo.getParticipants()) {
+                if (p.getTeamId() != teamid) {
+                    if (notMyteam < 0) notMyteam = p.getTeamId();
                     b = new Bundle();
                     b.putInt("champId", (int) p.getChampionId());
                     b.putLong("summonerId", p.getSummonerId());
@@ -200,10 +199,10 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
             }
 
             b = new Bundle();
-            if(currentGameInfo.getBannedChampions()!=null)
+            if (currentGameInfo.getBannedChampions() != null)
                 b.putSerializable("banned", currentGameInfo.getBannedChampions());
             b.putLong("teamId", notMyteam);
-            list.add(0,b);
+            list.add(0, b);
         }
         return list;
     }

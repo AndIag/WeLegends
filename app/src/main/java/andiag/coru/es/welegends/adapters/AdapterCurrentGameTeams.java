@@ -19,11 +19,9 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.entities.BannedChampion;
-import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Images;
 import andiag.coru.es.welegends.utils.handlers.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
@@ -158,15 +156,15 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
             h.imageBaron.setVisibility(View.GONE);
             h.textBoolean.setVisibility(View.GONE);
 
-            if(item.containsKey("banned")) {
+            if (item.containsKey("banned")) {
                 ArrayList<BannedChampion> bans = (ArrayList<BannedChampion>) item.getSerializable("banned");
                 if (bans != null) {
-                    for(BannedChampion b : bans){
-                        if(b.getTeamId()==(int)item.getLong("teamId"))
+                    for (BannedChampion b : bans) {
+                        if (b.getTeamId() == (int) item.getLong("teamId"))
                             putBannedChampionOnView(b, h);
                     }
                 }
-            }else{
+            } else {
                 h.bans.setVisibility(View.GONE);
             }
         }
@@ -175,8 +173,8 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
 
     class VHItem extends RecyclerView.ViewHolder {
         TextView textSummName, textChampName;
-        NetworkImageView imageChamp,imageSpell1,imageSpell2;
-        Button buttonR,buttonM;
+        NetworkImageView imageChamp, imageSpell1, imageSpell2;
+        Button buttonR, buttonM;
         View v;
 
         public VHItem(View itemView) {

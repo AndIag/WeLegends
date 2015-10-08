@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.activities.ActivityMain;
+import andiag.coru.es.welegends.activities.ActivityMatchDetails;
 import andiag.coru.es.welegends.utils.handlers.API;
 import andiag.coru.es.welegends.utils.handlers.Names;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;

@@ -124,5 +124,6 @@
     <string name="nothingToShow">Nada que mostrar</string>
     <string name="title_section_my_team">Mi Equipo</string>
     <string name="title_section_enemy_team">Equipo Enemigo</string>
+    <string name="title_activity_current_info">Partida Actual</string>
 
 </resources>

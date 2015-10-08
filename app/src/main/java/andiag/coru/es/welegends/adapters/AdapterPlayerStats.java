@@ -109,7 +109,6 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder instanceof VHDivider) {
             VHDivider h = (VHDivider) holder;
             h.divider.setText(item.getString("divider"));
-            //if (getItemViewType(position)==TYPE_STATUS) h.v.setBackgroundColor(item.getInt("color"));
             if (getItemViewType(position)==TYPE_STATUS){
                 if (playing) {
                     h.v.setClickable(true);

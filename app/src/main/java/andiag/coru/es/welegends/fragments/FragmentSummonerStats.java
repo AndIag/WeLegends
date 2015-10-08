@@ -256,7 +256,6 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
         Bundle b = new Bundle();
         b.putString("divider", title);
         b.putInt("type", AdapterPlayerStats.TYPE_DIVIDER);
-        b.putInt("color",getResources().getColor(R.color.posT4));
         return b;
     }
 
@@ -353,7 +352,7 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
                         isPlaying = true;
                         activityMain.setCurrentGameInfo(gson.fromJson(response.toString(), CurrentGameInfo.class));
                         adapter.updatePlayerStatus(isPlaying);
-                        scaleAdapter.notifyItemChanged(0);
+                        scaleAdapter.notifyItemChanged(1);
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -56,8 +56,6 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void updatePlayerStatus(boolean b) {
         this.playing = b;
         if (stats != null) notifyItemChanged(1);
-
-
     }
 
     @Override
@@ -115,10 +113,12 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (getItemViewType(position)==TYPE_STATUS){
                 if (playing) {
                     h.divider.setText(context.getString(R.string.playing_true));
-                    h.divider.setBackgroundColor(context.getResources().getColor(R.color.win));
+                    h.v.setCardBackgroundColor(context.getResources().getColor(R.color.win));
+                    //h.v.setBackgroundColor(context.getResources().getColor(R.color.win));
                 } else {
                     h.divider.setText(context.getString(R.string.playing_false));
-                    h.divider.setTextColor(context.getResources().getColor(R.color.lose));
+                    //h.v.setBackgroundColor(context.getResources().getColor(R.color.lose));
+                    h.v.setCardBackgroundColor(context.getResources().getColor(R.color.lose));
                 }
             }
 

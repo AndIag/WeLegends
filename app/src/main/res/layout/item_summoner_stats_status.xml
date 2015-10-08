@@ -21,7 +21,6 @@
             android:id="@+id/textGroup"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/posT2"
             android:textColor="@color/white"
             android:gravity="center"
             android:textStyle="bold"

@@ -213,7 +213,6 @@ public class ActivityMain extends AnimatedTabbedActivity {
             i.putExtra("summonerId", summoner.getId());
             startActivity(i);
 
-            //Toast.makeText(this, "CLICKED", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, getString(R.string.nothingToShow), Toast.LENGTH_LONG).show();
         }

@@ -36,7 +36,7 @@ import andiag.coru.es.welegends.utils.requests.VolleyHelper;
         runes           serializable
 
 
-
+        teamId          long
         banned          serializable
  */
 public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -129,8 +129,8 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
         if (holder instanceof VHItem) {
             final VHItem h = (VHItem) holder;
 
-            //h.buttonM.setVisibility(View.GONE);
-            //h.buttonR.setVisibility(View.GONE);
+            h.buttonM.setVisibility(View.INVISIBLE);
+            h.buttonR.setVisibility(View.INVISIBLE);
 
             h.textSummName.setText(item.getString("summonerName"));
             h.textChampName.setText(Champions.getChampName(item.getInt("champId")));
@@ -160,7 +160,8 @@ public class AdapterCurrentGameTeams extends RecyclerView.Adapter<RecyclerView.V
                 ArrayList<BannedChampion> bans = (ArrayList<BannedChampion>) item.getSerializable("banned");
                 if (bans != null) {
                     for(BannedChampion b : bans){
-                        putBannedChampionOnView(b, h);
+                        if(b.getTeamId()==(int)item.getLong("teamId"))
+                            putBannedChampionOnView(b, h);
                     }
                 }
             }

@@ -9,6 +9,7 @@ public class BannedChampion implements Serializable {
 
     private int championId;
     private int pickTurn;
+    private int teamId;
 
     public BannedChampion() {
     }
@@ -16,6 +17,14 @@ public class BannedChampion implements Serializable {
     public BannedChampion(int championId, int pickTurn) {
         this.championId = championId;
         this.pickTurn = pickTurn;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     public int getChampionId() {

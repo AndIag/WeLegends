@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -101,6 +102,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (playing) {
                 h.textPlayerStatus.setText(context.getString(R.string.playing_true));
                 h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.win));
+                h.textPlayerStatus.setBackgroundResource(R.color.DimGray);
             } else {
                 h.textPlayerStatus.setText(context.getString(R.string.playing_false));
                 h.textPlayerStatus.setTextColor(context.getResources().getColor(R.color.lose));

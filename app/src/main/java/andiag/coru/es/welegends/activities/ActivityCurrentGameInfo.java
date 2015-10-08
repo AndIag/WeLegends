@@ -171,7 +171,7 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
             b = new Bundle();
             if(currentGameInfo.getBannedChampions()!=null)
                 b.putSerializable("banned", currentGameInfo.getBannedChampions());
-            b.putLong("mapId", currentGameInfo.getMapId());
+            b.putLong("teamId", teamid);
             list.add(0,b);
         }
         return list;
@@ -181,9 +181,11 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
         ArrayList<Bundle> list = new ArrayList<>();
         Bundle b;
         long teamid = getMyTeamId();
+        long notMyteam = -1;
         if(teamid>=0){
             for(CurrentGameParticipant p : currentGameInfo.getParticipants()) {
                 if(p.getTeamId()!=teamid) {
+                    if(notMyteam<0) notMyteam = p.getTeamId();
                     b = new Bundle();
                     b.putInt("champId", (int) p.getChampionId());
                     b.putLong("summonerId", p.getSummonerId());
@@ -200,6 +202,7 @@ public class ActivityCurrentGameInfo extends AnimatedTabbedActivity {
             b = new Bundle();
             if(currentGameInfo.getBannedChampions()!=null)
                 b.putSerializable("banned", currentGameInfo.getBannedChampions());
+            b.putLong("teamId", notMyteam);
             list.add(0,b);
         }
         return list;

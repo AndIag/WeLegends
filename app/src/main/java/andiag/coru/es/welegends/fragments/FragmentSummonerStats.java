@@ -27,17 +27,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import andiag.coru.es.welegends.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterPlayerStats;
-import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.entities.Entry;
 import andiag.coru.es.welegends.entities.League;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.Names;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Names;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**

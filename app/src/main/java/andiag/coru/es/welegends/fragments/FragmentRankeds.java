@@ -33,12 +33,12 @@ import andiag.coru.es.welegends.activities.ActivityMain;
 import andiag.coru.es.welegends.adapters.AdapterRankedsHistory;
 import andiag.coru.es.welegends.entities.MatchList;
 import andiag.coru.es.welegends.entities.MatchReference;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Images;
-import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.Names;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Champions;
+import andiag.coru.es.welegends.utils.static_data.Images;
+import andiag.coru.es.welegends.utils.static_data.Names;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**

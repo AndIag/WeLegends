@@ -18,7 +18,7 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityChampionStatsDetails;
-import andiag.coru.es.welegends.utils.handlers.API;
+import andiag.coru.es.welegends.utils.API;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
         /*      BUNDLE DATA

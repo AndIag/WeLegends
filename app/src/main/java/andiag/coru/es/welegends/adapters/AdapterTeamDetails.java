@@ -24,12 +24,12 @@ import andiag.coru.es.welegends.entities.BannedChampion;
 import andiag.coru.es.welegends.entities.Participant;
 import andiag.coru.es.welegends.entities.ParticipantStats;
 import andiag.coru.es.welegends.entities.Team;
+import andiag.coru.es.welegends.utils.API;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Spells;
-import andiag.coru.es.welegends.utils.handlers.StatsColor;
+import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Champions;
+import andiag.coru.es.welegends.utils.static_data.Spells;
 
 /*
         team            Team

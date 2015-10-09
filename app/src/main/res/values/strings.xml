@@ -134,5 +134,6 @@
     <string name="title_section_my_team">My Team</string>
     <string name="title_section_enemy_team">Enemy Team</string>
     <string name="title_activity_current_info">Current Game</string>
+    <string name="loadStaticData">Loading Static Data....</string>
 
 </resources>

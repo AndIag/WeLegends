@@ -34,14 +34,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import andiag.coru.es.welegends.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.adapters.AdapterSummoner;
-import andiag.coru.es.welegends.entities.DTOs.SummonerHistoryDto;
 import andiag.coru.es.welegends.entities.Summoner;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.SummonerHistory;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.SummonerHistory;
 
 public class ActivitySummoner extends ActionBarActivity implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
 

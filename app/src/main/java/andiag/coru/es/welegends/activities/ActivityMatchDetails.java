@@ -28,8 +28,8 @@ import andiag.coru.es.welegends.entities.Team;
 import andiag.coru.es.welegends.fragments.FragmentMatchDetails;
 import andiag.coru.es.welegends.fragments.FragmentVictoryDefeatDetails;
 import andiag.coru.es.welegends.fragments.NotifycableFragment;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
 
 public class ActivityMatchDetails extends AnimatedTabbedActivity {

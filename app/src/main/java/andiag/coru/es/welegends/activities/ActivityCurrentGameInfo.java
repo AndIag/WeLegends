@@ -9,10 +9,10 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
+import andiag.coru.es.welegends.DTOs.currentGame.CurrentGameInfo;
+import andiag.coru.es.welegends.DTOs.currentGame.CurrentGameParticipant;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
-import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
-import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameParticipant;
 import andiag.coru.es.welegends.fragments.FragmentCurrentGameTeam;
 
 /**

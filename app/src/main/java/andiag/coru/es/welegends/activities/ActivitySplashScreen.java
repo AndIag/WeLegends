@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,15 +26,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import andiag.coru.es.welegends.DTOs.championsDTOs.ChampionListDto;
+import andiag.coru.es.welegends.DTOs.summonerSpellsDTOs.SummonerSpellListDto;
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.entities.DTOs.championsDTOs.ChampionListDto;
-import andiag.coru.es.welegends.entities.DTOs.summonerSpellsDTOs.SummonerSpellListDto;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.MyNetworkError;
-import andiag.coru.es.welegends.utils.handlers.Spells;
-import andiag.coru.es.welegends.utils.handlers.Version;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.MyNetworkError;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Champions;
+import andiag.coru.es.welegends.utils.static_data.Spells;
+import andiag.coru.es.welegends.utils.static_data.Version;
 
 /**
  * Created by Andy on 26/06/2015.
@@ -145,10 +144,8 @@ public class ActivitySplashScreen extends Activity {
     private void getChampionsFromServer() {
         final Gson gson = new Gson();
 
-        Log.d("getChampions", "Champions");
-
         progressBar.setVisibility(View.VISIBLE);
-        textView.setText(getResources().getString(R.string.loadNames));
+        textView.setText(getResources().getString(R.string.loadStaticData));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getAllChampsData(), (String) null,
                 new Response.Listener<JSONObject>() {
@@ -179,11 +176,6 @@ public class ActivitySplashScreen extends Activity {
 
     private void getSpellsFromServer() {
         final Gson gson = new Gson();
-
-        Log.d("getSpells", "SPELLS");
-
-        progressBar.setVisibility(View.VISIBLE);
-        textView.setText(getResources().getString(R.string.loadSpells));
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, API.getAllSummonerSpells(), (String) null,
                 new Response.Listener<JSONObject>() {

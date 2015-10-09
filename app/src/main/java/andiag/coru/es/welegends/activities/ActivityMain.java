@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import andiag.coru.es.welegends.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.SuperActivities.AnimatedTabbedActivity;
-import andiag.coru.es.welegends.entities.DTOs.currentGame.CurrentGameInfo;
 import andiag.coru.es.welegends.entities.Summoner;
 import andiag.coru.es.welegends.fragments.FragmentChampStats;
 import andiag.coru.es.welegends.fragments.FragmentHistory;

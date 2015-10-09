@@ -18,11 +18,11 @@ import java.util.concurrent.TimeUnit;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityMatchDetails;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Spells;
-import andiag.coru.es.welegends.utils.handlers.StatsColor;
+import andiag.coru.es.welegends.utils.API;
+import andiag.coru.es.welegends.utils.StatsColor;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Champions;
+import andiag.coru.es.welegends.utils.static_data.Spells;
 
 /*
             String  "version"

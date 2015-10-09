@@ -22,11 +22,11 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivityCurrentGameInfo;
 import andiag.coru.es.welegends.entities.BannedChampion;
+import andiag.coru.es.welegends.utils.API;
 import andiag.coru.es.welegends.utils.CircledNetworkImageView;
-import andiag.coru.es.welegends.utils.handlers.API;
-import andiag.coru.es.welegends.utils.handlers.Champions;
-import andiag.coru.es.welegends.utils.handlers.Spells;
 import andiag.coru.es.welegends.utils.requests.VolleyHelper;
+import andiag.coru.es.welegends.utils.static_data.Champions;
+import andiag.coru.es.welegends.utils.static_data.Spells;
 
 /*
         champId         int

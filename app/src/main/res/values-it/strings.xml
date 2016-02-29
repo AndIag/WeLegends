@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WeLegends</string>
-    <string name="action_settings">Impostazioni</string>
-    <string name="summoner">Evocatore:</string>
     <string name="section_summoner">EVOCATORE</string>
     <string name="section_champs">STATISTICHE</string>
     <string name="go">Cerca</string>
@@ -33,16 +31,11 @@
     <string name="jungle">Giungla</string>
     <string name="killingSprees">Serie più lunga di uccisioni:</string>
     <string name="level">Livello</string>
-    <string name="loadNames">Caricamento campioni…</string>
-    <string name="loadSpells">Caricamento incantesimi…</string>
     <string name="magicDamageDealt">Danno magico inflitto:</string>
     <string name="obserbabl_escroll_view">Library per interagire con Android Toolbar e utile per implementare aspetto grafico di applicazioni Material Design.</string>
     <string name="penta">Pentakills</string>
     <string name="physicalDamageDealt">Danno fisico inflitto:</string>
     <string name="quadra">Quadrakills</string>
-    <string name="queue_solo">Solo/Duo</string>
-    <string name="queue_team3">Squadra 3vs3</string>
-    <string name="queue_team5">Squadra 5vs5</string>
     <string name="recyclerview_animators">Library per creare facilmente RecyclerView con animazioni.</string>
     <string name="region_prompt">Scegli una regione:</string>
     <string name="rift">Landa degli Evocatori</string>

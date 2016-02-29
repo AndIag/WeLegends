@@ -18,13 +18,9 @@
     <string name="title_section_defeat_team">Equipo Perdedor</string>
 
     <!-- SubSections -->
-    <string name="queue_solo">Solo/Duo</string>
-    <string name="queue_team5">Equipo 5vs5</string>
-    <string name="queue_team3">Equipo 3vs3</string>
     <string name="region_prompt">Seleccione una región: </string>
 
     <!-- Actions -->
-    <string name="action_settings">Configuración</string>
     <string name="go">Buscar</string>
     <string name="action_about">Acerca de</string>
 
@@ -39,8 +35,6 @@
 
     <!-- Messages -->
     <string name="checkingVersion">Comprobando versión del servidor…</string>
-    <string name="loadNames">Cargando campeones…</string>
-    <string name="loadSpells">Cargando hechizos…</string>
     <string name="working">Trabajando…</string>
     <string name="searching_summoner">Buscando invocador…</string>
 
@@ -59,7 +53,6 @@
     <string name="smart_tab_layout">ViewPager personalizado que proporciona una personalización muy elevada.</string>
 
     <!-- Other Shit -->
-    <string name="summoner">Invocador:</string>
     <string name="hint_summoner">Nombre de Invocador</string>
     <string name="earnedGold">Oro por minuto:</string>
     <string name="farmedCs">Súbditos por minuto:</string>

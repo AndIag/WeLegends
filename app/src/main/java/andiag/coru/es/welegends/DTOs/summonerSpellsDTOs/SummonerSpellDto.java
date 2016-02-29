@@ -21,10 +21,6 @@ public class SummonerSpellDto implements Serializable {
         this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setId(long id) {
         this.id = id;
     }

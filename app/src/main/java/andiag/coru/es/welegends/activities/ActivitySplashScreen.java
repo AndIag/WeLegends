@@ -107,7 +107,7 @@ public class ActivitySplashScreen extends Activity {
                     public void onResponse(JSONArray response) {
                         ArrayList<String> versions = gson.fromJson(response.toString()
                                 , new TypeToken<ArrayList<String>>() {
-                        }.getType());
+                                }.getType());
                         try {
                             if (versions != null && versions.get(0).equals(Version.getVersion(activity))) {
                                 Champions.setChampions(null, activity); //Initialize champions with our static data

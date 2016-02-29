@@ -109,7 +109,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else if (holder instanceof VHDivider) {
             VHDivider h = (VHDivider) holder;
             h.divider.setText(item.getString("divider"));
-            if (getItemViewType(position)==TYPE_STATUS){
+            if (getItemViewType(position) == TYPE_STATUS) {
                 if (playing) {
                     h.v.setClickable(true);
                     h.divider.setText(context.getString(R.string.playing_true));
@@ -120,7 +120,6 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
                     h.v.setCardBackgroundColor(context.getResources().getColor(R.color.lose));
                 }
             }
-
 
 
         } else if (holder instanceof VHItem) {
@@ -137,7 +136,7 @@ public class AdapterPlayerStats extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return stats.size();
     }
 

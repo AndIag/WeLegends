@@ -9,6 +9,13 @@
     <color name="secondary_text">#727272</color>
     <color name="button_text">#ffffff</color>
 
+    <!-- Themes colors -->
+    <color name="lightBackground">#F5F5F5</color>
+    <color name="darkBackground">#757575</color>
+
+    <item name="card_light" type="color">#FFFFFF</item>
+    <item name="card_dark" type="color">#424242</item>
+
     <!-- Other -->
     <color name="tab_text_color">#FFFFFF</color>
     <color name="white">#FFFFFFFF</color>

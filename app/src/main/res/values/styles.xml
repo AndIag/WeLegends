@@ -6,31 +6,44 @@
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
 
-        <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/primary</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/primary_dark</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated
-             which is used to tint widgets -->
         <item name="colorAccent">@color/accent</item>
 
         <item name="colorButtonNormal">@color/primary</item>
 
-        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.SpinnerDropDownItemStyle
-        </item>
+        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.SpinnerDropDownItemStyle</item>
         <item name="android:spinnerItemStyle">@style/AppTheme.SpinnerItemStyle</item>
 
-        <!-- You can also set colorControlNormal, colorControlActivated
-             colorControlHighlight & colorSwitchThumbNormal. -->
+        <item name="cardStyle">@style/CardViewStyle.Light</item>
+
+        <item name="backgroundColor">@color/lightBackground</item>
+
     </style>
 
-    <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
+        <item name="colorButtonNormal">@color/primary</item>
+
+        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.Dark.SpinnerDropDownItemStyle</item>
+        <item name="android:spinnerItemStyle">@style/AppTheme.Dark.SpinnerItemStyle</item>
+
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
+
+        <item name="backgroundColor">@color/darkBackground</item>
+
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
     </style>
 
     <style name="Toolbar" parent="Theme.AppCompat">
@@ -39,6 +52,7 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <!-- Spinners Style -->
     <style name="Spinner" parent="Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@drawable/abc_popup_background_mtrl_mult</item>
     </style>
@@ -47,9 +61,34 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="AppTheme.Dark.SpinnerItemStyle" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
     <style name="AppTheme.SpinnerDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="AppTheme.Dark.SpinnerDropDownItemStyle" parent="AppTheme.SpinnerDropDownItemStyle">
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <!-- Cardviews Style -->
+    <attr name="cardStyle" format="reference" />
+
+    <style name="CardViewStyle" parent="CardView">
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">1dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="CardViewStyle.Light">
+        <item name="cardBackgroundColor">@color/card_light</item>
+    </style>
+
+    <style name="CardViewStyle.Dark">
+        <item name="cardBackgroundColor">@color/card_dark</item>
+    </style>
 </resources>

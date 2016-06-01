@@ -88,8 +88,20 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
             if ((!(summonerName.isEmpty())) && (!(summonerName.equals("")))) {
                 //TODO call retrofit API to get ID
                 Log.d(TAG,"Searching " + summonerName + " " + region);
-                Call<Summoner> call = ApiClient.get().getSummonerByName(region, summonerName);
-                Log.d(TAG, call.request().toString());
+                Call<Summoner> call = ApiClient.getWithTypeAdapter(summonerName).getSummonerByName(region,summonerName);
+                call.enqueue(new Callback<Summoner>() {
+                    @Override
+                    public void onResponse(Call<Summoner> call, Response<Summoner> response) {
+                        long id = response.body().getId();
+                        Toast.makeText(getApplicationContext(),"Summoner ID: " + id, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Summoner> call, Throwable t) {
+                        Log.d(TAG, "Error loading Summoner Id");
+                    }
+                });
+
             } else {
                 Toast.makeText(getApplicationContext(), getString(R.string.voidSummonerError),
                         Toast.LENGTH_LONG).show();

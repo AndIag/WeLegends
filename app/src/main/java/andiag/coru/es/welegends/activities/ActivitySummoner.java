@@ -15,10 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.rest.ApiClient;
+import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,7 +86,7 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
             if ((!(summonerName.isEmpty())) && (!(summonerName.equals("")))) {
                 //TODO call retrofit API to get ID
                 Log.d(TAG,"Searching " + summonerName + " " + region);
-                Call<Summoner> call = ApiClient.getWithTypeAdapter(summonerName).getSummonerByName(region,summonerName);
+                Call<Summoner> call = RestClient.get(summonerName).getSummonerByName(region,summonerName);
                 call.enqueue(new Callback<Summoner>() {
                     @Override
                     public void onResponse(Call<Summoner> call, Response<Summoner> response) {

@@ -9,7 +9,29 @@ import retrofit2.http.GET;
  */
 public interface ApiStatic {
 
-    @GET("/champion.json")
-    Call<Summoner> getChampions();//TODO Continue this API
+    //TODO Continue this API
 
+    //Profile Icons
+    @GET("/profileicon.json")
+    Call<Summoner> getProfileIcons();
+
+    //Champions
+    @GET("/champion.json")
+    Call<Summoner> getChampions();
+
+    //Items
+    @GET("/item.json")
+    Call<Summoner> getItems();
+
+    //Masteries
+    @GET("/mastery.json")
+    Call<Summoner> getMasteries();
+
+    //Runes
+    @GET("/rune.json")
+    Call<Summoner> getRunes();
+
+    //Summoner Spells
+    @GET("/summoner.json")
+    Call<Summoner> getSummonerSpells();
 }

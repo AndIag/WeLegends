@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.Utils;
+import andiag.coru.es.welegends.persistance.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 import retrofit2.Call;
@@ -27,12 +29,15 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
     private final static String TAG = "ActivitySummoner";
 
     private String region;
+    private DBSummoner db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner);
+        db = DBSummoner.getInstance(this);
 
+        //Allow press Enter key to search
         startSummonerListener();
 
         //Region picker
@@ -65,40 +70,33 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
         });
     }
 
-    private boolean isNetworkAvailable() {
-        //TODO Move to global utilities class
-        ConnectivityManager manager = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-
-        boolean isAvailable = false;
-        if (networkInfo != null && networkInfo.isConnected()) {
-            isAvailable = true;
-        }
-
-        return isAvailable;
-    }
-
     public void onClickFindSummoner(View v){
         String summonerName = ((EditText) findViewById(R.id.editTextSummoner)).getText().toString();
-        if (isNetworkAvailable()) {
-            summonerName = summonerName.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
+        if (Utils.isNetworkAvailable(this)) {
+            summonerName = Utils.cleanString(summonerName);
             if ((!(summonerName.isEmpty())) && (!(summonerName.equals("")))) {
-                //TODO call retrofit API to get ID
                 Log.d(TAG,"Searching " + summonerName + " " + region);
-                Call<Summoner> call = RestClient.get(summonerName).getSummonerByName(region,summonerName);
-                call.enqueue(new Callback<Summoner>() {
-                    @Override
-                    public void onResponse(Call<Summoner> call, Response<Summoner> response) {
-                        long id = response.body().getId();
-                        Toast.makeText(getApplicationContext(),"Summoner ID: " + id, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Summoner> call, Throwable t) {
-                        Log.d(TAG, "Error loading Summoner Id");
-                    }
-                });
+                Summoner summoner = db.getSummonerByName(summonerName, region);
+                if(summoner!=null && summoner.getSummonerLevel()==Utils.MAX_LEVEL){
+                    Log.d(TAG, "Local Found: " + summoner.getId());
+                    db.addSummoner(summoner);
+                    //TODO load new screen
+                }else {
+                    Call<Summoner> call = RestClient.get(summonerName).getSummonerByName(region, summonerName);
+                    call.enqueue(new Callback<Summoner>() {
+                        @Override
+                        public void onResponse(Call<Summoner> call, Response<Summoner> response) {
+                            Summoner summoner = response.body();
+                            summoner.setRegion(region);
+                            db.addSummoner(summoner);
+                            Log.d(TAG, "Searching: " + summoner.getName() + " --> Found: " + summoner.getId());
+                        }
+                        @Override
+                        public void onFailure(Call<Summoner> call, Throwable t) {
+                            Log.d(TAG, "Error loading Summoner Id");
+                        }
+                    });
+                }
 
             } else {
                 Toast.makeText(getApplicationContext(), getString(R.string.voidSummonerError),

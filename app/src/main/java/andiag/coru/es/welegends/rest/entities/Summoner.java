@@ -8,9 +8,11 @@ import java.io.Serializable;
 public class Summoner implements Serializable {
 
     private long id;
+    private Long localId = null;
     private String name;
+    private String region;
     private long profileIconId;
-    private long revisionDate;
+    private Long lastUpdate = null;
     private int summonerLevel;
 
     public Summoner() {
@@ -24,12 +26,28 @@ public class Summoner implements Serializable {
         this.id = id;
     }
 
+    public Long getLocalId() {
+        return localId;
+    }
+
+    public void setLocalId(Long localId) {
+        this.localId = localId;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public long getProfileIconId() {
@@ -40,12 +58,12 @@ public class Summoner implements Serializable {
         this.profileIconId = profileIconId;
     }
 
-    public long getRevisionDate() {
-        return revisionDate;
+    public Long getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setRevisionDate(long revisionDate) {
-        this.revisionDate = revisionDate;
+    public void setLastUpdate(Long lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public int getSummonerLevel() {

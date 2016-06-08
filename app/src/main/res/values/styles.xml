@@ -12,7 +12,8 @@
 
         <item name="colorButtonNormal">@color/primary</item>
 
-        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.SpinnerDropDownItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.SpinnerDropDownItemStyle
+        </item>
         <item name="android:spinnerItemStyle">@style/AppTheme.SpinnerItemStyle</item>
 
         <item name="cardStyle">@style/CardViewStyle.Light</item>
@@ -30,7 +31,9 @@
 
         <item name="colorButtonNormal">@color/primary</item>
 
-        <item name="android:spinnerDropDownItemStyle">@style/AppTheme.Dark.SpinnerDropDownItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">
+            @style/AppTheme.Dark.SpinnerDropDownItemStyle
+        </item>
         <item name="android:spinnerItemStyle">@style/AppTheme.Dark.SpinnerItemStyle</item>
 
         <item name="cardStyle">@style/CardViewStyle.Dark</item>

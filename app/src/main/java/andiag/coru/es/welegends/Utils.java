@@ -36,7 +36,7 @@ public class Utils {
         return sb.toString();
     }
 
-    public static String cleanString(String string){
+    public static String cleanString(String string) {
         return string.toLowerCase().replaceAll(" ", "").replace("\n", "").replace("\r", "");
     }
 

@@ -17,8 +17,6 @@ import andiag.coru.es.welegends.rest.entities.Summoner;
  */
 public class DBSummoner extends SQLiteOpenHelper{
 
-    private static final String TAG = "DBSummoner";
-
     public static final String TABLE_NAME = "Summoners";
     public static final String ID = "_id";
     public static final String RIOT_ID = "riotId";
@@ -27,7 +25,7 @@ public class DBSummoner extends SQLiteOpenHelper{
     public static final String ICON_ID = "iconId";
     public static final String LEVEL = "summonerLevel";
     public static final String LAST_UPDATE = "lastUpdate";
-
+    private static final String TAG = "DBSummoner";
     private static DBSummoner dbHelper = null;
 
     private DBSummoner(Context context) {

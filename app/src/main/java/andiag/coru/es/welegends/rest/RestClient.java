@@ -12,10 +12,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RestClient {
 
-    private static Api REST_CLIENT;
     private static final String WELEGENDS_PROXY_ENDPOINT = "http://andiag-prod.apigee.net/v1/welegends/";
-
     private static final String STATIC_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/";
+    private static Api REST_CLIENT;
 
     static {
         setupRestClient();

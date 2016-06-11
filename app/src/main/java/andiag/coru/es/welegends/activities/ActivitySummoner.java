@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
-import andiag.coru.es.welegends.persistance.DBSummoner;
+import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 import retrofit2.Call;

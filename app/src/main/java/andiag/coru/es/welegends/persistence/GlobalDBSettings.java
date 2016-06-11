@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.persistance;
+package andiag.coru.es.welegends.persistence;
 
 /**
  * Created by Canalejas on 06/06/2016.

@@ -1,4 +1,4 @@
-package andiag.coru.es.welegends.persistance;
+package andiag.coru.es.welegends.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.List;
 
 import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.rest.entities.Summoner;
@@ -27,6 +28,8 @@ public class DBSummoner extends SQLiteOpenHelper{
     public static final String LAST_UPDATE = "lastUpdate";
     private static final String TAG = "DBSummoner";
     private static DBSummoner dbHelper = null;
+
+    //TODO split this in DBHelper + DBMethods
 
     private DBSummoner(Context context) {
         super(context, GlobalDBSettings.DB_NAME, null, GlobalDBSettings.DB_VERSION);
@@ -118,6 +121,14 @@ public class DBSummoner extends SQLiteOpenHelper{
         return db.insert(TABLE_NAME, null, newSummoner);
     }
 
+    public List<Summoner> selectTopNSummoners(int n) {
+        //TODO
+        return null;
+    }
 
+    public List<Summoner> selectSummoners() {
+        //TODO
+        return null;
+    }
 
 }

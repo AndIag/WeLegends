@@ -68,7 +68,7 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_summoner);
+        setContentView(R.layout.activity_summoner_new);
         db = DBSummoner.getInstance(this);
 
         //Allow press Enter key to search

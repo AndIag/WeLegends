@@ -1,5 +1,6 @@
 package andiag.coru.es.welegends.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +16,18 @@ public class ActivitySummoner extends AppCompatActivity {
     private final static String TAG = "ActivitySummoner";
     private final static String FIND_SUMMONER_FRAGMENT = "findSummonerFragment";
     private final static String SUMMONER_HISTORIC_FRAGMENT = "summonerHistoricFragment";
+    public static ActivitySummoner activity = null;
 
     private DBSummoner db;
 
     public DBSummoner getDb() {
         return db;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ActivitySummoner.activity = this;
     }
 
     @Override
@@ -39,8 +47,17 @@ public class ActivitySummoner extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ActivitySummoner.activity = null;
+        this.db = null;
+    }
+
     public void throwNewActivity(Summoner summoner) {
         //TODO load new screen #1
+        Intent i = new Intent(this, ActivitySummonerData.class);
+        startActivity(i);
     }
 
     //Redirect View action to fragment

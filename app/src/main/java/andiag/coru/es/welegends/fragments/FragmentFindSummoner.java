@@ -19,6 +19,7 @@ import android.widget.Toast;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
+import andiag.coru.es.welegends.activities.ActivitySummonerData;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
@@ -32,6 +33,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     private final static String TAG = "FragmentFindSummoner";
 
     private ActivitySummoner parentActivity;
+    private ActivitySummonerData notificableActivity = null;
     private DBSummoner db;
 
     private String region;
@@ -62,7 +64,12 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
             Log.d(TAG, "onClickFindSummoner: Found-" + response.body().getId());
             Summoner newSummoner = response.body();
             newSummoner.setRegion(region);
-            //TODO notify fragment
+            db.addSummoner(newSummoner);
+            if (notificableActivity == null) {
+                Log.e(TAG, "callbackUpdateSummoner: Null notificable activity. This should never happen");
+                return;
+            }
+            notificableActivity.notifySummonerDataChange(newSummoner);
         }
 
         @Override
@@ -72,6 +79,10 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         }
     };
     //endregion
+
+    public void setNotificableActivity(ActivitySummonerData notificableActivity) {
+        this.notificableActivity = notificableActivity;
+    }
 
     public FragmentFindSummoner() {
         // Required empty public constructor

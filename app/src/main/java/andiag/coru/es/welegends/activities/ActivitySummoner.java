@@ -87,7 +87,6 @@ public class ActivitySummoner extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     private void startSummonerListener(){

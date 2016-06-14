@@ -130,4 +130,7 @@
     <string name="loadStaticData">Loading Static Data....</string>
     <string name="allsummoners">Historic</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

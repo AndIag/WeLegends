@@ -13,8 +13,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestClient {
 
     private static final String WELEGENDS_PROXY_ENDPOINT = "http://andiag-prod.apigee.net/v1/welegends/";
-    private static final String STATIC_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/";
+    private static final String DDRAGON_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/";
+    private static final String STATIC_DATA_ENDPOINT = "https://global.api.pvp.net/api/lol/static-data/";
     private static Api REST_CLIENT;
+
+    //TODO convert this in 3 singletones
 
     static {
         setupRestClient();
@@ -41,7 +44,7 @@ public class RestClient {
     }
 
     public static ApiStatic getStatic(String version, String locale){
-        String endpoint = STATIC_DATA_ENDPOINT+version+"/data/"+locale+"/";
+        String endpoint = DDRAGON_DATA_ENDPOINT + version + "/data/" + locale + "/";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(endpoint)

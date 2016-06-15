@@ -41,7 +41,6 @@ public class RestClient {
     }
 
     public static ApiStatic getStatic(String version, String locale){
-
         String endpoint = STATIC_DATA_ENDPOINT+version+"/data/"+locale+"/";
 
         Retrofit retrofit = new Retrofit.Builder()

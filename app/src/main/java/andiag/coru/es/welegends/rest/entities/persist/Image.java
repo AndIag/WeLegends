@@ -10,10 +10,6 @@ public class Image {
     private String full;
     private String sprite;
     private String group;
-    private Integer x;
-    private Integer y;
-    private Integer w;
-    private Integer h;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getFull() {
@@ -38,38 +34,6 @@ public class Image {
 
     public void setGroup(String group) {
         this.group = group;
-    }
-
-    public Integer getX() {
-        return x;
-    }
-
-    public void setX(Integer x) {
-        this.x = x;
-    }
-
-    public Integer getY() {
-        return y;
-    }
-
-    public void setY(Integer y) {
-        this.y = y;
-    }
-
-    public Integer getW() {
-        return w;
-    }
-
-    public void setW(Integer w) {
-        this.w = w;
-    }
-
-    public Integer getH() {
-        return h;
-    }
-
-    public void setH(Integer h) {
-        this.h = h;
     }
 
     public Map<String, Object> getAdditionalProperties() {

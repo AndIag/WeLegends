@@ -36,7 +36,6 @@ public class FragmentSummonerHistoric extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView - Start");
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

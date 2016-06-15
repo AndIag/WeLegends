@@ -2,7 +2,6 @@ package andiag.coru.es.welegends.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -75,7 +74,7 @@ public class ActivitySummoner extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_summoner_fragments);
+        setContentView(R.layout.activity_summoner);
         db = DBSummoner.getInstance(this);
 
         if (findViewById(R.id.fragmentContainer) != null) {
@@ -87,6 +86,7 @@ public class ActivitySummoner extends AppCompatActivity {
                     .commit();
         }
 
+        //TODO move this to background
         checkServerVersion();
 
     }

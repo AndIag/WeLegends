@@ -1,105 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="andiag.coru.es.welegends.activities.ActivitySummoner">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editTextSummoner"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textVersion"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:hint="@string/hint_summoner"
-        android:imeOptions="actionDone"
-        android:singleLine="true"
-        android:textColor="?colorAccent"
-        android:textColorHint="@color/secondary_text" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <Spinner
-        android:id="@+id/spinnerRegions"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextSummoner"
-        android:layout_alignStart="@+id/editTextSummoner"
-        android:layout_below="@+id/editTextSummoner"
-        android:entries="@array/region_array"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
-        android:prompt="@string/region_prompt"
-        android:spinnerMode="dialog"
-        android:textAlignment="center" />
-
-    <Button
-        android:id="@+id/buttonGo"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinnerRegions"
-        android:layout_alignStart="@+id/spinnerRegions"
-        android:layout_below="@+id/spinnerRegions"
-        android:elevation="10dp"
-        android:onClick="onClickFindSummoner"
-        android:text="@string/go"
-        android:textColor="@color/button_text" />
-
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:elevation="10dp"
-        android:src="@drawable/icon3" />
-
-    <ListView
-        android:id="@+id/listViewSummHistory"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonGo"
-        android:layout_alignStart="@+id/buttonGo"
-        android:layout_below="@+id/buttonSummoners"
-        android:divider="@color/transparent"
-        android:dividerHeight="2dp" />
-
-    <TextView
-        android:id="@+id/textVersion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editTextSummoner"
-        android:layout_alignLeft="@+id/editTextSummoner"
-        android:layout_alignRight="@+id/editTextSummoner"
-        android:layout_alignStart="@+id/editTextSummoner"
-        android:layout_below="@+id/progressBar"
-        android:gravity="center"
-        android:text="Version 6.11.1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?colorPrimary" />
-
-    <Button
-        android:id="@+id/buttonSummoners"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonGo"
-        android:layout_alignStart="@+id/buttonGo"
-        android:layout_below="@+id/buttonGo"
-        android:elevation="10dp"
-        android:text="@string/allsummoners"
-        android:textColor="@color/button_text" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_centerHorizontal="true"
-        android:indeterminate="true"
-        android:progressTint="?colorPrimary" />
-
-</RelativeLayout>
+</LinearLayout>

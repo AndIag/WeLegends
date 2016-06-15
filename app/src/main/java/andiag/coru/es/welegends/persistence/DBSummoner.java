@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class DBSummoner {
     }
 
     public long addSummoner(Summoner summoner){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(db==null) return -1;
 
         //If summoner already exist update it
@@ -94,13 +95,59 @@ public class DBSummoner {
     }
 
     public List<Summoner> selectTopNSummoners(int n) {
-        //TODO
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        if (db == null) return null;
+
+        ArrayList<Summoner> summoners = new ArrayList<>();
+
+        String select = "SELECT * FROM " + DBHelper.SUMMONER_TABLE_NAME + " ORDER BY " + DBHelper.SUMMONER_LAST_UPDATE + " LIMIT " + n;
+        Cursor cursor = db.rawQuery(select, null);
+        Summoner summoner;
+
+        try {
+            while (cursor.moveToNext()) {
+                summoner = new Summoner();
+                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ID)));
+                summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
+                summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
+                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
+                summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
+                summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
+                summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return summoners;
     }
 
     public List<Summoner> selectSummoners() {
-        //TODO
-        return null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        if (db == null) return null;
+
+        ArrayList<Summoner> summoners = new ArrayList<>();
+
+        String select = "SELECT * FROM " + DBHelper.SUMMONER_TABLE_NAME + " ORDER BY " + DBHelper.SUMMONER_LAST_UPDATE;
+        Cursor cursor = db.rawQuery(select, null);
+        Summoner summoner;
+
+        try {
+            while (cursor.moveToNext()) {
+                summoner = new Summoner();
+                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ID)));
+                summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
+                summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
+                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
+                summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
+                summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
+                summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return summoners;
     }
 
 }

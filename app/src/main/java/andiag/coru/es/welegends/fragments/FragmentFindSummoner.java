@@ -33,7 +33,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     private final static String TAG = "FragmentFindSummoner";
 
     private ActivitySummoner parentActivity;
-    private ActivitySummonerData notificableActivity = null;
+    private ActivitySummonerData notifiableActivity = null;
     private DBSummoner db;
 
     private String region;
@@ -47,7 +47,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
             summoner.setRegion(region);
             Log.d(TAG, "onClickFindSummoner: Updating database");
             db.addSummoner(summoner);
-            parentActivity.throwNewActivity(summoner);
+            parentActivity.throwNewActivity(summoner, false);
         }
 
         @Override
@@ -65,11 +65,11 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
             Summoner newSummoner = response.body();
             newSummoner.setRegion(region);
             db.addSummoner(newSummoner);
-            if (notificableActivity == null) {
-                Log.e(TAG, "callbackUpdateSummoner: Null notificable activity. This should never happen");
+            if (notifiableActivity == null) {
+                Log.e(TAG, "callbackUpdateSummoner: Null noticeable activity. This should never happen");
                 return;
             }
-            notificableActivity.notifySummonerDataChange(newSummoner);
+            notifiableActivity.notifySummonerDataChange(newSummoner);
         }
 
         @Override
@@ -80,8 +80,8 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     };
     //endregion
 
-    public void setNotificableActivity(ActivitySummonerData notificableActivity) {
-        this.notificableActivity = notificableActivity;
+    public void setNotifiableActivity(ActivitySummonerData notifiableActivity) {
+        this.notifiableActivity = notifiableActivity;
     }
 
     public FragmentFindSummoner() {
@@ -173,7 +173,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         Log.d(TAG, "onClickFindSummoner: Updating database");
         db.addSummoner(summoner);
         apiSearchSummonerId(summonerName, region, callbackUpdateSummoner);
-        parentActivity.throwNewActivity(summoner);
+        parentActivity.throwNewActivity(summoner, true);
     }
 
 }

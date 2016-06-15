@@ -44,7 +44,6 @@ public class ActivitySummoner extends AppCompatActivity {
                     .add(R.id.fragmentSummonerHistoric, new Fragment(), SUMMONER_HISTORIC_FRAGMENT)
                     .commit();
         }
-
     }
 
     @Override
@@ -54,9 +53,12 @@ public class ActivitySummoner extends AppCompatActivity {
         this.db = null;
     }
 
-    public void throwNewActivity(Summoner summoner) {
-        //TODO load new screen #1
+    public void throwNewActivity(Summoner summoner, boolean updateRequired) {
         Intent i = new Intent(this, ActivitySummonerData.class);
+        if (updateRequired) {
+            i.putExtra(ActivitySummonerData.ARG_FRAGMENT, FIND_SUMMONER_FRAGMENT);
+        }
+        i.putExtra(ActivitySummonerData.ARG_SUMMONER, summoner);
         startActivity(i);
     }
 

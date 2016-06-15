@@ -11,6 +11,10 @@ import andiag.coru.es.welegends.rest.entities.Summoner;
 public class ActivitySummonerData extends AppCompatActivity {
 
     private final static String TAG = "ActivitySummonerData";
+    public final static String ARG_SUMMONER = "SUMMONER";
+    public final static String ARG_FRAGMENT = "FRAGMENT";
+
+    private Summoner summoner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +22,20 @@ public class ActivitySummonerData extends AppCompatActivity {
         setContentView(R.layout.activity_summoner_data);
 
         if (savedInstanceState == null) {
-            ((FragmentFindSummoner) ActivitySummoner.activity.getSupportFragmentManager()
-                    .findFragmentByTag("findSummonerFragment")).setNotificableActivity(this);
+            if (getIntent().hasExtra(ARG_FRAGMENT)) {
+                ((FragmentFindSummoner) ActivitySummoner.activity.getSupportFragmentManager()
+                        .findFragmentByTag(getIntent().getStringExtra(ARG_FRAGMENT))).setNotifiableActivity(this);
+            }
+            this.summoner = (Summoner) getIntent().getSerializableExtra(ARG_SUMMONER);
+            Log.d(TAG, "received: " + summoner.getId());
         }
 
     }
 
-    public void notifySummonerDataChange(Summoner summoner) {
+    public void notifySummonerDataChange(Summoner newSummoner) {
         Log.d(TAG, "notifySummonerDataChange: " + summoner.getId());
+        this.summoner = newSummoner;
+        //TODO notify view
     }
 
 }

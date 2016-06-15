@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:layout_gravity="center"
-        android:src="@drawable/backgound_default"
+        android:src="@drawable/background_default0"
         android:scaleType="centerCrop"/>
 
     <RelativeLayout

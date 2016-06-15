@@ -11,6 +11,7 @@ import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.fragments.FragmentFindSummoner;
+import andiag.coru.es.welegends.fragments.FragmentSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -82,7 +83,7 @@ public class ActivitySummoner extends AppCompatActivity {
         } else {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentFindSummoner, new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT)
-                    .add(R.id.fragmentSummonerHistoric, new Fragment(), SUMMONER_HISTORIC_FRAGMENT)
+                    .add(R.id.fragmentSummonerHistoric, new FragmentSummonerHistoric(), SUMMONER_HISTORIC_FRAGMENT)
                     .commit();
         }
 
@@ -128,7 +129,7 @@ public class ActivitySummoner extends AppCompatActivity {
 
     public void onClickSwapFragment(View view) {
         if (findViewById(R.id.fragmentContainer) != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new Fragment())
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSummonerHistoric())
                     .addToBackStack(null)
                     .commit();
         }

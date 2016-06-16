@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
@@ -103,7 +104,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         startSummonerListener(fragmentView);
 
         //Region picker
-        Spinner spinner = (Spinner) fragmentView.findViewById(R.id.spinnerRegions);
+        BetterSpinner spinner = (BetterSpinner) fragmentView.findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
 
         return fragmentView;

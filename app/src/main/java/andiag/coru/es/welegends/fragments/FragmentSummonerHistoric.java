@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class FragmentSummonerHistoric extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG,"onCreateView - Start");
+
         View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -54,15 +53,6 @@ public class FragmentSummonerHistoric extends Fragment {
         adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         adapter.isFirstOnly(false);
         recyclerView.setAdapter(adapter);
-
-//        List<Summoner> summoners = new ArrayList<>();
-//        Summoner s;
-//        for(int i=0;i<10;i++){
-//            s = new Summoner();
-//            s.setName("Summoner "+i);
-//            s.setRegion("EUW");
-//            summoners.add(s);
-//        }
 
         adapter.addData(db.selectSummoners());
         return v;

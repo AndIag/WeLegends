@@ -143,6 +143,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         String summonerName = ((EditText) fragmentView.findViewById(R.id.editTextSummoner)).getText().toString();
         summonerName = Utils.cleanString(summonerName);
 
+        //TODO codify summoner name
         if (summonerName.isEmpty() || summonerName.equals("")) {
             Log.e(TAG, "onClickFindSummoner: Wrong search text");
             Toast.makeText(parentActivity.getApplicationContext(), getString(R.string.voidSummonerError),

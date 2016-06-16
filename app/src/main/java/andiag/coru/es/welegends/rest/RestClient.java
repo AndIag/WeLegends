@@ -17,19 +17,21 @@ public class RestClient {
     private static final String STATIC_DATA_ENDPOINT = "https://global.api.pvp.net/api/lol/static-data/";
     private static Api REST_CLIENT;
 
-    //TODO convert this in 3 singletones
-
-    static {
-        setupRestClient();
-    }
-
     private RestClient() {}
 
-    public static Api get() {
+    public static Api getWeLegendsData() {
+        if (REST_CLIENT == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(WELEGENDS_PROXY_ENDPOINT)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            REST_CLIENT = retrofit.create(Api.class);
+        }
         return REST_CLIENT;
     }
 
-    public static Api get(String name){
+    public static Api getWeLegendsData(String name) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(new SummonerTypeAdapterFactory(name))
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -43,7 +45,7 @@ public class RestClient {
         return retrofit.create(Api.class);
     }
 
-    public static ApiStatic getStatic(String version, String locale){
+    public static ApiStatic getDdragonStaticData(String version, String locale) {
         String endpoint = DDRAGON_DATA_ENDPOINT + version + "/data/" + locale + "/";
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -53,17 +55,5 @@ public class RestClient {
 
         return retrofit.create(ApiStatic.class);
     }
-
-    private static void setupRestClient() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(WELEGENDS_PROXY_ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        REST_CLIENT = retrofit.create(Api.class);
-    }
-
-
 
 }

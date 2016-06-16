@@ -44,7 +44,7 @@ public class DBSummoner {
         try {
             if (cursor.getCount() == 1 && cursor.moveToFirst()) {
                 summoner = new Summoner();
-                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ID)));
+                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper._ID)));
                 summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
                 summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
                 summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
@@ -65,7 +65,7 @@ public class DBSummoner {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(db==null) return -1;
 
-        String where = DBHelper.SUMMONER_ID + "=" + summonerId;
+        String where = DBHelper._ID + "=" + summonerId;
 
         ContentValues newValues = new ContentValues();
         newValues.put(DBHelper.SUMMONER_LAST_UPDATE, Calendar.getInstance().getTimeInMillis());
@@ -107,7 +107,7 @@ public class DBSummoner {
         try {
             while (cursor.moveToNext()) {
                 summoner = new Summoner();
-                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ID)));
+                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper._ID)));
                 summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
                 summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
                 summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
@@ -135,7 +135,7 @@ public class DBSummoner {
         try {
             while (cursor.moveToNext()) {
                 summoner = new Summoner();
-                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ID)));
+                summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper._ID)));
                 summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
                 summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
                 summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());

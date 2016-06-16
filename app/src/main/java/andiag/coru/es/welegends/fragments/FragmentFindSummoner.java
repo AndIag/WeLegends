@@ -134,7 +134,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     }
 
     private void apiSearchSummonerId(String summonerName, String region, Callback<Summoner> callback) {
-        Call<Summoner> call = RestClient.get(summonerName).getSummonerByName(region, summonerName);
+        Call<Summoner> call = RestClient.getWeLegendsData(summonerName).getSummonerByName(region, summonerName);
         call.enqueue(callback);
     }
 

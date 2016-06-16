@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.fragments.FragmentFindSummoner;
 import andiag.coru.es.welegends.fragments.FragmentSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
@@ -86,37 +87,50 @@ public class ActivitySummoner extends AppCompatActivity {
 
     //region Server Static Data
     private void checkServerVersion() {
-        Call<List<String>> call = RestClient.get().getServerVersion();
+        Call<List<String>> call = RestClient.getWeLegendsData().getServerVersion();
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 String newVersion = response.body().get(0);
-                Log.d(TAG, "Found Version: " + newVersion);
+                Log.d(TAG, "checkServerVersion -> FOUND: " + newVersion);
                 if (!newVersion.equals(Version.getVersion(activity))) {
+                    Log.d(TAG, "checkServerVersion -> NEW VERSION -> LOAD DATA");
                     //Version.setVersion(newVersion, activity);
-                    //TODO load locales
+                    String locale = getResources().getConfiguration().locale.getLanguage() + "_" + getResources().getConfiguration().locale.getCountry();
+                    loadServerChampions(newVersion, locale);
                 }
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.e(TAG, "VersionCallback ERROR");
+                Log.e(TAG, "checkServerVersion -> FAIL");
             }
         });
     }
 
-    private void loadServerChampions(String version, String locale) {
-        Call<GenericStaticData<String, Champion>> call = RestClient.getStatic(version, locale).getChampions();
+    private void loadServerChampions(final String version, final String locale) {
+        Call<GenericStaticData<String, Champion>> call = RestClient.getDdragonStaticData(version, locale).getChampions();
         call.enqueue(new Callback<GenericStaticData<String, Champion>>() {
             @Override
             public void onResponse(Call<GenericStaticData<String, Champion>> call, Response<GenericStaticData<String, Champion>> response) {
+                if (response.body() == null) {
+                    Log.d(TAG, "loadServerChampions -> FAIL");
+                    if (!locale.equals(Utils.DEFAULT_LOCALE)) {
+                        Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
+                        loadServerChampions(version, Utils.DEFAULT_LOCALE);
+                    }
+                }
+                Log.d(TAG, "loadServerChampions -> LOADED: " + String.valueOf(response.body().getData().size()));
                 //TODO save in database
-                Log.d(TAG, String.valueOf(response.body().getData().keySet().size()));
             }
 
             @Override
             public void onFailure(Call<GenericStaticData<String, Champion>> call, Throwable t) {
-
+                Log.d(TAG, "loadServerChampions -> FAIL");
+                if (!locale.equals(Utils.DEFAULT_LOCALE)) {
+                    Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
+                    loadServerChampions(version, Utils.DEFAULT_LOCALE);
+                }
             }
         });
     }

@@ -11,16 +11,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
     static final String DB_NAME = "andiag_welegends.sqlite";
-    static final int DB_VERSION = 1;
+    static final int DB_VERSION = 2;
 
     public static final String SUMMONER_TABLE_NAME = "Summoners";
-    public static final String SUMMONER_ID = "_id";
+
+    public static final String _ID = "_id";
     public static final String SUMMONER_RIOT_ID = "riotId";
     public static final String SUMMONER_NAME = "name";
     public static final String SUMMONER_REGION = "region";
     public static final String SUMMONER_ICON_ID = "iconId";
     public static final String SUMMONER_LEVEL = "summonerLevel";
     public static final String SUMMONER_LAST_UPDATE = "lastUpdate";
+
     private static DBHelper dbHelper = null;
 
     private DBHelper(Context context) {
@@ -37,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + SUMMONER_TABLE_NAME + " (" +
-                SUMMONER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 SUMMONER_RIOT_ID + " INTEGER, " +
                 SUMMONER_ICON_ID + " INTEGER, " +
                 SUMMONER_NAME + " TEXT, " +

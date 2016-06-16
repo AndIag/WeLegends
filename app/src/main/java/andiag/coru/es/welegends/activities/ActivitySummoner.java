@@ -96,6 +96,7 @@ public class ActivitySummoner extends AppCompatActivity {
                         String newVersion = response.body().get(0);
                         Log.d(TAG, "checkServerVersion -> FOUND: " + newVersion);
                         if (!newVersion.equals(Version.getVersion(activity))) {
+                            Version.setVersion(newVersion, activity);
                             Log.d(TAG, "checkServerVersion -> NEW VERSION -> LOAD DATA");
                             //Version.setVersion(newVersion, activity);
                             String locale = getResources().getConfiguration().locale.getLanguage() + "_" + getResources().getConfiguration().locale.getCountry();

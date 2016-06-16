@@ -21,6 +21,7 @@ import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.activities.ActivitySummonerData;
 import andiag.coru.es.welegends.persistence.DBSummoner;
+import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 import retrofit2.Call;
@@ -79,12 +80,12 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     };
     //endregion
 
-    public void setNotifiableActivity(ActivitySummonerData notifiableActivity) {
-        this.notifiableActivity = notifiableActivity;
-    }
-
     public FragmentFindSummoner() {
         // Required empty public constructor
+    }
+
+    public void setNotifiableActivity(ActivitySummonerData notifiableActivity) {
+        this.notifiableActivity = notifiableActivity;
     }
 
     @Override
@@ -100,6 +101,10 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
 
         //Allow press Enter key to search
         startSummonerListener(fragmentView);
+
+        //Show version
+        TextView version = (TextView) fragmentView.findViewById(R.id.textVersion);
+        version.setText("Version " + Version.getVersion(getActivity()));
 
         //Region picker
         Spinner spinner = (Spinner) fragmentView.findViewById(R.id.spinnerRegions);

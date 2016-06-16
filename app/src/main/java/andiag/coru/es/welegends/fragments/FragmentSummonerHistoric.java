@@ -28,6 +28,7 @@ public class FragmentSummonerHistoric extends Fragment {
 
     private final static String TAG = "FragmentSumHistoric";
     private AdapterSummonerHistoric adapter;
+    private RecyclerView recyclerView;
     private ActivitySummoner parentActivity;
     private DBSummoner db;
 
@@ -47,15 +48,39 @@ public class FragmentSummonerHistoric extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AdapterSummonerHistoric(getActivity(),R.layout.item_summoner_historic,new ArrayList<Summoner>());
-        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
-        adapter.isFirstOnly(false);
-        recyclerView.setAdapter(adapter);
 
+        // Inicialize recycler adapter
+        initAdapter();
+
+        //Fill with data from database
         adapter.addData(db.selectSummoners());
+
         return v;
+    }
+
+    public void initAdapter() {
+        adapter = new AdapterSummonerHistoric(getActivity(), R.layout.item_summoner_historic, new ArrayList<Summoner>());
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                Summoner summoner = adapter.getItem(i);
+                parentActivity.throwNewActivity(summoner, true);
+            }
+        });
+        adapter.setOnRecyclerViewItemLongClickListener(new BaseQuickAdapter.OnRecyclerViewItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(View view, int i) {
+                Summoner summoner = adapter.getItem(i);
+                if (db.deleteSummoner(summoner))
+                    adapter.remove(i);
+                return false;
+            }
+        });
     }
 
 }

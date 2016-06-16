@@ -129,8 +129,10 @@
     <string name="title_activity_current_info">Current Game</string>
     <string name="loadStaticData">Loading Static Data....</string>
     <string name="allsummoners">Historic</string>
+    <string name="empty">No Summoners Found. :(</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

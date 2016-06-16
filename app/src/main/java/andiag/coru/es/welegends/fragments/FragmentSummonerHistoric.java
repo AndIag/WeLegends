@@ -1,6 +1,7 @@
 package andiag.coru.es.welegends.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,11 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
+import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 
 
@@ -27,9 +29,18 @@ public class FragmentSummonerHistoric extends Fragment {
 
     private final static String TAG = "FragmentSumHistoric";
     private AdapterSummonerHistoric adapter;
+    private ActivitySummoner parentActivity;
+    private DBSummoner db;
 
     public FragmentSummonerHistoric() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.parentActivity = (ActivitySummoner) context;
+        this.db = ((ActivitySummoner) context).getDb();
     }
 
     @Override
@@ -44,16 +55,16 @@ public class FragmentSummonerHistoric extends Fragment {
         adapter.isFirstOnly(false);
         recyclerView.setAdapter(adapter);
 
-        List<Summoner> summoners = new ArrayList<>();
-        Summoner s;
-        for(int i=0;i<10;i++){
-            s = new Summoner();
-            s.setName("Summoner "+i);
-            s.setRegion("EUW");
-            summoners.add(s);
-        }
+//        List<Summoner> summoners = new ArrayList<>();
+//        Summoner s;
+//        for(int i=0;i<10;i++){
+//            s = new Summoner();
+//            s.setName("Summoner "+i);
+//            s.setRegion("EUW");
+//            summoners.add(s);
+//        }
 
-        adapter.addData(summoners);
+        adapter.addData(db.selectSummoners());
         return v;
     }
 

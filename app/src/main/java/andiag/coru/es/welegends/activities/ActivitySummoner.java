@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -34,6 +35,9 @@ public class ActivitySummoner extends AppCompatActivity {
     private DBSummoner db;
 
     public DBSummoner getDb() {
+        if (db == null) {
+            db = DBSummoner.getInstance(this);
+        }
         return db;
     }
 
@@ -42,13 +46,8 @@ public class ActivitySummoner extends AppCompatActivity {
         super.onStart();
         ActivitySummoner.activity = this;
 
-        Task.callInBackground(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                checkServerVersion();
-                return null;
-            }
-        });
+        //TODO make this exec just one time per run
+        checkServerVersion();
 
     }
 
@@ -90,15 +89,25 @@ public class ActivitySummoner extends AppCompatActivity {
         Call<List<String>> call = RestClient.getWeLegendsData().getServerVersion();
         call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                String newVersion = response.body().get(0);
-                Log.d(TAG, "checkServerVersion -> FOUND: " + newVersion);
-                if (!newVersion.equals(Version.getVersion(activity))) {
-                    Log.d(TAG, "checkServerVersion -> NEW VERSION -> LOAD DATA");
-                    //Version.setVersion(newVersion, activity);
-                    String locale = getResources().getConfiguration().locale.getLanguage() + "_" + getResources().getConfiguration().locale.getCountry();
-                    loadServerChampions(newVersion, locale);
-                }
+            public void onResponse(Call<List<String>> call, final Response<List<String>> response) {
+                Task.callInBackground(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        String newVersion = response.body().get(0);
+                        Log.d(TAG, "checkServerVersion -> FOUND: " + newVersion);
+                        if (!newVersion.equals(Version.getVersion(activity))) {
+                            Log.d(TAG, "checkServerVersion -> NEW VERSION -> LOAD DATA");
+                            //Version.setVersion(newVersion, activity);
+                            String locale = getResources().getConfiguration().locale.getLanguage() + "_" + getResources().getConfiguration().locale.getCountry();
+
+                            loadServerChampions(newVersion, locale);
+                            //TODO load other data
+                            return null;
+                        }
+                        stopProgressBar();
+                        return null;
+                    }
+                });
             }
 
             @Override
@@ -112,16 +121,22 @@ public class ActivitySummoner extends AppCompatActivity {
         Call<GenericStaticData<String, Champion>> call = RestClient.getDdragonStaticData(version, locale).getChampions();
         call.enqueue(new Callback<GenericStaticData<String, Champion>>() {
             @Override
-            public void onResponse(Call<GenericStaticData<String, Champion>> call, Response<GenericStaticData<String, Champion>> response) {
-                if (response.body() == null) {
-                    Log.d(TAG, "loadServerChampions -> FAIL");
-                    if (!locale.equals(Utils.DEFAULT_LOCALE)) {
-                        Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
-                        loadServerChampions(version, Utils.DEFAULT_LOCALE);
+            public void onResponse(Call<GenericStaticData<String, Champion>> call, final Response<GenericStaticData<String, Champion>> response) {
+                Task.callInBackground(new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        if (response.body() == null) {
+                            Log.d(TAG, "loadServerChampions -> FAIL");
+                            if (!locale.equals(Utils.DEFAULT_LOCALE)) {
+                                Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
+                                loadServerChampions(version, Utils.DEFAULT_LOCALE);
+                            }
+                        }
+                        Log.d(TAG, "loadServerChampions -> LOADED: " + String.valueOf(response.body().getData().size()));
+                        //TODO save in database
+                        return null;
                     }
-                }
-                Log.d(TAG, "loadServerChampions -> LOADED: " + String.valueOf(response.body().getData().size()));
-                //TODO save in database
+                });
             }
 
             @Override
@@ -135,6 +150,18 @@ public class ActivitySummoner extends AppCompatActivity {
         });
     }
     //endregion
+
+    //region View Control
+
+    public void stopProgressBar() {
+        ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+        bar.setVisibility(View.GONE);
+    }
+
+    public void startProgressBar() {
+        ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
+    }
 
     //Redirect View action to fragment
     public void onClickFindSummoner(View v){
@@ -151,4 +178,5 @@ public class ActivitySummoner extends AppCompatActivity {
                     .commit();
         }
     }
+    //endregion
 }

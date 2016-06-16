@@ -114,6 +114,8 @@ public class DBSummoner {
                 summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
                 summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
+
+                summoners.add(summoner);
             }
         } finally {
             cursor.close();
@@ -142,6 +144,8 @@ public class DBSummoner {
                 summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
                 summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
+
+                summoners.add(summoner);
             }
         } finally {
             cursor.close();

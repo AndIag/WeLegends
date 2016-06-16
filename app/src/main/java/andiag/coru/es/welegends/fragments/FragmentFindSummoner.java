@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
@@ -61,7 +60,6 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     private Callback<Summoner> callbackUpdateSummoner = new Callback<Summoner>() {
         @Override
         public void onResponse(Call<Summoner> call, Response<Summoner> response) {
-            //TODO move this to background processing
             Log.d(TAG, "onClickFindSummoner: Found-" + response.body().getId());
             Summoner newSummoner = response.body();
             newSummoner.setRegion(region);
@@ -104,7 +102,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         startSummonerListener(fragmentView);
 
         //Region picker
-        BetterSpinner spinner = (BetterSpinner) fragmentView.findViewById(R.id.spinnerRegions);
+        Spinner spinner = (Spinner) fragmentView.findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
 
         return fragmentView;

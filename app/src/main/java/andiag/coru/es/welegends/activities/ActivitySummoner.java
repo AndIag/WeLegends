@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.fragments.FragmentFindSummoner;
@@ -17,6 +18,7 @@ import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 import andiag.coru.es.welegends.rest.entities.persist.Champion;
 import andiag.coru.es.welegends.rest.utils.GenericStaticData;
+import bolts.Task;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,37 +32,6 @@ public class ActivitySummoner extends AppCompatActivity {
 
     private DBSummoner db;
 
-
-    private Callback<List<String>> versionCallback = new Callback<List<String>>() {
-        @Override
-        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-            String newVersion = response.body().get(0);
-            Log.d(TAG, "Found Version: " + newVersion);
-            if (!newVersion.equals(Version.getVersion(activity))) {
-                //Version.setVersion(newVersion, activity);
-                //TODO load locales
-            }
-        }
-
-        @Override
-        public void onFailure(Call<List<String>> call, Throwable t) {
-            Log.e(TAG, "VersionCallback ERROR");
-        }
-    };
-
-    private Callback<GenericStaticData<String, Champion>> championsCallback = new Callback<GenericStaticData<String, Champion>>() {
-        @Override
-        public void onResponse(Call<GenericStaticData<String, Champion>> call, Response<GenericStaticData<String, Champion>> response) {
-            //TODO save in database
-            Log.d(TAG, String.valueOf(response.body().getData().keySet().size()));
-        }
-
-        @Override
-        public void onFailure(Call<GenericStaticData<String, Champion>> call, Throwable t) {
-
-        }
-    };
-
     public DBSummoner getDb() {
         return db;
     }
@@ -69,6 +40,15 @@ public class ActivitySummoner extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         ActivitySummoner.activity = this;
+
+        Task.callInBackground(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                checkServerVersion();
+                return null;
+            }
+        });
+
     }
 
     @Override
@@ -85,9 +65,6 @@ public class ActivitySummoner extends AppCompatActivity {
                     .add(R.id.fragmentSummonerHistoric, new FragmentSummonerHistoric(), SUMMONER_HISTORIC_FRAGMENT)
                     .commit();
         }
-
-        //TODO move this to background
-        checkServerVersion();
 
     }
 
@@ -110,12 +87,38 @@ public class ActivitySummoner extends AppCompatActivity {
     //region Server Static Data
     private void checkServerVersion() {
         Call<List<String>> call = RestClient.get().getServerVersion();
-        call.enqueue(versionCallback);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                String newVersion = response.body().get(0);
+                Log.d(TAG, "Found Version: " + newVersion);
+                if (!newVersion.equals(Version.getVersion(activity))) {
+                    //Version.setVersion(newVersion, activity);
+                    //TODO load locales
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                Log.e(TAG, "VersionCallback ERROR");
+            }
+        });
     }
 
     private void loadServerChampions(String version, String locale) {
         Call<GenericStaticData<String, Champion>> call = RestClient.getStatic(version, locale).getChampions();
-        call.enqueue(championsCallback);
+        call.enqueue(new Callback<GenericStaticData<String, Champion>>() {
+            @Override
+            public void onResponse(Call<GenericStaticData<String, Champion>> call, Response<GenericStaticData<String, Champion>> response) {
+                //TODO save in database
+                Log.d(TAG, String.valueOf(response.body().getData().keySet().size()));
+            }
+
+            @Override
+            public void onFailure(Call<GenericStaticData<String, Champion>> call, Throwable t) {
+
+            }
+        });
     }
     //endregion
 

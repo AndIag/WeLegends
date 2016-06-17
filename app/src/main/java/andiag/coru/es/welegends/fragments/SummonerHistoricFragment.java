@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +17,36 @@ import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
+import andiag.coru.es.welegends.activities.NotifiableActivity;
 import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
+import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentSummonerHistoric extends Fragment {
+public class SummonerHistoricFragment extends Fragment implements NotifiableFragment<Summoner> {
 
     private final static String TAG = "FragmentSumHistoric";
     private AdapterSummonerHistoric adapter;
     private RecyclerView recyclerView;
+
+    private NotifiableActivity<Summoner> notifiableActivity = null;
     private ActivitySummoner parentActivity;
+
     private DBSummoner db;
 
-    public FragmentSummonerHistoric() {
+    public SummonerHistoricFragment() {
         // Required empty public constructor
+    }
+
+    public void setNotifiableActivity(NotifiableActivity<Summoner> notifiableActivity) {
+        this.notifiableActivity = notifiableActivity;
     }
 
     @Override
@@ -69,16 +82,45 @@ public class FragmentSummonerHistoric extends Fragment {
             @Override
             public void onItemClick(View view, int i) {
                 Summoner summoner = adapter.getItem(i);
-                parentActivity.throwNewActivity(summoner, true);
+                apiSearchSummonerId(summoner);
+                parentActivity.throwNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
             }
         });
         adapter.setOnRecyclerViewItemLongClickListener(new BaseQuickAdapter.OnRecyclerViewItemLongClickListener() {
             @Override
             public boolean onItemLongClick(View view, int i) {
+                //TODO argue if we really want this
                 Summoner summoner = adapter.getItem(i);
                 if (db.deleteSummoner(summoner))
                     adapter.remove(i);
                 return false;
+            }
+        });
+    }
+
+    private void apiSearchSummonerId(final Summoner summoner) {
+        Call<Summoner> call = RestClient.getWeLegendsData(summoner.getName())
+                .getSummonerByName(summoner.getRegion(), summoner.getName());
+
+        call.enqueue(new Callback<Summoner>() {
+            @Override
+            public void onResponse(Call<Summoner> call, Response<Summoner> response) {
+                Log.d(TAG, "onClickFindSummoner: Found-" + response.body().getId());
+                //TODO bug here, region is null
+                Summoner newSummoner = response.body();
+                newSummoner.setRegion(summoner.getRegion());
+                db.addSummoner(newSummoner);
+                if (notifiableActivity == null) {
+                    Log.e(TAG, "callbackUpdateSummoner: Null noticeable activity. This should never happen");
+                    return;
+                }
+                notifiableActivity.notifyDataChange(newSummoner);
+            }
+
+            @Override
+            public void onFailure(Call<Summoner> call, Throwable t) {
+                //This case may never happen
+                Log.d(TAG, "onClickFindSummoner: Summoner not found");
             }
         });
     }

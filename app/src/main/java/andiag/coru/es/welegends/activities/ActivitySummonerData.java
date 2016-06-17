@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.fragments.FragmentFindSummoner;
+import andiag.coru.es.welegends.fragments.NotifiableFragment;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 
-public class ActivitySummonerData extends AppCompatActivity {
+public class ActivitySummonerData extends AppCompatActivity implements NotifiableActivity<Summoner> {
 
     private final static String TAG = "ActivitySummonerData";
     public final static String ARG_SUMMONER = "SUMMONER";
@@ -23,7 +23,7 @@ public class ActivitySummonerData extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             if (getIntent().hasExtra(ARG_FRAGMENT)) {
-                ((FragmentFindSummoner) ActivitySummoner.activity.getSupportFragmentManager()
+                ((NotifiableFragment) ActivitySummoner.activity.getSupportFragmentManager()
                         .findFragmentByTag(getIntent().getStringExtra(ARG_FRAGMENT))).setNotifiableActivity(this);
             }
             this.summoner = (Summoner) getIntent().getSerializableExtra(ARG_SUMMONER);
@@ -32,7 +32,7 @@ public class ActivitySummonerData extends AppCompatActivity {
 
     }
 
-    public void notifySummonerDataChange(Summoner newSummoner) {
+    public void notifyDataChange(Summoner newSummoner) {
         Log.d(TAG, "notifySummonerDataChange: " + summoner.getId());
         this.summoner = newSummoner;
         //TODO notify view

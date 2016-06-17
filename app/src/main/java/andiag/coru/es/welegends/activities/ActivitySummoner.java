@@ -12,8 +12,8 @@ import java.util.concurrent.Callable;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
-import andiag.coru.es.welegends.fragments.FragmentFindSummoner;
-import andiag.coru.es.welegends.fragments.FragmentSummonerHistoric;
+import andiag.coru.es.welegends.fragments.FindSummonerFragment;
+import andiag.coru.es.welegends.fragments.SummonerHistoricFragment;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -28,8 +28,8 @@ import retrofit2.Response;
 public class ActivitySummoner extends AppCompatActivity {
 
     private final static String TAG = "ActivitySummoner";
-    private final static String FIND_SUMMONER_FRAGMENT = "findSummonerFragment";
-    private final static String SUMMONER_HISTORIC_FRAGMENT = "summonerHistoricFragment";
+    public final static String FIND_SUMMONER_FRAGMENT = "findSummonerFragment";
+    public final static String SUMMONER_HISTORIC_FRAGMENT = "summonerHistoricFragment";
     public static ActivitySummoner activity = null;
 
     private DBSummoner db;
@@ -58,11 +58,11 @@ public class ActivitySummoner extends AppCompatActivity {
         db = DBSummoner.getInstance(this);
 
         if (findViewById(R.id.fragmentContainer) != null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT).commit();
         } else {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentFindSummoner, new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT)
-                    .add(R.id.fragmentSummonerHistoric, new FragmentSummonerHistoric(), SUMMONER_HISTORIC_FRAGMENT)
+                    .add(R.id.fragmentFindSummoner, new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT)
+                    .add(R.id.fragmentSummonerHistoric, new SummonerHistoricFragment(), SUMMONER_HISTORIC_FRAGMENT)
                     .commit();
         }
 
@@ -75,10 +75,10 @@ public class ActivitySummoner extends AppCompatActivity {
         this.db = null;
     }
 
-    public void throwNewActivity(Summoner summoner, boolean updateRequired) {
+    public void throwNewActivity(Summoner summoner, String callbackFragment) {
         Intent i = new Intent(this, ActivitySummonerData.class);
-        if (updateRequired) {
-            i.putExtra(ActivitySummonerData.ARG_FRAGMENT, FIND_SUMMONER_FRAGMENT);
+        if (callbackFragment != null) {
+            i.putExtra(ActivitySummonerData.ARG_FRAGMENT, callbackFragment);
         }
         i.putExtra(ActivitySummonerData.ARG_SUMMONER, summoner);
         startActivity(i);
@@ -166,7 +166,7 @@ public class ActivitySummoner extends AppCompatActivity {
 
     //Redirect View action to fragment
     public void onClickFindSummoner(View v){
-        FragmentFindSummoner fragmentFindSummoner = (FragmentFindSummoner) getSupportFragmentManager()
+        FindSummonerFragment fragmentFindSummoner = (FindSummonerFragment) getSupportFragmentManager()
                 .findFragmentByTag(FIND_SUMMONER_FRAGMENT);
 
         fragmentFindSummoner.findSummoner(fragmentFindSummoner.getView());
@@ -174,7 +174,8 @@ public class ActivitySummoner extends AppCompatActivity {
 
     public void onClickSwapFragment(View view) {
         if (findViewById(R.id.fragmentContainer) != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSummonerHistoric())
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new SummonerHistoricFragment(), SUMMONER_HISTORIC_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
         }

@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 
 import andiag.coru.es.welegends.R;
+import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.activities.NotifiableActivity;
 import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
@@ -69,6 +70,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
         initAdapter();
 
         //Fill with data from database
+        //TODO historic is not showed until u rotate the screen
         adapter.addData(db.getSummoners());
 
         return v;
@@ -82,7 +84,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
             @Override
             public void onItemClick(View view, int i) {
                 Summoner summoner = adapter.getItem(i);
-                apiSearchSummonerId(summoner);
+                apiSearchSummonerId(Utils.cleanString(summoner.getName()), summoner.getRegion());
                 parentActivity.throwNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
             }
         });
@@ -98,17 +100,16 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
         });
     }
 
-    private void apiSearchSummonerId(final Summoner summoner) {
-        Call<Summoner> call = RestClient.getWeLegendsData(summoner.getName())
-                .getSummonerByName(summoner.getRegion(), summoner.getName());
+    private void apiSearchSummonerId(String summonerName, final String region) {
+        Call<Summoner> call = RestClient.getWeLegendsData(summonerName)
+                .getSummonerByName(region, summonerName);
 
         call.enqueue(new Callback<Summoner>() {
             @Override
             public void onResponse(Call<Summoner> call, Response<Summoner> response) {
                 Log.d(TAG, "onClickFindSummoner: Found-" + response.body().getId());
-                //TODO bug here, region is null
                 Summoner newSummoner = response.body();
-                newSummoner.setRegion(summoner.getRegion());
+                newSummoner.setRegion(region);
                 db.addSummoner(newSummoner);
                 if (notifiableActivity == null) {
                     Log.e(TAG, "callbackUpdateSummoner: Null noticeable activity. This should never happen");

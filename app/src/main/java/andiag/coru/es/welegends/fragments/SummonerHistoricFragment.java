@@ -69,7 +69,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
         initAdapter();
 
         //Fill with data from database
-        adapter.addData(db.selectSummoners());
+        adapter.addData(db.getSummoners());
 
         return v;
     }

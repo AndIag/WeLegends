@@ -33,9 +33,9 @@ public class DBSummoner {
         return dbSummoner;
     }
 
-    public Summoner getSummonerByName(String summonerName, String region){
+    public Summoner getSummonerByName(String summonerName, String region) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        if(db==null) return null;
+        if (db == null) return null;
 
         String where = DBHelper.SUMMONER_NAME + " = ? AND " + DBHelper.SUMMONER_REGION + " = ?";
         Cursor cursor = db.query(DBHelper.SUMMONER_TABLE_NAME, null, where,
@@ -53,7 +53,7 @@ public class DBSummoner {
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
                 Log.i(TAG, "Found: " + summoner.getName());
             }
-        }finally {
+        } finally {
             cursor.close();
         }
         return summoner;
@@ -61,7 +61,7 @@ public class DBSummoner {
 
     private int updateLastSummonerSearch(Long summonerId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if(db==null) return -1;
+        if (db == null) return -1;
 
         String where = DBHelper._ID + " = ?";
 
@@ -73,12 +73,12 @@ public class DBSummoner {
 
     }
 
-    public long addSummoner(Summoner summoner){
+    public long addSummoner(Summoner summoner) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if(db==null) return -1;
+        if (db == null) return -1;
 
         //If summoner already exist update it
-        if(summoner.getLocalId()!=null || getSummonerByName(summoner.getName(), summoner.getRegion())!=null){
+        if (summoner.getLocalId() != null || getSummonerByName(summoner.getName(), summoner.getRegion()) != null) {
             return (updateLastSummonerSearch(summoner.getLocalId())) > 0 ? summoner.getLocalId() : -1;
         }
 
@@ -102,14 +102,14 @@ public class DBSummoner {
         return deleted > 0;
     }
 
-    public List<Summoner> selectTopNSummoners(int n) {
+    public List<Summoner> getSummoners(int limit) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if (db == null) return null;
 
         ArrayList<Summoner> summoners = new ArrayList<>();
 
         Cursor cursor = db.query(DBHelper.SUMMONER_TABLE_NAME, null, null, null, null, null,
-                DBHelper.SUMMONER_LAST_UPDATE, String.valueOf(n));
+                DBHelper.SUMMONER_LAST_UPDATE, String.valueOf(limit));
         Summoner summoner;
 
         try {
@@ -133,7 +133,7 @@ public class DBSummoner {
         return summoners;
     }
 
-    public List<Summoner> selectSummoners() {
+    public List<Summoner> getSummoners() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if (db == null) return null;
 

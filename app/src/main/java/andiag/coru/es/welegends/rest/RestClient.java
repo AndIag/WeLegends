@@ -17,7 +17,8 @@ public class RestClient {
     private static final String STATIC_DATA_ENDPOINT = "https://global.api.pvp.net/api/lol/static-data/";
     private static Api REST_CLIENT;
 
-    private RestClient() {}
+    private RestClient() {
+    }
 
     public static Api getWeLegendsData() {
         if (REST_CLIENT == null) {

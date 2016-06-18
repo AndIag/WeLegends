@@ -21,8 +21,8 @@ public class AdapterSummonerHistoric extends BaseQuickAdapter<Summoner> {
 
     @Override
     protected void convert(BaseViewHolder holder, Summoner summoner) {
-        holder.setText(R.id.textSummonerName,summoner.getName())
-                .setText(R.id.textSummonerRegion,summoner.getRegion());
+        holder.setText(R.id.textSummonerName, summoner.getName())
+                .setText(R.id.textSummonerRegion, summoner.getRegion());
 
     }
 }

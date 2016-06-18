@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +46,7 @@ public class ActivitySummoner extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         ActivitySummoner.activity = this;
+        db = DBSummoner.getInstance(this);
 
         //Make checkServerVersion exec just one per run
         if (!Utils.isServerLoaded) {
@@ -55,18 +57,32 @@ public class ActivitySummoner extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (findViewById(R.id.fragmentContainer) != null) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(FIND_SUMMONER_FRAGMENT);
+            String displayedFragmentTag = (fragment != null && fragment.isVisible())
+                    ? FIND_SUMMONER_FRAGMENT : SUMMONER_HISTORIC_FRAGMENT;
+            outState.putString("FRAGMENT", displayedFragmentTag);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner);
-        db = DBSummoner.getInstance(this);
 
-        if (findViewById(R.id.fragmentContainer) != null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT).commit();
-        } else {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentFindSummoner, new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT)
-                    .add(R.id.fragmentSummonerHistoric, new SummonerHistoricFragment(), SUMMONER_HISTORIC_FRAGMENT)
-                    .commit();
+        //Initialize fragments if necessary
+        if (savedInstanceState == null) {
+            if (findViewById(R.id.fragmentContainer) != null) {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer,
+                        new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragmentFindSummoner, new FindSummonerFragment(), FIND_SUMMONER_FRAGMENT)
+                        .add(R.id.fragmentSummonerHistoric, new SummonerHistoricFragment(), SUMMONER_HISTORIC_FRAGMENT)
+                        .commit();
+            }
         }
 
     }
@@ -168,7 +184,7 @@ public class ActivitySummoner extends AppCompatActivity {
     }
 
     //Redirect View action to fragment
-    public void onClickFindSummoner(View v){
+    public void onClickFindSummoner(View v) {
         FindSummonerFragment fragmentFindSummoner = (FindSummonerFragment) getSupportFragmentManager()
                 .findFragmentByTag(FIND_SUMMONER_FRAGMENT);
 

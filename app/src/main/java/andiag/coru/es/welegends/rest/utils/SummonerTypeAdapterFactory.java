@@ -33,14 +33,14 @@ public class SummonerTypeAdapterFactory implements TypeAdapterFactory {
             public void write(JsonWriter out, T value) throws IOException {
                 delegate.write(out, value);
             }
+
             @Override
             public T read(JsonReader in) throws IOException {
 
                 JsonElement jsonElement = elementAdapter.read(in);
                 if (jsonElement.isJsonObject()) {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    if (jsonObject.has(name) && jsonObject.get(name).isJsonObject())
-                    {
+                    if (jsonObject.has(name) && jsonObject.get(name).isJsonObject()) {
                         jsonElement = jsonObject.get(name);
                     }
                 }

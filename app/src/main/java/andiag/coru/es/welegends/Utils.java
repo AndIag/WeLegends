@@ -11,6 +11,7 @@ public class Utils {
 
     public static final int MAX_LEVEL = 30;
     public static final String DEFAULT_LOCALE = "en_GB";
+    public static boolean isServerLoaded = false;
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager manager = (ConnectivityManager)

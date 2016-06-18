@@ -64,14 +64,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/lite/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/lite/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/lite/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/assets" type="java-test-resource" />
@@ -80,6 +72,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testLite/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />

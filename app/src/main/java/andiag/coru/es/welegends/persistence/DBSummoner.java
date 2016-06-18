@@ -37,9 +37,9 @@ public class DBSummoner {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if(db==null) return null;
 
-        String execute = "SELECT * FROM " + DBHelper.SUMMONER_TABLE_NAME + " WHERE " + DBHelper.SUMMONER_NAME + " = '" + summonerName.toLowerCase() +
-                "' AND " + DBHelper.SUMMONER_REGION + " = '" + region.toLowerCase() + "'";
-        Cursor cursor = db.rawQuery(execute, null);
+        String where = DBHelper.SUMMONER_NAME + " = ? AND " + DBHelper.SUMMONER_REGION + " = ?";
+        Cursor cursor = db.query(DBHelper.SUMMONER_TABLE_NAME, null, where,
+                new String[]{summonerName.toUpperCase(), region.toUpperCase()}, null, null, null);
         Summoner summoner = null;
         try {
             if (cursor.getCount() == 1 && cursor.moveToFirst()) {
@@ -47,13 +47,11 @@ public class DBSummoner {
                 summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper._ID)));
                 summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
                 summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
-                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
+                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)));
                 summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
                 summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
-            }
-            if (cursor.getCount() > 1) {
-                Log.d(TAG, "INCONSISTENCIES ERROR IN SUMMONER DATABASE");
+                Log.i(TAG, "Found: " + summoner.getName());
             }
         }finally {
             cursor.close();
@@ -65,12 +63,14 @@ public class DBSummoner {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if(db==null) return -1;
 
-        String where = DBHelper._ID + "=" + summonerId;
+        String where = DBHelper._ID + " = ?";
 
         ContentValues newValues = new ContentValues();
         newValues.put(DBHelper.SUMMONER_LAST_UPDATE, Calendar.getInstance().getTimeInMillis());
 
-        return db.update(DBHelper.SUMMONER_TABLE_NAME, newValues, where, null);
+        return db.update(DBHelper.SUMMONER_TABLE_NAME, newValues, where,
+                new String[]{String.valueOf(summonerId)});
+
     }
 
     public long addSummoner(Summoner summoner){
@@ -85,8 +85,8 @@ public class DBSummoner {
         //Else -> Insert new summoner in db
         ContentValues newSummoner = new ContentValues();
         newSummoner.put(DBHelper.SUMMONER_RIOT_ID, summoner.getId());
-        newSummoner.put(DBHelper.SUMMONER_NAME, summoner.getName().toLowerCase());
-        newSummoner.put(DBHelper.SUMMONER_REGION, summoner.getRegion().toLowerCase());
+        newSummoner.put(DBHelper.SUMMONER_NAME, summoner.getName().toUpperCase());
+        newSummoner.put(DBHelper.SUMMONER_REGION, summoner.getRegion().toUpperCase());
         newSummoner.put(DBHelper.SUMMONER_ICON_ID, summoner.getProfileIconId());
         newSummoner.put(DBHelper.SUMMONER_LEVEL, summoner.getSummonerLevel());
         newSummoner.put(DBHelper.SUMMONER_LAST_UPDATE, Calendar.getInstance().getTimeInMillis());
@@ -97,9 +97,9 @@ public class DBSummoner {
     public boolean deleteSummoner(Summoner summoner) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db == null) return false;
-        int deleted = db.delete(DBHelper.SUMMONER_TABLE_NAME, DBHelper._ID + "=" + summoner.getLocalId(), null);
-        if (deleted > 0) return true;
-        else return false;
+        int deleted = db.delete(DBHelper.SUMMONER_TABLE_NAME, DBHelper._ID + "= ?",
+                new String[]{String.valueOf(summoner.getLocalId())});
+        return deleted > 0;
     }
 
     public List<Summoner> selectTopNSummoners(int n) {
@@ -108,8 +108,8 @@ public class DBSummoner {
 
         ArrayList<Summoner> summoners = new ArrayList<>();
 
-        String select = "SELECT * FROM " + DBHelper.SUMMONER_TABLE_NAME + " ORDER BY " + DBHelper.SUMMONER_LAST_UPDATE + " LIMIT " + n;
-        Cursor cursor = db.rawQuery(select, null);
+        Cursor cursor = db.query(DBHelper.SUMMONER_TABLE_NAME, null, null, null, null, null,
+                DBHelper.SUMMONER_LAST_UPDATE, String.valueOf(n));
         Summoner summoner;
 
         try {
@@ -124,6 +124,7 @@ public class DBSummoner {
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
 
                 summoners.add(summoner);
+                Log.i(TAG, "Found: " + summoner.getName());
             }
         } finally {
             cursor.close();
@@ -138,8 +139,8 @@ public class DBSummoner {
 
         ArrayList<Summoner> summoners = new ArrayList<>();
 
-        String select = "SELECT * FROM " + DBHelper.SUMMONER_TABLE_NAME + " ORDER BY " + DBHelper.SUMMONER_LAST_UPDATE;
-        Cursor cursor = db.rawQuery(select, null);
+        Cursor cursor = db.query(DBHelper.SUMMONER_TABLE_NAME, null, null, null, null, null,
+                DBHelper.SUMMONER_LAST_UPDATE);
         Summoner summoner;
 
         try {
@@ -148,12 +149,13 @@ public class DBSummoner {
                 summoner.setLocalId(cursor.getLong(cursor.getColumnIndex(DBHelper._ID)));
                 summoner.setId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_RIOT_ID)));
                 summoner.setName(Utils.toTitleCase(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_NAME))));
-                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)).toUpperCase());
+                summoner.setRegion(cursor.getString(cursor.getColumnIndex(DBHelper.SUMMONER_REGION)));
                 summoner.setProfileIconId(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_ICON_ID)));
                 summoner.setSummonerLevel(cursor.getInt(cursor.getColumnIndex(DBHelper.SUMMONER_LEVEL)));
                 summoner.setLastUpdate(cursor.getLong(cursor.getColumnIndex(DBHelper.SUMMONER_LAST_UPDATE)));
 
                 summoners.add(summoner);
+                Log.i(TAG, "Found: " + summoner.getName());
             }
         } finally {
             cursor.close();

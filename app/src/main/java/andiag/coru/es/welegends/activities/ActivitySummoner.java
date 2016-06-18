@@ -46,8 +46,11 @@ public class ActivitySummoner extends AppCompatActivity {
         super.onStart();
         ActivitySummoner.activity = this;
 
-        //TODO make this exec just one time per run
-        checkServerVersion();
+        //Make checkServerVersion exec just one per run
+        if (!Utils.isServerLoaded) {
+            Utils.isServerLoaded = true;
+            checkServerVersion();
+        }
 
     }
 
@@ -94,10 +97,10 @@ public class ActivitySummoner extends AppCompatActivity {
                     @Override
                     public Void call() throws Exception {
                         String newVersion = response.body().get(0);
-                        Log.d(TAG, "checkServerVersion -> FOUND: " + newVersion);
+                        Log.d(TAG, "BACKGROUND: checkServerVersion -> FOUND: " + newVersion);
                         if (!newVersion.equals(Version.getVersion(activity))) {
                             Version.setVersion(newVersion, activity);
-                            Log.d(TAG, "checkServerVersion -> NEW VERSION -> LOAD DATA");
+                            Log.d(TAG, "BACKGROUND: checkServerVersion -> NEW VERSION -> LOAD DATA");
                             //Version.setVersion(newVersion, activity);
                             String locale = getResources().getConfiguration().locale.getLanguage() + "_" + getResources().getConfiguration().locale.getCountry();
 
@@ -113,7 +116,7 @@ public class ActivitySummoner extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.e(TAG, "checkServerVersion -> FAIL");
+                Log.e(TAG, "BACKGROUND: checkServerVersion -> FAIL");
             }
         });
     }
@@ -127,13 +130,13 @@ public class ActivitySummoner extends AppCompatActivity {
                     @Override
                     public Void call() throws Exception {
                         if (response.body() == null) {
-                            Log.d(TAG, "loadServerChampions -> FAIL");
+                            Log.d(TAG, "BACKGROUND: loadServerChampions -> FAIL");
                             if (!locale.equals(Utils.DEFAULT_LOCALE)) {
-                                Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
+                                Log.d(TAG, "BACKGROUND: loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
                                 loadServerChampions(version, Utils.DEFAULT_LOCALE);
                             }
                         }
-                        Log.d(TAG, "loadServerChampions -> LOADED: " + String.valueOf(response.body().getData().size()));
+                        Log.d(TAG, "BACKGROUND: loadServerChampions -> LOADED: " + String.valueOf(response.body().getData().size()));
                         //TODO save in database
                         return null;
                     }
@@ -142,9 +145,9 @@ public class ActivitySummoner extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GenericStaticData<String, Champion>> call, Throwable t) {
-                Log.d(TAG, "loadServerChampions -> FAIL");
+                Log.d(TAG, "BACKGROUND: loadServerChampions -> FAIL");
                 if (!locale.equals(Utils.DEFAULT_LOCALE)) {
-                    Log.d(TAG, "loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
+                    Log.d(TAG, "BACKGROUND: loadServerChampions -> RELOAD WITH: " + Utils.DEFAULT_LOCALE);
                     loadServerChampions(version, Utils.DEFAULT_LOCALE);
                 }
             }
@@ -178,6 +181,7 @@ public class ActivitySummoner extends AppCompatActivity {
                     .replace(R.id.fragmentContainer, new SummonerHistoricFragment(), SUMMONER_HISTORIC_FRAGMENT)
                     .addToBackStack(null)
                     .commit();
+
         }
     }
     //endregion

@@ -64,7 +64,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
         View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(parentActivity));
 
         // Inicialize recycler adapter
         initAdapter();
@@ -77,7 +77,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
     }
 
     public void initAdapter() {
-        adapter = new AdapterSummonerHistoric(getActivity(), R.layout.item_summoner_historic, new ArrayList<Summoner>());
+        adapter = new AdapterSummonerHistoric(parentActivity, R.layout.item_summoner_historic, new ArrayList<Summoner>());
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {

@@ -7,8 +7,6 @@ import andiag.coru.es.welegends.activities.NotifiableActivity;
  */
 public interface NotifiableFragment<T> {
 
-    //TODO change ActivitySummonerData to ActivitiNotifiable
-
     void setNotifiableActivity(NotifiableActivity<T> notifiableActivity);
 
 }

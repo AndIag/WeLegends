@@ -3,6 +3,7 @@ package andiag.coru.es.welegends.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
@@ -42,7 +42,7 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
     private ActivitySummoner parentActivity;
 
     private DBSummoner db;
-    private List<Summoner> summoners = new ArrayList<>();
+    private List<Summoner> summoners = null;
 
     public SummonerHistoricFragment() {
         // Required empty public constructor
@@ -60,13 +60,19 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        summoners = db.getSummoners();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        //TODO historic is not showed until u rotate the screen
         //Fill with data from database
-        summoners = db.getSummoners();
-        adapter.addData(summoners);
-        Log.d(TAG, "onResume");
+        if (summoners == null) {
+            summoners = db.getSummoners();
+        }
+        adapter.setNewData(summoners);
     }
 
     @Override
@@ -85,7 +91,8 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
     }
 
     public void initAdapter() {
-        adapter = new AdapterSummonerHistoric(parentActivity, R.layout.item_summoner_historic, new ArrayList<Summoner>());
+        adapter = new AdapterSummonerHistoric(parentActivity, R.layout.item_summoner_historic, null);
+        adapter.setNewData(summoners);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {

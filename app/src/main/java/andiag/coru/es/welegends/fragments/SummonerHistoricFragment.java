@@ -86,13 +86,14 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
 
         // Inicialize recycler adapter
         initAdapter();
+        //TODO this shit dont want to work!! Init sumonnerhistory adapter
+        adapter.setNewData(summoners);
 
         return v;
     }
 
     public void initAdapter() {
-        adapter = new AdapterSummonerHistoric(parentActivity, R.layout.item_summoner_historic, null);
-        adapter.setNewData(summoners);
+        adapter = new AdapterSummonerHistoric(R.layout.item_summoner_historic, null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {

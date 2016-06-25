@@ -1,7 +1,5 @@
 package andiag.coru.es.welegends.adapters;
 
-import android.content.Context;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -15,8 +13,8 @@ import andiag.coru.es.welegends.rest.entities.Summoner;
  */
 public class AdapterSummonerHistoric extends BaseQuickAdapter<Summoner> {
 
-    public AdapterSummonerHistoric(Context context, int layoutResId, List<Summoner> data) {
-        super(context, layoutResId, data);
+    public AdapterSummonerHistoric(int layoutResId, List<Summoner> data) {
+        super(layoutResId, data);
     }
 
     @Override

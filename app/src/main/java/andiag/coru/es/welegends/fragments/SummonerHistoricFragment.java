@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
@@ -34,13 +35,14 @@ import retrofit2.Response;
 public class SummonerHistoricFragment extends Fragment implements NotifiableFragment<Summoner> {
 
     private final static String TAG = "FragmentSumHistoric";
-    private AdapterSummonerHistoric adapter;
-    private RecyclerView recyclerView;
+    private AdapterSummonerHistoric adapter = null;
+    private RecyclerView recyclerView = null;
 
     private NotifiableActivity<Summoner> notifiableActivity = null;
     private ActivitySummoner parentActivity;
 
     private DBSummoner db;
+    private List<Summoner> summoners = new ArrayList<>();
 
     public SummonerHistoricFragment() {
         // Required empty public constructor
@@ -58,6 +60,16 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //TODO historic is not showed until u rotate the screen
+        //Fill with data from database
+        summoners = db.getSummoners();
+        adapter.addData(summoners);
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -68,10 +80,6 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
 
         // Inicialize recycler adapter
         initAdapter();
-
-        //Fill with data from database
-        //TODO historic is not showed until u rotate the screen
-        adapter.addData(db.getSummoners());
 
         return v;
     }

@@ -12,14 +12,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
-import andiag.coru.es.welegends.activities.NotifiableActivity;
+import andiag.coru.es.welegends.activities.ActivityNotifiable;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -29,12 +32,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FindSummonerFragment extends Fragment implements AdapterView.OnItemSelectedListener, NotifiableFragment<Summoner> {
+public class FragmentFindSummoner extends Fragment implements AdapterView.OnItemSelectedListener, FragmentNotifiable<Summoner> {
 
-    private final static String TAG = "FindSummonerFragment";
+    private final static String TAG = "FragmentFindSummoner";
 
     private ActivitySummoner parentActivity;
-    private NotifiableActivity<Summoner> notifiableActivity = null;
+    private ActivityNotifiable<Summoner> activityNotifiable = null;
     private DBSummoner db;
 
     private String region;
@@ -65,11 +68,11 @@ public class FindSummonerFragment extends Fragment implements AdapterView.OnItem
             Summoner newSummoner = response.body();
             newSummoner.setRegion(region);
             db.addSummoner(newSummoner);
-            if (notifiableActivity == null) {
+            if (activityNotifiable == null) {
                 Log.e(TAG, "callbackUpdateSummoner: Null noticeable activity. This should never happen");
                 return;
             }
-            notifiableActivity.notifyDataChange(newSummoner);
+            activityNotifiable.notifyDataChange(newSummoner);
         }
 
         @Override
@@ -80,12 +83,12 @@ public class FindSummonerFragment extends Fragment implements AdapterView.OnItem
     };
     //endregion
 
-    public FindSummonerFragment() {
+    public FragmentFindSummoner() {
         // Required empty public constructor
     }
 
-    public void setNotifiableActivity(NotifiableActivity<Summoner> notifiableActivity) {
-        this.notifiableActivity = notifiableActivity;
+    public void setActivityNotifiable(ActivityNotifiable<Summoner> activityNotifiable) {
+        this.activityNotifiable = activityNotifiable;
     }
 
     @Override
@@ -98,6 +101,12 @@ public class FindSummonerFragment extends Fragment implements AdapterView.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_find_summoner, container, false);
+
+        // Set the background image
+        ImageView background = (ImageView) fragmentView.findViewById(R.id.imageBackground);
+        Glide.with(parentActivity).load(RestClient.getLoadingImgEndpoint()+"Varus_3.jpg").dontAnimate()
+                .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
+                .into(background);
 
         //Allow press Enter key to search
         startSummonerListener(fragmentView);

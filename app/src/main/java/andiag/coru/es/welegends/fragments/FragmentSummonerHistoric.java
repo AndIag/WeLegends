@@ -19,7 +19,7 @@ import java.util.List;
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
 import andiag.coru.es.welegends.activities.ActivitySummoner;
-import andiag.coru.es.welegends.activities.NotifiableActivity;
+import andiag.coru.es.welegends.activities.ActivityNotifiable;
 import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -32,24 +32,24 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SummonerHistoricFragment extends Fragment implements NotifiableFragment<Summoner> {
+public class FragmentSummonerHistoric extends Fragment implements FragmentNotifiable<Summoner> {
 
     private final static String TAG = "FragmentSumHistoric";
     private AdapterSummonerHistoric adapter = null;
     private RecyclerView recyclerView = null;
 
-    private NotifiableActivity<Summoner> notifiableActivity = null;
+    private ActivityNotifiable<Summoner> activityNotifiable = null;
     private ActivitySummoner parentActivity;
 
     private DBSummoner db;
     private List<Summoner> summoners = null;
 
-    public SummonerHistoricFragment() {
+    public FragmentSummonerHistoric() {
         // Required empty public constructor
     }
 
-    public void setNotifiableActivity(NotifiableActivity<Summoner> notifiableActivity) {
-        this.notifiableActivity = notifiableActivity;
+    public void setActivityNotifiable(ActivityNotifiable<Summoner> activityNotifiable) {
+        this.activityNotifiable = activityNotifiable;
     }
 
     @Override
@@ -127,11 +127,11 @@ public class SummonerHistoricFragment extends Fragment implements NotifiableFrag
                 Summoner newSummoner = response.body();
                 newSummoner.setRegion(region);
                 db.addSummoner(newSummoner);
-                if (notifiableActivity == null) {
+                if (activityNotifiable == null) {
                     Log.e(TAG, "callbackUpdateSummoner: Null noticeable activity. This should never happen");
                     return;
                 }
-                notifiableActivity.notifyDataChange(newSummoner);
+                activityNotifiable.notifyDataChange(newSummoner);
             }
 
             @Override

@@ -57,4 +57,12 @@ public class RestClient {
         return retrofit.create(ApiStatic.class);
     }
 
+    public static String getProfileIconEndpoint(String version){
+        return DDRAGON_DATA_ENDPOINT+version+"/img/profileicon/";
+    }
+
+    public static String getLoadingImgEndpoint(){
+        return DDRAGON_DATA_ENDPOINT+"img/champion/loading/";
+    }
+
 }

@@ -2,6 +2,7 @@ package andiag.coru.es.welegends.fragments;
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,8 +22,8 @@ import com.bumptech.glide.Glide;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
-import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.activities.ActivityNotifiable;
+import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -104,7 +105,11 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
 
         // Set the background image
         ImageView background = (ImageView) fragmentView.findViewById(R.id.imageBackground);
-        Glide.with(parentActivity).load(RestClient.getLoadingImgEndpoint()+"Varus_3.jpg").dontAnimate()
+        String endpoint;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            endpoint = RestClient.getSplashImgEndpoint() + "Varus_3.jpg";
+        } else endpoint = RestClient.getLoadingImgEndpoint() + "Varus_3.jpg";
+        Glide.with(parentActivity).load(endpoint).dontAnimate()
                 .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
                 .into(background);
 
@@ -118,6 +123,12 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         //Region picker
         Spinner spinner = (Spinner) fragmentView.findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
+
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                == Configuration.SCREENLAYOUT_SIZE_XLARGE &&
+                getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            fragmentView.findViewById(R.id.buttonHistoric).setVisibility(View.GONE);
+        }
 
         return fragmentView;
     }

@@ -65,4 +65,8 @@ public class RestClient {
         return DDRAGON_DATA_ENDPOINT+"img/champion/loading/";
     }
 
+    public static String getSplashImgEndpoint() {
+        return DDRAGON_DATA_ENDPOINT + "img/champion/splash/";
+    }
+
 }

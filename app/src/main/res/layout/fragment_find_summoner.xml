@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
     <ImageView
         android:layout_width="match_parent"
@@ -82,7 +83,7 @@
             android:layout_height="75dp"
             android:text="Historic"
             android:onClick="onClickSwapFragment"
-            android:id="@+id/button"
+            android:id="@+id/buttonHistoric"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/ic_historic"
             android:layout_above="@+id/editTextSummoner"

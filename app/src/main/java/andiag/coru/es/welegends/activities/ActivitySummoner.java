@@ -71,21 +71,22 @@ public class ActivitySummoner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner);
-
-        //Initialize fragments if necessary
-        if (savedInstanceState == null) {
-            if (findViewById(R.id.fragmentContainer) != null) {
-                getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer,
-                        new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT).commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentFindSummoner, new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT)
-                        .add(R.id.fragmentSummonerHistoric, new FragmentSummonerHistoric(), SUMMONER_HISTORIC_FRAGMENT)
-                        .commit();
-            }
-        }
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (findViewById(R.id.fragmentContainer) != null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer,
+                    new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentFindSummoner, new FragmentFindSummoner(), FIND_SUMMONER_FRAGMENT)
+                    .add(R.id.fragmentSummonerHistoric, new FragmentSummonerHistoric(), SUMMONER_HISTORIC_FRAGMENT)
+                    .commit();
+        }
+    }
+
 
     @Override
     protected void onStop() {

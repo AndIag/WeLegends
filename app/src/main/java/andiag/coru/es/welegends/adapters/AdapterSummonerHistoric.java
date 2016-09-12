@@ -1,7 +1,6 @@
 package andiag.coru.es.welegends.adapters;
 
 import android.app.Activity;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,7 +10,6 @@ import com.github.siyamed.shapeimageview.RoundedImageView;
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
-import andiag.coru.es.welegends.persistence.DBHelper;
 import andiag.coru.es.welegends.persistence.Version;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;

@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
 
     private String region;
 
+    ProgressBar progressBar;
+
     //region Callbacks
     private Callback<Summoner> callbackSearchSummoner = new Callback<Summoner>() {
         @Override
@@ -52,7 +55,7 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
             summoner.setRegion(region);
             Log.d(TAG, "onClickFindSummoner: Updating database");
             db.addSummoner(summoner);
-            parentActivity.throwNewActivity(summoner, null);
+            parentActivity.launchNewActivity(summoner, null);
         }
 
         @Override
@@ -88,8 +91,16 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         // Required empty public constructor
     }
 
+    @Override
     public void setActivityNotifiable(ActivityNotifiable<Summoner> activityNotifiable) {
         this.activityNotifiable = activityNotifiable;
+    }
+
+    @Override
+    public void setProgressBarState(int viewState) {
+        if (progressBar != null) {
+            progressBar.setVisibility(viewState);
+        }
     }
 
     @Override
@@ -103,6 +114,9 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_find_summoner, container, false);
 
+        progressBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
         // Set the background image
         ImageView background = (ImageView) fragmentView.findViewById(R.id.imageBackground);
         String endpoint;
@@ -115,15 +129,12 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
 
         //Allow press Enter key to search
         startSummonerListener(fragmentView);
-
-        //Show version
         TextView version = (TextView) fragmentView.findViewById(R.id.textVersion);
         version.setText("Version " + Version.getVersion(getActivity()));
-
-        //Region picker
         Spinner spinner = (Spinner) fragmentView.findViewById(R.id.spinnerRegions);
         spinner.setOnItemSelectedListener(this);
 
+        //If we are showing both fragments hide history button
         if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
                 == Configuration.SCREENLAYOUT_SIZE_XLARGE &&
                 getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -145,8 +156,8 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
     //endregion
 
     private void startSummonerListener(final View fragmentView) {
-        EditText editText = (EditText) fragmentView.findViewById(R.id.editTextSummoner);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        EditText summonerEditText = (EditText) fragmentView.findViewById(R.id.editTextSummoner);
+        summonerEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN))) {
@@ -165,9 +176,9 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
 
     public void findSummoner(View fragmentView) {
         //Get and clean summoner
-        String summonerName = ((EditText) fragmentView.findViewById(R.id.editTextSummoner)).getText().toString();
+        EditText summonerEditText = (EditText) fragmentView.findViewById(R.id.editTextSummoner);
+        String summonerName = summonerEditText.getText().toString();
         summonerName = Utils.cleanString(summonerName);
-
 
         //TODO codify summoner name
         if (summonerName.isEmpty() || summonerName.equals("")) {
@@ -195,11 +206,11 @@ public class FragmentFindSummoner extends Fragment implements AdapterView.OnItem
         }
 
         //We do -> end.
-        Log.d(TAG, "onClickFindSummoner: FoudInLocal-" + summoner.getId());
+        Log.d(TAG, "onClickFindSummoner: FoundInLocal-" + summoner.getId());
         Log.d(TAG, "onClickFindSummoner: Updating database");
         db.addSummoner(summoner);
         apiSearchSummonerId(summonerName, region, callbackUpdateSummoner);
-        parentActivity.throwNewActivity(summoner, ActivitySummoner.FIND_SUMMONER_FRAGMENT);
+        parentActivity.launchNewActivity(summoner, ActivitySummoner.FIND_SUMMONER_FRAGMENT);
     }
 
 }

@@ -94,14 +94,6 @@ public class DBSummoner {
         return db.insert(DBHelper.SUMMONER_TABLE_NAME, null, newSummoner);
     }
 
-    public boolean deleteSummoner(Summoner summoner) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if (db == null) return false;
-        int deleted = db.delete(DBHelper.SUMMONER_TABLE_NAME, DBHelper._ID + "= ?",
-                new String[]{String.valueOf(summoner.getLocalId())});
-        return deleted > 0;
-    }
-
     public List<Summoner> getSummoners(int limit) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if (db == null) return null;

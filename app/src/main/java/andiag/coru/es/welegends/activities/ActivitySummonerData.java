@@ -1,19 +1,15 @@
 package andiag.coru.es.welegends.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.fragments.BlankFragment;
 import andiag.coru.es.welegends.fragments.FragmentNotifiable;
-import andiag.coru.es.welegends.fragments.FragmentSummonerHistoric;
 import andiag.coru.es.welegends.rest.entities.Summoner;
 
 public class ActivitySummonerData extends ActivityAnimatedTabbed implements ActivityNotifiable<Summoner> {

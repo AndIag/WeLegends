@@ -9,4 +9,6 @@ public interface FragmentNotifiable<T> {
 
     void setActivityNotifiable(ActivityNotifiable<T> activityNotifiable);
 
+    void setProgressBarState(int viewState);
+
 }

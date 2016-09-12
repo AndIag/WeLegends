@@ -11,15 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import java.util.List;
 
 import andiag.coru.es.welegends.R;
 import andiag.coru.es.welegends.Utils;
-import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.activities.ActivityNotifiable;
+import andiag.coru.es.welegends.activities.ActivitySummoner;
 import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
@@ -44,12 +46,19 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
     private DBSummoner db;
     private List<Summoner> summoners = null;
 
+    ProgressBar progressBar;
+
     public FragmentSummonerHistoric() {
         // Required empty public constructor
     }
 
+    @Override
     public void setActivityNotifiable(ActivityNotifiable<Summoner> activityNotifiable) {
         this.activityNotifiable = activityNotifiable;
+    }
+
+    @Override
+    public void setProgressBarState(int viewState) {
     }
 
     @Override
@@ -72,7 +81,6 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
         if (summoners == null) {
             summoners = db.getSummoners();
         }
-        adapter.setNewData(summoners);
     }
 
     @Override
@@ -80,6 +88,7 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
+
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(parentActivity));
@@ -96,22 +105,12 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
         adapter = new AdapterSummonerHistoric(R.layout.item_summoner_historic, null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerView.setAdapter(adapter);
-        adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int i) {
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 Summoner summoner = adapter.getItem(i);
                 apiSearchSummonerId(Utils.cleanString(summoner.getName()), summoner.getRegion());
-                parentActivity.throwNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
-            }
-        });
-        adapter.setOnRecyclerViewItemLongClickListener(new BaseQuickAdapter.OnRecyclerViewItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(View view, int i) {
-                //TODO argue if we really want this
-                Summoner summoner = adapter.getItem(i);
-                if (db.deleteSummoner(summoner))
-                    adapter.remove(i);
-                return false;
+                parentActivity.launchNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
             }
         });
     }

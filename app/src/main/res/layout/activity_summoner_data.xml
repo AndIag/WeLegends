@@ -32,7 +32,7 @@
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/Toolbar" >
 
-            <TextView
+            <andiag.coru.es.welegends.views.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/toolbar_title"
@@ -50,7 +50,7 @@
             android:clipToPadding="false"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            app:stl_defaultTabTextColor="@color/tab_text_color"
+            app:stl_defaultTabTextColor="?colorAccent"
             app:stl_defaultTabTextHorizontalPadding="18dp"
             app:stl_dividerColor="@color/transparent"
             app:stl_dividerThickness="0dp"

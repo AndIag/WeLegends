@@ -29,6 +29,7 @@ public class AdapterSummonerHistoric extends BaseQuickAdapter<Summoner> {
     @Override
     protected void convert(BaseViewHolder holder, Summoner summoner) {
         holder.setText(R.id.textSummonerName, summoner.getName())
+                .setText(R.id.textLevel,""+summoner.getSummonerLevel())
                 .setText(R.id.textSummonerRegion, summoner.getRegion());
 
         Glide.with(mContext).load(RestClient.getProfileIconEndpoint(version)+summoner.getProfileIconId()+".png").asBitmap()

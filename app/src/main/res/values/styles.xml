@@ -54,7 +54,7 @@
 
     <!-- This configures the styles for the title within the Toolbar  -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
 

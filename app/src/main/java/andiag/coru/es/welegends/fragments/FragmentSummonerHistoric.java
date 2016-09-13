@@ -8,10 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -26,6 +23,7 @@ import andiag.coru.es.welegends.adapters.AdapterSummonerHistoric;
 import andiag.coru.es.welegends.persistence.DBSummoner;
 import andiag.coru.es.welegends.rest.RestClient;
 import andiag.coru.es.welegends.rest.entities.Summoner;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,19 +32,19 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentSummonerHistoric extends Fragment implements FragmentNotifiable<Summoner> {
+public class FragmentSummonerHistoric extends FragmentBase implements FragmentNotifiable<Summoner> {
 
     private final static String TAG = "FragmentSumHistoric";
+
+    @BindView(R.id.recyclerSummoners)
+    RecyclerView recycler;
+
     private AdapterSummonerHistoric adapter = null;
-    private RecyclerView recyclerView = null;
 
     private ActivityNotifiable<Summoner> activityNotifiable = null;
-    private ActivitySummoner parentActivity;
 
     private DBSummoner db;
     private List<Summoner> summoners = null;
-
-    ProgressBar progressBar;
 
     public FragmentSummonerHistoric() {
         // Required empty public constructor
@@ -64,7 +62,6 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.parentActivity = (ActivitySummoner) context;
         this.db = ((ActivitySummoner) context).getDb();
     }
 
@@ -84,35 +81,31 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.fragment_summoner_historic, container, false);
-
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerSummoners);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(parentActivity));
-
-        // Inicialize recycler adapter
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recycler.setHasFixedSize(true);
+        recycler.setLayoutManager(new LinearLayoutManager(parentActivity));
         initAdapter();
-        //TODO this shit dont want to work!! Init sumonnerhistory adapter
-        adapter.setNewData(summoners);
+    }
 
-        return v;
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_summoner_historic;
     }
 
     public void initAdapter() {
         adapter = new AdapterSummonerHistoric(R.layout.item_summoner_historic, null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+        recycler.setAdapter(adapter);
+        recycler.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 Summoner summoner = adapter.getItem(i);
                 apiSearchSummonerId(Utils.cleanString(summoner.getName()), summoner.getRegion());
-                parentActivity.launchNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
+                ((ActivitySummoner)parentActivity).launchNewActivity(summoner, ActivitySummoner.SUMMONER_HISTORIC_FRAGMENT);
             }
         });
+        adapter.setNewData(summoners);
     }
 
     private void apiSearchSummonerId(String summonerName, final String region) {
@@ -140,5 +133,4 @@ public class FragmentSummonerHistoric extends Fragment implements FragmentNotifi
             }
         });
     }
-
 }

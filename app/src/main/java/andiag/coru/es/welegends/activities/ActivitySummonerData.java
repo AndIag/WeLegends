@@ -35,13 +35,19 @@ public class ActivitySummonerData extends ActivityAnimatedTabbed implements Acti
             }
             this.summoner = (Summoner) getIntent().getSerializableExtra(ARG_SUMMONER);
             Log.d(TAG, "received: " + summoner.getId());
+        } else {
+            summoner= (Summoner) savedInstanceState.getSerializable(ARG_SUMMONER);
         }
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-
         createTabs();
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ARG_SUMMONER,summoner);
     }
 
     @Override

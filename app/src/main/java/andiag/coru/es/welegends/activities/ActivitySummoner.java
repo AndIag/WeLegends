@@ -214,7 +214,7 @@ public class ActivitySummoner extends AppCompatActivity {
         FragmentFindSummoner fragmentFindSummoner = (FragmentFindSummoner) getSupportFragmentManager()
                 .findFragmentByTag(FIND_SUMMONER_FRAGMENT);
 
-        fragmentFindSummoner.findSummoner(fragmentFindSummoner.getView());
+        fragmentFindSummoner.findSummoner();
     }
 
     public void onClickSwapFragment(View view) {

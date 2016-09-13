@@ -37,19 +37,21 @@
             android:layout_alignBottom="@+id/imageSummoner"
             android:gravity="center_vertical"
             android:weightSum="1"
-            android:layout_marginLeft="8dp">
+            android:layout_marginLeft="8dp"
+            android:id="@+id/linearLayout">
 
-            <TextView
+            <andiag.coru.es.welegends.views.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:attr/textColorPrimary"
                 android:text="Greenstorm21"
                 android:id="@+id/textSummonerName"
                 android:layout_gravity="left|center_horizontal"
                 android:layout_weight="0.50"
                 android:gravity="center_vertical" />
 
-            <TextView
+            <andiag.coru.es.welegends.views.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -59,6 +61,20 @@
                 android:layout_weight="0.5"
                 android:gravity="center_vertical" />
         </LinearLayout>
+
+        <andiag.coru.es.welegends.views.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="30"
+            android:id="@+id/textLevel"
+            android:textColor="?colorAccent"
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

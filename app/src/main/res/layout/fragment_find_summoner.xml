@@ -51,13 +51,13 @@
             android:elevation="10dp"
             android:onClick="onClickFindSummoner"
             android:text="@string/go"
-            android:textColor="@color/button_text"
+            android:textColor="?colorAccent"
             android:layout_alignParentBottom="true"
             android:layout_alignLeft="@+id/spinnerRegions"
             android:layout_alignStart="@+id/spinnerRegions"
             android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-        <TextView
+        <andiag.coru.es.welegends.views.FontTextView
             android:id="@+id/textVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

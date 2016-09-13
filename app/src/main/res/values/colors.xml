@@ -9,6 +9,10 @@
     <color name="secondary_text">#727272</color>
     <color name="button_text">#ffffff</color>
 
+    <color name="primary_inverted">#FF5722</color>
+    <color name="primary_inverted_dark">#D84315</color>
+    <color name="accent_inverted">#6200EA</color>
+
     <!-- Themes colors -->
     <color name="lightBackground">#F5F5F5</color>
     <color name="darkBackground">#757575</color>

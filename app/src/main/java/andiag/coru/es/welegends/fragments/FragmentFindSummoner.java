@@ -129,7 +129,7 @@ public class FragmentFindSummoner extends FragmentBase implements AdapterView.On
         super.onViewCreated(view, savedInstanceState);
 
         progressBar.setVisibility(View.GONE);
-        setBackground();
+        setBackground("Tristana_5.jpg");
 
         startSummonerListener();
 
@@ -145,11 +145,11 @@ public class FragmentFindSummoner extends FragmentBase implements AdapterView.On
         }
     }
 
-    private void setBackground(){
+    private void setBackground(String image){
         String endpoint;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            endpoint = RestClient.getSplashImgEndpoint() + "Varus_3.jpg";
-        } else endpoint = RestClient.getLoadingImgEndpoint() + "Varus_3.jpg";
+            endpoint = RestClient.getSplashImgEndpoint() + image;
+        } else endpoint = RestClient.getLoadingImgEndpoint() + image;
         Glide.with(parentActivity).load(endpoint).dontAnimate()
                 .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
                 .into(background);

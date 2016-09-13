@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            app:theme="@style/Toolbar" >
+             >
 
             <andiag.coru.es.welegends.views.FontTextView
                 android:layout_width="wrap_content"

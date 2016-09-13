@@ -39,11 +39,35 @@
 
     </style>
 
+    <style name="AppTheme.DarkInverted" parent="AppTheme.Dark">
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/primary_inverted</item>
+        <item name="colorPrimaryDark">@color/primary_inverted_dark</item>
+        <item name="colorAccent">@color/accent_inverted</item>
+
+        <item name="colorButtonNormal">@color/primary_inverted</item>
+
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
+
+        <item name="backgroundColor">@color/darkBackground</item>
+
+    </style>
+
     <!-- Toolbar Style -->
     <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppTheme.DarkInverted.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_inverted</item>
+        <item name="colorPrimaryDark">@color/primary_inverted_dark</item>
+        <item name="colorAccent">@color/accent_inverted</item>
     </style>
 
     <style name="Toolbar" parent="Theme.AppCompat">

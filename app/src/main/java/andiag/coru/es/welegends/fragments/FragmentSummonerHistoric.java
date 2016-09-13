@@ -115,8 +115,9 @@ public class FragmentSummonerHistoric extends FragmentBase implements FragmentNo
         call.enqueue(new Callback<Summoner>() {
             @Override
             public void onResponse(Call<Summoner> call, Response<Summoner> response) {
-                Log.d(TAG, "onClickFindSummoner: Found-" + response.body().getId());
+                //Log.d(TAG, "onClickFindSummoner: Found-" + response.body());
                 Summoner newSummoner = response.body();
+                if (newSummoner!=null){
                 newSummoner.setRegion(region);
                 db.addSummoner(newSummoner);
                 if (activityNotifiable == null) {
@@ -124,6 +125,7 @@ public class FragmentSummonerHistoric extends FragmentBase implements FragmentNo
                     return;
                 }
                 activityNotifiable.notifyDataChange(newSummoner);
+                }
             }
 
             @Override

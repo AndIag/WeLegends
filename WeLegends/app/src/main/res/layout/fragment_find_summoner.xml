@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Version 6.11.1"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white" />

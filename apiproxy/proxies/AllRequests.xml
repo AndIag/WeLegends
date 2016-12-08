@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="AllRequests">
+    <Description>All the requests pass through this proxy.</Description>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>Extract-Variables-Summoner</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <HTTPProxyConnection>
+        <BasePath>/v1/welegends</BasePath>
+        <VirtualHost>default</VirtualHost>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="MatchRankedHistory">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/match/{id}/rankeds/{beginIndex}/{endIndex}") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>MatchRankedHistory</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="MatchCurrent">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/match/{id}/current/{platform}") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>MatchCurrent</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="MatchGlobalHistory">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/match/{id}/history") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>MatchGlobalHistory</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="MatchById">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/match/{id}") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>MatchById</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="SummonerLeagues">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/summoner/{id}/leagues") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>SummonerLeagues</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="SummonerStats">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/summoner/{id}/stats") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>SummonerStats</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="SummonerByName">
+        <Condition>(proxy.pathsuffix MatchesPath "/{region}/summoner/{id}") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>SummonerByName</TargetEndpoint>
+    </RouteRule>
+    <RouteRule name="StaticData">
+        <Condition>(proxy.pathsuffix MatchesPath "/*") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>StaticData</TargetEndpoint>
+    </RouteRule>
+</ProxyEndpoint>

@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- Main APP Colors -->
+    <color name="primary">#673AB7</color>
+    <color name="primary_dark">#311B92</color>
+    <color name="primary_light">#C5CAE9</color>
+    <color name="primary_20">#66673AB7</color>
+    <color name="accent">#FF5722</color>
+    <color name="secondary_text">#727272</color>
+    <color name="button_text">#ffffff</color>
+
+    <color name="primary_inverted">#FF5722</color>
+    <color name="primary_inverted_dark">#D84315</color>
+    <color name="accent_inverted">#6200EA</color>
+
+    <!-- Themes colors -->
+    <color name="lightBackground">#F5F5F5</color>
+    <color name="darkBackground">#757575</color>
+
+    <item name="card_light" type="color">#FFFFFF</item>
+    <item name="card_dark" type="color">#424242</item>
+
+    <!-- Other -->
+    <color name="tab_text_color">#FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Tables -->
+    <color name="left_row">@color/primary_dark</color>
+    <color name="right_row">@color/primary</color>
+
+    <!-- Toolbar -->
+    <color name="pos0">@color/primary_dark</color>
+    <color name="pos1">#0277BD</color>
+    <color name="pos2">#33691E</color>
+    <color name="pos3">#EF6C00</color>
+    <color name="pos4">#C62828</color>
+
+    <!-- ActionBar+Tabs -->
+    <color name="posT0">@color/primary</color>
+    <color name="posT1">#03A9F4</color>
+    <color name="posT2">#8BC34A</color>
+    <color name="posT3">#FFA000</color>
+    <color name="posT4">#F44336</color>
+
+    <!-- Victory/Defeat -->
+    <color name="win">#8BC34A</color>
+    <color name="winDarker">#689F38</color>
+    <color name="lose">#F44336</color>
+
+    <!-- Swipe Refresh Layout -->
+    <color name="swype_1">@color/posT0</color>
+    <color name="swype_2">@color/posT1</color>
+    <color name="swype_3">@color/posT2</color>
+    <color name="swype_4">@color/posT3</color>
+
+    <!-- Statistics -->
+    <color name="stats_perfect">#03A9F4</color>
+    <color name="stats_good">#4CAF50</color>
+    <color name="stats_regular">#FFC107</color>
+    <color name="stats_bad">#F44336</color>
+
 </resources>

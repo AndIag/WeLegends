@@ -1,11 +1,113 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppTheme.Base" />
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="colorButtonNormal">@color/primary</item>
+
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+
+        <item name="cardStyle">@style/CardViewStyle.Light</item>
+
+        <item name="backgroundColor">@color/lightBackground</item>
+
     </style>
 
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="colorButtonNormal">@color/primary</item>
+
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
+
+        <item name="backgroundColor">@color/darkBackground</item>
+
+    </style>
+
+    <style name="AppTheme.DarkInverted" parent="AppTheme.Dark">
+        <!-- Customize your theme here. -->
+
+        <item name="colorPrimary">@color/primary_inverted</item>
+        <item name="colorPrimaryDark">@color/primary_inverted_dark</item>
+        <item name="colorAccent">@color/accent_inverted</item>
+
+        <item name="colorButtonNormal">@color/primary_inverted</item>
+
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+
+        <item name="cardStyle">@style/CardViewStyle.Dark</item>
+
+        <item name="backgroundColor">@color/darkBackground</item>
+
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="AppTheme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppTheme.DarkInverted.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_inverted</item>
+        <item name="colorPrimaryDark">@color/primary_inverted_dark</item>
+        <item name="colorAccent">@color/accent_inverted</item>
+    </style>
+
+    <style name="Toolbar" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <!-- This configures the styles for the title within the Toolbar  -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
+    <!-- Spinners Style -->
+    <style name="SpinnerItem">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+    </style>
+
+    <style name="SpinnerDropDownItem">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+
+    <!-- Cardviews Style -->
+    <attr name="cardStyle" format="reference" />
+
+    <style name="CardViewStyle" parent="CardView">
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">1dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="CardViewStyle.Light">
+        <item name="cardBackgroundColor">@color/card_light</item>
+    </style>
+
+    <style name="CardViewStyle.Dark">
+        <item name="cardBackgroundColor">@color/card_dark</item>
+    </style>
 </resources>

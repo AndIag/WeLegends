@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editTextSummoner"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="@string/hint_summoner"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColor="?colorAccent"
+            android:textColorHint="@color/white"
+            android:layout_above="@+id/spinnerRegions"
+            android:layout_centerHorizontal="true" />
+
+        <Spinner
+            android:id="@+id/spinnerRegions"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/region_array"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:paddingLeft="8dp"
+            android:prompt="@string/region_prompt"
+            android:spinnerMode="dialog"
+            android:textAlignment="center"
+            android:layout_above="@+id/buttonGo"
+            android:layout_alignLeft="@+id/editTextSummoner"
+            android:layout_alignStart="@+id/editTextSummoner" />
+
+        <Button
+            android:id="@+id/buttonGo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:onClick="onClickFindSummoner"
+            android:text="@string/go"
+            android:textColor="?colorAccent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/spinnerRegions"
+            android:layout_alignStart="@+id/spinnerRegions"
+            android:layout_marginBottom="@dimen/activity_vertical_margin" />
+
+        <es.coru.andiag.welegends.common.FontTextView
+            android:id="@+id/textVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Version 6.11.1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="Historic"
+            android:onClick="onClickSwapFragment"
+            android:id="@+id/buttonHistoric"
+            android:background="?android:selectableItemBackground"
+            android:src="@drawable/ic_historic"
+            android:layout_above="@+id/editTextSummoner"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:tint="?colorAccent" />
+
+    </RelativeLayout>
+</FrameLayout>

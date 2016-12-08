@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
+import es.coru.andiag.welegends.common.Presenter
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.database.DBSummoner
 import es.coru.andiag.welegends.models.entities.Champion
@@ -18,14 +19,14 @@ import java.util.*
 /**
  * Created by Canalejas on 08/12/2016.
  */
-class InitPresenter private constructor() {
+class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
 
-    private val TAG = InitPresenter::class.java.simpleName
+    private val TAG = es.coru.andiag.welegends.find.PresenterActivityFindSummoner::class.java.simpleName
 
-    private var view: InitView? = null
+    private var view: ViewActivityFindSummoner? = null
     private var database: DBSummoner? = null
 
-    fun onViewAttached(view: InitView) {
+    override fun onViewAttached(view: ViewActivityFindSummoner) {
         this.view = view
         if (database == null) {
             database = DBSummoner.getInstance(view as Context)
@@ -35,12 +36,12 @@ class InitPresenter private constructor() {
 
     }
 
-    fun onViewDetached() {
+    override fun onViewDetached() {
         this.view = null
     }
 
     private fun checkServerVersion() {
-        (view as InitActivity).showLoading()
+        (view as ActivityFindSummoner).showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -56,14 +57,14 @@ class InitPresenter private constructor() {
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
                             uiThread {
-                                (view as InitView).updateVersion(newVersion)
+                                (view as ViewActivityFindSummoner).updateVersion(newVersion)
                                 loadServerChampions(version = newVersion, locale = locale)
                                 //TODO load other info
                             }
 
                         } else {
                             uiThread {
-                                (view as InitView).hideLoading()
+                                (view as ViewActivityFindSummoner).hideLoading()
                             }
                         }
 
@@ -73,7 +74,7 @@ class InitPresenter private constructor() {
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 Log.e(TAG, "ERROR: checkServerVersion - onFailure: %s".format(t.message))
-                (view as InitActivity).hideLoading()
+                (view as ActivityFindSummoner).hideLoading()
             }
         })
     }
@@ -113,12 +114,12 @@ class InitPresenter private constructor() {
 
     companion object {
 
-        private var presenter: InitPresenter? = null
+        private var presenter: es.coru.andiag.welegends.find.PresenterActivityFindSummoner? = null
 
-        val instance: InitPresenter
+        val instance: es.coru.andiag.welegends.find.PresenterActivityFindSummoner
             get() {
                 if (presenter == null) {
-                    presenter = InitPresenter()
+                    presenter = PresenterActivityFindSummoner()
                 }
                 return presenter!!
             }

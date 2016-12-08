@@ -10,12 +10,12 @@ import butterknife.ButterKnife
 import es.coru.andiag.welegends.R
 
 
-class InitActivity : AppCompatActivity(), InitView {
+class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
 
     @BindView(R.id.progressBar) lateinit var progressBar: ProgressBar
 
-    private val TAG = InitActivity::class.java.simpleName
-    private val presenter: InitPresenter = InitPresenter.instance
+    private val TAG = ActivityFindSummoner::class.java.simpleName
+    private val presenter: PresenterActivityFindSummoner = PresenterActivityFindSummoner.instance
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,11 +7,26 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name="es.coru.andiag.welegends.common.WeLegends"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="DATABASE"
+            android:value="andiag_welegends.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="es.coru.andiag.welegends.models.entities" />
+
         <activity android:name=".find.ActivityFindSummoner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

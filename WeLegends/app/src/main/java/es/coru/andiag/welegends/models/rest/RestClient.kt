@@ -24,9 +24,11 @@ object RestClient {
 
     fun getWeLegendsData(): API {
         if (REST_CLIENT == null) {
+            val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+
             val retrofit = Retrofit.Builder()
                     .baseUrl(WELEGENDS_PROXY_ENDPOINT)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 
             REST_CLIENT = retrofit.create(API::class.java)
@@ -50,17 +52,18 @@ object RestClient {
 
     fun getDdragonStaticData(version: String, locale: String): Static {
         val endpoint = "$DDRAGON_DATA_ENDPOINT$version/data/$locale/"
+        val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
         if (STATIC_CLIENT == null) {
             staticEndpoint = endpoint
             val retrofit = Retrofit.Builder()
                     .baseUrl(endpoint)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             STATIC_CLIENT = retrofit.create(Static::class.java)
         } else if (endpoint != staticEndpoint) {
             val retrofit = Retrofit.Builder()
                     .baseUrl(endpoint)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             STATIC_CLIENT = retrofit.create(Static::class.java)
         }

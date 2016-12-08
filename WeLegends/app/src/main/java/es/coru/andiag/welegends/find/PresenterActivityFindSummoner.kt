@@ -2,10 +2,10 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
+import com.orm.SugarRecord
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.Presenter
 import es.coru.andiag.welegends.models.Version
-import es.coru.andiag.welegends.models.database.DBSummoner
 import es.coru.andiag.welegends.models.entities.Champion
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
 import es.coru.andiag.welegends.models.rest.RestClient
@@ -26,15 +26,10 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
     private val TAG = es.coru.andiag.welegends.find.PresenterActivityFindSummoner::class.java.simpleName
 
     private var view: ViewActivityFindSummoner? = null
-    private var database: DBSummoner? = null
-
     private var semaphore: Semaphore? = null
 
     override fun onViewAttached(view: ViewActivityFindSummoner) {
         this.view = view
-        if (database == null) {
-            database = DBSummoner.getInstance(view as Context)
-        }
 
         checkServerVersion()
 
@@ -58,20 +53,20 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                         if (newVersion != Version.getVersion(view as Context)) {
                             //If our version was older we need to reload data
 
-                            Version.setVersion(newVersion, view as Context)
+//                            Version.setVersion(newVersion, view as Context)
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
+                            semaphore!!.acquire(1)
                             uiThread { // Update version field to show loading feedback
                                 (view as ViewActivityFindSummoner).updateVersion((view as Context)
                                         .getString(R.string.loadStaticData))
+                                //Load static data. !IMPORTANT change semaphore if some method change
+                                loadServerChampions(version = newVersion, locale = locale)
+                                //TODO load other info
                             }
-
-                            //Load static data. !IMPORTANT change semaphore if some method change
-                            loadServerChampions(version = newVersion, locale = locale, hasSemaphore = false)
-                            //TODO load other info
                         }
 
                         semaphore!!.acquire()
@@ -94,29 +89,34 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
         })
     }
 
-    private fun loadServerChampions(version: String, locale: String, hasSemaphore: Boolean) {
-        if (!hasSemaphore) { // Request semaphore if required
-            semaphore!!.acquire()
-            Log.i(TAG, "Semaphore acquired for: loadServerChampions")
-        }
+    private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
         call.enqueue(object : Callback<GenericStaticData<String, Champion>> {
             override fun onResponse(call: Call<GenericStaticData<String, Champion>>, response: Response<GenericStaticData<String, Champion>>) {
-                if (response.isSuccessful) {
+                if (!response.isSuccessful || response.body() == null) {
+                    Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
+                    if (locale != RestClient.DEFAULT_LOCALE) {
+                        Log.i(TAG, "Reloading Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
+                        loadServerChampions(version, RestClient.DEFAULT_LOCALE)
+                        return
+                    }
+                    Log.i(TAG, "Semaphore released with error for: loadServerChampions")
+                    semaphore!!.release()
+                    (view as ViewActivityFindSummoner).errorLoading()
+                } else {
                     doAsync {
-                        if (response.body() == null) {
-                            Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
-                            if (locale != RestClient.DEFAULT_LOCALE) {
-                                Log.i(TAG, "Reloading Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
-                                loadServerChampions(version, RestClient.DEFAULT_LOCALE, true)
+                        try {
+                            Log.i(TAG, "Loaded Champions: %s".format(response.body().data!!.keys))
+                            SugarRecord.saveInTx(response.body().data!!.values)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Error updating champions: %s".format(e.message))
+                            uiThread {
+                                (view as ViewActivityFindSummoner).errorLoading()
                             }
+                        } finally {
+                            Log.i(TAG, "Semaphore released for: loadServerChampions")
+                            semaphore!!.release()
                         }
-                        Log.i(TAG, "Loaded Champions: %s".format(response.body().data))
-
-                        //TODO save in database
-
-                        Log.i(TAG, "Semaphore released for: loadServerChampions")
-                        semaphore!!.release()
                     }
                 }
             }
@@ -125,9 +125,10 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 if (locale != RestClient.DEFAULT_LOCALE) {
                     Log.i(TAG, "Reloading Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
-                    loadServerChampions(version, RestClient.DEFAULT_LOCALE, true)
+                    loadServerChampions(version, RestClient.DEFAULT_LOCALE)
                     return
                 }
+                Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                 semaphore!!.release()
                 (view as ViewActivityFindSummoner).errorLoading()
             }

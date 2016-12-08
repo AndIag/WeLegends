@@ -2,11 +2,15 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
+import com.orm.SchemaGenerator
+import com.orm.SugarContext
+import com.orm.SugarDb
 import com.orm.SugarRecord
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.Presenter
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.entities.Champion
+import es.coru.andiag.welegends.models.entities.ProfileIcon
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
@@ -39,6 +43,15 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
         this.view = null
     }
 
+    private fun recreateDatabase() {
+        Log.i(TAG, "Recreating Database 4new Version")
+        SugarContext.terminate()
+        val schemaGenerator = SchemaGenerator((view as Context).applicationContext)
+        schemaGenerator.deleteTables(SugarDb((view as Context).applicationContext).db)
+        SugarContext.init((view as Context).applicationContext)
+        schemaGenerator.createDatabase(SugarDb((view as Context).applicationContext).db)
+    }
+
     private fun checkServerVersion() {
         (view as ActivityFindSummoner).showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
@@ -46,25 +59,30 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {
                     //Init semaphore with number of methods to load
-                    semaphore = Semaphore(1)
+                    semaphore = Semaphore(2)
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
                         if (newVersion != Version.getVersion(view as Context)) {
                             //If our version was older we need to reload data
 
-//                            Version.setVersion(newVersion, view as Context)
+                            //TODO uncomment this line
+                            //Version.setVersion(newVersion, view as Context)
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
-                            semaphore!!.acquire(1)
+                            recreateDatabase()
+
+                            semaphore!!.acquire(2)
                             uiThread { // Update version field to show loading feedback
                                 (view as ViewActivityFindSummoner).updateVersion((view as Context)
                                         .getString(R.string.loadStaticData))
+
                                 //Load static data. !IMPORTANT change semaphore if some method change
                                 loadServerChampions(version = newVersion, locale = locale)
+                                loadProfileIcons(version = newVersion, locale = locale)
                                 //TODO load other info
                             }
                         }
@@ -89,29 +107,31 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
         })
     }
 
+    //region Data Loaders
     private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
         call.enqueue(object : Callback<GenericStaticData<String, Champion>> {
             override fun onResponse(call: Call<GenericStaticData<String, Champion>>, response: Response<GenericStaticData<String, Champion>>) {
                 if (!response.isSuccessful || response.body() == null) {
-                    Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     if (locale != RestClient.DEFAULT_LOCALE) {
-                        Log.i(TAG, "Reloading Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
+                        Log.i(TAG, "Reloading loadServerChampions Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
                         loadServerChampions(version, RestClient.DEFAULT_LOCALE)
                         return
                     }
+                    Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                     semaphore!!.release()
-                    (view as ViewActivityFindSummoner).errorLoading()
+                    (view as ViewActivityFindSummoner).errorLoading(null)
                 } else {
                     doAsync {
                         try {
                             Log.i(TAG, "Loaded Champions: %s".format(response.body().data!!.keys))
+                            SugarRecord.deleteAll(Champion().javaClass)
                             SugarRecord.saveInTx(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             uiThread {
-                                (view as ViewActivityFindSummoner).errorLoading()
+                                (view as ViewActivityFindSummoner).errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
@@ -122,18 +142,66 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
             }
 
             override fun onFailure(call: Call<GenericStaticData<String, Champion>>, t: Throwable) {
-                Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 if (locale != RestClient.DEFAULT_LOCALE) {
-                    Log.i(TAG, "Reloading Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
+                    Log.i(TAG, "Reloading loadServerChampions Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
                     loadServerChampions(version, RestClient.DEFAULT_LOCALE)
                     return
                 }
+                Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                 semaphore!!.release()
-                (view as ViewActivityFindSummoner).errorLoading()
+                (view as ViewActivityFindSummoner).errorLoading(null)
             }
         })
     }
+
+    private fun loadProfileIcons(version: String, locale: String) {
+        val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
+        call.enqueue(object : Callback<GenericStaticData<String, ProfileIcon>> {
+            override fun onResponse(call: Call<GenericStaticData<String, ProfileIcon>>, response: Response<GenericStaticData<String, ProfileIcon>>) {
+                if (!response.isSuccessful || response.body() == null) {
+                    if (locale != RestClient.DEFAULT_LOCALE) {
+                        Log.i(TAG, "Reloading loadProfileIcons Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
+                        loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
+                        return
+                    }
+                    Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
+                    Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
+                    semaphore!!.release()
+                    (view as ViewActivityFindSummoner).errorLoading(null)
+                } else {
+                    doAsync {
+                        try {
+                            Log.i(TAG, "Loaded ProfileIcons: %s".format(response.body().data!!.keys))
+                            SugarRecord.deleteAll(ProfileIcon().javaClass)
+                            SugarRecord.saveInTx(response.body().data!!.values)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Error updating profile icons: %s".format(e.message))
+                            uiThread {
+                                (view as ViewActivityFindSummoner).errorLoading(null)
+                            }
+                        } finally {
+                            Log.i(TAG, "Semaphore released for: loadProfileIcons")
+                            semaphore!!.release()
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<GenericStaticData<String, ProfileIcon>>, t: Throwable) {
+                if (locale != RestClient.DEFAULT_LOCALE) {
+                    Log.i(TAG, "Reloading loadProfileIcons Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
+                    loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
+                    return
+                }
+                Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
+                Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
+                semaphore!!.release()
+                (view as ViewActivityFindSummoner).errorLoading(null)
+            }
+        })
+    }
+    //endregion
 
     companion object {
 

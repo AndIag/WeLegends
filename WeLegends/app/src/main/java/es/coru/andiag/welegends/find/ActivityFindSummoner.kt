@@ -56,7 +56,7 @@ class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
         progressBar.visibility = View.INVISIBLE
     }
 
-    override fun errorLoading() {
+    override fun errorLoading(message: String?) {
 
     }
 

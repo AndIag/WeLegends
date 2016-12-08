@@ -7,5 +7,5 @@ package es.coru.andiag.welegends.common
 interface LoadingView {
     fun showLoading()
     fun hideLoading()
-    fun errorLoading()
+    fun errorLoading(message: String?)
 }

@@ -14,6 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import java.util.concurrent.Semaphore
 
 
 /**
@@ -25,6 +26,8 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
 
     private var view: ViewActivityFindSummoner? = null
     private var database: DBSummoner? = null
+
+    private var semaphore: Semaphore? = null
 
     override fun onViewAttached(view: ViewActivityFindSummoner) {
         this.view = view
@@ -46,6 +49,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {
+                    semaphore = Semaphore(1)
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
@@ -57,16 +61,17 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
                             uiThread {
-                                (view as ViewActivityFindSummoner).updateVersion(newVersion)
-                                loadServerChampions(version = newVersion, locale = locale)
-                                //TODO load other info
+                                (view as ViewActivityFindSummoner).updateVersion("Updating Data")
                             }
-
-                        } else {
-                            uiThread {
-                                (view as ViewActivityFindSummoner).hideLoading()
-                            }
+                            loadServerChampions(version = newVersion, locale = locale)
+                            //TODO load other info
                         }
+                        semaphore!!.acquire()
+                        uiThread {
+                            (view as ViewActivityFindSummoner).updateVersion(newVersion)
+                            (view as ViewActivityFindSummoner).hideLoading()
+                        }
+                        semaphore!!.release()
 
                     }
                 }
@@ -80,6 +85,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
     }
 
     private fun loadServerChampions(version: String, locale: String) {
+        semaphore!!.acquire()
         val call = RestClient.getDdragonStaticData(version, locale).champions()
         call.enqueue(object : Callback<GenericStaticData<String, Champion>> {
             override fun onResponse(call: Call<GenericStaticData<String, Champion>>, response: Response<GenericStaticData<String, Champion>>) {
@@ -97,6 +103,9 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                         }
                         Log.i(TAG, "Loaded Champions: %s".format(response.body().data))
                         //TODO save in database
+
+                        semaphore!!.release()
+
                     }
                 }
             }

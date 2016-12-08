@@ -2,11 +2,11 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
-import es.coru.andiag.welegends.common.database.DBSummoner
-import es.coru.andiag.welegends.common.database.Version
-import es.coru.andiag.welegends.common.entities.Champion
-import es.coru.andiag.welegends.common.entities.dto.GenericStaticData
-import es.coru.andiag.welegends.common.rest.RestClient
+import es.coru.andiag.welegends.models.Version
+import es.coru.andiag.welegends.models.database.DBSummoner
+import es.coru.andiag.welegends.models.entities.Champion
+import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
+import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

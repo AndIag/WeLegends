@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.FontTextView
+import es.coru.andiag.welegends.common.views.FontTextView
 
 
 /**

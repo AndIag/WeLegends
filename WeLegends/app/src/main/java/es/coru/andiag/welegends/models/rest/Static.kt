@@ -1,8 +1,8 @@
-package es.coru.andiag.welegends.common.rest
+package es.coru.andiag.welegends.models.rest
 
-import es.coru.andiag.welegends.common.entities.Champion
-import es.coru.andiag.welegends.common.entities.Summoner
-import es.coru.andiag.welegends.common.entities.dto.GenericStaticData
+import es.coru.andiag.welegends.models.entities.Champion
+import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET
 

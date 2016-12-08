@@ -1,9 +1,9 @@
-package es.coru.andiag.welegends.common.database
+package es.coru.andiag.welegends.models.database
 
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import es.coru.andiag.welegends.common.entities.Summoner
+import es.coru.andiag.welegends.models.entities.Summoner
 import java.util.*
 
 /**

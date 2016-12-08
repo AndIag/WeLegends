@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common.entities.dto
+package es.coru.andiag.welegends.models.entities.dto
 
 import java.io.Serializable
 

@@ -1,7 +1,7 @@
-package es.coru.andiag.welegends.common.rest
+package es.coru.andiag.welegends.models.rest
 
 import com.google.gson.GsonBuilder
-import es.coru.andiag.welegends.common.entities.dto.SummonerTypeAdapterFactory
+import es.coru.andiag.welegends.models.entities.dto.SummonerTypeAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

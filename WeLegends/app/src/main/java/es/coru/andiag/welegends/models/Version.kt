@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common.database
+package es.coru.andiag.welegends.models
 
 import android.content.Context
 

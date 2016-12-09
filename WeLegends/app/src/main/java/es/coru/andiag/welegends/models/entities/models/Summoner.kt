@@ -1,20 +1,24 @@
-package es.coru.andiag.welegends.models.entities
+package es.coru.andiag.welegends.models.entities.models
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import com.orm.SugarRecord
+import com.orm.dsl.Unique
 import java.io.Serializable
+import java.security.Timestamp
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
 
-class Summoner : Serializable {
+class Summoner : SugarRecord(), Serializable {
 
-    var id: Long = 0
-    var localId: Long? = null
-    var name: String? = null
-    var region: String? = null
-    var profileIconId: Long = 0
-    var lastUpdate: Long? = null
-    var summonerLevel: Int = 0
+    @SerializedName("id") @Unique @Expose var riotId: Long = 0
+    @Expose var name: String? = null
+    @Expose var region: String? = null
+    @Expose var profileIconId: Long = 0
+    @Expose var lastUpdate: Timestamp? = null
+    @Expose var summonerLevel: Int = 0
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

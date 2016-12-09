@@ -25,7 +25,7 @@
             android:value="false" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="es.coru.andiag.welegends.models.entities" />
+            android:value="es.coru.andiag.welegends.models.entities.models" />
 
         <activity android:name=".find.ActivityFindSummoner">
             <intent-filter>

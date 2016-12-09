@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common.views;
+package es.coru.andiag.welegends.common.utils;
 
 /**
  * Created by Canalejas on 08/12/2016.

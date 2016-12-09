@@ -1,8 +1,9 @@
-package es.coru.andiag.welegends.models.entities
+package es.coru.andiag.welegends.models.entities.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.orm.SugarRecord
+import com.orm.dsl.Unique
 import java.io.Serializable
 
 /**
@@ -11,7 +12,7 @@ import java.io.Serializable
 
 class ProfileIcon : SugarRecord(), Serializable {
 
-    @SerializedName("id") @Expose var key: Number? = null
+    @SerializedName("id") @Unique @Expose var key: Number? = null
     @Expose var image: Image? = null
 
 }

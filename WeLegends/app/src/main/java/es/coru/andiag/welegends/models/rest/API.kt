@@ -1,6 +1,6 @@
 package es.coru.andiag.welegends.models.rest
 
-import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.entities.models.Summoner
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

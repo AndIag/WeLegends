@@ -8,10 +8,11 @@ import com.orm.SugarDb
 import com.orm.SugarRecord
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.Presenter
+import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.Version
-import es.coru.andiag.welegends.models.entities.Champion
-import es.coru.andiag.welegends.models.entities.ProfileIcon
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
+import es.coru.andiag.welegends.models.entities.models.Champion
+import es.coru.andiag.welegends.models.entities.models.ProfileIcon
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -19,6 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import java.util.concurrent.Callable
 import java.util.concurrent.Semaphore
 
 
@@ -58,25 +60,31 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {
-                    //Init semaphore with number of methods to load
-                    semaphore = Semaphore(2)
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
+                        //If our version was older we need to reload data
                         if (newVersion != Version.getVersion(view as Context)) {
-                            //If our version was older we need to reload data
-
-                            //TODO uncomment this line
                             //Version.setVersion(newVersion, view as Context)
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
+                            //Init semaphore with number of methods to load and callback method
+                            semaphore = CallbackSemaphore(2, Callable {
+                                uiThread {
+                                    (view as ViewActivityFindSummoner).updateVersion(newVersion)
+                                    (view as ViewActivityFindSummoner).hideLoading()
+                                    Log.i(TAG, "Data Load Ended")
+                                }
+                            })
+
                             recreateDatabase()
 
                             semaphore!!.acquire(2)
-                            uiThread { // Update version field to show loading feedback
+                            uiThread {
+                                // Update version field to show loading feedback
                                 (view as ViewActivityFindSummoner).updateVersion((view as Context)
                                         .getString(R.string.loadStaticData))
 
@@ -86,15 +94,6 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                                 //TODO load other info
                             }
                         }
-
-                        semaphore!!.acquire()
-                        Log.i(TAG, "Semaphore acquired for: checkServerVersion")
-                        uiThread {
-                            (view as ViewActivityFindSummoner).updateVersion(newVersion)
-                            (view as ViewActivityFindSummoner).hideLoading()
-                        }
-                        Log.i(TAG, "Semaphore released for: checkServerVersion")
-                        semaphore!!.release()
 
                     }
                 }

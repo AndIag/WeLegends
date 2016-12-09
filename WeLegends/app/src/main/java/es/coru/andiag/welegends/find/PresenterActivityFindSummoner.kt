@@ -2,17 +2,15 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
-import com.orm.SchemaGenerator
-import com.orm.SugarContext
-import com.orm.SugarDb
-import com.orm.SugarRecord
+import com.raizlabs.android.dbflow.config.FlowManager
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.Presenter
+import es.coru.andiag.welegends.common.WeLegendsDatabase
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.Version
+import es.coru.andiag.welegends.models.entities.database.Champion
+import es.coru.andiag.welegends.models.entities.database.ProfileIcon
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
-import es.coru.andiag.welegends.models.entities.models.Champion
-import es.coru.andiag.welegends.models.entities.models.ProfileIcon
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -47,11 +45,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
 
     private fun recreateDatabase() {
         Log.i(TAG, "Recreating Database 4new Version")
-        SugarContext.terminate()
-        val schemaGenerator = SchemaGenerator((view as Context).applicationContext)
-        schemaGenerator.deleteTables(SugarDb((view as Context).applicationContext).db)
-        SugarContext.init((view as Context).applicationContext)
-        schemaGenerator.createDatabase(SugarDb((view as Context).applicationContext).db)
+        FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((view as Context).applicationContext)
     }
 
     private fun checkServerVersion() {
@@ -80,7 +74,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                                 }
                             })
 
-                            recreateDatabase()
+//                            recreateDatabase()
 
                             semaphore!!.acquire(2)
                             uiThread {
@@ -119,14 +113,13 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                     }
                     Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                    semaphore!!.release()
+                    semaphore!!.release(1)
                     (view as ViewActivityFindSummoner).errorLoading(null)
                 } else {
                     doAsync {
                         try {
                             Log.i(TAG, "Loaded Champions: %s".format(response.body().data!!.keys))
-                            SugarRecord.deleteAll(Champion().javaClass)
-                            SugarRecord.saveInTx(response.body().data!!.values)
+                            FlowManager.getModelAdapter(Champion::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             uiThread {
@@ -134,7 +127,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
-                            semaphore!!.release()
+                            semaphore!!.release(1)
                         }
                     }
                 }
@@ -148,7 +141,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                 }
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                semaphore!!.release()
+                semaphore!!.release(1)
                 (view as ViewActivityFindSummoner).errorLoading(null)
             }
         })
@@ -166,14 +159,13 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                     }
                     Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                    semaphore!!.release()
+                    semaphore!!.release(1)
                     (view as ViewActivityFindSummoner).errorLoading(null)
                 } else {
                     doAsync {
                         try {
                             Log.i(TAG, "Loaded ProfileIcons: %s".format(response.body().data!!.keys))
-                            SugarRecord.deleteAll(ProfileIcon().javaClass)
-                            SugarRecord.saveInTx(response.body().data!!.values)
+                            FlowManager.getModelAdapter(ProfileIcon::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
                             uiThread {
@@ -181,7 +173,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadProfileIcons")
-                            semaphore!!.release()
+                            semaphore!!.release(1)
                         }
                     }
                 }
@@ -195,7 +187,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                 }
                 Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                semaphore!!.release()
+                semaphore!!.release(1)
                 (view as ViewActivityFindSummoner).errorLoading(null)
             }
         })

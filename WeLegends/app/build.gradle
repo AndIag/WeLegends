@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "$tools_version"
     defaultConfig {
         applicationId "es.coru.andiag.welegends"
         minSdkVersion 19
@@ -29,12 +30,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
 
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:cardview-v7:25.0.1'
-    compile 'com.android.support:recyclerview-v7:25.0.1'
-    compile 'com.android.support:support-v4:25.0.1'
+    compile "com.android.support:appcompat-v7:$tools_version"
+    compile "com.android.support:cardview-v7:$tools_version"
+    compile "com.android.support:recyclerview-v7:$tools_version"
+    compile "com.android.support:support-v4:$tools_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
@@ -45,8 +47,10 @@ dependencies {
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.github.satyan:sugar:1.5'
     compile 'org.jetbrains.anko:anko-sdk15:0.9'
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
 
 }
 repositories {

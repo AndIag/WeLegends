@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.entities.dto
+package es.coru.andiag.welegends.common.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonElement

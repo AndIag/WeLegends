@@ -15,4 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class es.coru.andiag.welegends.models.entities.** { *; }
+-keep class es.coru.andiag.welegends.models.entities.database.** { *; }
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { ; }
+-keep class com.raizlabs.android.dbflow.config.GeneratedDatabaseHolder
+-keep class * extends com.raizlabs.android.dbflow.config.BaseDatabaseDefinition { *; }

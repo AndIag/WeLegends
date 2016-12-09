@@ -4,7 +4,7 @@ import android.util.Log
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.BasePresenter
 import es.coru.andiag.welegends.common.Utils
-import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -18,7 +18,7 @@ import retrofit2.Response
 class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() {
 
     fun getSummonerByName(name: String, region: String) {
-        Log.d(TAG, "getSummonerByName " + name)
+        Log.d(TAG, "getSummonerByName $name region $region")
         searchSummonerByName(name, region)
     }
 
@@ -44,10 +44,10 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                 if (summoner == null) {
                     searchSummonerInApi(cleanName, region, object : Callback<Summoner> {
                         override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                            val summoner = response.body()
-                            summoner.region = region
+                            var s : Summoner = response.body()
+                            s.region = region
                             //db.addSummoner(summoner)
-                            uiThread { onSuccess(summoner) }
+                            uiThread { onSuccess(s) }
                         }
 
                         override fun onFailure(call: Call<Summoner>, t: Throwable) {

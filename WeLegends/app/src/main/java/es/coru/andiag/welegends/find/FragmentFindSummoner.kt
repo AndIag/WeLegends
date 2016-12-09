@@ -2,20 +2,14 @@ package es.coru.andiag.welegends.find
 
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.bumptech.glide.Glide
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.BaseFragment
-import es.coru.andiag.welegends.common.views.FontTextView
-import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.common.utils.FontTextView
+import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient
 
 

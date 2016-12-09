@@ -1,8 +1,9 @@
 package es.coru.andiag.welegends.common
 
 import android.app.Application
+import com.raizlabs.android.dbflow.config.FlowConfig
+import com.raizlabs.android.dbflow.config.FlowManager
 
-import com.orm.SugarContext
 
 /**
  * Created by Canalejas on 08/12/2016.
@@ -12,6 +13,7 @@ class WeLegends : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        SugarContext.init(this)
+        FlowManager.init(FlowConfig.Builder(this)
+                .openDatabasesOnInit(true).build())
     }
 }

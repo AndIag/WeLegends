@@ -2,15 +2,14 @@ package es.coru.andiag.welegends.find
 
 import android.content.Context
 import android.util.Log
-import com.orm.SchemaGenerator
-import com.orm.SugarContext
-import com.orm.SugarDb
-import com.orm.SugarRecord
+import com.raizlabs.android.dbflow.config.FlowManager
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.BasePresenter
+import es.coru.andiag.welegends.common.WeLegendsDatabase
+import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.Version
-import es.coru.andiag.welegends.models.entities.Champion
-import es.coru.andiag.welegends.models.entities.ProfileIcon
+import es.coru.andiag.welegends.models.entities.database.Champion
+import es.coru.andiag.welegends.models.entities.database.ProfileIcon
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
@@ -19,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import java.util.concurrent.Callable
 import java.util.concurrent.Semaphore
 
 
@@ -38,11 +38,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
 
     private fun recreateDatabase() {
         Log.i(TAG, "Recreating Database 4new Version")
-        SugarContext.terminate()
-        val schemaGenerator = SchemaGenerator((getView() as Context).applicationContext)
-        schemaGenerator.deleteTables(SugarDb((getView() as Context).applicationContext).db)
-        SugarContext.init((getView() as Context).applicationContext)
-        schemaGenerator.createDatabase(SugarDb((getView() as Context).applicationContext).db)
+        FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((getView() as Context).applicationContext)
     }
 
     private fun checkServerVersion() {
@@ -51,26 +47,31 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {
-                    //Init semaphore with number of methods to load
-                    semaphore = Semaphore(2)
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
                         if (newVersion != Version.getVersion(getView() as Context)) {
-                            //If our version was older we need to reload data
-
-                            //TODO uncomment this line
                             //Version.setVersion(newVersion, getView() as Context)
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
-                            recreateDatabase()
+                            //Init semaphore with number of methods to load and callback method
+                            semaphore = CallbackSemaphore(2, Callable {
+                                uiThread {
+                                    getView().updateVersion(newVersion)
+                                    getView().hideLoading()
+                                    Log.i(TAG, "Data Load Ended")
+                                }
+                            })
+
+//                            recreateDatabase()
 
                             semaphore!!.acquire(2)
-                            uiThread { // Update version field to show loading feedback
-                                (getView() as ViewActivityFindSummoner).updateVersion((getView() as Context)
+                            uiThread {
+                                // Update version field to show loading feedback
+                                getView().updateVersion((getView() as Context)
                                         .getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
@@ -79,15 +80,6 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                                 //TODO load other info
                             }
                         }
-
-                        semaphore!!.acquire()
-                        Log.i(TAG, "Semaphore acquired for: checkServerVersion")
-                        uiThread {
-                            (getView() as ViewActivityFindSummoner).updateVersion(newVersion)
-                            (getView() as ViewActivityFindSummoner).hideLoading()
-                        }
-                        Log.i(TAG, "Semaphore released for: checkServerVersion")
-                        semaphore!!.release()
 
                     }
                 }
@@ -113,22 +105,21 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                     }
                     Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                    semaphore!!.release()
-                    (getView() as ViewActivityFindSummoner).errorLoading(null)
+                    semaphore!!.release(1)
+                    getView().errorLoading(null)
                 } else {
                     doAsync {
                         try {
                             Log.i(TAG, "Loaded Champions: %s".format(response.body().data!!.keys))
-                            SugarRecord.deleteAll(Champion().javaClass)
-                            SugarRecord.saveInTx(response.body().data!!.values)
+                            FlowManager.getModelAdapter(Champion::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             uiThread {
-                                (getView() as ViewActivityFindSummoner).errorLoading(null)
+                                getView().errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
-                            semaphore!!.release()
+                            semaphore!!.release(1)
                         }
                     }
                 }
@@ -142,8 +133,8 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                 }
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                semaphore!!.release()
-                (getView() as ViewActivityFindSummoner).errorLoading(null)
+                semaphore!!.release(1)
+                getView().errorLoading(null)
             }
         })
     }
@@ -160,22 +151,21 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                     }
                     Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                    semaphore!!.release()
-                    (getView() as ViewActivityFindSummoner).errorLoading(null)
+                    semaphore!!.release(1)
+                    getView().errorLoading(null)
                 } else {
                     doAsync {
                         try {
                             Log.i(TAG, "Loaded ProfileIcons: %s".format(response.body().data!!.keys))
-                            SugarRecord.deleteAll(ProfileIcon().javaClass)
-                            SugarRecord.saveInTx(response.body().data!!.values)
+                            FlowManager.getModelAdapter(ProfileIcon::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
                             uiThread {
-                                (getView() as ViewActivityFindSummoner).errorLoading(null)
+                                getView().errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadProfileIcons")
-                            semaphore!!.release()
+                            semaphore!!.release(1)
                         }
                     }
                 }
@@ -189,8 +179,8 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                 }
                 Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                semaphore!!.release()
-                (getView() as ViewActivityFindSummoner).errorLoading(null)
+                semaphore!!.release(1)
+                getView().errorLoading(null)
             }
         })
     }

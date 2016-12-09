@@ -7,7 +7,7 @@ import com.orm.SugarContext
 import com.orm.SugarDb
 import com.orm.SugarRecord
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.Presenter
+import es.coru.andiag.welegends.common.BasePresenter
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.entities.Champion
 import es.coru.andiag.welegends.models.entities.ProfileIcon
@@ -25,35 +25,28 @@ import java.util.concurrent.Semaphore
 /**
  * Created by Canalejas on 08/12/2016.
  */
-class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
+class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>() {
 
     private val TAG = es.coru.andiag.welegends.find.PresenterActivityFindSummoner::class.java.simpleName
 
-    private var view: ViewActivityFindSummoner? = null
     private var semaphore: Semaphore? = null
 
-    override fun onViewAttached(view: ViewActivityFindSummoner) {
-        this.view = view
-
+    override fun onAttach() {
+        super.onAttach()
         checkServerVersion()
-
-    }
-
-    override fun onViewDetached() {
-        this.view = null
     }
 
     private fun recreateDatabase() {
         Log.i(TAG, "Recreating Database 4new Version")
         SugarContext.terminate()
-        val schemaGenerator = SchemaGenerator((view as Context).applicationContext)
-        schemaGenerator.deleteTables(SugarDb((view as Context).applicationContext).db)
-        SugarContext.init((view as Context).applicationContext)
-        schemaGenerator.createDatabase(SugarDb((view as Context).applicationContext).db)
+        val schemaGenerator = SchemaGenerator((getView() as Context).applicationContext)
+        schemaGenerator.deleteTables(SugarDb((getView() as Context).applicationContext).db)
+        SugarContext.init((getView() as Context).applicationContext)
+        schemaGenerator.createDatabase(SugarDb((getView() as Context).applicationContext).db)
     }
 
     private fun checkServerVersion() {
-        (view as ActivityFindSummoner).showLoading()
+        (getView() as ActivityFindSummoner).showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -63,11 +56,11 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
-                        if (newVersion != Version.getVersion(view as Context)) {
+                        if (newVersion != Version.getVersion(getView() as Context)) {
                             //If our version was older we need to reload data
 
                             //TODO uncomment this line
-                            //Version.setVersion(newVersion, view as Context)
+                            //Version.setVersion(newVersion, getView() as Context)
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
@@ -77,7 +70,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
 
                             semaphore!!.acquire(2)
                             uiThread { // Update version field to show loading feedback
-                                (view as ViewActivityFindSummoner).updateVersion((view as Context)
+                                (getView() as ViewActivityFindSummoner).updateVersion((getView() as Context)
                                         .getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
@@ -90,8 +83,8 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                         semaphore!!.acquire()
                         Log.i(TAG, "Semaphore acquired for: checkServerVersion")
                         uiThread {
-                            (view as ViewActivityFindSummoner).updateVersion(newVersion)
-                            (view as ViewActivityFindSummoner).hideLoading()
+                            (getView() as ViewActivityFindSummoner).updateVersion(newVersion)
+                            (getView() as ViewActivityFindSummoner).hideLoading()
                         }
                         Log.i(TAG, "Semaphore released for: checkServerVersion")
                         semaphore!!.release()
@@ -102,7 +95,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 Log.e(TAG, "ERROR: checkServerVersion - onFailure: %s".format(t.message))
-                (view as ActivityFindSummoner).hideLoading()
+                (getView() as ActivityFindSummoner).hideLoading()
             }
         })
     }
@@ -121,7 +114,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                     Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                     semaphore!!.release()
-                    (view as ViewActivityFindSummoner).errorLoading(null)
+                    (getView() as ViewActivityFindSummoner).errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -131,7 +124,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             uiThread {
-                                (view as ViewActivityFindSummoner).errorLoading(null)
+                                (getView() as ViewActivityFindSummoner).errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
@@ -150,7 +143,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                 semaphore!!.release()
-                (view as ViewActivityFindSummoner).errorLoading(null)
+                (getView() as ViewActivityFindSummoner).errorLoading(null)
             }
         })
     }
@@ -168,7 +161,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                     Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                     semaphore!!.release()
-                    (view as ViewActivityFindSummoner).errorLoading(null)
+                    (getView() as ViewActivityFindSummoner).errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -178,7 +171,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
                             uiThread {
-                                (view as ViewActivityFindSummoner).errorLoading(null)
+                                (getView() as ViewActivityFindSummoner).errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadProfileIcons")
@@ -197,7 +190,7 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
                 Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                 semaphore!!.release()
-                (view as ViewActivityFindSummoner).errorLoading(null)
+                (getView() as ViewActivityFindSummoner).errorLoading(null)
             }
         })
     }
@@ -216,5 +209,4 @@ class PresenterActivityFindSummoner : Presenter<ViewActivityFindSummoner> {
             }
 
     }
-
 }

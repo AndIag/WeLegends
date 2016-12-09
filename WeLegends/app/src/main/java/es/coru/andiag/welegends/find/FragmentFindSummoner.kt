@@ -1,41 +1,104 @@
 package es.coru.andiag.welegends.find
 
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.bumptech.glide.Glide
 import es.coru.andiag.welegends.R
+import es.coru.andiag.welegends.common.BaseFragment
 import es.coru.andiag.welegends.common.views.FontTextView
+import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.rest.RestClient
 
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : Fragment() {
+class FragmentFindSummoner() : BaseFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner, AdapterView.OnItemSelectedListener {
 
-    @BindView(R.id.textVersion) lateinit var textVersion: FontTextView
+    @BindView(R.id.editTextSummoner)
+    lateinit var editSummonerName: EditText
+    @BindView(R.id.buttonGo)
+    lateinit var buttonSearch: Button
+    @BindView(R.id.imageBackground)
+    lateinit var imageBackground: ImageView
+    @BindView(R.id.spinnerRegions)
+    lateinit var spinnerRegions: Spinner
+    @BindView(R.id.buttonHistoric)
+    lateinit var buttonHistoric: ImageButton
+    @BindView(R.id.textVersion)
+    lateinit var textVersion: FontTextView
 
-    private lateinit var bind: Unbinder
+    lateinit var region: String
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_find_summoner, container, false)
-        bind = ButterKnife.bind(this, view)
-        return view
+    override val fragmentLayout: Int
+        get() = R.layout.fragment_find_summoner
+
+    override fun setupViews() {
+        setBackground("Tristana_5.jpg")
+        spinnerRegions.onItemSelectedListener = this
+        buttonSearch.setOnClickListener {
+            presenter?.getSummonerByName(editSummonerName.text.toString(), region)
+        }
+    }
+
+    override fun addPresenter(): PresenterFragmentFindSummoner {
+        return PresenterFragmentFindSummoner()
+    }
+
+    override fun onPresenterCreated(p: PresenterFragmentFindSummoner) {
+        p.attach(this)
+    }
+
+    override fun onSummonerFound(summoner: Summoner) {
+        Toast.makeText(context, summoner.name + " " + summoner.id, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSummonerNotFound(error: Int) {
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showLoading() {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideLoading() {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun errorLoading(message: String?) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun updateVersion(version: String) {
         textVersion.text = version
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        bind.unbind()
+    private fun setBackground(image: String) {
+        val endpoint: String
+        if (resources.configuration.orientation === Configuration.ORIENTATION_LANDSCAPE) {
+            endpoint = RestClient.loadingImgEndpoint + image
+        } else
+            endpoint = RestClient.loadingImgEndpoint + image
+        Glide.with(context).load(endpoint).dontAnimate()
+                .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
+                .into(imageBackground)
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        region = p0!!.getItemAtPosition(p2) as String
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
     }
 
     companion object {

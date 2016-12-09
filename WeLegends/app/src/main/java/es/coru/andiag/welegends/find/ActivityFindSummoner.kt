@@ -32,7 +32,7 @@ class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
 
     override fun onStart() {
         super.onStart()
-        presenter.onViewAttached(this)
+        presenter.attach(this)
     }
 
     override fun onResume() {
@@ -45,7 +45,7 @@ class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
 
     override fun onStop() {
         super.onStop()
-        presenter.onViewDetached()
+        presenter.attach(this)
     }
 
     override fun showLoading() {

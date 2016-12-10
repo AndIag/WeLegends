@@ -1,6 +1,5 @@
 package es.coru.andiag.welegends.common.base
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,9 +12,9 @@ import butterknife.Unbinder
 /**
  * Created by andyq on 09/12/2016.
  */
-abstract class BaseFragment<P : BasePresenter<*>>() : Fragment() {
+abstract class BaseLoadingFragment<P : BasePresenter<*>, A : BaseLoadingView>() : Fragment() {
 
-    lateinit var activity: Activity
+    lateinit var parentView: A
 
     lateinit internal var unbinder: Unbinder
     var presenter: P? = null
@@ -31,7 +30,7 @@ abstract class BaseFragment<P : BasePresenter<*>>() : Fragment() {
     @Suppress("UNCHECKED_CAST")
     override fun onAttach(activity: Context?) {
         super.onAttach(activity)
-        this.activity = activity as Activity
+        this.parentView = activity as A
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,9 +38,6 @@ abstract class BaseFragment<P : BasePresenter<*>>() : Fragment() {
         unbinder = ButterKnife.bind(this, view)
         return view
     }
-
-
-    abstract fun setupViews()
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +51,8 @@ abstract class BaseFragment<P : BasePresenter<*>>() : Fragment() {
             (this.presenter as BasePresenter<*>).detach()
         }
     }
+
+    abstract fun setupViews()
 
     abstract fun addPresenter(): P
 

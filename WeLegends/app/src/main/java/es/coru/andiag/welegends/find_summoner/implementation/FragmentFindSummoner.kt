@@ -1,13 +1,19 @@
 package es.coru.andiag.welegends.find_summoner.implementation
 
 
+import android.content.Context
 import android.content.res.Configuration
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.Unbinder
 import com.bumptech.glide.Glide
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.base.BaseLoadingFragment
+import es.coru.andiag.welegends.common.mvp.BaseFragment
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.find_summoner.PresenterFragmentFindSummoner
 import es.coru.andiag.welegends.find_summoner.ViewFragmentFindSummoner
@@ -19,7 +25,7 @@ import es.coru.andiag.welegends.models.rest.RestClient
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : BaseLoadingFragment<PresenterFragmentFindSummoner, ActivityFindSummoner>(), ViewFragmentFindSummoner, AdapterView.OnItemSelectedListener {
+class FragmentFindSummoner() : BaseFragment<ActivityFindSummoner>(), ViewFragmentFindSummoner, AdapterView.OnItemSelectedListener {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -35,24 +41,36 @@ class FragmentFindSummoner() : BaseLoadingFragment<PresenterFragmentFindSummoner
     lateinit var textVersion: FontTextView
 
     lateinit var region: String
+    lateinit internal var unbinder: Unbinder
 
-    override val fragmentLayout: Int
-        get() = R.layout.fragment_find_summoner
+//    override val fragmentLayout: Int
+//        get() = R.layout.fragment_find_summoner
+//
+//    override fun setupViews() {
+//        setBackground("Tristana_5.jpg")
+//        spinnerRegions.onItemSelectedListener = this
+//        buttonSearch.setOnClickListener {
+//            presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
+//        }
+//    }
+//
+//    override fun addPresenter(): PresenterFragmentFindSummoner {
+//        return PresenterFragmentFindSummoner()
+//    }
+//
+//    override fun onPresenterCreated(p: PresenterFragmentFindSummoner) {
+//        p.attach(this, parentView!!)
+//    }
 
-    override fun setupViews() {
-        setBackground("Tristana_5.jpg")
-        spinnerRegions.onItemSelectedListener = this
-        buttonSearch.setOnClickListener {
-            presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
-        }
+    override fun onAttach(context: Context?) {
+        setPresenter(PresenterFragmentFindSummoner())
+        super.onAttach(context)
     }
 
-    override fun addPresenter(): PresenterFragmentFindSummoner {
-        return PresenterFragmentFindSummoner()
-    }
-
-    override fun onPresenterCreated(p: PresenterFragmentFindSummoner) {
-        p.attach(this, parentView!!)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater!!.inflate(R.layout.fragment_find_summoner, container, false)
+        unbinder = ButterKnife.bind(this, view)
+        return view
     }
 
     override fun onSummonerFound(summoner: Summoner) {

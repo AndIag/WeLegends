@@ -1,30 +1,18 @@
 package es.coru.andiag.welegends.find_summoner
 
-import android.content.Context
+import es.coru.andiag.welegends.common.mvp.base.BasePresenter
+import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummoner
 
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
-class PresenterActivityFindSummoner() {
-
+class PresenterActivityFindSummoner() : BasePresenter<ActivityFindSummoner>() {
     private val TAG = es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner::class.java.simpleName
 
-    fun attach(context: Context) {
-        //super.onAttach()
+    override fun onViewAttached() {
     }
 
-    companion object {
-
-        private var presenter: es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner? = null
-
-        val instance: es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner
-            get() {
-                if (presenter == null) {
-                    presenter = PresenterActivityFindSummoner()
-                }
-                return presenter!!
-            }
-
+    override fun onViewDetached() {
     }
 }

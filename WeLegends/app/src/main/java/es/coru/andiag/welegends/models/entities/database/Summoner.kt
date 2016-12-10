@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.Model
-import es.coru.andiag.welegends.common.WeLegendsDatabase
+import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 import java.security.Timestamp
 
@@ -14,7 +14,7 @@ import java.security.Timestamp
  */
 
 @Table(database = WeLegendsDatabase::class)
-class Summoner : BaseModel(), Serializable, Model {
+class Summoner() : BaseModel(), Serializable, Model {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @Unique @Column var id: Long? = null

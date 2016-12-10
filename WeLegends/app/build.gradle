@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getExternalModuleDir()}\""
     }
     buildTypes {
         release {
@@ -54,10 +55,14 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
 
 }
-repositories {
-    mavenCentral()
-}
 
 kapt {
     generateStubs = true
+}
+
+def getExternalModuleDir() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    def externalModuleDir = properties.getProperty('HttpLoggingInterceptorLevel', "BODY")
+    return externalModuleDir
 }

@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common
+package es.coru.andiag.welegends.common.base
 
 import android.app.Activity
 import android.content.Context
@@ -13,13 +13,14 @@ import butterknife.Unbinder
 /**
  * Created by andyq on 09/12/2016.
  */
-abstract class BaseFragment<P : BasePresenter<*> > () : Fragment() {
+abstract class BaseFragment<P : BasePresenter<*>>() : Fragment() {
 
     lateinit var activity: Activity
 
     lateinit internal var unbinder: Unbinder
     var presenter: P? = null
         protected set
+    protected abstract val fragmentLayout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ abstract class BaseFragment<P : BasePresenter<*> > () : Fragment() {
         this.onPresenterCreated(this.presenter!!)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onAttach(activity: Context?) {
         super.onAttach(activity)
         this.activity = activity as Activity
@@ -38,7 +40,6 @@ abstract class BaseFragment<P : BasePresenter<*> > () : Fragment() {
         return view
     }
 
-    protected abstract val fragmentLayout: Int
 
     abstract fun setupViews()
 

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.Model
-import es.coru.andiag.welegends.common.WeLegendsDatabase
+import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 
 /**
@@ -13,7 +13,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-class Champion : BaseModel(), Serializable, Model {
+class Champion() : BaseModel(), Serializable, Model {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @SerializedName("id") @Column var name: String? = null

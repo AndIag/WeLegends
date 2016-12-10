@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common
+package es.coru.andiag.welegends
 
 import com.raizlabs.android.dbflow.annotation.Database
 
@@ -7,9 +7,9 @@ import com.raizlabs.android.dbflow.annotation.Database
  */
 
 @Database(name = WeLegendsDatabase.NAME, version = WeLegendsDatabase.VERSION)
-object WeLegendsDatabase {
-
-    const val NAME = "andiag_welegends"
-    const val VERSION = 1
-
+class WeLegendsDatabase {
+    companion object {
+        const val NAME = "andiag_welegends"
+        const val VERSION = 1
+    }
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.Model
-import es.coru.andiag.welegends.common.WeLegendsDatabase
+import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 
 /**
@@ -12,7 +12,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-class ProfileIcon : BaseModel(), Serializable, Model {
+class ProfileIcon() : BaseModel(), Serializable, Model {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @Unique @Column var id: Long? = null

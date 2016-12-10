@@ -36,12 +36,11 @@
             android:entries="@array/region_array"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:prompt="@string/region_prompt"
             android:spinnerMode="dialog"
             android:textAlignment="center"
             android:layout_above="@+id/buttonGo"
-            android:layout_alignLeft="@+id/editTextSummoner"
             android:layout_alignStart="@+id/editTextSummoner" />
 
         <Button
@@ -53,7 +52,6 @@
             android:text="@string/go"
             android:textColor="?colorAccent"
             android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/spinnerRegions"
             android:layout_alignStart="@+id/spinnerRegions"
             android:layout_marginBottom="@dimen/activity_vertical_margin" />
 

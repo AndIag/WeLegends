@@ -12,7 +12,8 @@ import es.coru.andiag.welegends.R
 
 class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
 
-    @BindView(R.id.progressBar) lateinit var progressBar: ProgressBar
+    @BindView(R.id.progressBar)
+    lateinit var progressBar: ProgressBar
 
     private val TAG = ActivityFindSummoner::class.java.simpleName
     private val presenter: PresenterActivityFindSummoner = PresenterActivityFindSummoner.instance
@@ -57,10 +58,6 @@ class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
     }
 
     override fun errorLoading(message: String?) {
-
-    }
-
-    override fun updateBackground(imageUrl: String) {
 
     }
 

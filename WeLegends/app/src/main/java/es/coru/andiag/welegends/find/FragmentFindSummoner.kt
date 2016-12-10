@@ -7,7 +7,7 @@ import android.widget.*
 import butterknife.BindView
 import com.bumptech.glide.Glide
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.BaseFragment
+import es.coru.andiag.welegends.common.base.BaseFragment
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient

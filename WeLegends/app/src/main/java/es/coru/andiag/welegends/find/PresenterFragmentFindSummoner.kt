@@ -2,8 +2,8 @@ package es.coru.andiag.welegends.find
 
 import android.util.Log
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.BasePresenter
-import es.coru.andiag.welegends.common.Utils
+import es.coru.andiag.welegends.common.base.BasePresenter
+import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
@@ -38,13 +38,13 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
     fun searchSummonerByName(name: String, region: String) {
         Log.d(TAG, "searchSummonerByName")
         doAsync {
-            val cleanName = Utils.cleanString(name)
+            val cleanName = StringUtils.cleanString(name)
             if (!cleanName.isEmpty()) {
                 val summoner: Summoner? = null//db.getSummonerByName(cleanName, region)
                 if (summoner == null) {
                     searchSummonerInApi(cleanName, region, object : Callback<Summoner> {
                         override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                            var s : Summoner = response.body()
+                            var s: Summoner = response.body()
                             s.region = region
                             //db.addSummoner(summoner)
                             uiThread { onSuccess(s) }

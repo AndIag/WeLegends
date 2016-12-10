@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common
+package es.coru.andiag.welegends
 
 import android.app.Application
 import com.raizlabs.android.dbflow.config.FlowConfig

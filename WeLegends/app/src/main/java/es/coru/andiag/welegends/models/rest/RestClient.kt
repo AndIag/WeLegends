@@ -1,6 +1,9 @@
 package es.coru.andiag.welegends.models.rest
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
+import es.coru.andiag.welegends.BuildConfig
 import es.coru.andiag.welegends.common.utils.SummonerTypeAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,15 +29,47 @@ object RestClient {
     private var STATIC_CLIENT: Static? = null
     private var staticEndpoint: String? = null
 
+    private fun getLoggingLevel(): HttpLoggingInterceptor {
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        when (BuildConfig.HttpLoggingInterceptorLevel) {
+            "NONE" -> {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+            }
+            "BASIC" -> {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+            }
+            "HEADERS" -> {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
+            }
+            "BODY" -> {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            }
+            else -> {
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            }
+        }
+        return httpLoggingInterceptor
+    }
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = manager.activeNetworkInfo
+
+        var isAvailable = false
+        if (networkInfo != null && networkInfo.isConnected) {
+            isAvailable = true
+        }
+
+        return isAvailable
+    }
+
     fun getWeLegendsData(): API {
         if (REST_CLIENT == null) {
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             val okHttpClient = OkHttpClient.Builder()
                     .connectTimeout(12, TimeUnit.SECONDS)
                     .readTimeout(12, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(true)
-                    .addInterceptor(httpLoggingInterceptor)
+                    .addInterceptor(getLoggingLevel())
                     .build()
 
             val retrofit = Retrofit.Builder()
@@ -54,13 +89,11 @@ object RestClient {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create()
 
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val okHttpClient = OkHttpClient.Builder()
                 .connectTimeout(12, TimeUnit.SECONDS)
                 .readTimeout(12, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
-                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(getLoggingLevel())
                 .build()
 
         val retrofit = Retrofit.Builder()

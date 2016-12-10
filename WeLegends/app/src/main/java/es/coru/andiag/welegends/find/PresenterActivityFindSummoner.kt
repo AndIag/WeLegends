@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.BasePresenter
-import es.coru.andiag.welegends.common.WeLegendsDatabase
+import es.coru.andiag.welegends.WeLegendsDatabase
+import es.coru.andiag.welegends.common.base.BasePresenter
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.entities.database.Champion
@@ -19,7 +19,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import java.util.concurrent.Callable
-import java.util.concurrent.Semaphore
 
 
 /**
@@ -29,7 +28,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
 
     private val TAG = es.coru.andiag.welegends.find.PresenterActivityFindSummoner::class.java.simpleName
 
-    private var semaphore: Semaphore? = null
+    private var semaphore: CallbackSemaphore? = null
 
     override fun onAttach() {
         super.onAttach()
@@ -41,7 +40,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
         FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((getView() as Context).applicationContext)
     }
 
-    private fun checkServerVersion() {
+    private fun checkServerVersion() { //TODO move to fragment presenter
         (getView() as ActivityFindSummoner).showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
@@ -114,6 +113,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             FlowManager.getModelAdapter(Champion::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
+                            //e.printStackTrace()
                             uiThread {
                                 getView().errorLoading(null)
                             }
@@ -160,6 +160,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             FlowManager.getModelAdapter(ProfileIcon::class.java).saveAll(response.body().data!!.values)
                         } catch (e: Exception) {
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
+                            //e.printStackTrace()
                             uiThread {
                                 getView().errorLoading(null)
                             }

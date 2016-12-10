@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find_summoner
+package es.coru.andiag.welegends.find_summoner.implementation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +8,8 @@ import butterknife.BindView
 import butterknife.BuildConfig
 import butterknife.ButterKnife
 import es.coru.andiag.welegends.R
+import es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner
+import es.coru.andiag.welegends.find_summoner.ViewActivityFindSummoner
 
 
 class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {

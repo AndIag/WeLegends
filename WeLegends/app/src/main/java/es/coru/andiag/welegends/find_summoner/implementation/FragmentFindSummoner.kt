@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find_summoner
+package es.coru.andiag.welegends.find_summoner.implementation
 
 
 import android.content.res.Configuration
@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.BaseLoadingFragment
 import es.coru.andiag.welegends.common.utils.FontTextView
+import es.coru.andiag.welegends.find_summoner.PresenterFragmentFindSummoner
+import es.coru.andiag.welegends.find_summoner.ViewFragmentFindSummoner
 import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient
 
@@ -41,7 +43,7 @@ class FragmentFindSummoner() : BaseLoadingFragment<PresenterFragmentFindSummoner
         setBackground("Tristana_5.jpg")
         spinnerRegions.onItemSelectedListener = this
         buttonSearch.setOnClickListener {
-            presenter?.getSummonerByName(editSummonerName.text.toString(), region)
+            presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
         }
     }
 
@@ -50,7 +52,7 @@ class FragmentFindSummoner() : BaseLoadingFragment<PresenterFragmentFindSummoner
     }
 
     override fun onPresenterCreated(p: PresenterFragmentFindSummoner) {
-        p.attach(this)
+        p.attach(this, parentView!!)
     }
 
     override fun onSummonerFound(summoner: Summoner) {

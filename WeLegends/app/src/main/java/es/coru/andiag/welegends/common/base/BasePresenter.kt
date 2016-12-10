@@ -7,9 +7,10 @@ package es.coru.andiag.welegends.common.base
 
 abstract class BasePresenter<V> {
 
-    private var view: V? = null
+    var view: V? = null
+        get private set
 
-    fun attach(view: V) {
+    open fun attach(view: V) {
         this.view = view
         onAttach()
     }
@@ -17,14 +18,12 @@ abstract class BasePresenter<V> {
     open fun onAttach() {
     }
 
-    fun detach() {
+    open fun detach() {
         onDetach()
         view = null
     }
 
     open fun onDetach() {
     }
-
-    protected fun getView() = view!!
 
 }

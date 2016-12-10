@@ -12,13 +12,15 @@ import butterknife.Unbinder
 /**
  * Created by andyq on 09/12/2016.
  */
-abstract class BaseLoadingFragment<P : BasePresenter<*>, A : BaseLoadingView>() : Fragment() {
+abstract class BaseLoadingFragment<P : BaseFragmentPresenter<*, C>, C> : Fragment()
+where C : Context, C : BaseLoadingView {
 
-    lateinit var parentView: A
+    var presenter: P? = null
+        get private set
+    var parentView: C? = null
+        get private set
 
     lateinit internal var unbinder: Unbinder
-    var presenter: P? = null
-        protected set
     protected abstract val fragmentLayout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +30,9 @@ abstract class BaseLoadingFragment<P : BasePresenter<*>, A : BaseLoadingView>() 
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onAttach(activity: Context?) {
-        super.onAttach(activity)
-        this.parentView = activity as A
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.parentView = context as C
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,14 +49,12 @@ abstract class BaseLoadingFragment<P : BasePresenter<*>, A : BaseLoadingView>() 
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder.unbind()
-        if (this.presenter != null) {
-            (this.presenter as BasePresenter<*>).detach()
-        }
+        (this.presenter as BasePresenter<*>).detach()
     }
 
     abstract fun setupViews()
 
     abstract fun addPresenter(): P
 
-    abstract fun onPresenterCreated(var1: P)
+    abstract fun onPresenterCreated(p: P)
 }

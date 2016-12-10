@@ -5,9 +5,11 @@ import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.common.base.BasePresenter
+import es.coru.andiag.welegends.common.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.common.utils.StringUtils
+import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummoner
+import es.coru.andiag.welegends.find_summoner.implementation.FragmentFindSummoner
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.entities.database.Champion
 import es.coru.andiag.welegends.models.entities.database.ProfileIcon
@@ -26,7 +28,7 @@ import java.util.concurrent.Callable
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() {
+class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivityFindSummoner>() {
 
     private var semaphore: CallbackSemaphore? = null
 
@@ -54,32 +56,33 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                             summoner.region = region
                             summoner.save()
                             uiThread {
-                                getView().onSummonerFound(summoner)
+                                view!!.onSummonerFound(summoner)
                             }
                         }
                     }
 
                     override fun onFailure(call: Call<Summoner>, t: Throwable) {
-                        getView().onSummonerNotFound(R.string.error404)
+                        view!!.onSummonerNotFound(R.string.error404)
                     }
                 })
             } else {
-                getView().onSummonerFound(dbSummoner)
+                view!!.onSummonerFound(dbSummoner)
             }
         } else {
-            getView().onSummonerNotFound(R.string.voidSummonerError)
+            view!!.onSummonerNotFound(R.string.voidSummonerError)
         }
     }
     //endregion
 
     private fun recreateDatabase() {
         Log.i(TAG, "Recreating Database 4new Version")
-        FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((getView() as Context).applicationContext)
+        FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((view!! as Context).applicationContext)
     }
 
     //region Data Loaders
     private fun checkServerVersion() {
 //        getView().showLoading()
+        parentView!!.showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -87,7 +90,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
-                        if (newVersion != Version.getVersion(getView() as Context)) {
+                        if (newVersion != Version.getVersion(parentView as Context)) {
                             //Version.setVersion(newVersion, getView() as Context)
                             val locale = Locale.getDefault().toString()
 
@@ -97,8 +100,8 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                             //Init semaphore with number of methods to load and callback method
                             semaphore = CallbackSemaphore(2, Callable {
                                 uiThread {
-                                    getView().onVersionUpdate(newVersion)
-//                                    getView().hideLoading()
+                                    view!!.onVersionUpdate(newVersion)
+                                    parentView!!.hideLoading()
                                     Log.i(TAG, "Data Load Ended")
                                 }
                             })
@@ -108,7 +111,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                             semaphore!!.acquire(2)
                             uiThread {
                                 // Update version field to show loading feedback
-                                getView().onVersionUpdate((getView() as Context)
+                                view!!.onVersionUpdate((parentView as Context)
                                         .getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
@@ -124,7 +127,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 Log.e(TAG, "ERROR: checkServerVersion - onFailure: %s".format(t.message))
-//                getView().hideLoading()
+                parentView!!.hideLoading()
             }
         })
     }
@@ -142,7 +145,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                     Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                     semaphore!!.release(1)
-//                    getView().errorLoading(null)
+                    parentView!!.errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -152,7 +155,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             //e.printStackTrace()
                             uiThread {
-//                                getView().errorLoading(null)
+                                parentView!!.errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
@@ -171,7 +174,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                 semaphore!!.release(1)
-//                getView().errorLoading(null)
+                parentView!!.errorLoading(null)
             }
         })
     }
@@ -189,7 +192,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                     Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                     semaphore!!.release(1)
-//                    getView().errorLoading(null)
+                    parentView!!.errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -199,7 +202,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
                             //e.printStackTrace()
                             uiThread {
-//                                getView().errorLoading(null)
+                                parentView!!.errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadProfileIcons")
@@ -218,7 +221,7 @@ class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() 
                 Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                 semaphore!!.release(1)
-//                getView().errorLoading(null)
+                parentView!!.errorLoading(null)
             }
         })
     }

@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 
 import android.content.res.Configuration
@@ -61,18 +61,6 @@ class FragmentFindSummoner() : BaseFragment<PresenterFragmentFindSummoner>(), Vi
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showLoading() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun hideLoading() {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun errorLoading(message: String?) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     fun updateVersion(version: String) {
         textVersion.text = version
     }
@@ -93,6 +81,10 @@ class FragmentFindSummoner() : BaseFragment<PresenterFragmentFindSummoner>(), Vi
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
+    }
+
+    override fun onVersionUpdate(version: String) {
+        textVersion.text = version
     }
 
     companion object {

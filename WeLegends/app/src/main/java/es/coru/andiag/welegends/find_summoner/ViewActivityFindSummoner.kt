@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 import es.coru.andiag.welegends.common.base.BaseLoadingView
 
@@ -7,5 +7,4 @@ import es.coru.andiag.welegends.common.base.BaseLoadingView
  */
 
 interface ViewActivityFindSummoner : BaseLoadingView {
-    fun updateVersion(version: String)
 }

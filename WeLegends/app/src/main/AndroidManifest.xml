@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".find.ActivityFindSummoner">
+        <activity android:name=".find_summoner.ActivityFindSummoner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

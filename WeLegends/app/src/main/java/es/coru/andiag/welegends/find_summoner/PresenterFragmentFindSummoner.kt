@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 import android.content.Context
 import android.util.Log
@@ -7,9 +7,11 @@ import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.common.base.BasePresenter
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
+import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.entities.database.Champion
 import es.coru.andiag.welegends.models.entities.database.ProfileIcon
+import es.coru.andiag.welegends.models.entities.database.Summoner
 import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
 import es.coru.andiag.welegends.models.rest.RestClient
 import org.jetbrains.anko.doAsync
@@ -22,11 +24,9 @@ import java.util.concurrent.Callable
 
 
 /**
- * Created by Canalejas on 08/12/2016.
+ * Created by andyq on 09/12/2016.
  */
-class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>() {
-
-    private val TAG = es.coru.andiag.welegends.find.PresenterActivityFindSummoner::class.java.simpleName
+class PresenterFragmentFindSummoner : BasePresenter<ViewFragmentFindSummoner>() {
 
     private var semaphore: CallbackSemaphore? = null
 
@@ -35,13 +35,51 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
         checkServerVersion()
     }
 
+    //region FindSummoner
+    fun getSummonerByName(name: String, region: String) {
+        Log.d(TAG, "searchSummonerByName")
+        val cleanName = StringUtils.cleanString(name)
+        if (!cleanName.isEmpty()) {
+            val dbSummoner: Summoner? = null
+//            var dbSummoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
+//                    .where(Summoner_Table.name.eq(name))
+//                    .and(Summoner_Table.region.eq(region))
+//                    .querySingle()
+            if (dbSummoner == null) {
+                val call = RestClient.getWeLegendsData(cleanName).getSummonerByName(region, cleanName)
+                call.enqueue(object : Callback<Summoner> {
+                    override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
+                        doAsync {
+                            val summoner: Summoner = response.body()
+                            summoner.region = region
+                            summoner.save()
+                            uiThread {
+                                getView().onSummonerFound(summoner)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Summoner>, t: Throwable) {
+                        getView().onSummonerNotFound(R.string.error404)
+                    }
+                })
+            } else {
+                getView().onSummonerFound(dbSummoner)
+            }
+        } else {
+            getView().onSummonerNotFound(R.string.voidSummonerError)
+        }
+    }
+    //endregion
+
     private fun recreateDatabase() {
         Log.i(TAG, "Recreating Database 4new Version")
         FlowManager.getDatabase(WeLegendsDatabase.NAME).reset((getView() as Context).applicationContext)
     }
 
-    private fun checkServerVersion() { //TODO move to fragment presenter
-        (getView() as ActivityFindSummoner).showLoading()
+    //region Data Loaders
+    private fun checkServerVersion() {
+//        getView().showLoading()
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -59,8 +97,8 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             //Init semaphore with number of methods to load and callback method
                             semaphore = CallbackSemaphore(2, Callable {
                                 uiThread {
-                                    getView().updateVersion(newVersion)
-                                    getView().hideLoading()
+                                    getView().onVersionUpdate(newVersion)
+//                                    getView().hideLoading()
                                     Log.i(TAG, "Data Load Ended")
                                 }
                             })
@@ -70,7 +108,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             semaphore!!.acquire(2)
                             uiThread {
                                 // Update version field to show loading feedback
-                                getView().updateVersion((getView() as Context)
+                                getView().onVersionUpdate((getView() as Context)
                                         .getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
@@ -86,12 +124,11 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 Log.e(TAG, "ERROR: checkServerVersion - onFailure: %s".format(t.message))
-                (getView() as ActivityFindSummoner).hideLoading()
+//                getView().hideLoading()
             }
         })
     }
 
-    //region Data Loaders
     private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
         call.enqueue(object : Callback<GenericStaticData<String, Champion>> {
@@ -105,7 +142,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                     Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                     semaphore!!.release(1)
-                    getView().errorLoading(null)
+//                    getView().errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -115,7 +152,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             Log.e(TAG, "Error updating champions: %s".format(e.message))
                             //e.printStackTrace()
                             uiThread {
-                                getView().errorLoading(null)
+//                                getView().errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadServerChampions")
@@ -134,7 +171,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                 Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadServerChampions")
                 semaphore!!.release(1)
-                getView().errorLoading(null)
+//                getView().errorLoading(null)
             }
         })
     }
@@ -152,7 +189,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                     Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
                     Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                     semaphore!!.release(1)
-                    getView().errorLoading(null)
+//                    getView().errorLoading(null)
                 } else {
                     doAsync {
                         try {
@@ -162,7 +199,7 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                             Log.e(TAG, "Error updating profile icons: %s".format(e.message))
                             //e.printStackTrace()
                             uiThread {
-                                getView().errorLoading(null)
+//                                getView().errorLoading(null)
                             }
                         } finally {
                             Log.i(TAG, "Semaphore released for: loadProfileIcons")
@@ -181,23 +218,13 @@ class PresenterActivityFindSummoner() : BasePresenter<ViewActivityFindSummoner>(
                 Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
                 Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
                 semaphore!!.release(1)
-                getView().errorLoading(null)
+//                getView().errorLoading(null)
             }
         })
     }
     //endregion
 
     companion object {
-
-        private var presenter: es.coru.andiag.welegends.find.PresenterActivityFindSummoner? = null
-
-        val instance: es.coru.andiag.welegends.find.PresenterActivityFindSummoner
-            get() {
-                if (presenter == null) {
-                    presenter = PresenterActivityFindSummoner()
-                }
-                return presenter!!
-            }
-
+        internal val TAG = PresenterFragmentFindSummoner::class.java.simpleName
     }
 }

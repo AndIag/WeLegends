@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 /**
  * Created by andyq on 09/12/2016.

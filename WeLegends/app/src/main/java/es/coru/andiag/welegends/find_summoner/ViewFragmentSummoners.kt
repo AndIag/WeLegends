@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 import es.coru.andiag.welegends.common.base.BaseLoadingView
 import es.coru.andiag.welegends.models.entities.database.Summoner

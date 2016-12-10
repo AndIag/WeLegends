@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find
+package es.coru.andiag.welegends.find_summoner
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -59,11 +59,6 @@ class ActivityFindSummoner : AppCompatActivity(), ViewActivityFindSummoner {
 
     override fun errorLoading(message: String?) {
 
-    }
-
-    override fun updateVersion(version: String) {
-        (supportFragmentManager.findFragmentByTag(FragmentFindSummoner.TAG) as FragmentFindSummoner)
-                .updateVersion(version)
     }
 
 }

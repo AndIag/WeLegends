@@ -1,6 +1,6 @@
 package es.coru.andiag.welegends.find_summoner
 
-import es.coru.andiag.welegends.common.mvp.base.BasePresenter
+import es.coru.andiag.andiag_mvp.base.BasePresenter
 import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummoner
 
 

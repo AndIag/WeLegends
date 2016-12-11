@@ -1,22 +1,27 @@
-package es.coru.andiag.welegends.common.mvp;
+package es.coru.andiag.andiag_mvp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import es.coru.andiag.welegends.common.mvp.base.BasePresenter;
-import es.coru.andiag.welegends.common.mvp.base.BaseView;
+import es.coru.andiag.andiag_mvp.base.BasePresenter;
+import es.coru.andiag.andiag_mvp.base.BaseView;
+
 
 /**
- * Created by iagoc on 11/12/2016.
+ * Created by Canalejas on 11/12/2016.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
     private final static String TAG = BaseActivity.class.getSimpleName();
 
-    private BasePresenter<BaseActivity> mPresenter;
+    private P mPresenter;
 
-    protected void setPresenter(BasePresenter<? extends BaseActivity> presenter) {
-        mPresenter = (BasePresenter<BaseActivity>) presenter;
+    protected void setPresenter(P presenter) {
+        mPresenter = presenter;
+    }
+
+    protected P getPresenter() {
+        return mPresenter;
     }
 
     @Override

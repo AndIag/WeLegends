@@ -1,7 +1,7 @@
-package es.coru.andiag.welegends.common.mvp;
+package es.coru.andiag.andiag_mvp;
 
 /**
- * Created by iagoc on 11/12/2016.
+ * Created by Canalejas on 11/12/2016.
  */
 
 public interface BaseLoadingView {

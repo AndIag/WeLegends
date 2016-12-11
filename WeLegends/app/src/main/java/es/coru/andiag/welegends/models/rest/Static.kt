@@ -1,9 +1,9 @@
 package es.coru.andiag.welegends.models.rest
 
-import es.coru.andiag.welegends.models.entities.database.Champion
-import es.coru.andiag.welegends.models.entities.database.ProfileIcon
-import es.coru.andiag.welegends.models.entities.database.Summoner
-import es.coru.andiag.welegends.models.entities.dto.GenericStaticData
+import es.coru.andiag.welegends.models.database.Champion
+import es.coru.andiag.welegends.models.database.ProfileIcon
+import es.coru.andiag.welegends.models.database.Summoner
+import es.coru.andiag.welegends.models.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET
 

@@ -1,9 +1,9 @@
-package es.coru.andiag.welegends.common.mvp.base;
+package es.coru.andiag.andiag_mvp.base;
 
 import android.content.Context;
 
 /**
- * Created by iagoc on 10/12/2016.
+ * Created by Canalejas on 10/12/2016.
  */
 
 public abstract class BasePresenter<V extends Context & BaseView> {

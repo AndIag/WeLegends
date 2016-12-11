@@ -1,14 +1,16 @@
-package es.coru.andiag.welegends.common.mvp;
+package es.coru.andiag.andiag_mvp;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ProgressBar;
 
 /**
- * Created by iagoc on 11/12/2016.
+ * Created by Canalejas on 11/12/2016.
  */
 
-public class BaseLoadingActivity extends BaseActivity implements BaseLoadingView {
-    private final static String TAG = BaseLoadingActivity.class.getSimpleName();
+public class BaseLoadingFragment extends BaseFragment implements BaseLoadingView {
+    private final static String TAG = BaseLoadingFragment.class.getSimpleName();
 
     protected ProgressBar mProgressBar;
     private boolean startLoading;
@@ -18,13 +20,13 @@ public class BaseLoadingActivity extends BaseActivity implements BaseLoadingView
     }
 
     protected void setProgressBar(int resId, boolean startLoading) {
-        this.mProgressBar = (ProgressBar) findViewById(resId);
+        this.mProgressBar = (ProgressBar) getActivity().findViewById(resId);
         this.startLoading = startLoading;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (startLoading && mProgressBar != null) {
             showLoading();
         }

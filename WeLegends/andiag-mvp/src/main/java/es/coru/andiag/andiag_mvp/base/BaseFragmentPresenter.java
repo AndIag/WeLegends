@@ -1,18 +1,18 @@
-package es.coru.andiag.welegends.common.mvp.base;
+package es.coru.andiag.andiag_mvp.base;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
 /**
- * Created by iagoc on 11/12/2016.
+ * Created by Canalejas on 11/12/2016.
  */
 
 public abstract class BaseFragmentPresenter<V extends Fragment & BaseFragmentView, PV extends Context & BaseView> {
 
     private final static String TAG = BaseFragmentPresenter.class.getSimpleName();
 
-    protected V mView;
-    protected PV mParent;
+    private V mView;
+    private PV mParent;
 
     public V getView() {
         return mView;
@@ -34,8 +34,8 @@ public abstract class BaseFragmentPresenter<V extends Fragment & BaseFragmentVie
         onViewDetached();
     }
 
-    public abstract void onViewAttached();
+    protected abstract void onViewAttached();
 
-    public abstract void onViewDetached();
+    protected abstract void onViewDetached();
 
 }

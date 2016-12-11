@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.entities.database
+package es.coru.andiag.welegends.models.database
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

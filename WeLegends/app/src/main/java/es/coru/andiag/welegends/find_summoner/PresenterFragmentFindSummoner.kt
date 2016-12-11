@@ -13,8 +13,8 @@ import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.database.Champion
 import es.coru.andiag.welegends.models.database.ProfileIcon
 import es.coru.andiag.welegends.models.database.Summoner
-import es.coru.andiag.welegends.models.dto.GenericStaticData
 import es.coru.andiag.welegends.models.rest.RestClient
+import es.coru.andiag.welegends.models.rest.utils.StaticDataCallback
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -134,97 +134,22 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
-        call.enqueue(object : Callback<GenericStaticData<String, Champion>> {
-            override fun onResponse(call: Call<GenericStaticData<String, Champion>>, response: Response<GenericStaticData<String, Champion>>) {
-                if (!response.isSuccessful || response.body() == null) {
-                    if (locale != RestClient.DEFAULT_LOCALE) {
-                        Log.i(TAG, "Reloading loadServerChampions Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
-                        loadServerChampions(version, RestClient.DEFAULT_LOCALE)
-                        return
-                    }
-                    Log.e(TAG, "ERROR: loadServerChampions - onResponse: %s".format(response.errorBody().string()))
-                    Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                    semaphore!!.release(1)
-                    parent!!.errorLoading(null)
-                } else {
-                    doAsync {
-                        try {
-                            Log.i(TAG, "Loaded Champions: %s".format(response.body().data!!.keys))
-                            FlowManager.getDatabase(Champion::class.java).writableDatabase
-                            FlowManager.getModelAdapter(Champion::class.java).saveAll(response.body().data!!.values)
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error updating champions: %s".format(e.message))
-                            e.printStackTrace()
-                            uiThread {
-                                parent!!.errorLoading(null)
-                            }
-                        } finally {
-                            Log.i(TAG, "Semaphore released for: loadServerChampions")
-                            semaphore!!.release(1)
-                        }
-                    }
-                }
+        call.enqueue(StaticDataCallback(semaphore!!, version, locale, parent, Champion::class.java, Runnable {
+            if (locale != RestClient.DEFAULT_LOCALE) {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadServerChampions(version, RestClient.DEFAULT_LOCALE)
             }
-
-            override fun onFailure(call: Call<GenericStaticData<String, Champion>>, t: Throwable) {
-                if (locale != RestClient.DEFAULT_LOCALE) {
-                    Log.i(TAG, "Reloading loadServerChampions Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
-                    loadServerChampions(version, RestClient.DEFAULT_LOCALE)
-                    return
-                }
-                Log.e(TAG, "ERROR: loadServerChampions - onFailure: %s".format(t.message))
-                Log.i(TAG, "Semaphore released with error for: loadServerChampions")
-                semaphore!!.release(1)
-                parent!!.errorLoading(null)
-            }
-        })
+        }))
     }
 
     private fun loadProfileIcons(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
-        call.enqueue(object : Callback<GenericStaticData<String, ProfileIcon>> {
-            override fun onResponse(call: Call<GenericStaticData<String, ProfileIcon>>, response: Response<GenericStaticData<String, ProfileIcon>>) {
-                if (!response.isSuccessful || response.body() == null) {
-                    if (locale != RestClient.DEFAULT_LOCALE) {
-                        Log.i(TAG, "Reloading loadProfileIcons Locale From onResponse To: %s".format(RestClient.DEFAULT_LOCALE))
-                        loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
-                        return
-                    }
-                    Log.e(TAG, "ERROR: loadProfileIcons - onResponse: %s".format(response.errorBody().string()))
-                    Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                    semaphore!!.release(1)
-                    parent!!.errorLoading(null)
-                } else {
-                    doAsync {
-                        try {
-                            Log.i(TAG, "Loaded ProfileIcons: %s".format(response.body().data!!.keys))
-                            FlowManager.getModelAdapter(ProfileIcon::class.java).saveAll(response.body().data!!.values)
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Error updating profile icons: %s".format(e.message))
-                            //e.printStackTrace()
-                            uiThread {
-                                parent!!.errorLoading(null)
-                            }
-                        } finally {
-                            Log.i(TAG, "Semaphore released for: loadProfileIcons")
-                            semaphore!!.release(1)
-                        }
-                    }
-                }
+        call.enqueue(StaticDataCallback(semaphore!!, version, locale, parent, ProfileIcon::class.java, Runnable {
+            if (locale != RestClient.DEFAULT_LOCALE) {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(ProfileIcon::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
             }
-
-            override fun onFailure(call: Call<GenericStaticData<String, ProfileIcon>>, t: Throwable) {
-                if (locale != RestClient.DEFAULT_LOCALE) {
-                    Log.i(TAG, "Reloading loadProfileIcons Locale From onFailure To: %s".format(RestClient.DEFAULT_LOCALE))
-                    loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
-                    return
-                }
-                Log.e(TAG, "ERROR: loadProfileIcons - onFailure: %s".format(t.message))
-                Log.i(TAG, "Semaphore released with error for: loadProfileIcons")
-                semaphore!!.release(1)
-                parent!!.errorLoading(null)
-            }
-        })
+        }))
     }
     //endregion
 

@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,6 +32,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    kapt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     compile "com.android.support:appcompat-v7:$tools_version"
     compile "com.android.support:cardview-v7:$tools_version"
@@ -44,7 +45,6 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton:butterknife:8.4.0'
-    kapt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

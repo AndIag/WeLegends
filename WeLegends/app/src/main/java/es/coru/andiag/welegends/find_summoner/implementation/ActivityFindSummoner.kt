@@ -1,14 +1,23 @@
 package es.coru.andiag.welegends.find_summoner.implementation
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.ImageView
+import butterknife.BindView
 import butterknife.ButterKnife
+import com.bumptech.glide.Glide
 import es.coru.andiag.andiag_mvp.BaseLoadingActivity
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner
+import es.coru.andiag.welegends.models.rest.RestClient
 
 
 class ActivityFindSummoner : BaseLoadingActivity() {
     private val TAG = ActivityFindSummoner::class.java.simpleName
+
+
+    @BindView(R.id.imageBackground)
+    lateinit var imageBackground: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +31,17 @@ class ActivityFindSummoner : BaseLoadingActivity() {
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)
                 .commit()
 
+    }
+
+    fun setBackground(image: String) {
+        val endpoint: String
+        if (resources.configuration.orientation === Configuration.ORIENTATION_LANDSCAPE) {
+            endpoint = RestClient.loadingImgEndpoint + image
+        } else
+            endpoint = RestClient.loadingImgEndpoint + image
+        Glide.with(this).load(endpoint).dontAnimate()
+                .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
+                .into(imageBackground)
     }
 
 }

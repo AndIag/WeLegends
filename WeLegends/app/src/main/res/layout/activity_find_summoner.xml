@@ -12,6 +12,14 @@
         android:indeterminate="true"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
+    <ImageView
+        android:id="@+id/imageBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/background_default1"
+        android:scaleType="centerCrop" />
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"

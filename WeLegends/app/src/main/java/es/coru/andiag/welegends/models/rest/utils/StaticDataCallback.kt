@@ -15,11 +15,18 @@ import retrofit2.Response
 
 /**
  * Created by Canalejas on 11/12/2016.
+ * Generic callback to simplify all StaticData Requests
+ * @constructor [semaphore] used to allow concurrency
+ * @constructor [locale] needed to know if a reload to {@link RestClient.DEFAULT_LOCALE} is required
+ * @constructor [parent] called when callback process ends
+ * @constructor [clazz] class to save in database
+ * @constructor [runnable] method to run when reload is required
  */
 class StaticDataCallback<T : BaseModel>(
-        private var semaphore: CallbackSemaphore, private var version: String,
-        private var locale: String, private var parent: BaseLoadingView,
-        private var clazz: Class<T>, private var runnable: Runnable) : Callback<GenericStaticData<String, T>> {
+        private var semaphore: CallbackSemaphore, private var locale: String,
+        private var parent: BaseLoadingView, private var clazz: Class<T>,
+        private var runnable: Runnable)
+    : Callback<GenericStaticData<String, T>> {
 
     private val TAG: String = StaticDataCallback::class.java.simpleName
 
@@ -40,6 +47,7 @@ class StaticDataCallback<T : BaseModel>(
                     FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error updating %s: %s".format(clazz.simpleName, e.message))
+                    e.printStackTrace()
                     uiThread {
                         parent.errorLoading(null)
                     }
@@ -61,6 +69,5 @@ class StaticDataCallback<T : BaseModel>(
         semaphore.release(1)
         parent.errorLoading(null)
     }
-
 
 }

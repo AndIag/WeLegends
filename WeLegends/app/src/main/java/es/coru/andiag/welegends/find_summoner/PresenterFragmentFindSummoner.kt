@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.find_summoner
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
+import com.raizlabs.android.dbflow.structure.InvalidDBConfiguration
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
@@ -77,8 +78,12 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
     //endregion
 
     private fun recreateDatabase() {
-        Log.i(TAG, "Recreating Database 4new Version")
-        FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(parent!!.applicationContext)
+        try {
+            Log.i(TAG, "Recreating Database 4new Version")
+            FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(parent!!.applicationContext)
+        } catch (e: InvalidDBConfiguration) {
+            e.printStackTrace()
+        }
     }
 
     //region Data Loaders
@@ -107,7 +112,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                                 }
                             })
 
-//                            recreateDatabase()
+                            recreateDatabase()
 
                             semaphore!!.acquire(2)
                             uiThread {
@@ -134,22 +139,20 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
-        call.enqueue(StaticDataCallback(semaphore!!, version, locale, parent, Champion::class.java, Runnable {
-            if (locale != RestClient.DEFAULT_LOCALE) {
-                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                loadServerChampions(version, RestClient.DEFAULT_LOCALE)
-            }
-        }))
+        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Champion::class.java,
+                Runnable {
+                    Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                    loadServerChampions(version, RestClient.DEFAULT_LOCALE)
+                }))
     }
 
     private fun loadProfileIcons(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
-        call.enqueue(StaticDataCallback(semaphore!!, version, locale, parent, ProfileIcon::class.java, Runnable {
-            if (locale != RestClient.DEFAULT_LOCALE) {
-                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(ProfileIcon::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
-            }
-        }))
+        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, ProfileIcon::class.java,
+                Runnable {
+                    Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(ProfileIcon::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                    loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
+                }))
     }
     //endregion
 

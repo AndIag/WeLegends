@@ -8,14 +8,17 @@ import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 
 /**
- * Created by Canalejas on 09/12/2016.
+ * Created by Canalejas on 13/12/2016.
  */
-
 @Table(database = WeLegendsDatabase::class)
-class ProfileIcon() : BaseModel(), Serializable {
+class Mastery : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-    @SerializedName("id") @Unique @Column var riotId: Long? = null
+    @SerializedName("id") @Unique @Column var riotId: Int? = null
+    @Unique @Column var name: String? = null
     @ForeignKey(tableClass = Image::class) var image: Image? = null
+    @Column var ranks: Int? = null
+    @Column var prereq: String? = null
+//    @Column var description: List<String>? = null
 
 }

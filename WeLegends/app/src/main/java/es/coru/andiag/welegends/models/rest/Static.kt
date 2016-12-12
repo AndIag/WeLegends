@@ -1,9 +1,6 @@
 package es.coru.andiag.welegends.models.rest
 
-import es.coru.andiag.welegends.models.database.Champion
-import es.coru.andiag.welegends.models.database.Item
-import es.coru.andiag.welegends.models.database.ProfileIcon
-import es.coru.andiag.welegends.models.database.Summoner
+import es.coru.andiag.welegends.models.database.*
 import es.coru.andiag.welegends.models.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET
@@ -28,14 +25,14 @@ interface Static {
 
     //Masteries
     @GET("mastery.json")
-    fun masteries(): Call<Summoner>
+    fun masteries(): Call<GenericStaticData<String, Mastery>>
 
     //Runes
     @GET("rune.json")
-    fun runes(): Call<Summoner>
+    fun runes(): Call<GenericStaticData<String, Rune>>
 
     //Summoner Spells
     @GET("summoner.json")
-    fun summonerSpells(): Call<Summoner>
+    fun summonerSpells(): Call<GenericStaticData<String, SummonerSpell>>
 
 }

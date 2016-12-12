@@ -44,6 +44,13 @@ class StaticDataCallback<T : BaseModel>(
             doAsync {
                 try {
                     Log.i(TAG, "Loaded %s: %s".format(clazz.simpleName, response.body().data!!.keys))
+                    if (clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
+                        Log.i(TAG, "Called %s when loading %s".format(KeyInMapTypeAdapter::class.java.simpleName, clazz.simpleName))
+                        response.body().data!!.values.forEachIndexed {
+                            i, t ->
+                            (t as KeyInMapTypeAdapter).setKey(response.body().data!!.keys.elementAt(i))
+                        }
+                    }
                     FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error updating %s: %s".format(clazz.simpleName, e.message))

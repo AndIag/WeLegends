@@ -12,6 +12,7 @@ import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummone
 import es.coru.andiag.welegends.find_summoner.implementation.FragmentFindSummoner
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.database.Champion
+import es.coru.andiag.welegends.models.database.Item
 import es.coru.andiag.welegends.models.database.ProfileIcon
 import es.coru.andiag.welegends.models.database.Summoner
 import es.coru.andiag.welegends.models.rest.RestClient
@@ -82,7 +83,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
             Log.i(TAG, "Recreating Database 4new Version")
             FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(parent!!.applicationContext)
         } catch (e: InvalidDBConfiguration) {
-            e.printStackTrace()
+            Log.i(TAG, "Database did not exist")
         }
     }
 
@@ -103,10 +104,8 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
-                            Log.i(TAG, parent!!.isLoading.toString())
-
                             //Init semaphore with number of methods to load and callback method
-                            semaphore = CallbackSemaphore(2, Callable {
+                            semaphore = CallbackSemaphore(3, Callable {
                                 uiThread {
                                     view!!.onVersionUpdate(newVersion)
                                     parent!!.hideLoading()
@@ -116,7 +115,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
                             recreateDatabase()
 
-                            semaphore!!.acquire(2)
+                            semaphore!!.acquire(3)
                             uiThread {
                                 // Update version field to show loading feedback
                                 view!!.onVersionUpdate(view!!.getString(R.string.loadStaticData))
@@ -124,6 +123,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                                 //Load static data. !IMPORTANT change semaphore if some method change
                                 loadServerChampions(version = newVersion, locale = locale)
                                 loadProfileIcons(version = newVersion, locale = locale)
+                                loadItems(version = newVersion, locale = locale)
                                 //TODO load other info
                             }
                         }
@@ -156,6 +156,17 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                     loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
                 }))
     }
+
+    private fun loadItems(version: String, locale: String) {
+        Log.d(TAG, "Loading items")
+        val call = RestClient.getDdragonStaticData(version, locale).items()
+        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Item::class.java,
+                Runnable {
+                    Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                    loadItems(version, RestClient.DEFAULT_LOCALE)
+                }))
+    }
+
     //endregion
 
     companion object {

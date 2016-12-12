@@ -1,6 +1,7 @@
 package es.coru.andiag.welegends.models.rest
 
 import es.coru.andiag.welegends.models.database.Champion
+import es.coru.andiag.welegends.models.database.Item
 import es.coru.andiag.welegends.models.database.ProfileIcon
 import es.coru.andiag.welegends.models.database.Summoner
 import es.coru.andiag.welegends.models.dto.GenericStaticData
@@ -23,7 +24,7 @@ interface Static {
 
     //Items
     @GET("item.json")
-    fun items(): Call<Summoner>
+    fun items(): Call<GenericStaticData<String, Item>>
 
     //Masteries
     @GET("mastery.json")

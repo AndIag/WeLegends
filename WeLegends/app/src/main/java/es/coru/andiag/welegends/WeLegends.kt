@@ -2,7 +2,6 @@ package es.coru.andiag.welegends
 
 import android.app.Application
 import com.raizlabs.android.dbflow.config.FlowConfig
-import com.raizlabs.android.dbflow.config.FlowLog
 import com.raizlabs.android.dbflow.config.FlowManager
 
 
@@ -18,6 +17,6 @@ class WeLegends : Application() {
         super.onCreate()
         FlowManager.init(FlowConfig.Builder(this)
                 .openDatabasesOnInit(true).build())
-        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
+//        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
     }
 }

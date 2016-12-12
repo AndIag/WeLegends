@@ -12,7 +12,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-open class Champion() : BaseModel(), Serializable {
+class Champion() : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @SerializedName("id") @Unique @Column var riotId: String? = null

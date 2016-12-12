@@ -15,23 +15,13 @@ import java.io.Serializable
 open class Champion() : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-        get set
-    @SerializedName("id") @Column var name: String? = null
-        get set
+    @SerializedName("id") @Unique @Column var riotId: String? = null
+    @Expose(serialize = false, deserialize = false) @Unique @Column var name: String? = riotId
     @Column var version: String? = null
-        get set
     @Unique @Column var key: String? = null
-        get set
     @Column var title: String? = null
-        get set
     @Column var blurb: String? = null
-        get set
     @ForeignKey(tableClass = Image::class) var image: Image? = null
-        get set
     @Column var partype: String? = null
-        get set
 
-    override fun toString(): String {
-        return "%d -> %s".format(mid, name)
-    }
 }

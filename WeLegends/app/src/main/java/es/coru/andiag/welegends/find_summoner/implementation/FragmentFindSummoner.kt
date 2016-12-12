@@ -47,7 +47,7 @@ class FragmentFindSummoner() : ButterFragment<PresenterFragmentFindSummoner>(), 
     }
 
     override fun onSummonerFound(summoner: Summoner) {
-        Toast.makeText(context, summoner.name + " " + summoner.id, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSummonerNotFound(error: Int) {

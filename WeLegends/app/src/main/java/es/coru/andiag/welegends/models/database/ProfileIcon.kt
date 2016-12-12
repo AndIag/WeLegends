@@ -1,6 +1,7 @@
 package es.coru.andiag.welegends.models.database
 
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.Model
@@ -15,7 +16,7 @@ import java.io.Serializable
 class ProfileIcon() : BaseModel(), Serializable, Model {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-    @Unique @Column var id: Long? = null
+    @SerializedName("id") @Unique @Column var riotId: Long? = null
     @ForeignKey(tableClass = Image::class) var image: Image? = null
 
 }

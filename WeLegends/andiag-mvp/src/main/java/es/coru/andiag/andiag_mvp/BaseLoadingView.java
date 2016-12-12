@@ -5,9 +5,13 @@ package es.coru.andiag.andiag_mvp;
  */
 
 public interface BaseLoadingView {
+    boolean isLoading();
+
     void showLoading();
 
     void hideLoading();
 
     void errorLoading(String message);
+
+    void errorLoading(int stringResource);
 }

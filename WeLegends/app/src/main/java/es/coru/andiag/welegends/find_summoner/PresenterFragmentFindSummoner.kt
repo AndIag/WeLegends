@@ -103,12 +103,14 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
+                            Log.i(TAG, parent!!.isLoading.toString())
+
                             //Init semaphore with number of methods to load and callback method
                             semaphore = CallbackSemaphore(2, Callable {
                                 uiThread {
                                     view!!.onVersionUpdate(newVersion)
                                     parent!!.hideLoading()
-                                    Log.i(TAG, "Data Load Ended")
+                                    Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                                 }
                             })
 

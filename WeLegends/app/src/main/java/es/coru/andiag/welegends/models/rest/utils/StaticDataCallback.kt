@@ -47,7 +47,6 @@ class StaticDataCallback<T : BaseModel>(
                     FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error updating %s: %s".format(clazz.simpleName, e.message))
-                    e.printStackTrace()
                     uiThread {
                         parent.errorLoading(null)
                     }

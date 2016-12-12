@@ -7,7 +7,6 @@ import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.Model
 import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
-import java.security.Timestamp
 
 /**
  * Created by Canalejas on 08/12/2016.
@@ -17,11 +16,11 @@ import java.security.Timestamp
 class Summoner() : BaseModel(), Serializable, Model {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-    @Unique @Column var id: Long? = null
+    @SerializedName("id") @Unique @Column var riotId: Long? = null
     @Column var name: String? = null
     @Column var region: String? = null
     @SerializedName("profileIconId") @ForeignKey(tableClass = ProfileIcon::class) var profileIcon: ProfileIcon? = null
-    @Column var lastUpdate: Timestamp? = null
+    @Column var lastUpdate: Long? = null
     @Column var summonerLevel: Int = 0
 
     override fun equals(other: Any?): Boolean {
@@ -30,16 +29,16 @@ class Summoner() : BaseModel(), Serializable, Model {
 
         val summoner = other as Summoner?
 
-        return id == summoner!!.id && profileIcon!!.id == summoner.profileIcon!!.id
+        return riotId == summoner!!.riotId && profileIcon!!.riotId == summoner.profileIcon!!.riotId
                 && summonerLevel == summoner.summonerLevel
                 && name == summoner.name && region == summoner.region
     }
 
     override fun hashCode(): Int {
-        var result = (id!! xor id!!.ushr(32)).toInt()
+        var result = (riotId!! xor riotId!!.ushr(32)).toInt()
         result = 31 * result + name!!.hashCode()
         result = 31 * result + region!!.hashCode()
-        result = 31 * result + (profileIcon!!.id!! xor profileIcon!!.id!!.ushr(32)).toInt()
+        result = 31 * result + (profileIcon!!.riotId!! xor profileIcon!!.riotId!!.ushr(32)).toInt()
         result = 31 * result + summonerLevel
         return result
     }

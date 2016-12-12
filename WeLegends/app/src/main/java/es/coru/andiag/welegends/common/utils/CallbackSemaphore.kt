@@ -7,11 +7,11 @@ import java.util.concurrent.Semaphore
  * Created by Canalejas on 09/12/2016.
  */
 
-class CallbackSemaphore(permits: Int, private val callable: Callable<*>?) : Semaphore(permits) {
+class CallbackSemaphore(val permits: Int, private val callable: Callable<*>?) : Semaphore(permits) {
 
     override fun release() {
         super.release()
-        if (queueLength == 0 && callable != null) {
+        if (availablePermits() == this.permits && callable != null) {
             try {
                 callable.call()
             } catch (e: Exception) {
@@ -20,4 +20,14 @@ class CallbackSemaphore(permits: Int, private val callable: Callable<*>?) : Sema
         }
     }
 
+    override fun release(permits: Int) {
+        super.release(permits)
+        if (availablePermits() == this.permits && callable != null) {
+            try {
+                callable.call()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }

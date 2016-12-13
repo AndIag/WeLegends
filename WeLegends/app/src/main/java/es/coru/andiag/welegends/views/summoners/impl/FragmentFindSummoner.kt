@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.views.find_summoner.impl
+package es.coru.andiag.welegends.views.summoners.impl
 
 
 import android.content.Context
@@ -9,8 +9,8 @@ import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ButterFragment
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.entities.Summoner
-import es.coru.andiag.welegends.presenters.PresenterFragmentFindSummoner
-import es.coru.andiag.welegends.views.find_summoner.ViewFragmentFindSummoner
+import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
+import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
 
 
 /**
@@ -39,7 +39,7 @@ class FragmentFindSummoner() : ButterFragment<PresenterFragmentFindSummoner>(), 
     }
 
     override fun setupViews() {
-        (context as ActivityFindSummoner).setBackground("Tristana_5.jpg")
+        (context as ActivitySummoners).setBackground("Tristana_5.jpg")
         spinnerRegions.onItemSelectedListener = this
         buttonSearch.setOnClickListener {
             presenter!!.getSummonerByName(editSummonerName.text.toString(), region)

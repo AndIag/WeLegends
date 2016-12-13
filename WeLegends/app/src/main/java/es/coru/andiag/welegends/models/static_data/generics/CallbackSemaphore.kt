@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common.utils
+package es.coru.andiag.welegends.models.static_data.generics
 
 import java.util.concurrent.Callable
 import java.util.concurrent.Semaphore

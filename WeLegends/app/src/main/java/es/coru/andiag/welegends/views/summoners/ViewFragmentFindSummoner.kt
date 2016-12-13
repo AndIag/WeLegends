@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.views.find_summoner
+package es.coru.andiag.welegends.views.summoners
 
 import es.coru.andiag.andiag_mvp.base.BaseFragmentView
 import es.coru.andiag.welegends.models.entities.Summoner

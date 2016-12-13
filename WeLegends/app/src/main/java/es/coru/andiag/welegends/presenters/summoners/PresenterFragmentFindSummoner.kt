@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.presenters
+package es.coru.andiag.welegends.presenters.summoners
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -6,15 +6,15 @@ import com.raizlabs.android.dbflow.structure.InvalidDBConfiguration
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.entities.Summoner
 import es.coru.andiag.welegends.models.static_data.*
+import es.coru.andiag.welegends.models.static_data.generics.CallbackSemaphore
 import es.coru.andiag.welegends.models.static_data.generics.StaticDataCallback
-import es.coru.andiag.welegends.views.find_summoner.impl.ActivityFindSummoner
-import es.coru.andiag.welegends.views.find_summoner.impl.FragmentFindSummoner
+import es.coru.andiag.welegends.views.summoners.impl.ActivitySummoners
+import es.coru.andiag.welegends.views.summoners.impl.FragmentFindSummoner
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -27,7 +27,7 @@ import java.util.concurrent.Callable
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivityFindSummoner>() {
+class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivitySummoners>() {
 
     private var semaphore: CallbackSemaphore? = null
 

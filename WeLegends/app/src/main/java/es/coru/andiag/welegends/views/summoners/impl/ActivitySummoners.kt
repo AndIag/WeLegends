@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.views.find_summoner.impl
+package es.coru.andiag.welegends.views.summoners.impl
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,12 +8,12 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import es.coru.andiag.andiag_mvp.BaseLoadingActivity
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.presenters.PresenterActivityFindSummoner
 import es.coru.andiag.welegends.models.api.RestClient
+import es.coru.andiag.welegends.presenters.summoners.PresenterActivitySummoners
 
 
-class ActivityFindSummoner : BaseLoadingActivity() {
-    private val TAG = ActivityFindSummoner::class.java.simpleName
+class ActivitySummoners : BaseLoadingActivity() {
+    private val TAG = ActivitySummoners::class.java.simpleName
 
 
     @BindView(R.id.imageBackground)
@@ -25,7 +25,7 @@ class ActivityFindSummoner : BaseLoadingActivity() {
         ButterKnife.bind(this)
 
         setProgressBar(R.id.progressBar, true)
-        presenter = PresenterActivityFindSummoner()
+        presenter = PresenterActivitySummoners()
 
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)

@@ -4,7 +4,6 @@ import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.andiag_mvp.BaseLoadingView
-import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.api.dto.GenericStaticData
 import org.jetbrains.anko.doAsync

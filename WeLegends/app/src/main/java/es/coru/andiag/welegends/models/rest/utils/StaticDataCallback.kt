@@ -13,6 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 /**
  * Created by Canalejas on 11/12/2016.
  * Generic callback to simplify all StaticData Requests
@@ -46,9 +47,8 @@ class StaticDataCallback<T : BaseModel>(
                     Log.i(TAG, "Loaded %s: %s".format(clazz.simpleName, response.body().data!!.keys))
                     if (clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
                         Log.i(TAG, "Called %s when loading %s".format(KeyInMapTypeAdapter::class.java.simpleName, clazz.simpleName))
-                        response.body().data!!.values.forEachIndexed {
-                            i, t ->
-                            (t as KeyInMapTypeAdapter).setKey(response.body().data!!.keys.elementAt(i))
+                        for ((k, v) in response.body().data!!) {
+                            (v as KeyInMapTypeAdapter).setKey(k)
                         }
                     }
                     FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)

@@ -1,7 +1,7 @@
-package es.coru.andiag.welegends.models.rest
+package es.coru.andiag.welegends.models.api
 
-import es.coru.andiag.welegends.common.entities.*
-import es.coru.andiag.welegends.models.dto.GenericStaticData
+import es.coru.andiag.welegends.models.database.entities.*
+import es.coru.andiag.welegends.models.api.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET
 

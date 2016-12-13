@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.common.entities
+package es.coru.andiag.welegends.models.database.entities
 
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.Column
@@ -9,15 +9,15 @@ import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 
 /**
- * Created by Canalejas on 12/12/2016.
+ * Created by Canalejas on 08/12/2016.
  */
+
 @Table(database = WeLegendsDatabase::class)
-class Gold : BaseModel(), Serializable {
+class Image() : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-    @Column var base: Int? = null
-    @Column(getterName = "getPurchasable") var purchasable: Boolean? = null
-    @Column var total: Int? = null
-    @Column var sell: Int? = null
+    @Column var full: String? = null
+    @Column var sprite: String? = null
+    @Column var group: String? = null
 
 }

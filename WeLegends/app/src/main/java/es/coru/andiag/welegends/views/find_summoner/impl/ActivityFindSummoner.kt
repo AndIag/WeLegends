@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find_summoner.implementation
+package es.coru.andiag.welegends.views.find_summoner.impl
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,8 +8,8 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import es.coru.andiag.andiag_mvp.BaseLoadingActivity
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.find_summoner.PresenterActivityFindSummoner
-import es.coru.andiag.welegends.models.rest.RestClient
+import es.coru.andiag.welegends.presenters.PresenterActivityFindSummoner
+import es.coru.andiag.welegends.models.api.RestClient
 
 
 class ActivityFindSummoner : BaseLoadingActivity() {

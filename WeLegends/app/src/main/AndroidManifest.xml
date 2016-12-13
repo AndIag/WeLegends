@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".find_summoner.implementation.ActivityFindSummoner">
+        <activity android:name="es.coru.andiag.welegends.views.find_summoner.impl.ActivityFindSummoner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

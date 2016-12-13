@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.rest
+package es.coru.andiag.welegends.models.api
 
 import android.content.Context
 import android.net.ConnectivityManager

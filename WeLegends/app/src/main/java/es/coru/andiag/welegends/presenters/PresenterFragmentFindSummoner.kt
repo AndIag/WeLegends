@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.find_summoner
+package es.coru.andiag.welegends.presenters
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -6,13 +6,13 @@ import com.raizlabs.android.dbflow.structure.InvalidDBConfiguration
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.common.entities.*
+import es.coru.andiag.welegends.models.database.entities.*
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.common.utils.StringUtils
-import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummoner
-import es.coru.andiag.welegends.find_summoner.implementation.FragmentFindSummoner
+import es.coru.andiag.welegends.views.find_summoner.impl.ActivityFindSummoner
+import es.coru.andiag.welegends.views.find_summoner.impl.FragmentFindSummoner
 import es.coru.andiag.welegends.models.Version
-import es.coru.andiag.welegends.models.rest.RestClient
+import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.utils.StaticDataCallback
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

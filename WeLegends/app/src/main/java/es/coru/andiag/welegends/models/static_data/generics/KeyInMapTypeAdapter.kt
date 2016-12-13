@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.utils
+package es.coru.andiag.welegends.models.static_data.generics
 
 /**
  * Created by Canalejas on 12/12/2016.

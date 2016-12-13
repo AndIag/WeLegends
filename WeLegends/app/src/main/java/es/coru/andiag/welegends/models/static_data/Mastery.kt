@@ -1,11 +1,11 @@
-package es.coru.andiag.welegends.models.database.entities
+package es.coru.andiag.welegends.models.static_data
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.models.utils.ConverterStringList
+import es.coru.andiag.welegends.models.static_data.dbflow_converters.ConverterStringList
 import java.io.Serializable
 
 /**

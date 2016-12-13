@@ -1,12 +1,12 @@
-package es.coru.andiag.welegends.models.utils
+package es.coru.andiag.welegends.models.static_data.generics
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.andiag_mvp.BaseLoadingView
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
-import es.coru.andiag.welegends.models.api.dto.GenericStaticData
 import es.coru.andiag.welegends.models.api.RestClient
+import es.coru.andiag.welegends.models.api.dto.GenericStaticData
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

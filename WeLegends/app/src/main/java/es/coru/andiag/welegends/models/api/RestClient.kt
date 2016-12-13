@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
 import es.coru.andiag.welegends.BuildConfig
+import es.coru.andiag.welegends.models.api.endpoints.API
+import es.coru.andiag.welegends.models.api.endpoints.Static
 import es.coru.andiag.welegends.models.utils.SummonerTypeAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

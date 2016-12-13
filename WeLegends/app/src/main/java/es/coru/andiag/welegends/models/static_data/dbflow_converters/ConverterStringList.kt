@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.utils
+package es.coru.andiag.welegends.models.static_data.dbflow_converters
 
 import com.google.gson.Gson
 import com.raizlabs.android.dbflow.converter.TypeConverter

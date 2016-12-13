@@ -1,10 +1,12 @@
-package es.coru.andiag.welegends.models.database
+package es.coru.andiag.welegends.common.entities
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.welegends.WeLegendsDatabase
+import es.coru.andiag.welegends.models.utils.ConverterIntList
+import es.coru.andiag.welegends.models.utils.ConverterStringList
 import java.io.Serializable
 
 /**
@@ -29,12 +31,9 @@ class SummonerSpell : BaseModel(), Serializable {
     @Column var rangeBurn: String? = null
     @ForeignKey(tableClass = Image::class) var image: Image? = null
     @Column var resource: String? = null
-//    @Column var range: List<Int>? = null
-//    @Column var modes: List<String>? = null
-//    @Column var vars: List<Any>? = null
-//    @Column var effectBurn: List<Any>? = null
-//    @Column var effect: List<Any>? = null
-//    @Column var cost: List<Int>? = null
-//    @Column var cooldown: List<Int>? = null
+    @Column(typeConverter = ConverterIntList::class) var range: Array<Int>? = null
+    @Column(typeConverter = ConverterStringList::class) var modes: Array<String>? = null
+    @Column(typeConverter = ConverterIntList::class) var cost: Array<Int>? = null
+    @Column(typeConverter = ConverterIntList::class) var cooldown: Array<Int>? = null
 
 }

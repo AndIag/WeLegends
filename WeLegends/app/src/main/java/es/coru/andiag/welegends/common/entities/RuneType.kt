@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.database
+package es.coru.andiag.welegends.common.entities
 
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.Column

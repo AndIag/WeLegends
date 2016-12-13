@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.database
+package es.coru.andiag.welegends.common.entities
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -8,17 +8,14 @@ import es.coru.andiag.welegends.WeLegendsDatabase
 import java.io.Serializable
 
 /**
- * Created by Canalejas on 13/12/2016.
+ * Created by Canalejas on 09/12/2016.
  */
+
 @Table(database = WeLegendsDatabase::class)
-class Mastery : BaseModel(), Serializable {
+class ProfileIcon() : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
-    @SerializedName("id") @Unique @Column var riotId: Int? = null
-    @Unique @Column var name: String? = null
+    @SerializedName("id") @Unique @Column var riotId: Long? = null
     @ForeignKey(tableClass = Image::class) var image: Image? = null
-    @Column var ranks: Int? = null
-    @Column var prereq: String? = null
-//    @Column var description: List<String>? = null
 
 }

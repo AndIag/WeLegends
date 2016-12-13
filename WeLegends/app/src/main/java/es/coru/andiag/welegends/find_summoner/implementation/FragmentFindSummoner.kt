@@ -7,10 +7,10 @@ import android.widget.*
 import butterknife.BindView
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ButterFragment
+import es.coru.andiag.welegends.common.entities.Summoner
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.find_summoner.PresenterFragmentFindSummoner
 import es.coru.andiag.welegends.find_summoner.ViewFragmentFindSummoner
-import es.coru.andiag.welegends.models.database.Summoner
 
 
 /**

@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.rest.utils
+package es.coru.andiag.welegends.models.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonElement

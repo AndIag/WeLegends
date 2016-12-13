@@ -1,6 +1,6 @@
 package es.coru.andiag.welegends.models.rest
 
-import es.coru.andiag.welegends.models.database.*
+import es.coru.andiag.welegends.common.entities.*
 import es.coru.andiag.welegends.models.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET

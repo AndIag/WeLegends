@@ -6,14 +6,14 @@ import com.raizlabs.android.dbflow.structure.InvalidDBConfiguration
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
+import es.coru.andiag.welegends.common.entities.*
 import es.coru.andiag.welegends.common.utils.CallbackSemaphore
 import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.find_summoner.implementation.ActivityFindSummoner
 import es.coru.andiag.welegends.find_summoner.implementation.FragmentFindSummoner
 import es.coru.andiag.welegends.models.Version
-import es.coru.andiag.welegends.models.database.*
 import es.coru.andiag.welegends.models.rest.RestClient
-import es.coru.andiag.welegends.models.rest.utils.StaticDataCallback
+import es.coru.andiag.welegends.models.utils.StaticDataCallback
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -140,7 +140,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadServerChampions(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).champions()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Champion::class.java,
+        call.enqueue(StaticDataCallback(Champion::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadServerChampions(version, RestClient.DEFAULT_LOCALE)
@@ -149,7 +149,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadProfileIcons(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, ProfileIcon::class.java,
+        call.enqueue(StaticDataCallback(ProfileIcon::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(ProfileIcon::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadProfileIcons(version, RestClient.DEFAULT_LOCALE)
@@ -158,7 +158,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadItems(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).items()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Item::class.java,
+        call.enqueue(StaticDataCallback(Item::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadItems(version, RestClient.DEFAULT_LOCALE)
@@ -167,7 +167,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadSummonerSpells(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).summonerSpells()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, SummonerSpell::class.java,
+        call.enqueue(StaticDataCallback(SummonerSpell::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(SummonerSpell::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadSummonerSpells(version, RestClient.DEFAULT_LOCALE)
@@ -176,7 +176,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadMasteries(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).masteries()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Mastery::class.java,
+        call.enqueue(StaticDataCallback(Mastery::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Mastery::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadMasteries(version, RestClient.DEFAULT_LOCALE)
@@ -185,7 +185,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
 
     private fun loadRunes(version: String, locale: String) {
         val call = RestClient.getDdragonStaticData(version, locale).runes()
-        call.enqueue(StaticDataCallback(semaphore!!, locale, parent, Rune::class.java,
+        call.enqueue(StaticDataCallback(Rune::class.java, locale, semaphore!!, parent,
                 Runnable {
                     Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Rune::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                     loadRunes(version, RestClient.DEFAULT_LOCALE)

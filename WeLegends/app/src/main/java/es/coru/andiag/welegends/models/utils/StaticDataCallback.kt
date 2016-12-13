@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.rest.utils
+package es.coru.andiag.welegends.models.utils
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -24,8 +24,10 @@ import retrofit2.Response
  * @constructor [runnable] method to run when reload is required
  */
 class StaticDataCallback<T : BaseModel>(
-        private var semaphore: CallbackSemaphore, private var locale: String,
-        private var parent: BaseLoadingView, private var clazz: Class<T>,
+        private var clazz: Class<T>,
+        private var locale: String,
+        private var semaphore: CallbackSemaphore,
+        private var parent: BaseLoadingView,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 
@@ -46,7 +48,6 @@ class StaticDataCallback<T : BaseModel>(
                 try {
                     Log.i(TAG, "Loaded %s: %s".format(clazz.simpleName, response.body().data!!.keys))
                     if (clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
-                        Log.i(TAG, "Called %s when loading %s".format(KeyInMapTypeAdapter::class.java.simpleName, clazz.simpleName))
                         for ((k, v) in response.body().data!!) {
                             (v as KeyInMapTypeAdapter).setKey(k)
                         }

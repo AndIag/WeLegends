@@ -1,10 +1,11 @@
-package es.coru.andiag.welegends.models.database
+package es.coru.andiag.welegends.common.entities
 
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.models.rest.utils.KeyInMapTypeAdapter
+import es.coru.andiag.welegends.models.utils.ConverterStringList
+import es.coru.andiag.welegends.models.utils.KeyInMapTypeAdapter
 import java.io.Serializable
 
 /**
@@ -21,9 +22,9 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
     @ForeignKey(tableClass = RuneType::class) var rune: RuneType? = null
     @Column var colloq: String? = null
     @Column var plaintext: String? = null
+    @Column(typeConverter = ConverterStringList::class) var tags: Array<String>? = null
 
 //    private val stats: Map<String, Int>? = null
-//    private val tags: List<String>? = null
 
     override fun setKey(key: String) {
         this.riotId = key

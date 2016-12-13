@@ -1,10 +1,11 @@
-package es.coru.andiag.welegends.models.database
+package es.coru.andiag.welegends.common.entities
 
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.models.rest.utils.KeyInMapTypeAdapter
+import es.coru.andiag.welegends.models.utils.ConverterStringList
+import es.coru.andiag.welegends.models.utils.KeyInMapTypeAdapter
 import java.io.Serializable
 
 /**
@@ -22,9 +23,8 @@ class Item : BaseModel(), Serializable, KeyInMapTypeAdapter {
     @Column var plaintext: String? = null
     @ForeignKey(tableClass = Image::class) var image: Image? = null
     @ForeignKey(tableClass = Gold::class) var gold: Gold? = null
-
-//    @SerializedName("into") var intoList: List<String>? = null
-//    @SerializedName("tags") var tagsList: List<String>? = null
+    @Column(typeConverter = ConverterStringList::class) var into: Array<String>? = null
+    @Column(typeConverter = ConverterStringList::class) var tags: Array<String>? = null
 //    @SerializedName("maps") var mapsMap: Map<String, Boolean>? = null
 //    @SerializedName("stats") var statsMap: Map<String, Int>? = null
 

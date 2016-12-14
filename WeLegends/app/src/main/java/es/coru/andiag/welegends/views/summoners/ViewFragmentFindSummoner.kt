@@ -1,7 +1,7 @@
 package es.coru.andiag.welegends.views.summoners
 
 import es.coru.andiag.andiag_mvp.base.BaseFragmentView
-import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.database.Summoner
 
 /**
  * Created by andyq on 09/12/2016.

@@ -1,7 +1,7 @@
 package es.coru.andiag.welegends.models.api.endpoints
 
 import es.coru.andiag.welegends.models.api.dto.GenericStaticData
-import es.coru.andiag.welegends.models.static_data.*
+import es.coru.andiag.welegends.models.database.static_data.*
 import retrofit2.Call
 import retrofit2.http.GET
 

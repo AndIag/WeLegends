@@ -8,7 +8,7 @@ import butterknife.BindView
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ButterFragment
 import es.coru.andiag.welegends.common.utils.FontTextView
-import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
 

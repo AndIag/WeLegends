@@ -1,11 +1,12 @@
-package es.coru.andiag.welegends.models.static_data.generics
+package es.coru.andiag.welegends.models.utils
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.BaseLoadingView
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.api.dto.GenericStaticData
+import es.coru.andiag.welegends.models.database.static_data.generics.KeyInMapTypeAdapter
+import es.coru.andiag.welegends.presenters.summoners.DataLoader
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -26,7 +27,7 @@ class StaticDataCallback<T : BaseModel>(
         private var clazz: Class<T>,
         private var locale: String,
         private var semaphore: CallbackSemaphore,
-        private var parent: BaseLoadingView,
+        private var caller: DataLoader,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 
@@ -41,7 +42,7 @@ class StaticDataCallback<T : BaseModel>(
             Log.e(TAG, "ERROR: Loading %s - onResponse: %s".format(clazz.simpleName, response.errorBody().string()))
             Log.i(TAG, "Semaphore released with error for: %s".format(clazz.simpleName))
             semaphore.release(1)
-            parent.errorLoading(null)
+            caller.onLoadError(null)
         } else {
             doAsync {
                 try {
@@ -55,7 +56,7 @@ class StaticDataCallback<T : BaseModel>(
                 } catch (e: Exception) {
                     Log.e(TAG, "Error updating %s: %s".format(clazz.simpleName, e.message))
                     uiThread {
-                        parent.errorLoading(null)
+                        caller.onLoadError(null)
                     }
                 } finally {
                     Log.i(TAG, "Semaphore released for: %s".format(clazz.simpleName))
@@ -73,7 +74,7 @@ class StaticDataCallback<T : BaseModel>(
         Log.e(TAG, "ERROR: Loading %s - onFailure: %s".format(clazz.simpleName, t!!.message))
         Log.i(TAG, "Semaphore released with error for: %s".format(clazz.simpleName))
         semaphore.release(1)
-        parent.errorLoading(null)
+        caller.onLoadError(null)
     }
 
 }

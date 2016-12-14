@@ -1,12 +1,12 @@
-package es.coru.andiag.welegends.models.api
+package es.coru.andiag.welegends.models.wrapped.api
 
 import android.content.Context
 import android.net.ConnectivityManager
 import com.google.gson.GsonBuilder
 import es.coru.andiag.welegends.BuildConfig
-import es.coru.andiag.welegends.models.api.endpoints.API
-import es.coru.andiag.welegends.models.api.endpoints.Static
 import es.coru.andiag.welegends.models.utils.SummonerTypeAdapterFactory
+import es.coru.andiag.welegends.models.wrapped.api.endpoints.API
+import es.coru.andiag.welegends.models.wrapped.api.endpoints.Static
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

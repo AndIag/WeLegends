@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.database.static_data.dbflow_converters
+package es.coru.andiag.welegends.models.wrapped.database.static_data.dbflow_converters
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject

@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.database.static_data
+package es.coru.andiag.welegends.models.wrapped.database.static_data
 
 import android.util.Log
 import com.google.gson.JsonArray
@@ -8,10 +8,10 @@ import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
-import es.coru.andiag.welegends.models.api.RestClient
-import es.coru.andiag.welegends.models.database.static_data.dbflow_converters.JsonArrayConverter
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.StaticDataCallback
+import es.coru.andiag.welegends.models.wrapped.api.RestClient
+import es.coru.andiag.welegends.models.wrapped.database.static_data.dbflow_converters.JsonArrayConverter
 import java.io.Serializable
 
 /**

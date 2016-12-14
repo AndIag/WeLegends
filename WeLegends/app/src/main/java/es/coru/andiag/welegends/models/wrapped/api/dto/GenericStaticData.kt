@@ -1,4 +1,4 @@
-package es.coru.andiag.welegends.models.api.dto
+package es.coru.andiag.welegends.models.wrapped.api.dto
 
 import java.io.Serializable
 

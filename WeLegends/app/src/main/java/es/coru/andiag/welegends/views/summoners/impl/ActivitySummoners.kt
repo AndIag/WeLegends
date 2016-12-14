@@ -8,7 +8,7 @@ import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import es.coru.andiag.andiag_mvp.BaseLoadingActivity
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.models.api.RestClient
+import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.presenters.summoners.PresenterActivitySummoners
 
 

@@ -4,9 +4,9 @@ import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
 import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
-import es.coru.andiag.welegends.models.api.RestClient
-import es.coru.andiag.welegends.models.api.dto.GenericStaticData
-import es.coru.andiag.welegends.models.database.static_data.generics.KeyInMapTypeAdapter
+import es.coru.andiag.welegends.models.wrapped.api.RestClient
+import es.coru.andiag.welegends.models.wrapped.api.dto.GenericStaticData
+import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

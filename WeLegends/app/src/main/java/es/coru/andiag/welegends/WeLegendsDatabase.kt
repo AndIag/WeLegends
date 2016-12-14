@@ -22,6 +22,7 @@ class WeLegendsDatabase {
             try {
                 Log.i(PresenterFragmentFindSummoner.TAG, "Recreating Database 4new Version")
                 FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(context.applicationContext)
+                // TODO make this recreate only static data
             } catch (e: InvalidDBConfiguration) {
                 Log.i(PresenterFragmentFindSummoner.TAG, "Database did not exist")
             }

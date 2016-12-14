@@ -6,13 +6,13 @@ import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
-import es.coru.andiag.andiag_mvp.BaseLoadingActivity
+import es.coru.andiag.andiag_mvp.samples.AIActivityLoading
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.presenters.summoners.PresenterActivitySummoners
 
 
-class ActivitySummoners : BaseLoadingActivity() {
+class ActivitySummoners : AIActivityLoading() {
     private val TAG = ActivitySummoners::class.java.simpleName
 
 

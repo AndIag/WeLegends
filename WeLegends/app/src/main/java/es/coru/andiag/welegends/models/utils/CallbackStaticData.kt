@@ -3,7 +3,7 @@ package es.coru.andiag.welegends.models.utils
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.api.dto.GenericStaticData
 import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
@@ -23,15 +23,15 @@ import retrofit2.Response
  * @constructor [clazz] class to save in database
  * @constructor [runnable] method to run when reload is required
  */
-class StaticDataCallback<T : BaseModel>(
+class CallbackStaticData<T : BaseModel>(
         private var clazz: Class<T>,
         private var locale: String,
         private var semaphore: CallbackSemaphore,
-        private var caller: DataLoaderPresenter<*>,
+        private var caller: AIInterfaceLoaderPresenter<*>,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 
-    private val TAG: String = StaticDataCallback::class.java.simpleName
+    private val TAG: String = CallbackStaticData::class.java.simpleName
 
     override fun onResponse(call: Call<GenericStaticData<String, T>>?, response: Response<GenericStaticData<String, T>>?) {
         if (!response!!.isSuccessful || response.body() == null) {

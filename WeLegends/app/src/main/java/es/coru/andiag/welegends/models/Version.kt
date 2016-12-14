@@ -2,7 +2,7 @@ package es.coru.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
-import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
@@ -44,7 +44,7 @@ object Version {
         return version!!
     }
 
-    fun checkServerVersion(caller: DataLoaderPresenter<String>) {
+    fun checkServerVersion(caller: AIInterfaceLoaderPresenter<String>) {
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {

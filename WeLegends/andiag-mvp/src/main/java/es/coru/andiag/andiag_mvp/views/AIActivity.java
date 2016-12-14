@@ -1,18 +1,17 @@
-package es.coru.andiag.andiag_mvp;
+package es.coru.andiag.andiag_mvp.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import es.coru.andiag.andiag_mvp.base.BasePresenter;
-import es.coru.andiag.andiag_mvp.interfaces.BaseView;
+import es.coru.andiag.andiag_mvp.presenters.AIActivityPresenter;
 
 
 /**
  * Created by Canalejas on 11/12/2016.
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
-    private final static String TAG = BaseActivity.class.getSimpleName();
+public abstract class AIActivity<P extends AIActivityPresenter> extends AppCompatActivity implements AIInterfaceActivityView {
+    private final static String TAG = AIActivity.class.getSimpleName();
 
     private P mPresenter;
 

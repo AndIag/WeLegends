@@ -5,10 +5,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
-import es.coru.andiag.welegends.models.utils.StaticDataCallback
+import es.coru.andiag.welegends.models.utils.CallbackStaticData
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import java.io.Serializable
 
@@ -25,9 +25,9 @@ class ProfileIcon() : BaseModel(), Serializable {
     companion object {
         private val TAG: String = ProfileIcon::class.java.simpleName
 
-        fun loadFromServer(caller: DataLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
-            call.enqueue(StaticDataCallback(ProfileIcon::class.java, locale, semaphore, caller,
+            call.enqueue(CallbackStaticData(ProfileIcon::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(ProfileIcon::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                         loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)

@@ -9,7 +9,7 @@ import retrofit2.http.GET
  * Created by Canalejas on 08/12/2016.
  */
 
-interface Static {
+interface StaticAPI {
 
     //Profile Icons
     @GET("profileicon.json")

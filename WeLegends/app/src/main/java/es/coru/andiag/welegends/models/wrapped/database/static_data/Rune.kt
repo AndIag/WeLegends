@@ -6,13 +6,13 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
-import es.coru.andiag.welegends.models.utils.StaticDataCallback
+import es.coru.andiag.welegends.models.utils.CallbackStaticData
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
-import es.coru.andiag.welegends.models.wrapped.database.static_data.dbflow_converters.JsonArrayConverter
-import es.coru.andiag.welegends.models.wrapped.database.static_data.dbflow_converters.JsonObjectConverter
+import es.coru.andiag.welegends.models.wrapped.database.converters.ConverterJsonArray
+import es.coru.andiag.welegends.models.wrapped.database.converters.ConverterJsonObject
 import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
 import java.io.Serializable
 
@@ -30,8 +30,8 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
     @ForeignKey(tableClass = RuneType::class) var rune: RuneType? = null
     @Column var colloq: String? = null
     @Column var plaintext: String? = null
-    @Column(typeConverter = JsonArrayConverter::class) var tags: JsonArray? = null
-    @Column(typeConverter = JsonObjectConverter::class) var stats: JsonObject? = null
+    @Column(typeConverter = ConverterJsonArray::class) var tags: JsonArray? = null
+    @Column(typeConverter = ConverterJsonObject::class) var stats: JsonObject? = null
 
     override fun setKey(key: String) {
         this.riotId = key.toLong()
@@ -40,9 +40,9 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
     companion object {
         private val TAG: String = Rune::class.java.simpleName
 
-        fun loadFromServer(caller: DataLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).runes()
-            call.enqueue(StaticDataCallback(Rune::class.java, locale, semaphore, caller,
+            call.enqueue(CallbackStaticData(Rune::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Rune::class.java.simpleName, RestClient.DEFAULT_LOCALE))
                         ProfileIcon.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)

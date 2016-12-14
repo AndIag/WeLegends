@@ -12,12 +12,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getExternalModuleDir()}\""
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getExternalModuleDir()}\""
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "HttpLoggingInterceptorLevel", "NONE"
         }
     }
     sourceSets {

@@ -1,5 +1,6 @@
 package es.coru.andiag.welegends.models.utils
 
+import android.util.Log
 import java.util.concurrent.Callable
 import java.util.concurrent.Semaphore
 
@@ -8,6 +9,7 @@ import java.util.concurrent.Semaphore
  */
 
 class CallbackSemaphore(val permits: Int, private val callable: Callable<*>?) : Semaphore(permits) {
+    private val TAG: String = CallbackSemaphore::class.java.simpleName
 
     override fun release() {
         super.release()
@@ -15,6 +17,7 @@ class CallbackSemaphore(val permits: Int, private val callable: Callable<*>?) : 
             try {
                 callable.call()
             } catch (e: Exception) {
+                Log.e(TAG, e.message)
                 e.printStackTrace()
             }
         }
@@ -26,6 +29,7 @@ class CallbackSemaphore(val permits: Int, private val callable: Callable<*>?) : 
             try {
                 callable.call()
             } catch (e: Exception) {
+                Log.e(TAG, e.message)
                 e.printStackTrace()
             }
         }

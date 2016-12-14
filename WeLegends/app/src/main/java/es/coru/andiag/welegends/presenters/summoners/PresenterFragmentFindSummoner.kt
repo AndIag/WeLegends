@@ -1,7 +1,7 @@
 package es.coru.andiag.welegends.presenters.summoners
 
 import android.content.Context
-import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIFragmentPresenter
 import es.coru.andiag.welegends.models.Summoner
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.views.summoners.impl.ActivitySummoners
@@ -12,7 +12,7 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner as SummonerEnti
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), SummonerDataLoaderPresenter {
+class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), PresenterSummonerLoader {
 
     override fun onViewAttached() {
         Version.checkServerVersion(this)

@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder
 import es.coru.andiag.welegends.BuildConfig
 import es.coru.andiag.welegends.models.utils.SummonerTypeAdapterFactory
 import es.coru.andiag.welegends.models.wrapped.api.endpoints.API
-import es.coru.andiag.welegends.models.wrapped.api.endpoints.Static
+import es.coru.andiag.welegends.models.wrapped.api.endpoints.StaticAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -28,7 +28,7 @@ object RestClient {
 
     private var REST_CLIENT: API? = null
 
-    private var STATIC_CLIENT: Static? = null
+    private var STATIC_CLIENT: StaticAPI? = null
     private var staticEndpoint: String? = null
 
     private fun getLoggingLevel(): HttpLoggingInterceptor {
@@ -107,7 +107,7 @@ object RestClient {
         return retrofit.create(API::class.java)
     }
 
-    fun getDdragonStaticData(version: String, locale: String): Static {
+    fun getDdragonStaticData(version: String, locale: String): StaticAPI {
         val endpoint = "$DDRAGON_DATA_ENDPOINT$version/data/$locale/"
         if (STATIC_CLIENT == null) {
             staticEndpoint = endpoint
@@ -115,13 +115,13 @@ object RestClient {
                     .baseUrl(endpoint)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            STATIC_CLIENT = retrofit.create(Static::class.java)
+            STATIC_CLIENT = retrofit.create(StaticAPI::class.java)
         } else if (endpoint != staticEndpoint) {
             val retrofit = Retrofit.Builder()
                     .baseUrl(endpoint)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            STATIC_CLIENT = retrofit.create(Static::class.java)
+            STATIC_CLIENT = retrofit.create(StaticAPI::class.java)
         }
 
         return STATIC_CLIENT!!

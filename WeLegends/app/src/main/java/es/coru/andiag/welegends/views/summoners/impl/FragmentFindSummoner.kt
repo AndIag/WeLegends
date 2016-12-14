@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.*
 import butterknife.BindView
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.base.ButterFragment
+import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
@@ -17,7 +17,7 @@ import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : ButterFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner, AdapterView.OnItemSelectedListener {
+class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner, AdapterView.OnItemSelectedListener {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText

@@ -1,15 +1,17 @@
-package es.coru.andiag.andiag_mvp;
+package es.coru.andiag.andiag_mvp.samples;
 
 import android.view.View;
+import android.widget.Toast;
 
-import es.coru.andiag.andiag_mvp.interfaces.BaseLoadingView;
+import es.coru.andiag.andiag_mvp.views.AIActivity;
+import es.coru.andiag.andiag_mvp.views.AIInterfaceLoadingView;
 
 /**
  * Created by Canalejas on 11/12/2016.
  */
 
-public class BaseLoadingActivity extends BaseActivity implements BaseLoadingView {
-    private final static String TAG = BaseLoadingActivity.class.getSimpleName();
+public class AIActivityLoading extends AIActivity implements AIInterfaceLoadingView {
+    private final static String TAG = AIActivityLoading.class.getSimpleName();
 
     protected View loadingView;
     private boolean startLoading;
@@ -48,11 +50,11 @@ public class BaseLoadingActivity extends BaseActivity implements BaseLoadingView
 
     @Override
     public void errorLoading(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void errorLoading(int stringResource) {
-
+        Toast.makeText(this, this.getString(stringResource), Toast.LENGTH_SHORT).show();
     }
 }

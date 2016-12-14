@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import es.coru.andiag.andiag_mvp.BaseFragment
-import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIFragmentPresenter
+import es.coru.andiag.andiag_mvp.views.AIFragment
 
 /**
  * Created by Canalejas on 11/12/2016.
  */
-abstract class ButterFragment<P> : BaseFragment<P>() where P : BaseFragmentPresenter<*, *> {
+abstract class FragmentBase<P> : AIFragment<P>() where P : AIFragmentPresenter<*, *> {
 
     internal var unbinder: Unbinder? = null
     protected abstract val fragmentLayout: Int

@@ -7,7 +7,7 @@ import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.models.wrapped.database.Summoner_Table
-import es.coru.andiag.welegends.presenters.summoners.SummonerDataLoaderPresenter
+import es.coru.andiag.welegends.presenters.summoners.PresenterSummonerLoader
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -22,7 +22,7 @@ import java.util.*
 object Summoner {
     private val TAG: String = Summoner::class.java.simpleName
 
-    fun getSummonerByName(caller: SummonerDataLoaderPresenter, name: String, region: String) {
+    fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
         Log.d(TAG, "searchSummonerByName")
         val cleanName = URLEncoder.encode(StringUtils.cleanString(name), "UTF-8")//TODO get format from mobile
         if (!cleanName.isEmpty()) {

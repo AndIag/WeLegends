@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import es.coru.andiag.andiag_mvp.base.BasePresenter;
-import es.coru.andiag.andiag_mvp.base.BaseView;
+import es.coru.andiag.andiag_mvp.interfaces.BaseView;
 
 
 /**

@@ -3,6 +3,9 @@ package es.coru.andiag.andiag_mvp.base;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import es.coru.andiag.andiag_mvp.interfaces.BaseFragmentView;
+import es.coru.andiag.andiag_mvp.interfaces.BaseView;
+
 /**
  * Created by Canalejas on 11/12/2016.
  */

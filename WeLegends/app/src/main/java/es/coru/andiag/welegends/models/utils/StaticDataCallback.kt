@@ -3,10 +3,10 @@ package es.coru.andiag.welegends.models.utils
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
+import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.api.dto.GenericStaticData
 import es.coru.andiag.welegends.models.database.static_data.generics.KeyInMapTypeAdapter
-import es.coru.andiag.welegends.presenters.summoners.DataLoader
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -19,7 +19,7 @@ import retrofit2.Response
  * Generic callback to simplify all StaticData Requests
  * @constructor [semaphore] used to allow concurrency
  * @constructor [locale] needed to know if a reload to {@link RestClient.DEFAULT_LOCALE} is required
- * @constructor [parent] called when callback process ends
+ * @constructor [caller] called when callback process ends
  * @constructor [clazz] class to save in database
  * @constructor [runnable] method to run when reload is required
  */
@@ -27,7 +27,7 @@ class StaticDataCallback<T : BaseModel>(
         private var clazz: Class<T>,
         private var locale: String,
         private var semaphore: CallbackSemaphore,
-        private var caller: DataLoader,
+        private var caller: DataLoaderPresenter<*>,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 

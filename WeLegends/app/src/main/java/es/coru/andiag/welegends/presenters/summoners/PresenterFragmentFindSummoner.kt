@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.Log
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
+import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.database.Summoner
 import es.coru.andiag.welegends.models.database.Summoner_Table
-import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.views.summoners.impl.ActivitySummoners
 import es.coru.andiag.welegends.views.summoners.impl.FragmentFindSummoner
 import org.jetbrains.anko.doAsync
@@ -24,12 +24,9 @@ import java.util.*
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), DataLoader {
-
-    private var semaphore: CallbackSemaphore? = null
+class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), DataLoaderPresenter<String> {
 
     override fun onViewAttached() {
-//        checkServerVersion()
         Version.checkServerVersion(this)
     }
 
@@ -81,13 +78,13 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
         return parent!!
     }
 
-    override fun onLoadSuccess(data: String) {
-        view!!.onVersionUpdate(data)
+    override fun onLoadSuccess(message: String?, data: String?) {
+        view!!.onVersionUpdate(data!!)
         parent!!.showLoading()
     }
 
-    override fun onLoadProgressChange(message: String) {
-        view!!.onVersionUpdate(message)
+    override fun onLoadProgressChange(message: String?, data: String?) {
+        view!!.onVersionUpdate(message!!)
     }
 
     override fun onLoadError(message: String?) {

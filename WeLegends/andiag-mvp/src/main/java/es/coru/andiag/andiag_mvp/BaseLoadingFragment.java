@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import es.coru.andiag.andiag_mvp.interfaces.BaseLoadingView;
+
 /**
  * Created by Canalejas on 11/12/2016.
  */

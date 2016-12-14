@@ -2,6 +2,8 @@ package es.coru.andiag.andiag_mvp.base;
 
 import android.content.Context;
 
+import es.coru.andiag.andiag_mvp.interfaces.BaseView;
+
 /**
  * Created by Canalejas on 10/12/2016.
  */

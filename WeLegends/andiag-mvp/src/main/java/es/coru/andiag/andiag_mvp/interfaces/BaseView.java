@@ -1,4 +1,4 @@
-package es.coru.andiag.andiag_mvp.base;
+package es.coru.andiag.andiag_mvp.interfaces;
 
 /**
  * Created by Canalejas on 10/12/2016.

@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter;
-import es.coru.andiag.andiag_mvp.base.BaseFragmentView;
+import es.coru.andiag.andiag_mvp.interfaces.BaseFragmentView;
 
 
 /**

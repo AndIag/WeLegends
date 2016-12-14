@@ -5,11 +5,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
+import es.coru.andiag.andiag_mvp.interfaces.DataLoaderPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.StaticDataCallback
-import es.coru.andiag.welegends.presenters.summoners.DataLoader
 import java.io.Serializable
 
 /**
@@ -25,7 +25,7 @@ class ProfileIcon() : BaseModel(), Serializable {
     companion object {
         private val TAG: String = ProfileIcon::class.java.simpleName
 
-        fun loadFromServer(caller: DataLoader, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: DataLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).profileIcons()
             call.enqueue(StaticDataCallback(ProfileIcon::class.java, locale, semaphore, caller,
                     Runnable {

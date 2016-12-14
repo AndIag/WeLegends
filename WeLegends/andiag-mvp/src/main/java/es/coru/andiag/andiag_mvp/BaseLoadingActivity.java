@@ -2,6 +2,8 @@ package es.coru.andiag.andiag_mvp;
 
 import android.view.View;
 
+import es.coru.andiag.andiag_mvp.interfaces.BaseLoadingView;
+
 /**
  * Created by Canalejas on 11/12/2016.
  */

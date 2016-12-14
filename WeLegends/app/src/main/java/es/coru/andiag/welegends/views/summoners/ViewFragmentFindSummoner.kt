@@ -10,5 +10,6 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner
 interface ViewFragmentFindSummoner : AIInterfaceFragmentView, AIInterfaceLoadingView {
     fun onSummonerFound(summoner: Summoner)
     fun onSummonerNotFound(error: Int)
+    fun onSummonerNotFound(message: String)
     fun onVersionUpdate(version: String)
 }

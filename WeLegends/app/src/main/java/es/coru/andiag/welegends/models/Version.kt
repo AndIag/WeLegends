@@ -26,6 +26,11 @@ object Version {
     private val ARG_VERSION = "Version"
     private var version: String? = null
 
+    /**
+     * Set new version to local properties
+     * @param [newVersion] version to save
+     * @param [context] required to access sharedPreferences
+     */
     private fun setVersion(newVersion: String, context: Context) {
         version = newVersion
 
@@ -35,6 +40,10 @@ object Version {
                 .apply()
     }
 
+    /**
+     * Get local saved version
+     * @param [context] required to access sharedPreferences
+     */
     fun getVersion(context: Context): String {
         if (version == null) {
             val settings = context.getSharedPreferences(FILE_NAME, 0)
@@ -44,6 +53,10 @@ object Version {
         return version!!
     }
 
+    /**
+     * Check if our local version correspond to server version. If not, call all static data loaders
+     * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
+     */
     fun checkServerVersion(caller: AIInterfaceLoaderPresenter<String>) {
         val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
         call.enqueue(object : Callback<List<String>> {
@@ -67,7 +80,7 @@ object Version {
                                 }
                             })
 
-                            WeLegendsDatabase.recreateDatabase(caller.context)
+                            WeLegendsDatabase.recreateStaticTables(caller.context)
 
                             semaphore.acquire(6)
                             uiThread {

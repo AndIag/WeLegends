@@ -25,31 +25,11 @@ class Summoner() : BaseModel(), Serializable {
     @Column var lastUpdate: Long? = null
     @Column var summonerLevel: Int = 0
 
-    var profileIconId: Long? = null
-        set(value) = setValue(value)
+    var profileIconId: Long?
+        set(value) {
+            profileIcon = SQLite.select().from<ProfileIcon>(ProfileIcon::class.java)
+                    .where(ProfileIcon_Table.riotId.eq(value)).querySingle()
+        }
+        get() = if (profileIcon != null) profileIcon!!.riotId else null
 
-    private fun setValue(value: Long?) {
-        profileIcon = SQLite.select().from<ProfileIcon>(ProfileIcon::class.java)
-                .where(ProfileIcon_Table.riotId.eq(value)).querySingle()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-
-        val summoner = other as Summoner?
-
-        return riotId == summoner!!.riotId && profileIcon!!.riotId == summoner.profileIcon!!.riotId
-                && summonerLevel == summoner.summonerLevel
-                && name == summoner.name && region == summoner.region
-    }
-
-    override fun hashCode(): Int {
-        var result = (riotId!! xor riotId!!.ushr(32)).toInt()
-        result = 31 * result + name!!.hashCode()
-        result = 31 * result + region!!.hashCode()
-        result = 31 * result + (profileIcon!!.riotId!! xor profileIcon!!.riotId!!.ushr(32)).toInt()
-        result = 31 * result + summonerLevel
-        return result
-    }
 }

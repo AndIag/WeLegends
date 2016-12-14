@@ -65,7 +65,8 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     }
 
     override fun onSummonerLoadError(message: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        view!!.onSummonerNotFound(message)
+        view!!.hideLoading()
     }
     //endregion
 

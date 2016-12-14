@@ -54,7 +54,7 @@ public class AIActivityLoading extends AIActivity implements AIInterfaceLoadingV
     }
 
     @Override
-    public void errorLoading(int stringResource) {
-        Toast.makeText(this, this.getString(stringResource), Toast.LENGTH_SHORT).show();
+    public void errorLoading(int resId) {
+        Toast.makeText(this, this.getString(resId), Toast.LENGTH_SHORT).show();
     }
 }

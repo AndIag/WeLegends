@@ -3,7 +3,6 @@ package es.coru.andiag.welegends.models
 import android.util.Log
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.models.wrapped.database.Summoner_Table
@@ -13,6 +12,7 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URLEncoder
 import java.util.*
 
 /**
@@ -21,11 +21,16 @@ import java.util.*
 object Summoner {
     private val TAG: String = Summoner::class.java.simpleName
 
+    /**
+     * Try to find a [Summoner] in local database or in riot server
+     * @param [name]
+     * @param [region]
+     * @return [PresenterSummonerLoader.onSummonerFound] with [Summoner] data
+     *      or call [PresenterSummonerLoader.onSummonerLoadError]
+     */
     fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
-//        val cleanName = URLEncoder.encode(StringUtils.cleanString(name), "UTF-8")//TODO get format from mobile
-        val cleanName = StringUtils.cleanString(name)
+        val cleanName = URLEncoder.encode(name, "UTF-8")
         if (!cleanName.isEmpty()) {
-            Log.i(TAG, "Searching summoner %s in database".format(cleanName))
             var summoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
                     .where(Summoner_Table.name.eq(name))
                     .and(Summoner_Table.region.eq(region))
@@ -40,20 +45,20 @@ object Summoner {
                                 summoner = response.body()
                                 summoner!!.region = region
                                 summoner!!.lastUpdate = Calendar.getInstance().timeInMillis
-                                Log.i(TAG, "Saving new summoner %s".format(summoner!!.name))
                                 summoner!!.save()
                                 uiThread {
+                                    Log.i(TAG, "Saving new summoner %s".format(summoner!!.name))
                                     caller.onSummonerFound(summoner!!)
                                 }
                             }
                             return
                         }
-                        Log.e(TAG, response.message())
+                        Log.e(TAG, "Error %s loading summoner".format(response.message()))
                         caller.onSummonerLoadError(response.message())
                     }
 
                     override fun onFailure(call: Call<Summoner>, t: Throwable) {
-                        Log.e(TAG, t.message)
+                        Log.e(TAG, "Error %s loading summoner".format(t.message))
                         caller.onSummonerLoadError(R.string.error404)
                     }
                 })

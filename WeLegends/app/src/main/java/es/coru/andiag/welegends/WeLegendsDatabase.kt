@@ -18,7 +18,7 @@ class WeLegendsDatabase {
         const val NAME: String = "WeLegends"
         const val VERSION: Int = 1
 
-        fun recreateDatabase(context: Context) {
+        fun recreateStaticTables(context: Context) {
             try {
                 Log.i(PresenterFragmentFindSummoner.TAG, "Recreating Database 4new Version")
                 FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(context.applicationContext)

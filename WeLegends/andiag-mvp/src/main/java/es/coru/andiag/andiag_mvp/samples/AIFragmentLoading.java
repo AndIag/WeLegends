@@ -56,7 +56,7 @@ public class AIFragmentLoading extends AIFragment implements AIInterfaceLoadingV
     }
 
     @Override
-    public void errorLoading(int stringResource) {
-        Toast.makeText(getContext(), this.getString(stringResource), Toast.LENGTH_SHORT).show();
+    public void errorLoading(int resId) {
+        Toast.makeText(getContext(), this.getString(resId), Toast.LENGTH_SHORT).show();
     }
 }

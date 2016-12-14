@@ -14,5 +14,5 @@ public interface AIInterfaceLoadingView {
 
     void errorLoading(String message);
 
-    void errorLoading(int stringResource);
+    void errorLoading(int resId);
 }

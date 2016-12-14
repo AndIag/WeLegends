@@ -13,7 +13,6 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.URLEncoder
 import java.util.*
 
 /**
@@ -23,39 +22,47 @@ object Summoner {
     private val TAG: String = Summoner::class.java.simpleName
 
     fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
-        Log.d(TAG, "searchSummonerByName")
-        val cleanName = URLEncoder.encode(StringUtils.cleanString(name), "UTF-8")//TODO get format from mobile
+//        val cleanName = URLEncoder.encode(StringUtils.cleanString(name), "UTF-8")//TODO get format from mobile
+        val cleanName = StringUtils.cleanString(name)
         if (!cleanName.isEmpty()) {
-            var dbSummoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
+            Log.i(TAG, "Searching summoner %s in database".format(cleanName))
+            var summoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
                     .where(Summoner_Table.name.eq(name))
                     .and(Summoner_Table.region.eq(region))
                     .querySingle()
-            if (dbSummoner == null) {
+            if (summoner == null) {
                 val call = RestClient.getWeLegendsData(cleanName).getSummonerByName(region, cleanName)
                 call.enqueue(object : Callback<Summoner> {
                     override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
                         if (response.isSuccessful) {
                             doAsync {
-                                dbSummoner = response.body()
-                                dbSummoner!!.region = region
-                                dbSummoner!!.lastUpdate = Calendar.getInstance().timeInMillis
-                                dbSummoner!!.save()
+                                Log.d(TAG, response.body().toString())
+                                summoner = response.body()
+                                summoner!!.region = region
+                                summoner!!.lastUpdate = Calendar.getInstance().timeInMillis
+                                Log.i(TAG, "Saving new summoner %s".format(summoner!!.name))
+                                summoner!!.save()
                                 uiThread {
-                                    caller.onSummonerFound(dbSummoner!!)
+                                    caller.onSummonerFound(summoner!!)
                                 }
                             }
+                            return
                         }
-                        // TODO handle not found summoners
+                        Log.e(TAG, response.message())
+                        caller.onSummonerLoadError(response.message())
                     }
 
                     override fun onFailure(call: Call<Summoner>, t: Throwable) {
+                        Log.e(TAG, t.message)
                         caller.onSummonerLoadError(R.string.error404)
                     }
                 })
             } else {
-                caller.onSummonerFound(dbSummoner!!)
+                Log.i(TAG, "Summoner %s found in database".format(summoner!!.name))
+                caller.onSummonerFound(summoner!!)
             }
         } else {
+            Log.e(TAG, "Empty summoner")
             caller.onSummonerLoadError(R.string.voidSummonerError)
         }
     }

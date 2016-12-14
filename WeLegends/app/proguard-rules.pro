@@ -17,3 +17,4 @@
 #}
 -keep class es.coru.andiag.welegends.models.wrapped.database.** { *; }
 -keep class es.coru.andiag.welegends.WeLegendsDatabase { *; }
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }

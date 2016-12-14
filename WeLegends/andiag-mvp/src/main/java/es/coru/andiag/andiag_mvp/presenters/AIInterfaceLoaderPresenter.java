@@ -14,4 +14,6 @@ public interface AIInterfaceLoaderPresenter<T> {
     void onLoadProgressChange(String message, T data);
 
     void onLoadError(String message);
+
+    void onLoadError(int resId);
 }

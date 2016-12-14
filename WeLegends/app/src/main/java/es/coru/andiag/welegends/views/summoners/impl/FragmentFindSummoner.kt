@@ -29,6 +29,8 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     lateinit var buttonHistoric: ImageButton
     @BindView(R.id.textVersion)
     lateinit var textVersion: FontTextView
+    @BindView(R.id.progressBar)
+    lateinit var progressBar: ProgressBar
 
     lateinit var region: String
     override val fragmentLayout: Int = R.layout.fragment_find_summoner
@@ -63,6 +65,24 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
 
     override fun onVersionUpdate(version: String) {
         textVersion.text = version
+    }
+
+    override fun isLoading(): Boolean {
+        return progressBar.visibility == View.VISIBLE
+    }
+
+    override fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressBar.visibility = View.GONE
+    }
+
+    override fun errorLoading(message: String?) {
+    }
+
+    override fun errorLoading(stringResource: Int) {
     }
 
     companion object {

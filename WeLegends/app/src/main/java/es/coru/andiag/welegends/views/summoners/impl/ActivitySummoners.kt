@@ -2,17 +2,17 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
-import es.coru.andiag.andiag_mvp.samples.AIActivityLoading
+import es.coru.andiag.andiag_mvp.views.AIInterfaceActivityView
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
-import es.coru.andiag.welegends.presenters.summoners.PresenterActivitySummoners
 
 
-class ActivitySummoners : AIActivityLoading() {
+class ActivitySummoners : AppCompatActivity(), AIInterfaceActivityView {
     private val TAG = ActivitySummoners::class.java.simpleName
 
 
@@ -23,9 +23,6 @@ class ActivitySummoners : AIActivityLoading() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_summoner)
         ButterKnife.bind(this)
-
-        setProgressBar(R.id.progressBar, true)
-        presenter = PresenterActivitySummoners()
 
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)

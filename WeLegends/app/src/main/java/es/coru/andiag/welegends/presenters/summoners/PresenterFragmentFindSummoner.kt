@@ -15,6 +15,7 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner as SummonerEnti
 class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), PresenterSummonerLoader {
 
     override fun onViewAttached() {
+        view!!.showLoading()
         Version.checkServerVersion(this)
     }
 
@@ -23,16 +24,18 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     }
 
     fun getSummonerByName(name: String, region: String) {
+        view!!.showLoading()
         Summoner.getSummonerByName(this, name, region)
     }
 
+    //region AIInterfaceLoaderPresenter
     override fun getContext(): Context {
         return parent!!
     }
 
     override fun onLoadSuccess(message: String?, data: String?) {
         view!!.onVersionUpdate(data!!)
-        parent!!.showLoading()
+        view!!.hideLoading()
     }
 
     override fun onLoadProgressChange(message: String?, data: String?) {
@@ -40,18 +43,31 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     }
 
     override fun onLoadError(message: String?) {
-        parent!!.hideLoading()
-        //TODO give some type of feedback and close app
+        view!!.errorLoading(message)
+        view!!.hideLoading()
     }
 
+    override fun onLoadError(resId: Int) {
+        view!!.errorLoading(resId)
+        view!!.hideLoading()
+    }
+    //endregion
+
+    //region PresenterSummonerLoader
     override fun onSummonerFound(summoner: SummonerEntity) {
         view!!.onSummonerFound(summoner)
+        view!!.hideLoading()
     }
 
-    override fun onSummonerLoadError(message: Int) {
-        view!!.onSummonerNotFound(message)
-        //TODO give some type of feedback
+    override fun onSummonerLoadError(resId: Int) {
+        view!!.onSummonerNotFound(resId)
+        view!!.hideLoading()
     }
+
+    override fun onSummonerLoadError(message: String) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    //endregion
 
     companion object {
         internal val TAG = PresenterFragmentFindSummoner::class.java.simpleName

@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
     <EditText
         android:id="@+id/editTextSummoner"
         android:layout_width="200dp"

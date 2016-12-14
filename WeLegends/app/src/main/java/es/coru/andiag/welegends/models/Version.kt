@@ -88,6 +88,7 @@ object Version {
                             Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                         }
                     }
+                    return
                 }
                 caller.onLoadError(response.message())
             }

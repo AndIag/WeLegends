@@ -18,7 +18,7 @@ object StringUtils {
     }
 
     fun cleanString(string: String): String {
-        return string.toLowerCase().replace(" ".toRegex(), "").replace("\n", "").replace("\r", "").replace(",", " ")
+        return string.toLowerCase().replace(" ".toRegex(), "").replace("\n", "").replace("\r", "")
     }
 
 }

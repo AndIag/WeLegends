@@ -8,5 +8,6 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner
  */
 interface PresenterSummonerLoader : AIInterfaceLoaderPresenter<String> {
     fun onSummonerFound(summoner: Summoner)
-    fun onSummonerLoadError(message: Int)
+    fun onSummonerLoadError(message: String)
+    fun onSummonerLoadError(resId: Int)
 }

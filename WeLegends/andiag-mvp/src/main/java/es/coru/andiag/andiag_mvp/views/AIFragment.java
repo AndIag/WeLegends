@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 
 import es.coru.andiag.andiag_mvp.presenters.AIFragmentPresenter;
 
@@ -34,8 +35,8 @@ public abstract class AIFragment<P extends AIFragmentPresenter> extends Fragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (mPresenter == null) Log.e(TAG, "Null Presenter: Initialize it on setPresenter method");
         this.mPresenter.attach(this, this.mParentContext);
     }

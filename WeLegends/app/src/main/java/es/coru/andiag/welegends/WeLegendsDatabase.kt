@@ -15,7 +15,7 @@ import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummon
 @Database(name = WeLegendsDatabase.NAME, version = WeLegendsDatabase.VERSION)
 class WeLegendsDatabase {
     companion object {
-        const val NAME: String = "WeLegendsDatabase"
+        const val NAME: String = "WeLegends"
         const val VERSION: Int = 1
 
         fun recreateDatabase(context: Context) {

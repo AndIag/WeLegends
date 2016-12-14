@@ -18,6 +18,7 @@ abstract class FragmentBase<P> : AIFragment<P>() where P : AIFragmentPresenter<*
     protected abstract val fragmentLayout: Int
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater!!.inflate(fragmentLayout, container, false)
         unbinder = ButterKnife.bind(this, view)
         return view

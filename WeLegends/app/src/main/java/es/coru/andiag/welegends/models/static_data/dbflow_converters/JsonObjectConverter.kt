@@ -1,21 +1,22 @@
 package es.coru.andiag.welegends.models.static_data.dbflow_converters
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.raizlabs.android.dbflow.converter.TypeConverter
+
 
 /**
  * Created by Canalejas on 13/12/2016.
  */
-
 @com.raizlabs.android.dbflow.annotation.TypeConverter
-class ConverterIntList : TypeConverter<String, Array<Int>>() {
+class JsonObjectConverter : TypeConverter<String, JsonObject>() {
 
-    override fun getDBValue(model: Array<Int>?): String? {
-        return if (model == null) null else gson!!.toJson(model)
+    override fun getModelValue(data: String?): JsonObject {
+        return gson!!.fromJson(data, JsonObject::class.java)
     }
 
-    override fun getModelValue(data: String): Array<Int> {
-        return gson!!.fromJson(data, Array<Int>::class.java)
+    override fun getDBValue(model: JsonObject?): String? {
+        return model?.toString()
     }
 
     companion object {
@@ -26,4 +27,5 @@ class ConverterIntList : TypeConverter<String, Array<Int>>() {
             gson = Gson()
         }
     }
+
 }

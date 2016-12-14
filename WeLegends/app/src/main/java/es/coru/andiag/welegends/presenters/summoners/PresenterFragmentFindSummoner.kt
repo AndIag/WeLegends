@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.presenters.summoners
 
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
+import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.raizlabs.android.dbflow.structure.InvalidDBConfiguration
 import es.coru.andiag.andiag_mvp.base.BaseFragmentPresenter
 import es.coru.andiag.welegends.R
@@ -10,6 +11,7 @@ import es.coru.andiag.welegends.common.utils.StringUtils
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.api.RestClient
 import es.coru.andiag.welegends.models.entities.Summoner
+import es.coru.andiag.welegends.models.entities.Summoner_Table
 import es.coru.andiag.welegends.models.static_data.*
 import es.coru.andiag.welegends.models.static_data.generics.CallbackSemaphore
 import es.coru.andiag.welegends.models.static_data.generics.StaticDataCallback
@@ -44,23 +46,26 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
         Log.d(TAG, "searchSummonerByName")
         val cleanName = StringUtils.cleanString(name)
         if (!cleanName.isEmpty()) {
-            val dbSummoner: Summoner? = null
-//            var dbSummoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
-//                    .where(Summoner_Table.name.eq(name))
-//                    .and(Summoner_Table.region.eq(region))
-//                    .querySingle()
+            var dbSummoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
+                    .where(Summoner_Table.name.eq(name))
+                    .and(Summoner_Table.region.eq(region))
+                    .querySingle()
             if (dbSummoner == null) {
                 val call = RestClient.getWeLegendsData(cleanName).getSummonerByName(region, cleanName)
                 call.enqueue(object : Callback<Summoner> {
                     override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                        doAsync {
-                            val summoner: Summoner = response.body()
-                            summoner.region = region
-                            summoner.save()
-                            uiThread {
-                                view.onSummonerFound(summoner)
+                        if (response.isSuccessful) {
+                            doAsync {
+                                dbSummoner = response.body()
+                                dbSummoner!!.region = region
+                                dbSummoner!!.lastUpdate = Calendar.getInstance().timeInMillis
+                                dbSummoner!!.save()
+                                uiThread {
+                                    view.onSummonerFound(dbSummoner!!)
+                                }
                             }
                         }
+                        // TODO handle not found summoners
                     }
 
                     override fun onFailure(call: Call<Summoner>, t: Throwable) {
@@ -68,7 +73,7 @@ class PresenterFragmentFindSummoner : BaseFragmentPresenter<FragmentFindSummoner
                     }
                 })
             } else {
-                view!!.onSummonerFound(dbSummoner)
+                view!!.onSummonerFound(dbSummoner!!)
             }
         } else {
             view!!.onSummonerNotFound(R.string.voidSummonerError)

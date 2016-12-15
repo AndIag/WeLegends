@@ -48,7 +48,7 @@ class SummonerSpell : BaseModel(), Serializable {
             call.enqueue(CallbackStaticData(SummonerSpell::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(SummonerSpell::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        ProfileIcon.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+                        SummonerSpell.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
                     }))
         }
 

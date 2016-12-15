@@ -49,7 +49,7 @@ class Item : BaseModel(), Serializable, KeyInMapTypeAdapter {
             call.enqueue(CallbackStaticData(Item::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        ProfileIcon.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+                        Item.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
                     }))
         }
 

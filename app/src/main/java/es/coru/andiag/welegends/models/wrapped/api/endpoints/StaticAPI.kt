@@ -11,10 +11,6 @@ import retrofit2.http.GET
 
 interface StaticAPI {
 
-    //Profile Icons
-    @GET("profileicon.json")
-    fun profileIcons(): Call<GenericStaticData<String, ProfileIcon>>
-
     //Champions
     @GET("champion.json")
     fun champions(): Call<GenericStaticData<String, Champion>>

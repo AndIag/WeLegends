@@ -75,6 +75,7 @@ object Summoner {
 
     /**
      * Return a list of summoners order by date DESC
+     * @param [caller] contains error and success callbacks
      * @param [limit] max number of elements returned
      * @return [MutableList] of [Summoner]
      */

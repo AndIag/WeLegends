@@ -45,7 +45,7 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
             call.enqueue(CallbackStaticData(Rune::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Rune::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        ProfileIcon.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+                        Rune.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
                     }))
         }
 

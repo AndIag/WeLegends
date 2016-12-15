@@ -14,9 +14,15 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner as SummonerEnti
  */
 class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, ActivitySummoners>(), PresenterSummonerLoader {
 
+    var version: String? = null
+
     override fun onViewAttached() {
-        view!!.showLoading()
-        Version.checkServerVersion(this)
+        if (version == null) {
+            view!!.showLoading()
+            Version.checkServerVersion(this)
+            return
+        }
+//        onLoadSuccess(version, null)
     }
 
     override fun onViewDetached() {
@@ -34,6 +40,7 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     }
 
     override fun onLoadSuccess(message: String?, data: String?) {
+        this.version = data
         view!!.onVersionUpdate(data!!)
         view!!.hideLoading()
     }

@@ -73,7 +73,7 @@ object Version {
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
                             //Init semaphore with number of methods to load and callback method
-                            val semaphore: CallbackSemaphore = CallbackSemaphore(6, Callable {
+                            val semaphore: CallbackSemaphore = CallbackSemaphore(5, Callable {
                                 uiThread {
                                     caller.onLoadSuccess(null, newVersion)
                                     Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
@@ -82,14 +82,13 @@ object Version {
 
                             WeLegendsDatabase.recreateStaticTables(caller.context)
 
-                            semaphore.acquire(6)
+                            semaphore.acquire(5)
                             uiThread {
                                 // Update version field to show loading feedback
                                 caller.onLoadProgressChange(caller.context.getString(R.string.loadStaticData), null)
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
                                 Champion.loadFromServer(caller, semaphore, newVersion, locale)
-                                ProfileIcon.loadFromServer(caller, semaphore, newVersion, locale)
                                 Item.loadFromServer(caller, semaphore, newVersion, locale)
                                 SummonerSpell.loadFromServer(caller, semaphore, newVersion, locale)
                                 Mastery.loadFromServer(caller, semaphore, newVersion, locale)

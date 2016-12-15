@@ -36,7 +36,7 @@ class Mastery : BaseModel(), Serializable {
             call.enqueue(CallbackStaticData(Mastery::class.java, locale, semaphore, caller,
                     Runnable {
                         Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Mastery::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        ProfileIcon.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+                        Mastery.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
                     }))
         }
 

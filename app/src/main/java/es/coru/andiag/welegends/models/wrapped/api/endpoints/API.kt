@@ -14,7 +14,4 @@ interface API {
     @GET("{region}/summoner/{name}")
     fun getSummonerByName(@Path("region") region: String, @Path("name") name: String): Call<Summoner>
 
-    @GET("versions")
-    fun getServerVersion(): Call<List<String>>
-
 }

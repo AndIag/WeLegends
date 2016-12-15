@@ -72,4 +72,14 @@ object Summoner {
         }
     }
 
+    /**
+     * Return a list of summoners order by date DESC
+     * @param [limit] max number of elements returned
+     * @return [MutableList] of [Summoner]
+     */
+    fun getSummonerHistoric(limit: Int): MutableList<Summoner>? {
+        return SQLite.select().from<Summoner>(Summoner::class.java)
+                .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList()
+    }
+
 }

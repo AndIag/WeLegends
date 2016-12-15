@@ -58,7 +58,7 @@ object Version {
      * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
      */
     fun checkServerVersion(caller: AIInterfaceLoaderPresenter<String>) {
-        val call: Call<List<String>> = RestClient.getWeLegendsData().getServerVersion()
+        val call: Call<List<String>> = RestClient.getVersion().versions()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 if (response.isSuccessful) {

@@ -14,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.URLEncoder
 import java.util.*
+import java.util.List
 
 /**
  * Created by Canalejas on 14/12/2016.
@@ -70,6 +71,16 @@ object Summoner {
             Log.e(TAG, "Empty summoner")
             caller.onSummonerLoadError(R.string.voidSummonerError)
         }
+    }
+
+    /**
+     * Return a list of summoners order by date DESC
+     * @param [limit] max number of elements returned
+     * @return [List] of [Summoner]
+     */
+    fun getSummonerHistoric(limit: Int): List<Summoner> {
+        return SQLite.select().from<Summoner>(Summoner::class.java)
+                .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList()
     }
 
 }

@@ -3,6 +3,7 @@ package es.coru.andiag.welegends.models.wrapped.api
 import es.coru.andiag.welegends.BuildConfig
 import es.coru.andiag.welegends.models.wrapped.api.endpoints.API
 import es.coru.andiag.welegends.models.wrapped.api.endpoints.StaticAPI
+import es.coru.andiag.welegends.models.wrapped.api.endpoints.VersionAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,9 +21,9 @@ object RestClient {
 
     private val WELEGENDS_PROXY_ENDPOINT = BuildConfig.AndIagApi
     private val DDRAGON_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/"
-    private val STATIC_DATA_ENDPOINT = "https://global.api.pvp.net/api/lol/static-data/"
 
     private var REST_CLIENT: API? = null
+    private var VERSION_CLIENT: VersionAPI? = null
 
     private var STATIC_CLIENT: StaticAPI? = null
     private var staticEndpoint: String? = null
@@ -96,6 +97,17 @@ object RestClient {
         }
 
         return STATIC_CLIENT!!
+    }
+
+    fun getVersion(): VersionAPI {
+        if (VERSION_CLIENT == null) {
+            val retrofit = Retrofit.Builder()
+                    .baseUrl("https://ddragon.leagueoflegends.com/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            VERSION_CLIENT = retrofit.create(VersionAPI::class.java)
+        }
+        return VERSION_CLIENT!!
     }
 
     fun getProfileIconEndpoint(version: String): String {

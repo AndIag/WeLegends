@@ -17,12 +17,16 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getExternalModuleDir()}\""
+            buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getRetrofitLogginLevel()}\""
+            buildConfigField "String", "AndIagApi", "\"${getAndIagApi()}\""
+            buildConfigField "String", "ApiKey", "\"${getApiKey()}\""
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "HttpLoggingInterceptorLevel", "NONE"
+            buildConfigField "String", "AndIagApi", "\"${getAndIagApi()}\""
+            buildConfigField "String", "ApiKey", "\"${getApiKey()}\""
         }
     }
     sourceSets {
@@ -68,9 +72,20 @@ kapt {
     generateStubs = true
 }
 
-def getExternalModuleDir() {
+def getRetrofitLogginLevel() {
     Properties properties = new Properties()
     properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
-    def externalModuleDir = properties.getProperty('HttpLoggingInterceptorLevel', "BODY")
-    return externalModuleDir
+    return properties.getProperty('HttpLoggingInterceptorLevel', "BODY")
+}
+
+def getAndIagApi() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    return properties.getProperty('AndIagApi', "http://andiag-prod.apigee.net/v1/test-welegends/")
+}
+
+def getApiKey() {
+    Properties properties = new Properties()
+    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+    return properties.getProperty('ApiKey', "")
 }

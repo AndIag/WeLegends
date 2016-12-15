@@ -1,10 +1,6 @@
 package es.coru.andiag.welegends.models.wrapped.api
 
-import android.content.Context
-import android.net.ConnectivityManager
-import com.google.gson.GsonBuilder
 import es.coru.andiag.welegends.BuildConfig
-import es.coru.andiag.welegends.models.utils.SummonerTypeAdapterFactory
 import es.coru.andiag.welegends.models.wrapped.api.endpoints.API
 import es.coru.andiag.welegends.models.wrapped.api.endpoints.StaticAPI
 import okhttp3.OkHttpClient
@@ -22,7 +18,7 @@ object RestClient {
 
     val DEFAULT_LOCALE = "en_GB"
 
-    private val WELEGENDS_PROXY_ENDPOINT = "http://andiag-prod.apigee.net/v1/welegends/"
+    private val WELEGENDS_PROXY_ENDPOINT = BuildConfig.AndIagApi
     private val DDRAGON_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/"
     private val STATIC_DATA_ENDPOINT = "https://global.api.pvp.net/api/lol/static-data/"
 
@@ -53,18 +49,6 @@ object RestClient {
         return httpLoggingInterceptor
     }
 
-    fun isNetworkAvailable(context: Context): Boolean {
-        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = manager.activeNetworkInfo
-
-        var isAvailable = false
-        if (networkInfo != null && networkInfo.isConnected) {
-            isAvailable = true
-        }
-
-        return isAvailable
-    }
-
     fun getWeLegendsData(): API {
         if (REST_CLIENT == null) {
             val okHttpClient = OkHttpClient.Builder()
@@ -72,39 +56,26 @@ object RestClient {
                     .readTimeout(12, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(true)
                     .addInterceptor(getLoggingLevel())
-                    .build()
+
+            // Add api key to all requests if required
+            if (!BuildConfig.ApiKey.isEmpty()) {
+                okHttpClient.addInterceptor({ chain ->
+                    var request = chain!!.request()
+                    val url = request.url().newBuilder().addQueryParameter("api_key", BuildConfig.ApiKey).build()
+                    request = request.newBuilder().url(url).build()
+                    chain.proceed(request)
+                })
+            }
 
             val retrofit = Retrofit.Builder()
                     .baseUrl(WELEGENDS_PROXY_ENDPOINT)
-                    .client(okHttpClient)
+                    .client(okHttpClient.build())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
 
             REST_CLIENT = retrofit.create(API::class.java)
         }
         return REST_CLIENT!!
-    }
-
-    fun getWeLegendsData(name: String): API {
-        val gson = GsonBuilder()
-                .registerTypeAdapterFactory(SummonerTypeAdapterFactory(name))
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create()
-
-        val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(12, TimeUnit.SECONDS)
-                .readTimeout(12, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .addInterceptor(getLoggingLevel())
-                .build()
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl(WELEGENDS_PROXY_ENDPOINT)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-
-        return retrofit.create(API::class.java)
     }
 
     fun getDdragonStaticData(version: String, locale: String): StaticAPI {

@@ -36,7 +36,7 @@ object Summoner {
                     .and(Summoner_Table.region.eq(region))
                     .querySingle()
             if (summoner == null) {
-                val call = RestClient.getWeLegendsData(cleanName).getSummonerByName(region, cleanName)
+                val call = RestClient.getWeLegendsData().getSummonerByName(region, cleanName)
                 call.enqueue(object : Callback<Summoner> {
                     override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
                         if (response.isSuccessful) {

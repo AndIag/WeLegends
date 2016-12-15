@@ -38,7 +38,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     @BindView(R.id.progressBar)
     lateinit var progressBar: ProgressBar
 
-    lateinit var region: String
+    var region: String = "EUW"
     override val fragmentLayout: Int = R.layout.fragment_find_summoner
 
     @OnClick(R.id.buttonGo)

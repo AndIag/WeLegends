@@ -40,7 +40,7 @@
             android:layout_marginLeft="8dp"
             android:id="@+id/linearLayout">
 
-            <andiag.coru.es.welegends.views.FontTextView
+            <es.coru.andiag.welegends.common.utils.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -51,7 +51,7 @@
                 android:layout_weight="0.50"
                 android:gravity="center_vertical" />
 
-            <andiag.coru.es.welegends.views.FontTextView
+            <es.coru.andiag.welegends.common.utils.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -62,7 +62,7 @@
                 android:gravity="center_vertical" />
         </LinearLayout>
 
-        <andiag.coru.es.welegends.views.FontTextView
+        <es.coru.andiag.welegends.common.utils.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"

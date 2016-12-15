@@ -41,4 +41,14 @@ class ActivitySummoners : AppCompatActivity(), AIInterfaceActivityView {
                 .into(imageBackground)
     }
 
+    fun onClickSwapFragment() {
+        if (findViewById(R.id.fragmentContainer) != null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, FragmentSummonerList(), FragmentSummonerList.TAG)
+                    .addToBackStack(null)
+                    .commit()
+
+        }
+    }
+
 }

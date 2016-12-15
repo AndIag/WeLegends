@@ -14,11 +14,10 @@ import es.coru.andiag.welegends.views.summoners.impl.FragmentSummonerList
 class PresenterFragmentSummonerList : AIFragmentPresenter<FragmentSummonerList, ActivitySummoners>(), AIInterfaceLoaderPresenter<List<Summoner>> {
 
     override fun onViewAttached() {
-        loadSummoners()
     }
 
-    private fun loadSummoners() {
-
+    fun loadSummoners() {
+        es.coru.andiag.welegends.models.Summoner.getSummonerHistoric(this, 20)
     }
 
     override fun onViewDetached() {

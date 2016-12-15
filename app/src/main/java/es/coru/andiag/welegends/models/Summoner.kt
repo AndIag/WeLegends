@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.models
 
 import android.util.Log
 import com.raizlabs.android.dbflow.sql.language.SQLite
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
@@ -77,9 +78,9 @@ object Summoner {
      * @param [limit] max number of elements returned
      * @return [MutableList] of [Summoner]
      */
-    fun getSummonerHistoric(limit: Int): MutableList<Summoner>? {
-        return SQLite.select().from<Summoner>(Summoner::class.java)
-                .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList()
+    fun getSummonerHistoric(caller: AIInterfaceLoaderPresenter<List<Summoner>>, limit: Int) {
+        return caller.onLoadSuccess("Success", SQLite.select().from<Summoner>(Summoner::class.java)
+                .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }
 
 }

@@ -46,6 +46,11 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
     }
 
+    @OnClick(R.id.buttonHistoric)
+    fun showSummonerList() {
+        (mParentContext as ActivitySummoners).onClickSwapFragment()
+    }
+
     @OnEditorAction(value = R.id.editTextSummoner)
     fun findSummoner(actionId: Int, event: KeyEvent?): Boolean {
         if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {

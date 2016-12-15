@@ -1,12 +1,10 @@
 package es.coru.andiag.welegends.views.adapters
 
-import android.app.Activity
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.github.siyamed.shapeimageview.RoundedImageView
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 
@@ -14,13 +12,8 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner
 /**
  * Created by andyq on 15/12/2016.
  */
-class AdapterSummonerList(layoutResId: Int, data: List<Summoner>) : BaseQuickAdapter<Summoner, BaseViewHolder>(layoutResId, data) {
+class AdapterSummonerList(layoutResId: Int, data: List<Summoner>, val version: String) : BaseQuickAdapter<Summoner, BaseViewHolder>(layoutResId, data) {
 
-    private val version: String
-
-    init {
-        version = Version.getVersion(mContext as Activity)
-    }
 
     override fun convert(holder: BaseViewHolder, summoner: Summoner) {
         holder.setText(R.id.textSummonerName, summoner.name)

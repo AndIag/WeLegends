@@ -65,19 +65,19 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     }
 
     override fun setupViews() {
-        (context as ActivitySummoners).setBackground("Tristana_5.jpg")
+        (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
     }
 
     override fun onSummonerFound(summoner: Summoner) {
-        Toast.makeText(context, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSummonerNotFound(error: Int) {
-        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
     }
 
     override fun onSummonerNotFound(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onVersionUpdate(version: String) {
@@ -97,11 +97,11 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     }
 
     override fun errorLoading(message: String?) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun errorLoading(resId: Int) {
-        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, resId, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

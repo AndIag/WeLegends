@@ -9,12 +9,14 @@
 
 # Add any project specific keep options here:
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+
+# DBFlow
 -keep class es.coru.andiag.welegends.models.wrapped.database.** { *; }
 -keep class es.coru.andiag.welegends.WeLegendsDatabase { *; }
 -keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
+
+# ReactiveNetwork
+-dontwarn com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
+-dontwarn io.reactivex.functions.Function
+-dontwarn rx.internal.util.**
+-dontwarn sun.misc.Unsafe

@@ -37,6 +37,7 @@
     <string name="checkingVersion">Checking server version…</string>
     <string name="working">Working…</string>
     <string name="searching_summoner">Searching summoner…</string>
+    <string name="losing_connection">Weak connection. App could have malfunction.</string>
 
     <!-- Map Names -->
     <string name="rift">Summoner\'s Rift</string>

@@ -42,7 +42,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:8.4.0'
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-    provided 'frankiesardo:icepick-processor:3.2.0'
 
     compile "com.android.support:appcompat-v7:$tools_version"
     compile "com.android.support:cardview-v7:$tools_version"
@@ -55,12 +54,16 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'frankiesardo:icepick:3.2.0'
 
+    // Async library for Kotlin
+    compile 'org.jetbrains.anko:anko-sdk15:0.9'
+
+    //Network access
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
-    compile 'org.jetbrains.anko:anko-sdk15:0.9'
+
+    //Database
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"

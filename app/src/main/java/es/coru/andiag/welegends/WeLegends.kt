@@ -15,8 +15,9 @@ class WeLegends : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         FlowManager.init(FlowConfig.Builder(this)
                 .openDatabasesOnInit(true).build())
-//        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V)
     }
+
 }

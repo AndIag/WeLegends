@@ -3,12 +3,13 @@ WeLegends
 
 # Config for Developers
 You will need a Riot [Api Key](https://developer.riotgames.com/sign-in) for testing the app.
-Config the key in your gradle `local.properties` before start programming (without <>). 
+Config the key in your gradle `local.properties` before start programming. 
 ```
 ApiKey=<YOUR_API_KEY>
 ```
 
-You can also change the [Retrofit](https://github.com/square/retrofit) log level adding this property to your `local.properties` (without <>)
+You can also change the [Retrofit](https://github.com/square/retrofit) log level adding this property to your `local.properties`
+	
 	- Allowed levels are: NONE, BASIC, HEADERS, BODY(default)
 ```
 HttpLoggingInterceptorLevel=<LEVEL>

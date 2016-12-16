@@ -17,12 +17,7 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     var version: String? = null
 
     override fun onViewAttached() {
-        if (version == null) {
-            view!!.showLoading()
-            Version.checkServerVersion(this)
-            return
-        }
-//        onLoadSuccess(version, null)
+
     }
 
     override fun onViewDetached() {
@@ -39,13 +34,13 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
         return parent!!
     }
 
-    override fun onLoadSuccess(message: String?, data: String?) {
+    override fun onLoadSuccess(data: String?) {
         this.version = data
         view!!.onVersionUpdate(data!!)
         view!!.hideLoading()
     }
 
-    override fun onLoadProgressChange(message: String?, data: String?) {
+    override fun onLoadProgressChange(message: String?) {
         view!!.onVersionUpdate(message!!)
     }
 

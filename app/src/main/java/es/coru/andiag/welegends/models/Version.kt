@@ -75,7 +75,7 @@ object Version {
                             //Init semaphore with number of methods to load and callback method
                             val semaphore: CallbackSemaphore = CallbackSemaphore(5, Callable {
                                 uiThread {
-                                    caller.onLoadSuccess(null, newVersion)
+                                    caller.onLoadSuccess(newVersion)
                                     Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                                 }
                             })
@@ -85,7 +85,7 @@ object Version {
                             semaphore.acquire(5)
                             uiThread {
                                 // Update version field to show loading feedback
-                                caller.onLoadProgressChange(caller.context.getString(R.string.loadStaticData), null)
+                                caller.onLoadProgressChange(caller.context.getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
                                 Champion.loadFromServer(caller, semaphore, newVersion, locale)
@@ -96,7 +96,7 @@ object Version {
                             }
                         }
                         uiThread {
-                            caller.onLoadSuccess(null, newVersion)
+                            caller.onLoadSuccess(newVersion)
                             Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                         }
                     }

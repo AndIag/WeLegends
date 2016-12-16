@@ -9,9 +9,9 @@ import android.content.Context;
 public interface AIInterfaceLoaderPresenter<T> {
     Context getContext();
 
-    void onLoadSuccess(String message, T data);
+    void onLoadSuccess(T data);
 
-    void onLoadProgressChange(String message, T data);
+    void onLoadProgressChange(String message);
 
     void onLoadError(String message);
 

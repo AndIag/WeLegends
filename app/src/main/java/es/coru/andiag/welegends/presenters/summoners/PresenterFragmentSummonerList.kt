@@ -28,11 +28,11 @@ class PresenterFragmentSummonerList : AIFragmentPresenter<FragmentSummonerList, 
         return parent!!
     }
 
-    override fun onLoadSuccess(message: String?, data: List<Summoner>) {
+    override fun onLoadSuccess(data: List<Summoner>) {
         view!!.onSummonersLoaded(data)
     }
 
-    override fun onLoadProgressChange(message: String?, data: List<Summoner>) {
+    override fun onLoadProgressChange(message: String?) {
     }
 
     override fun onLoadError(message: String?) {

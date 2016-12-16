@@ -80,7 +80,7 @@ object Summoner {
      * @return [MutableList] of [Summoner]
      */
     fun getSummonerHistoric(caller: AIInterfaceLoaderPresenter<List<Summoner>>, limit: Int) {
-        return caller.onLoadSuccess("Success", SQLite.select().from<Summoner>(Summoner::class.java)
+        return caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
                 .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }
 

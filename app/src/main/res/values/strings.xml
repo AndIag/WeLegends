@@ -32,6 +32,7 @@
     <string name="unknowkError">Unknown Error</string>
     <string name="networkUnavailable">Network is unavailable</string>
     <string name="nothingToShow">Nothing to show</string>
+    <string name="error_network">Network is not working properly</string>
 
     <!-- Messages -->
     <string name="checkingVersion">Checking server version…</string>

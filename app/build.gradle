@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "$tools_version"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "es.coru.andiag.welegends"
         minSdkVersion 19
@@ -63,6 +63,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    compile 'com.github.pwittchen:reactivenetwork:0.7.0'
 
     //Database
     compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"

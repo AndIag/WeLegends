@@ -20,3 +20,6 @@
 -dontwarn io.reactivex.functions.Function
 -dontwarn rx.internal.util.**
 -dontwarn sun.misc.Unsafe
+
+# Kotlin
+-dontwarn kotlin.**

@@ -17,6 +17,12 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     var version: String? = null
 
     override fun onViewAttached() {
+        /**
+         * Try to retrieve server version.
+         * After Version.getVersion(this) execution 2 things could happen
+         *      - We have server version loaded
+         *      - We have null but a new callback was added to [Version]
+         */
         this.version = Version.getVersion(this)
     }
 
@@ -24,17 +30,24 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
 
     }
 
+    /**
+     * Try to find summoner in server
+     */
     fun getSummonerByName(name: String, region: String) {
-        view!!.showLoading()
         Summoner.getSummonerByName(this, name, region)
     }
 
+    /**
+     * Return server version or null if still loading
+     */
     fun getServerVersion(): String? {
-        if (version != null) {
-            return version
+        if (version == null && !Version.isLoading()) {
+            /**
+             * See if static load has ended with null as param
+             */
+            version = Version.getVersion(null)
         }
-        Version.getVersion(this)
-        return null
+        return version
     }
 
     //region AIInterfaceLoaderPresenter
@@ -44,43 +57,37 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
 
     override fun onLoadSuccess(data: String?) {
         this.version = data
-        view!!.onVersionUpdate(data!!)
-        view!!.hideLoading()
+        if (view != null) {
+            view!!.onVersionLoaded(data!!)
+        }
     }
 
-    override fun onLoadProgressChange(message: String?) {
-        view!!.onVersionUpdate(message!!)
+    override fun onLoadProgressChange(message: String, stillLoading: Boolean) {
+        view!!.onStaticDataLoadChange(message, stillLoading)
     }
 
-    override fun onLoadProgressChange(resId: Int) {
-        view!!.onVersionUpdate(context.getString(resId))
+    override fun onLoadProgressChange(resId: Int, stillLoading: Boolean) {
+        view!!.onStaticDataLoadChange(context.getString(resId), stillLoading)
     }
 
     override fun onLoadError(message: String?) {
-        view!!.errorLoading(message)
-        view!!.hideLoading()
     }
 
     override fun onLoadError(resId: Int) {
-        view!!.errorLoading(resId)
-        view!!.hideLoading()
     }
     //endregion
 
     //region PresenterSummonerLoader
     override fun onSummonerFound(summoner: SummonerEntity) {
         view!!.onSummonerFound(summoner)
-        view!!.hideLoading()
     }
 
     override fun onSummonerLoadError(resId: Int) {
         view!!.onSummonerNotFound(resId)
-        view!!.hideLoading()
     }
 
     override fun onSummonerLoadError(message: String) {
         view!!.onSummonerNotFound(message)
-        view!!.hideLoading()
     }
     //endregion
 

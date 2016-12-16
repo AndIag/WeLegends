@@ -32,10 +32,10 @@ class PresenterFragmentSummonerList : AIFragmentPresenter<FragmentSummonerList, 
         view!!.onSummonersLoaded(data)
     }
 
-    override fun onLoadProgressChange(message: String?) {
+    override fun onLoadProgressChange(message: String, stillLoading: Boolean) {
     }
 
-    override fun onLoadProgressChange(resId: Int) {
+    override fun onLoadProgressChange(resId: Int, stillLoading: Boolean) {
     }
 
     override fun onLoadError(message: String?) {

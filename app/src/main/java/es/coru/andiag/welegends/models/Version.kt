@@ -59,18 +59,26 @@ object Version {
     }
 
     /**
-     * Get loaded version or set a callback
+     * Get loaded version or set a callback.
+     * Use null as callback if we just want to check the version
      * @param [caller] callback required if version are not loaded
      */
     fun getVersion(caller: AIInterfaceLoaderPresenter<String>?): String? {
-        if (version == null) {
+        if (version == null && caller != null) {
             this.caller = caller
             if (isVersionLoading) {
-                caller!!.onLoadProgressChange(R.string.loadStaticData)
+                caller.onLoadProgressChange(R.string.loadStaticData, true)
             }
-            return null
         }
-        return version!!
+        return version
+    }
+
+    /**
+     * Ask if app is loading static data
+     * @return [Boolean] true if loading false otherwise
+     */
+    fun isLoading(): Boolean {
+        return isVersionLoading
     }
 
     /**
@@ -78,7 +86,7 @@ object Version {
      * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
      */
     fun checkServerVersion(caller: AIInterfaceErrorHandlerPresenter<String>) {
-        isVersionLoading = false
+        isVersionLoading = true
         val call: Call<List<String>> = RestClient.getVersion().versions()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -87,7 +95,7 @@ object Version {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
                         if (newVersion != getSavedVersion(caller.context)) {
-                            setVersion(newVersion, caller.context) //Comment this line to test static data load
+//                            setVersion(newVersion, caller.context) //Comment this line to test static data load
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))

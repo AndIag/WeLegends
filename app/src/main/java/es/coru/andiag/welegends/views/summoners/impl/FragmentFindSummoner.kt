@@ -15,6 +15,7 @@ import butterknife.OnItemSelected
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
+import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
@@ -42,27 +43,20 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     var region: String = "EUW"
     override val fragmentLayout: Int = R.layout.fragment_find_summoner
 
-    @OnClick(R.id.buttonGo)
-    fun findSummoner() {
-        presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
-    }
-
+    /**
+     * Replace [FragmentSummonerList] in activity
+     */
     @OnClick(R.id.buttonHistoric)
     fun showSummonerList() {
         (mParentContext as ActivitySummoners).onClickSwapFragment()
     }
 
-    @OnEditorAction(value = R.id.editTextSummoner)
-    fun findSummoner(actionId: Int, event: KeyEvent?): Boolean {
-        if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-            findSummoner()
-        }
-        return false
-    }
-
+    /**
+     * Change picked region
+     */
     @OnItemSelected(R.id.spinnerRegions)
-    fun spinnerItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        Log.d(TAG, p0!!.getItemAtPosition(p2) as String)
+    fun spinnerItemSelected(p0: AdapterView<*>?, p2: Int) {
+        region = p0!!.getItemAtPosition(p2) as String
     }
 
     override fun onAttach(context: Context?) {
@@ -73,9 +67,10 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (presenter.getServerVersion() == null) {
-            progressBar.visibility = View.VISIBLE
+            showLoading()
         } else {
             textVersion.text = presenter.getServerVersion()
+            hideLoading()
         }
     }
 
@@ -83,40 +78,99 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
     }
 
-    override fun onSummonerFound(summoner: Summoner) {
-        Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onSummonerNotFound(error: Int) {
-        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onSummonerNotFound(message: String) {
-        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onVersionUpdate(version: String) {
-        textVersion.text = version
-    }
-
-    override fun isLoading(): Boolean {
-        return progressBar.visibility == View.VISIBLE
-    }
-
-    override fun showLoading() {
+    private fun showLoading() {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         progressBar.visibility = View.GONE
     }
 
-    override fun errorLoading(message: String?) {
-        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
+    //region Find Summoner
+    /**
+     * Try to find a [Summoner] using a name and a region
+     */
+    @OnClick(R.id.buttonGo)
+    fun findSummoner() {
+        if (!Version.isLoading()) {
+            showLoading()
+            presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
+            return
+        }
+        Toast.makeText(context, R.string.wait_static_data_end, Toast.LENGTH_SHORT).show()
     }
 
-    override fun errorLoading(resId: Int) {
-        Toast.makeText(mParentContext, resId, Toast.LENGTH_SHORT).show()
+    /**
+     * Launch [FragmentFindSummoner.findSummoner] on keyboard press enter
+     */
+    @OnEditorAction(value = R.id.editTextSummoner)
+    fun findSummoner(actionId: Int, event: KeyEvent?): Boolean {
+        if ((event != null && (event.keyCode == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+            findSummoner()
+        }
+        return false
+    }
+
+    /**
+     * Launch new activity with retrieved summoner
+     * @param [Summoner] retrieved summoner
+     */
+    override fun onSummonerFound(summoner: Summoner) {
+        hideLoading()
+        Log.i(TAG, "Found summoner %s with id %d".format(summoner.name, summoner.riotId))
+        Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
+        // TODO launch new activity
+    }
+
+    /**
+     * Handle find summoner errors
+     */
+    override fun onSummonerNotFound(error: Int) {
+        hideLoading()
+        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Handle find summoner errors
+     */
+    override fun onSummonerNotFound(message: String) {
+        hideLoading()
+        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
+    }
+    //endregion
+
+    //region Version Load
+    /**
+     * Update given version in view
+     */
+    override fun onVersionLoaded(version: String) {
+        hideLoading()
+        textVersion.text = version
+    }
+
+    /**
+     * Handle load version errors
+     */
+    override fun onVersionLoadError(error: Int) {
+        hideLoading()
+        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Handle load version errors
+     */
+    override fun onVersionLoadError(error: String) {
+        hideLoading()
+        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+    }
+    //endregion
+
+    /**
+     * Update view depending on message and loading state
+     */
+    override fun onStaticDataLoadChange(message: String, stillLoading: Boolean) {
+        textVersion.text = message
+        if (stillLoading) showLoading() else hideLoading()
     }
 
     companion object {

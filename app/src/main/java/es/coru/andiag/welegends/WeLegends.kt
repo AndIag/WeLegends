@@ -3,6 +3,7 @@ package es.coru.andiag.welegends
 import android.app.Application
 import android.content.Context
 import android.net.NetworkInfo
+import android.util.Log
 import android.widget.Toast
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
@@ -31,11 +32,16 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
         initNetworkObserver(this)
 
         if (WeLegends.isNetworkAvailable()) {
+            Log.i(TAG, "Checking Server Version")
             Version.checkServerVersion(this)
         }
 
     }
 
+    /**
+     * Required callbacks for [Version.checkServerVersion]
+     */
+    //region Callbacks
     override fun getContext(): Context {
         return this
     }
@@ -47,10 +53,15 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
     override fun onLoadError(resId: Int) {
         Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
     }
+    //endregion
 
     companion object {
         internal var connectivity: Connectivity? = null
 
+        /**
+         * Add a network listener for all application
+         * @param [Context] listener owner
+         */
         private fun initNetworkObserver(context: Context) {
             ReactiveNetwork.observeNetworkConnectivity(context)
                     .subscribeOn(Schedulers.io())
@@ -63,6 +74,10 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
                     }
         }
 
+        /**
+         * Ask if network is available
+         * @return [Boolean]
+         */
         fun isNetworkAvailable(): Boolean {
             return connectivity != null && connectivity!!.state == NetworkInfo.State.CONNECTED
         }

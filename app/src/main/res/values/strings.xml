@@ -39,6 +39,7 @@
     <string name="working">Working…</string>
     <string name="searching_summoner">Searching summoner…</string>
     <string name="losing_connection">Weak connection. App could have malfunction.</string>
+    <string name="wait_static_data_end">Wait until data load ends</string>
 
     <!-- Map Names -->
     <string name="rift">Summoner\'s Rift</string>

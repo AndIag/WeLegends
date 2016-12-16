@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -67,6 +68,15 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         presenter = PresenterFragmentFindSummoner()
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (presenter.getServerVersion() == null) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            textVersion.text = presenter.getServerVersion()
+        }
     }
 
     override fun setupViews() {

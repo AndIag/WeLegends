@@ -6,7 +6,7 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.CallbackStaticData
@@ -40,7 +40,7 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
     companion object {
         private val TAG: String = Rune::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).runes()
             call.enqueue(CallbackStaticData(Rune::class.java, locale, semaphore, caller,
                     Runnable {

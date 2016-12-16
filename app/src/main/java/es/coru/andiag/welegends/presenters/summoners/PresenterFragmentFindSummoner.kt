@@ -17,7 +17,7 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     var version: String? = null
 
     override fun onViewAttached() {
-
+        this.version = Version.getVersion(this)
     }
 
     override fun onViewDetached() {
@@ -27,6 +27,14 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
     fun getSummonerByName(name: String, region: String) {
         view!!.showLoading()
         Summoner.getSummonerByName(this, name, region)
+    }
+
+    fun getServerVersion(): String? {
+        if (version != null) {
+            return version
+        }
+        Version.getVersion(this)
+        return null
     }
 
     //region AIInterfaceLoaderPresenter
@@ -42,6 +50,10 @@ class PresenterFragmentFindSummoner : AIFragmentPresenter<FragmentFindSummoner, 
 
     override fun onLoadProgressChange(message: String?) {
         view!!.onVersionUpdate(message!!)
+    }
+
+    override fun onLoadProgressChange(resId: Int) {
+        view!!.onVersionUpdate(context.getString(resId))
     }
 
     override fun onLoadError(message: String?) {

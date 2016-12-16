@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.CallbackStaticData
@@ -32,7 +32,7 @@ class Champion() : BaseModel(), Serializable {
     companion object {
         private val TAG: String = Champion::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).champions()
             call.enqueue(CallbackStaticData(Champion::class.java, locale, semaphore, caller,
                     Runnable {

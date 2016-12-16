@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
@@ -21,10 +22,13 @@ import java.util.concurrent.Callable
  */
 object Version {
     private val TAG = Version::class.java.simpleName
-    
+
     private val FILE_NAME = "VersionData"
     private val ARG_VERSION = "Version"
     private var version: String? = null
+
+    private var caller: AIInterfaceLoaderPresenter<String>? = null
+    private var isVersionLoading: Boolean = false
 
     /**
      * Set new version to local properties
@@ -33,18 +37,19 @@ object Version {
      */
     private fun setVersion(newVersion: String, context: Context) {
         version = newVersion
+        context.getSharedPreferences(FILE_NAME, 0).edit().clear().putString(ARG_VERSION, version).apply()
 
-        val settings = context.getSharedPreferences(FILE_NAME, 0)
-        settings.edit().clear()
-                .putString(ARG_VERSION, version)
-                .apply()
+        if (caller != null) {
+            caller!!.onLoadSuccess(version)
+        }
+        isVersionLoading = false
     }
 
     /**
      * Get local saved version
      * @param [context] required to access sharedPreferences
      */
-    fun getVersion(context: Context): String {
+    private fun getSavedVersion(context: Context): String {
         if (version == null) {
             val settings = context.getSharedPreferences(FILE_NAME, 0)
             version = settings.getString(ARG_VERSION, "6.23.1")
@@ -54,10 +59,26 @@ object Version {
     }
 
     /**
+     * Get loaded version or set a callback
+     * @param [caller] callback required if version are not loaded
+     */
+    fun getVersion(caller: AIInterfaceLoaderPresenter<String>?): String? {
+        if (version == null) {
+            this.caller = caller
+            if (isVersionLoading) {
+                caller!!.onLoadProgressChange(R.string.loadStaticData)
+            }
+            return null
+        }
+        return version!!
+    }
+
+    /**
      * Check if our local version correspond to server version. If not, call all static data loaders
      * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
      */
-    fun checkServerVersion(caller: AIInterfaceLoaderPresenter<String>) {
+    fun checkServerVersion(caller: AIInterfaceErrorHandlerPresenter<String>) {
+        isVersionLoading = false
         val call: Call<List<String>> = RestClient.getVersion().versions()
         call.enqueue(object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
@@ -65,7 +86,7 @@ object Version {
                     doAsync {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
-                        if (newVersion != getVersion(caller.context)) {
+                        if (newVersion != getSavedVersion(caller.context)) {
                             setVersion(newVersion, caller.context) //Comment this line to test static data load
                             val locale = Locale.getDefault().toString()
 
@@ -75,7 +96,6 @@ object Version {
                             //Init semaphore with number of methods to load and callback method
                             val semaphore: CallbackSemaphore = CallbackSemaphore(5, Callable {
                                 uiThread {
-                                    caller.onLoadSuccess(newVersion)
                                     Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                                 }
                             })
@@ -85,7 +105,6 @@ object Version {
                             semaphore.acquire(5)
                             uiThread {
                                 // Update version field to show loading feedback
-                                caller.onLoadProgressChange(caller.context.getString(R.string.loadStaticData))
 
                                 //Load static data. !IMPORTANT change semaphore if some method change
                                 Champion.loadFromServer(caller, semaphore, newVersion, locale)
@@ -96,17 +115,19 @@ object Version {
                             }
                         }
                         uiThread {
-                            caller.onLoadSuccess(newVersion)
+                            setVersion(newVersion, caller.context)
                             Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                         }
                     }
                     return
                 }
+                isVersionLoading = false
                 caller.onLoadError(response.message())
             }
 
             override fun onFailure(call: Call<List<String>>, t: Throwable) {
                 Log.e(TAG, "ERROR: checkServerVersion - onFailure: %s".format(t.message))
+                isVersionLoading = false
                 caller.onLoadError(t.message)
             }
         })

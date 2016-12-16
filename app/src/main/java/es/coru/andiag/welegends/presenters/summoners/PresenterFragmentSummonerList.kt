@@ -35,6 +35,9 @@ class PresenterFragmentSummonerList : AIFragmentPresenter<FragmentSummonerList, 
     override fun onLoadProgressChange(message: String?) {
     }
 
+    override fun onLoadProgressChange(resId: Int) {
+    }
+
     override fun onLoadError(message: String?) {
         view!!.onSummonersEmpty(R.string.error404)
     }

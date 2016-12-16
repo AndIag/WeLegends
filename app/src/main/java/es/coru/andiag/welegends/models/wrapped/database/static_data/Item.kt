@@ -6,7 +6,7 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.CallbackStaticData
@@ -44,7 +44,7 @@ class Item : BaseModel(), Serializable, KeyInMapTypeAdapter {
     companion object {
         private val TAG: String = Item::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceLoaderPresenter<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).items()
             call.enqueue(CallbackStaticData(Item::class.java, locale, semaphore, caller,
                     Runnable {

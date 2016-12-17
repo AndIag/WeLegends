@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -19,6 +20,7 @@ class ActivitySummoners : AppCompatActivity() {
     @BindView(R.id.imageBackground)
     lateinit var imageBackground: ImageView
 
+    //region Activity Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_summoner)
@@ -34,6 +36,16 @@ class ActivitySummoners : AppCompatActivity() {
         super.onBackPressed()
         imageBackground.visibility = View.VISIBLE
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    //endregion
 
     /**
      * Load given image(champion splash) as activity background

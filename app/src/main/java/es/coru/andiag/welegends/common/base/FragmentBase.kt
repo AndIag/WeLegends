@@ -24,17 +24,10 @@ abstract class FragmentBase<P> : AIFragment<P>() where P : AIPresenter<*, *> {
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupViews()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder!!.unbind()
         unbinder = null
     }
-
-    abstract fun setupViews()
 
 }

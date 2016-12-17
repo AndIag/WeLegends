@@ -59,6 +59,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         region = p0!!.getItemAtPosition(p2) as String
     }
 
+    //region Fragment Lifecycle
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         presenter = PresenterFragmentFindSummoner()
@@ -66,6 +67,8 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
+
         if (presenter.getServerVersion() == null) {
             showLoading()
         } else {
@@ -73,10 +76,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
             hideLoading()
         }
     }
-
-    override fun setupViews() {
-        (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
-    }
+    //endregion
 
     private fun showLoading() {
         progressBar.visibility = View.VISIBLE
@@ -86,6 +86,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         progressBar.visibility = View.GONE
     }
 
+    //region Callbacks
     //region Find Summoner
     /**
      * Try to find a [Summoner] using a name and a region
@@ -172,6 +173,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         textVersion.text = message
         if (stillLoading) showLoading() else hideLoading()
     }
+    //endregion
 
     companion object {
         val TAG: String = FragmentFindSummoner::class.java.simpleName

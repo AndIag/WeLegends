@@ -1,8 +1,11 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
 import android.content.Context
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -27,19 +30,36 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
     @BindView(R.id.recyclerSummoners)
     lateinit var recycler: RecyclerView
 
+    @BindView(R.id.toolbar)
+    lateinit var toolbar: Toolbar
+
     var adapter: AdapterSummonerList? = null
 
     override val fragmentLayout: Int = R.layout.fragment_summoner_list
 
+    //region Fragment Lifecycle
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         presenter = PresenterFragmentSummonerList()
     }
 
-    override fun setupViews() {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         recycler.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(mParentContext)
         initAdapter()
+
+        configureToolbar((mParentContext as ActivitySummoners))
+    }
+    //endregion
+
+    //region View Config
+    private fun configureToolbar(activity: AppCompatActivity) {
+        activity.setSupportActionBar(toolbar)
+        activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        activity.supportActionBar!!.setDisplayShowHomeEnabled(true)
+        activity.supportActionBar!!.setDisplayShowTitleEnabled(false)
     }
 
     private fun initAdapter() {
@@ -55,7 +75,9 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
         })
         presenter.loadSummoners()
     }
+    //endregion
 
+    //region Callbacks
     override fun onSummonersLoaded(summoners: List<Summoner>) {
         adapter!!.setNewData(summoners)
     }
@@ -64,6 +86,7 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
         adapter!!.setNewData(null)
         Toast.makeText(context, error!!, Toast.LENGTH_SHORT).show()
     }
+    //endregion
 
     companion object {
         val TAG: String = FragmentSummonerList::class.java.simpleName

@@ -47,6 +47,7 @@ dependencies {
     compile "com.android.support:cardview-v7:$tools_version"
     compile "com.android.support:recyclerview-v7:$tools_version"
     compile "com.android.support:support-v4:$tools_version"
+    compile "com.android.support:design:$tools_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'

@@ -3,6 +3,7 @@ package es.coru.andiag.welegends.views.summoners.impl
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import butterknife.BindView
@@ -43,6 +44,7 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
 
     private fun initAdapter() {
         adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), Version.getVersion(null)!!)
+        adapter!!.emptyView = LayoutInflater.from(mParentContext).inflate(R.layout.empty_summoner_view, null)
         adapter!!.openLoadAnimation()
         recycler.adapter = adapter
         recycler.addOnItemTouchListener(object : OnItemClickListener() {

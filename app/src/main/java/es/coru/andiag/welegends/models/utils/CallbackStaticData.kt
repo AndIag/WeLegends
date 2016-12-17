@@ -3,7 +3,7 @@ package es.coru.andiag.welegends.models.utils
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.api.dto.GenericStaticData
 import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter

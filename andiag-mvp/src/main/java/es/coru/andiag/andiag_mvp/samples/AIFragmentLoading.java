@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoadingView;
 import es.coru.andiag.andiag_mvp.views.AIFragment;
-import es.coru.andiag.andiag_mvp.views.AIInterfaceLoadingView;
 
 /**
  * Created by Canalejas on 11/12/2016.

@@ -2,8 +2,8 @@ package es.coru.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore

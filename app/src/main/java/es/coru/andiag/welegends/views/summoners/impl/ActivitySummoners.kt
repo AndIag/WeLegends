@@ -8,13 +8,12 @@ import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
-import es.coru.andiag.andiag_mvp.views.AIInterfaceActivityView
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 
 
-class ActivitySummoners : AppCompatActivity(), AIInterfaceActivityView {
+class ActivitySummoners : AppCompatActivity() {
     private val TAG = ActivitySummoners::class.java.simpleName
 
     @BindView(R.id.imageBackground)

@@ -1,6 +1,6 @@
 package es.coru.andiag.welegends.presenters.summoners
 
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 
 /**

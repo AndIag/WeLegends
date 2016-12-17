@@ -9,7 +9,7 @@ import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceErrorHandlerPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.models.Version
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

@@ -3,8 +3,8 @@ package es.coru.andiag.andiag_mvp.samples;
 import android.view.View;
 import android.widget.Toast;
 
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoadingView;
 import es.coru.andiag.andiag_mvp.views.AIActivity;
-import es.coru.andiag.andiag_mvp.views.AIInterfaceLoadingView;
 
 /**
  * Created by Canalejas on 11/12/2016.

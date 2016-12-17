@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import es.coru.andiag.andiag_mvp.presenters.AIFragmentPresenter
+import es.coru.andiag.andiag_mvp.presenters.AIPresenter
 import es.coru.andiag.andiag_mvp.views.AIFragment
 
 /**
  * Created by Canalejas on 11/12/2016.
  */
-abstract class FragmentBase<P> : AIFragment<P>() where P : AIFragmentPresenter<*, *> {
+abstract class FragmentBase<P> : AIFragment<P>() where P : AIPresenter<*, *> {
 
     internal var unbinder: Unbinder? = null
     protected abstract val fragmentLayout: Int

@@ -2,7 +2,7 @@ package es.coru.andiag.welegends.models
 
 import android.util.Log
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import es.coru.andiag.andiag_mvp.presenters.AIInterfaceLoaderPresenter
+import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
@@ -30,19 +30,21 @@ object Summoner {
      *      or call [PresenterSummonerLoader.onSummonerLoadError]
      */
     fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
-        val cleanName = URLEncoder.encode(name, "UTF-8")
-        if (!cleanName.isEmpty()) {
+        if (!name.isEmpty()) {
+            // Try to find summoner in local database
             var summoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
                     .where(Summoner_Table.name.eq(name))
                     .and(Summoner_Table.region.eq(region))
                     .querySingle()
             if (summoner == null) {
+                // If summoner is not in local search it in server
+                val cleanName = URLEncoder.encode(name, "UTF-8")
                 val call = RestClient.getWeLegendsData().getSummonerByName(region, cleanName)
                 call.enqueue(object : Callback<Summoner> {
                     override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
                         if (response.isSuccessful) {
                             doAsync {
-                                Log.d(TAG, response.body().toString())
+                                Log.d(TAG, "Summoner %d found".format(response.body().riotId))
                                 summoner = response.body()
                                 summoner!!.region = region
                                 summoner!!.lastUpdate = Calendar.getInstance().timeInMillis

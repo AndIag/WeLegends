@@ -95,7 +95,6 @@ object Version {
                         val newVersion: String = response.body()[0]
                         Log.i(TAG, "Server Version: %s".format(newVersion))
                         if (newVersion != getSavedVersion(caller.context)) {
-//                            setVersion(newVersion, caller.context) //Comment this line to test static data load
                             val locale = Locale.getDefault().toString()
 
                             Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
@@ -123,7 +122,7 @@ object Version {
                             }
                         }
                         uiThread {
-                            setVersion(newVersion, caller.context)
+                            setVersion(newVersion, caller.context) //Comment this line to test static data load
                             Log.i(TAG, "CallbackSemaphore: StaticData Load Ended")
                         }
                     }

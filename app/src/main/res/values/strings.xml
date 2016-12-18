@@ -22,6 +22,7 @@
     <!-- Actions -->
     <string name="go">Search</string>
     <string name="action_about">About</string>
+    <string name="retry">Retry</string>
 
     <!-- Errors -->
     <string name="timeout">Timeout Error</string>
@@ -32,7 +33,8 @@
     <string name="unknowkError">Unknown Error</string>
     <string name="networkUnavailable">Network is unavailable</string>
     <string name="nothingToShow">Nothing to show</string>
-    <string name="error_network">Network is not working properly</string>
+    <string name="error_loading_static_data">Error loading Static Data</string>
+    <string name="toast_error_loading_static_data">Error loading Static Data. Relaunch App</string>
 
     <!-- Messages -->
     <string name="checkingVersion">Checking server version…</string>

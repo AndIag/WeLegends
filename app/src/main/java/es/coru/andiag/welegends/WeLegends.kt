@@ -3,7 +3,9 @@ package es.coru.andiag.welegends
 import android.app.Application
 import android.content.Context
 import android.net.NetworkInfo
+import android.support.design.widget.Snackbar
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
@@ -38,25 +40,38 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
 
     }
 
-    /**
-     * Required callbacks for [Version.checkServerVersion]
-     */
-    //region Callbacks
     override fun getContext(): Context {
         return this
     }
 
+    /**
+     * Required callbacks for [Version.checkServerVersion]
+     */
+    //region Callbacks
     override fun onLoadError(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Log.e(TAG, message)
+        if (view != null) {
+            Snackbar.make(view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry, { Version.checkServerVersion(this) })
+            return
+        }
+        Toast.makeText(this, R.string.toast_error_loading_static_data, Toast.LENGTH_LONG).show()
     }
 
     override fun onLoadError(resId: Int) {
-        Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+        Log.e(TAG, getString(resId))
+        if (view != null) {
+            Snackbar.make(view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.retry, { Version.checkServerVersion(this) })
+            return
+        }
+        Toast.makeText(this, R.string.toast_error_loading_static_data, Toast.LENGTH_LONG).show()
     }
     //endregion
 
     companion object {
-        internal var connectivity: Connectivity? = null
+        private var connectivity: Connectivity? = null
+        internal var view: View? = null
 
         /**
          * Add a network listener for all application
@@ -69,7 +84,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
                     .subscribe { connectivity ->
                         WeLegends.connectivity = connectivity
                         if (connectivity.state != NetworkInfo.State.CONNECTED) {
-                            Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, R.string.networkUnavailable, Toast.LENGTH_LONG).show()
                         }
                     }
         }

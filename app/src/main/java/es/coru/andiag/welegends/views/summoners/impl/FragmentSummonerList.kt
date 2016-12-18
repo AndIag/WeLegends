@@ -2,10 +2,8 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -30,9 +28,6 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
     @BindView(R.id.recyclerSummoners)
     lateinit var recycler: RecyclerView
 
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-
     var adapter: AdapterSummonerList? = null
 
     override val fragmentLayout: Int = R.layout.fragment_summoner_list
@@ -50,18 +45,10 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
         recycler.layoutManager = LinearLayoutManager(mParentContext)
         initAdapter()
 
-        configureToolbar((mParentContext as ActivitySummoners))
     }
     //endregion
 
     //region View Config
-    private fun configureToolbar(activity: AppCompatActivity) {
-        activity.setSupportActionBar(toolbar)
-        activity.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        activity.supportActionBar!!.setDisplayShowHomeEnabled(true)
-        activity.supportActionBar!!.setDisplayShowTitleEnabled(false)
-    }
-
     private fun initAdapter() {
         adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), Version.getVersion(null)!!)
         adapter!!.emptyView = LayoutInflater.from(mParentContext).inflate(R.layout.empty_summoner_view, null)

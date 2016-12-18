@@ -1,6 +1,7 @@
 package es.coru.andiag.welegends.models
 
 import android.util.Log
+import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
@@ -33,7 +34,7 @@ object Summoner {
         if (!name.isEmpty()) {
             // Try to find summoner in local database
             var summoner: Summoner? = SQLite.select().from<Summoner>(Summoner::class.java)
-                    .where(Summoner_Table.name.eq(name))
+                    .where(Summoner_Table.name.eq(name).collate(Collate.NOCASE))
                     .and(Summoner_Table.region.eq(region))
                     .querySingle()
             if (summoner == null) {

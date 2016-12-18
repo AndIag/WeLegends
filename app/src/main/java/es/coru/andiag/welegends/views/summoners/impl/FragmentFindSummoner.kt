@@ -13,6 +13,7 @@ import butterknife.OnClick
 import butterknife.OnEditorAction
 import butterknife.OnItemSelected
 import es.coru.andiag.welegends.R
+import es.coru.andiag.welegends.WeLegends
 import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.Version
@@ -68,6 +69,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
+        WeLegends.view = view
 
         if (presenter.getServerVersion() == null) {
             showLoading()
@@ -76,6 +78,12 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
             hideLoading()
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        WeLegends.view = null
+    }
+
     //endregion
 
     private fun showLoading() {

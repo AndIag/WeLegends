@@ -20,11 +20,9 @@ import retrofit2.Response
  * @constructor [semaphore] used to allow concurrency
  * @constructor [locale] needed to know if a reload to {@link RestClient.DEFAULT_LOCALE} is required
  * @constructor [caller] called when callback process ends
- * @constructor [clazz] class to save in database
  * @constructor [runnable] method to run when reload is required
  */
 class CallbackStaticData<T : BaseModel>(
-        private var clazz: Class<T>,
         private var locale: String,
         private var semaphore: CallbackSemaphore,
         private var caller: AIInterfaceErrorHandlerPresenter<String>,
@@ -39,13 +37,14 @@ class CallbackStaticData<T : BaseModel>(
                 runnable.run()
                 return
             }
-            Log.e(TAG, "ERROR: Loading %s - onResponse: %s".format(clazz.simpleName, response.errorBody().string()))
-            Log.i(TAG, "Semaphore released with error for: %s".format(clazz.simpleName))
+            Log.e(TAG, "ERROR: onResponse: %s".format(response.errorBody().string()))
+            Log.i(TAG, "Semaphore released with errors")
             semaphore.release(1)
             caller.onLoadError(null)
         } else {
             doAsync {
                 try {
+                    val clazz: Class<T> = response.body().data!!.values.first().javaClass
                     Log.i(TAG, "Loaded %s: %s".format(clazz.simpleName, response.body().data!!.keys))
                     if (clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
                         for ((k, v) in response.body().data!!) {
@@ -54,12 +53,12 @@ class CallbackStaticData<T : BaseModel>(
                     }
                     FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)
                 } catch (e: Exception) {
-                    Log.e(TAG, "Error updating %s: %s".format(clazz.simpleName, e.message))
+                    Log.e(TAG, "Error saving %s".format(e.message))
                     uiThread {
                         caller.onLoadError(null)
                     }
                 } finally {
-                    Log.i(TAG, "Semaphore released for: %s".format(clazz.simpleName))
+                    Log.i(TAG, "Semaphore released")
                     semaphore.release(1)
                 }
             }
@@ -71,8 +70,8 @@ class CallbackStaticData<T : BaseModel>(
             runnable.run()
             return
         }
-        Log.e(TAG, "ERROR: Loading %s - onFailure: %s".format(clazz.simpleName, t!!.message))
-        Log.i(TAG, "Semaphore released with error for: %s".format(clazz.simpleName))
+        Log.e(TAG, "ERROR: onFailure: %s".format(t!!.message))
+        Log.i(TAG, "Semaphore released with errors")
         semaphore.release(1)
         caller.onLoadError(null)
     }

@@ -17,7 +17,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getRetrofitLogginLevel()}\""
+            buildConfigField "String", "HttpLoggingInterceptorLevel", "\"${getRetrofitLoggingLevel()}\""
             buildConfigField "String", "AndIagApi", "\"${getAndIagApi()}\""
             buildConfigField "String", "ApiKey", "\"${getApiKey()}\""
         }
@@ -78,8 +78,10 @@ dependencies {
 kapt {
     generateStubs = true
 }
+buildscript {
+}
 
-def getRetrofitLogginLevel() {
+def getRetrofitLoggingLevel() {
     Properties properties = new Properties()
     properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
     return properties.getProperty('HttpLoggingInterceptorLevel', "BODY")

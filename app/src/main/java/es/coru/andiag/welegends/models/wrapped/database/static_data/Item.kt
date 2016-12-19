@@ -46,11 +46,10 @@ class Item : BaseModel(), Serializable, KeyInMapTypeAdapter {
 
         fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).items()
-            call.enqueue(CallbackStaticData(Item::class.java, locale, semaphore, caller,
-                    Runnable {
-                        Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        Item.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
-                    }))
+            call.enqueue(CallbackStaticData<Item>(locale, semaphore, caller, Runnable {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+            }))
         }
 
     }

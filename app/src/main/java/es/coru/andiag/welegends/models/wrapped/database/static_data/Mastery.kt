@@ -33,11 +33,10 @@ class Mastery : BaseModel(), Serializable {
 
         fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).masteries()
-            call.enqueue(CallbackStaticData(Mastery::class.java, locale, semaphore, caller,
-                    Runnable {
-                        Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Mastery::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        Mastery.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
-                    }))
+            call.enqueue(CallbackStaticData<Mastery>(locale, semaphore, caller, Runnable {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Mastery::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+            }))
         }
 
     }

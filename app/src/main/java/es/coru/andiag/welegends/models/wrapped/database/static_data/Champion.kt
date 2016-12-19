@@ -34,11 +34,10 @@ class Champion() : BaseModel(), Serializable {
 
         fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).champions()
-            call.enqueue(CallbackStaticData(Champion::class.java, locale, semaphore, caller,
-                    Runnable {
-                        Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
-                    }))
+            call.enqueue(CallbackStaticData<Champion>(locale, semaphore, caller, Runnable {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Champion::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+            }))
         }
 
     }

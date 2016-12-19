@@ -42,11 +42,10 @@ class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
 
         fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).runes()
-            call.enqueue(CallbackStaticData(Rune::class.java, locale, semaphore, caller,
-                    Runnable {
-                        Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Rune::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                        Rune.loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
-                    }))
+            call.enqueue(CallbackStaticData<Rune>(locale, semaphore, caller, Runnable {
+                Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Rune::class.java.simpleName, RestClient.DEFAULT_LOCALE))
+                loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+            }))
         }
 
     }

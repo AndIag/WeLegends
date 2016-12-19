@@ -11,7 +11,8 @@ import es.coru.andiag.welegends.models.wrapped.database.Summoner as SummonerEnti
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFindSummoner>(), PresenterSummonerLoader {
+class PresenterFragmentFindSummoner private constructor() : AIPresenter<ActivitySummoners, FragmentFindSummoner>(), PresenterSummonerLoader {
+    private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
 
     var version: String? = null
 
@@ -93,7 +94,14 @@ class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFin
     //endregion
 
     companion object {
-        internal val TAG = PresenterFragmentFindSummoner::class.java.simpleName
+        private var presenter: PresenterFragmentFindSummoner? = null
+
+        fun getInstance(): PresenterFragmentFindSummoner {
+            if (presenter == null) {
+                presenter = PresenterFragmentFindSummoner()
+            }
+            return presenter!!
+        }
     }
 
 }

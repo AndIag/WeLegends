@@ -35,7 +35,7 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
     //region Fragment Lifecycle
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        presenter = PresenterFragmentSummonerList()
+        presenter = PresenterFragmentSummonerList.getInstance()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

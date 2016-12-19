@@ -10,7 +10,9 @@ import es.coru.andiag.welegends.views.summoners.impl.FragmentSummonerList
 /**
  * Created by andyq on 15/12/2016.
  */
-class PresenterFragmentSummonerList : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderPresenter<List<Summoner>> {
+class PresenterFragmentSummonerList private constructor() : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderPresenter<List<Summoner>> {
+    private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
+
     override fun onViewAttached() {
     }
 
@@ -41,4 +43,16 @@ class PresenterFragmentSummonerList : AIPresenter<ActivitySummoners, FragmentSum
         }
     }
     //endregion
+
+    companion object {
+        private var presenter: PresenterFragmentSummonerList? = null
+
+        fun getInstance(): PresenterFragmentSummonerList {
+            if (presenter == null) {
+                presenter = PresenterFragmentSummonerList()
+            }
+            return presenter!!
+        }
+    }
+
 }

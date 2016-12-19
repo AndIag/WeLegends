@@ -63,7 +63,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     //region Fragment Lifecycle
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        presenter = PresenterFragmentFindSummoner()
+        presenter = PresenterFragmentFindSummoner.getInstance()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

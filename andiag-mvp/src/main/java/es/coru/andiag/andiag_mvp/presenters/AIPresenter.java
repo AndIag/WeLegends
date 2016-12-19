@@ -12,6 +12,9 @@ public abstract class AIPresenter<C, V> implements AIInterfacePresenter<C, V> {
     private C mContext;
     private boolean isViewCreated = false;
 
+    protected AIPresenter() {
+    }
+
     @Override
     public V getView() {
         return mView;
@@ -46,8 +49,6 @@ public abstract class AIPresenter<C, V> implements AIInterfacePresenter<C, V> {
         return mContext != null;
     }
 
-    public abstract void onViewAttached();
-
     public void onViewDetached() {
         isViewCreated = false;
     }
@@ -55,4 +56,7 @@ public abstract class AIPresenter<C, V> implements AIInterfacePresenter<C, V> {
     public void onViewCreated() {
         isViewCreated = true;
     }
+
+    public abstract void onViewAttached();
+
 }

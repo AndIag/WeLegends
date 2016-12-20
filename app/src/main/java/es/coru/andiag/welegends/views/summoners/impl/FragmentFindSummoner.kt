@@ -2,20 +2,20 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import butterknife.BindView
-import butterknife.OnClick
-import butterknife.OnEditorAction
-import butterknife.OnItemSelected
+import butterknife.*
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegends
 import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
+import es.coru.andiag.welegends.common.utils.HorizontalPicker
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
@@ -26,20 +26,22 @@ import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
+class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner, HorizontalPicker.OnItemSelected {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
     @BindView(R.id.buttonGo)
-    lateinit var buttonSearch: Button
-    @BindView(R.id.spinnerRegions)
-    lateinit var spinnerRegions: Spinner
+    lateinit var buttonSearch: FloatingActionButton
     @BindView(R.id.buttonHistoric)
     lateinit var buttonHistoric: ImageButton
     @BindView(R.id.textVersion)
     lateinit var textVersion: FontTextView
     @BindView(R.id.progressBar)
     lateinit var progressBar: ProgressBar
+    @BindView(R.id.pickerRegions)
+    lateinit var pickerRegions: HorizontalPicker
+    @BindArray(R.array.region_array)
+    lateinit var regions: Array<String>
 
     var region: String = "EUW"
     override val fragmentLayout: Int = R.layout.fragment_find_summoner
@@ -52,14 +54,6 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         (mParentContext as ActivitySummoners).onClickSwapFragment()
     }
 
-    /**
-     * Change picked region
-     */
-    @OnItemSelected(R.id.spinnerRegions)
-    fun spinnerItemSelected(p0: AdapterView<*>?, p2: Int) {
-        region = p0!!.getItemAtPosition(p2) as String
-    }
-
     //region Fragment Lifecycle
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -68,8 +62,10 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (mParentContext as ActivitySummoners).setBackground("Tristana_5.jpg")
+        (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
         WeLegends.view = view
+
+        editSummonerName.typeface = Typeface.createFromAsset(context.assets, "Aller.ttf")
 
         if (presenter.getServerVersion() == null) {
             showLoading()
@@ -77,6 +73,12 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
             textVersion.text = presenter.getServerVersion()
             hideLoading()
         }
+
+        pickerRegions.setOnItemSelectedListener(this)
+    }
+
+    override fun onItemSelected(index: Int) {
+        region = regions[index]
     }
 
     override fun onDestroyView() {

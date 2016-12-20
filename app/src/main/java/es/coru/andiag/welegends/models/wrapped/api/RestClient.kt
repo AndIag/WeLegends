@@ -20,7 +20,7 @@ object RestClient {
     val DEFAULT_LOCALE = "en_GB"
 
     private val WELEGENDS_PROXY_ENDPOINT = BuildConfig.AndIagApi
-    private val DDRAGON_DATA_ENDPOINT = "https://ddragon.leagueoflegends.com/cdn/"
+    private val DDRAGON_DATA_ENDPOINT = "http://ddragon.leagueoflegends.com/cdn/"
 
     private var REST_CLIENT: API? = null
     private var VERSION_CLIENT: VersionAPI? = null
@@ -102,7 +102,7 @@ object RestClient {
     fun getVersion(): VersionAPI {
         if (VERSION_CLIENT == null) {
             val retrofit = Retrofit.Builder()
-                    .baseUrl("https://ddragon.leagueoflegends.com/api/")
+                    .baseUrl("http://ddragon.leagueoflegends.com/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             VERSION_CLIENT = retrofit.create(VersionAPI::class.java)

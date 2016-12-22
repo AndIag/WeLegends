@@ -9,13 +9,19 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.*
-import butterknife.*
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ProgressBar
+import android.widget.Toast
+import butterknife.BindArray
+import butterknife.BindView
+import butterknife.OnClick
+import butterknife.OnEditorAction
+import com.aigestudio.wheelpicker.WheelPicker
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegends
 import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
-import es.coru.andiag.welegends.common.utils.HorizontalPicker
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
@@ -26,7 +32,7 @@ import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner, HorizontalPicker.OnItemSelected {
+class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -38,10 +44,10 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     lateinit var textVersion: FontTextView
     @BindView(R.id.progressBar)
     lateinit var progressBar: ProgressBar
-    @BindView(R.id.pickerRegions)
-    lateinit var pickerRegions: HorizontalPicker
     @BindArray(R.array.region_array)
     lateinit var regions: Array<String>
+    @BindView(R.id.wheel_region_picker)
+    lateinit var wheelRegion: WheelPicker
 
     var region: String = "EUW"
     override val fragmentLayout: Int = R.layout.fragment_find_summoner
@@ -74,11 +80,12 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
             hideLoading()
         }
 
-        pickerRegions.setOnItemSelectedListener(this)
-    }
+        wheelRegion.data = regions.asList()
+        wheelRegion.isCyclic = true
+        wheelRegion.setOnItemSelectedListener { wheelPicker, any, i ->
+            region = regions[i]
+        }
 
-    override fun onItemSelected(index: Int) {
-        region = regions[index]
     }
 
     override fun onDestroyView() {

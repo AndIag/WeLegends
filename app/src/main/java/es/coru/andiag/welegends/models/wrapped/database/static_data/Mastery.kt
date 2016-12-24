@@ -6,12 +6,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.CallbackStaticData
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.converters.ConverterJsonArray
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import java.io.Serializable
 
 /**
@@ -31,7 +31,7 @@ class Mastery : BaseModel(), Serializable {
     companion object {
         private val TAG: String = Mastery::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).masteries()
             call.enqueue(CallbackStaticData<Mastery>(locale, semaphore, caller, Runnable {
                 Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Mastery::class.java.simpleName, RestClient.DEFAULT_LOCALE))

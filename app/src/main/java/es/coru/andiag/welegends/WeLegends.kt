@@ -11,8 +11,8 @@ import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.models.Version
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers
  * Created by Canalejas on 08/12/2016.
  */
 
-class WeLegends : Application(), AIInterfaceErrorHandlerPresenter<String> {
+class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
     private val TAG: String = WeLegends::class.java.simpleName
 
     override fun onCreate() {

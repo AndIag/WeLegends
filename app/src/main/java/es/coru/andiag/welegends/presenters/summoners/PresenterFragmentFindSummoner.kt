@@ -1,5 +1,6 @@
 package es.coru.andiag.welegends.presenters.summoners
 
+import android.support.annotation.StringRes
 import es.coru.andiag.andiag_mvp.presenters.AIPresenter
 import es.coru.andiag.welegends.models.Summoner
 import es.coru.andiag.welegends.models.Version
@@ -54,15 +55,15 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
         }
     }
 
-    override fun onLoadProgressChange(message: String, stillLoading: Boolean) {
+    override fun onLoadProgressChange(message: String?) {
         if (isViewAttached && hasContext()) {
-            view!!.onStaticDataLoadChange(message, stillLoading)
+            view!!.onStaticDataLoadChange(message)
         }
     }
 
-    override fun onLoadProgressChange(resId: Int, stillLoading: Boolean) {
+    override fun onLoadProgressChange(@StringRes resId: Int) {
         if (isViewAttached && hasContext()) {
-            view!!.onStaticDataLoadChange(context.getString(resId), stillLoading)
+            view!!.onStaticDataLoadChange(context.getString(resId))
         }
     }
 

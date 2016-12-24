@@ -1,6 +1,5 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -35,9 +34,8 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
     override val fragmentLayout: Int = R.layout.fragment_summoner_list
 
     //region Fragment Lifecycle
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        presenter = PresenterFragmentSummonerList.getInstance()
+    override fun initPresenter() {
+        mPresenter = PresenterFragmentSummonerList.getInstance()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -59,10 +57,10 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
         recycler.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(p0: BaseQuickAdapter<*, *>?, p1: View?, p2: Int) {
                 val summoner: Summoner = p0!!.getItem(p2) as Summoner
-                startActivity(Intent(context, ActivityMain::class.java))
+                startActivity(Intent(mParentContext, ActivityMain::class.java))
             }
         })
-        presenter.loadSummoners()
+        mPresenter.loadSummoners()
     }
     //endregion
 
@@ -73,7 +71,7 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
 
     override fun onSummonersEmpty(error: Int?) {
         adapter!!.setNewData(null)
-        Toast.makeText(context, error!!, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, error!!, Toast.LENGTH_SHORT).show()
     }
     //endregion
 

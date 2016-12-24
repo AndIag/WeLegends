@@ -1,11 +1,9 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -62,23 +60,22 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         (mParentContext as ActivitySummoners).onClickSwapFragment()
     }
 
-    //region Fragment Lifecycle
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        presenter = PresenterFragmentFindSummoner.getInstance()
+    override fun initPresenter() {
+        mPresenter = PresenterFragmentFindSummoner.getInstance()
     }
 
+    //region Fragment Lifecycle
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
         WeLegends.view = view
 
-        editSummonerName.typeface = Typeface.createFromAsset(context.assets, "Aller.ttf")
+        editSummonerName.typeface = Typeface.createFromAsset(mParentContext.assets, "Aller.ttf")
 
-        if (presenter.getServerVersion() == null) {
+        if (mPresenter.getServerVersion() == null) {
             showLoading()
         } else {
-            textVersion.text = presenter.getServerVersion()
+            textVersion.text = mPresenter.getServerVersion()
             hideLoading()
         }
 
@@ -114,10 +111,10 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     fun findSummoner() {
         if (!Version.isLoading()) {
             showLoading()
-            presenter!!.getSummonerByName(editSummonerName.text.toString(), region)
+            mPresenter!!.getSummonerByName(editSummonerName.text.toString(), region)
             return
         }
-        Toast.makeText(context, R.string.wait_static_data_end, Toast.LENGTH_SHORT).show()
+        Toast.makeText(mParentContext, R.string.wait_static_data_end, Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -140,7 +137,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         Log.i(TAG, "Found summoner %s with id %d".format(summoner.name, summoner.riotId))
         Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
         // TODO launch new activity
-        startActivity(Intent(context, ActivityMain::class.java))
+        startActivity(Intent(mParentContext, ActivityMain::class.java))
     }
 
     /**
@@ -189,9 +186,8 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     /**
      * Update view depending on message and loading state
      */
-    override fun onStaticDataLoadChange(message: String, stillLoading: Boolean) {
+    override fun onStaticDataLoadChange(message: String?) {
         textVersion.text = message
-        if (stillLoading) showLoading() else hideLoading()
     }
     //endregion
 

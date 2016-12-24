@@ -6,7 +6,6 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.utils.CallbackStaticData
@@ -14,6 +13,7 @@ import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.converters.ConverterJsonArray
 import es.coru.andiag.welegends.models.wrapped.database.converters.ConverterJsonObject
 import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import java.io.Serializable
 
 /**
@@ -44,7 +44,7 @@ class Item : BaseModel(), Serializable, KeyInMapTypeAdapter {
     companion object {
         private val TAG: String = Item::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter<String>, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).items()
             call.enqueue(CallbackStaticData<Item>(locale, semaphore, caller, Runnable {
                 Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(Item::class.java.simpleName, RestClient.DEFAULT_LOCALE))

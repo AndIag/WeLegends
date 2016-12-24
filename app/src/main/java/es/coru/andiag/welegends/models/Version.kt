@@ -2,13 +2,13 @@ package es.coru.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegendsDatabase
 import es.coru.andiag.welegends.models.utils.CallbackSemaphore
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.static_data.*
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -27,7 +27,7 @@ object Version {
     private val ARG_VERSION = "Version"
     private var version: String? = null
 
-    private var caller: AIInterfaceLoaderPresenter<String>? = null
+    private var caller: AIInterfaceLoaderHandlerPresenter<String>? = null
     private var isVersionLoading: Boolean = false
 
     /**
@@ -63,11 +63,11 @@ object Version {
      * Use null as callback if we just want to check the version
      * @param [caller] callback required if version are not loaded
      */
-    fun getVersion(caller: AIInterfaceLoaderPresenter<String>?): String? {
+    fun getVersion(caller: AIInterfaceLoaderHandlerPresenter<String>?): String? {
         if (version == null && caller != null) {
             this.caller = caller
             if (isVersionLoading) {
-                caller.onLoadProgressChange(R.string.loadStaticData, true)
+                caller.onLoadProgressChange(R.string.loadStaticData)
             }
         }
         return version
@@ -85,7 +85,7 @@ object Version {
      * Check if our local version correspond to server version. If not, call all static data loaders
      * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
      */
-    fun checkServerVersion(caller: AIInterfaceErrorHandlerPresenter<String>) {
+    fun checkServerVersion(caller: AIInterfaceErrorHandlerPresenter) {
         isVersionLoading = true
         val call: Call<List<String>> = RestClient.getVersion().versions()
         call.enqueue(object : Callback<List<String>> {

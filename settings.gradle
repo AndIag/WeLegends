@@ -1,1 +1,1 @@
-include ':app', ':andiag-mvp'
+include ':app'

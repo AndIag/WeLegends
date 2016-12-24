@@ -74,7 +74,7 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}@aar"
 
-    compile project(path: ':andiag-mvp')
+    compile 'com.github.iagocanalejas:andiag-mvp-utils:0.0.1'
 }
 
 kapt {

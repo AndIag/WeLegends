@@ -1,16 +1,16 @@
 package es.coru.andiag.welegends.presenters.summoners
 
 import es.coru.andiag.andiag_mvp.presenters.AIPresenter
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.views.summoners.impl.ActivitySummoners
 import es.coru.andiag.welegends.views.summoners.impl.FragmentSummonerList
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 
 /**
  * Created by andyq on 15/12/2016.
  */
-class PresenterFragmentSummonerList private constructor() : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderPresenter<List<Summoner>> {
+class PresenterFragmentSummonerList private constructor() : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
 
     override fun onViewAttached() {
@@ -25,10 +25,10 @@ class PresenterFragmentSummonerList private constructor() : AIPresenter<Activity
         view!!.onSummonersLoaded(data)
     }
 
-    override fun onLoadProgressChange(message: String, stillLoading: Boolean) {
+    override fun onLoadProgressChange(message: String) {
     }
 
-    override fun onLoadProgressChange(resId: Int, stillLoading: Boolean) {
+    override fun onLoadProgressChange(resId: Int) {
     }
 
     override fun onLoadError(message: String?) {

@@ -12,5 +12,5 @@ interface ViewFragmentFindSummoner {
     fun onVersionLoaded(version: String)
     fun onVersionLoadError(error: Int)
     fun onVersionLoadError(error: String)
-    fun onStaticDataLoadChange(message: String, stillLoading: Boolean)
+    fun onStaticDataLoadChange(message: String?)
 }

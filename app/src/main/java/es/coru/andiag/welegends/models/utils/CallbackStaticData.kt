@@ -3,10 +3,10 @@ package es.coru.andiag.welegends.models.utils
 import android.util.Log
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceErrorHandlerPresenter
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.api.dto.GenericStaticData
 import es.coru.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -25,7 +25,7 @@ import retrofit2.Response
 class CallbackStaticData<T : BaseModel>(
         private var locale: String,
         private var semaphore: CallbackSemaphore,
-        private var caller: AIInterfaceErrorHandlerPresenter<String>,
+        private var caller: AIInterfaceErrorHandlerPresenter,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 

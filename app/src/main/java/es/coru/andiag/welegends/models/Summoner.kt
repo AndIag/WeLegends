@@ -3,12 +3,12 @@ package es.coru.andiag.welegends.models
 import android.util.Log
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import es.coru.andiag.andiag_mvp.utils.AIInterfaceLoaderPresenter
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.models.wrapped.database.Summoner_Table
 import es.coru.andiag.welegends.presenters.summoners.PresenterSummonerLoader
+import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -82,7 +82,7 @@ object Summoner {
      * @param [limit] max number of elements returned
      * @return [MutableList] of [Summoner]
      */
-    fun getSummonerHistoric(caller: AIInterfaceLoaderPresenter<List<Summoner>>, limit: Int) {
+    fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
         return caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
                 .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }

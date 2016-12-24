@@ -19,20 +19,20 @@ import butterknife.OnEditorAction
 import com.aigestudio.wheelpicker.WheelPicker
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegends
-import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import es.coru.andiag.welegends.views.main.ActivityMain
 import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
+import es.coru.andoiag.andiag_mvp_utils.fragments.AIButterFragment
 
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
+class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -50,7 +50,6 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     lateinit var wheelRegion: WheelPicker
 
     var region: String = "EUW"
-    override val fragmentLayout: Int = R.layout.fragment_find_summoner
 
     /**
      * Replace [FragmentSummonerList] in activity
@@ -58,6 +57,10 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     @OnClick(R.id.buttonHistoric)
     fun showSummonerList() {
         (mParentContext as ActivitySummoners).onClickSwapFragment()
+    }
+
+    override fun initLayout() {
+        mFragmentLayout = R.layout.fragment_find_summoner
     }
 
     override fun initPresenter() {

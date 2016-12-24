@@ -11,29 +11,31 @@ import butterknife.BindView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import es.coru.andiag.welegends.R
-import es.coru.andiag.welegends.common.base.FragmentBase
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentSummonerList
 import es.coru.andiag.welegends.views.adapters.AdapterSummonerList
 import es.coru.andiag.welegends.views.main.ActivityMain
 import es.coru.andiag.welegends.views.summoners.ViewFragmentSummonerList
+import es.coru.andoiag.andiag_mvp_utils.fragments.AIButterFragment
 import java.util.*
 
 
 /**
  * Created by andyq on 09/12/2016.
  */
-class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), ViewFragmentSummonerList {
+class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), ViewFragmentSummonerList {
 
     @BindView(R.id.recyclerSummoners)
     lateinit var recycler: RecyclerView
 
     var adapter: AdapterSummonerList? = null
 
-    override val fragmentLayout: Int = R.layout.fragment_summoner_list
-
     //region Fragment Lifecycle
+    override fun initLayout() {
+        mFragmentLayout = R.layout.fragment_summoner_list
+    }
+
     override fun initPresenter() {
         mPresenter = PresenterFragmentSummonerList.getInstance()
     }

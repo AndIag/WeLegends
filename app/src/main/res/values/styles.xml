@@ -19,8 +19,6 @@
 
         <item name="backgroundColor">@color/lightBackground</item>
 
-        <item name="horizontalPickerStyle">@style/AppTheme.HorizontalPicker</item>
-
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -38,8 +36,6 @@
         <item name="cardStyle">@style/CardViewStyle.Dark</item>
 
         <item name="backgroundColor">@color/darkBackground</item>
-
-        <item name="horizontalPickerStyle">@style/AppTheme.HorizontalPicker</item>
 
     </style>
 
@@ -95,13 +91,6 @@
     <style name="SpinnerDropDownItem">
         <item name="android:textColor">@color/primary</item>
     </style>
-
-    <!-- HorizontalPicker -->
-    <style name="AppTheme.HorizontalPicker">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
 
     <!-- Cardviews Style -->
     <attr name="cardStyle" format="reference" />

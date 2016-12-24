@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/transparent"
     tools:context=".views.summoners.impl.FragmentFindSummoner">
 
-    <EditText
-        android:id="@+id/editTextSummoner"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:hint="@string/hint_summoner"
-        android:imeOptions="actionGo"
-        android:maxLines="1"
-        android:textColor="?colorAccent"
-        android:textColorHint="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/buttonGo"
-        android:inputType="text"
-        android:textSize="24sp" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:indeterminate="true"
+        android:tint="@color/lightHighlight"/>
 
     <es.coru.andiag.welegends.common.utils.FontTextView
         android:id="@+id/textVersion"
@@ -33,47 +31,74 @@
         android:textColor="@color/white" />
 
     <ImageButton
+        android:id="@+id/buttonHistoric"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:text="Historic"
-        android:id="@+id/buttonHistoric"
-        android:background="?android:selectableItemBackground"
-        android:src="@drawable/ic_historic"
-        android:layout_above="@+id/editTextSummoner"
+        android:layout_above="@+id/input_layout_summoner"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="?android:selectableItemBackground"
         android:scaleType="fitCenter"
-        android:tint="?colorAccent" />
+        android:src="@drawable/ic_historic"
+        android:text="Historic"
+        android:tint="@color/lightHighlight" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_alignParentStart="true" />
-
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/buttonGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
-        app:backgroundTint="@color/black_20"
-        android:textColor="?colorAccent"
-        android:layout_marginBottom="16dp"
-        android:text="@string/go"
+        android:layout_alignBottom="@+id/input_layout_summoner"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/input_layout_summoner"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:src="@drawable/ic_search"
+        android:background="?android:selectableItemBackground"
+        android:elevation="10dp"
+        android:tint="@color/lightHighlight" />
+    <!--android:text="@string/go"-->
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_summoner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toLeftOf="@+id/buttonGo"
+        android:layout_toStartOf="@+id/buttonGo">
+
+        <EditText
+            android:id="@+id/editTextSummoner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:hint="@string/hint_summoner"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/lightHighlight"
+            android:textSize="24sp" />
+    </android.support.design.widget.TextInputLayout>
 
     <com.aigestudio.wheelpicker.WheelPicker
         android:id="@+id/wheel_region_picker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:layout_alignParentEnd="true"
-        app:wheel_selected_item_text_color="@color/accent"
+        app:wheel_selected_item_text_color="@color/lightHighlight"
         app:wheel_item_text_color="@color/white"
-        app:wheel_item_text_size="15sp" />
+        app:wheel_item_text_size="15sp"
+        android:layout_below="@+id/progressBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/buttonGo" />
 
 </RelativeLayout>

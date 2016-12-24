@@ -1,6 +1,7 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,6 +17,7 @@ import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentSummonerList
 import es.coru.andiag.welegends.views.adapters.AdapterSummonerList
+import es.coru.andiag.welegends.views.main.ActivityMain
 import es.coru.andiag.welegends.views.summoners.ViewFragmentSummonerList
 import java.util.*
 
@@ -57,8 +59,8 @@ class FragmentSummonerList : FragmentBase<PresenterFragmentSummonerList>(), View
         recycler.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(p0: BaseQuickAdapter<*, *>?, p1: View?, p2: Int) {
                 val summoner: Summoner = p0!!.getItem(p2) as Summoner
+                startActivity(Intent(context, ActivityMain::class.java))
             }
-
         })
         presenter.loadSummoners()
     }

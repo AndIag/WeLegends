@@ -2,6 +2,7 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -25,6 +26,7 @@ import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
+import es.coru.andiag.welegends.views.main.ActivityMain
 import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
 
 
@@ -37,7 +39,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
     @BindView(R.id.buttonGo)
-    lateinit var buttonSearch: FloatingActionButton
+    lateinit var buttonSearch: ImageButton
     @BindView(R.id.buttonHistoric)
     lateinit var buttonHistoric: ImageButton
     @BindView(R.id.textVersion)
@@ -138,6 +140,7 @@ class FragmentFindSummoner() : FragmentBase<PresenterFragmentFindSummoner>(), Vi
         Log.i(TAG, "Found summoner %s with id %d".format(summoner.name, summoner.riotId))
         Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
         // TODO launch new activity
+        startActivity(Intent(context, ActivityMain::class.java))
     }
 
     /**

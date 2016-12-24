@@ -58,6 +58,8 @@
     <string name="smart_tab_layout">A custom ViewPager title strip which gives you an easy way to customize the look.</string>
 
     <!-- Other Shit -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="hint_summoner">Summoner\'s name</string>
     <string name="earnedGold">Gold per minute:</string>
     <string name="farmedCs">Creeps per minute:</string>
@@ -139,6 +141,30 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
 
+    <!-- NavDrawer items strings -->
+    <string-array name="DrawerItems">
+        <item>Profile</item>
+        <item>Rankeds</item>
+        <item>History</item>
+        <item>Statistics</item>
+    </string-array>
+
+    <!-- Preferences strings  -->
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_title_theme">Theme</string>
+
+    <string-array name="pref_theme_list_titles">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Alternate</item>
+    </string-array>
+
+    <string-array name="pref_theme_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 
 </resources>

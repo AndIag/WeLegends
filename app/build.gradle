@@ -3,12 +3,12 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion versions.compiledSdk
+    buildToolsVersion "$versions.buildTools"
     defaultConfig {
         applicationId "es.coru.andiag.welegends"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion versions.compiledSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,15 +41,15 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:8.4.0'
-    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$versions.dbflow"
 
-    compile "com.android.support:appcompat-v7:$tools_version"
-    compile "com.android.support:cardview-v7:$tools_version"
-    compile "com.android.support:recyclerview-v7:$tools_version"
-    compile "com.android.support:support-v4:$tools_version"
-    compile "com.android.support:design:$tools_version"
-    compile "com.android.support:preference-v14:$tools_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.android.support:appcompat-v7:$versions.supportLib"
+    compile "com.android.support:cardview-v7:$versions.supportLib"
+    compile "com.android.support:recyclerview-v7:$versions.supportLib"
+    compile "com.android.support:support-v4:$versions.supportLib"
+    compile "com.android.support:design:$versions.supportLib"
+    compile "com.android.support:preference-v14:$versions.supportLib"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
 
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
@@ -70,17 +70,15 @@ dependencies {
     compile 'com.github.pwittchen:reactivenetwork:0.7.0'
 
     //Database
-    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}@aar"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:$versions.dbflow"
+    compile "com.github.Raizlabs.DBFlow:dbflow:$versions.dbflow"
+    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$versions.dbflow@aar"
 
-    compile 'com.github.iagocanalejas:andiag-mvp-utils:-SNAPSHOT' // TODO just for test
+    compile 'com.github.iagocanalejas:andiag-mvp-utils:0.0.3'
 }
 
 kapt {
     generateStubs = true
-}
-buildscript {
 }
 
 def getRetrofitLoggingLevel() {

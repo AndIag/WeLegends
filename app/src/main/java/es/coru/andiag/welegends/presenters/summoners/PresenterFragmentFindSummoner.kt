@@ -50,19 +50,19 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
     //region AIInterfaceLoaderPresenter
     override fun onLoadSuccess(data: String?) {
         this.version = data
-        if (isViewAttached) {
+        if (isViewCreated) {
             view!!.onVersionLoaded(data!!)
         }
     }
 
     override fun onLoadProgressChange(message: String?) {
-        if (isViewAttached && hasContext()) {
+        if (isViewCreated && hasContext()) {
             view!!.onStaticDataLoadChange(message)
         }
     }
 
     override fun onLoadProgressChange(@StringRes resId: Int) {
-        if (isViewAttached && hasContext()) {
+        if (isViewCreated && hasContext()) {
             view!!.onStaticDataLoadChange(context.getString(resId))
         }
     }
@@ -76,19 +76,19 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
 
     //region PresenterSummonerLoader
     override fun onSummonerFound(summoner: SummonerEntity) {
-        if (isViewAttached) {
+        if (isViewCreated) {
             view!!.onSummonerFound(summoner)
         }
     }
 
     override fun onSummonerLoadError(resId: Int) {
-        if (isViewAttached) {
+        if (isViewCreated) {
             view!!.onSummonerNotFound(resId)
         }
     }
 
     override fun onSummonerLoadError(message: String) {
-        if (isViewAttached) {
+        if (isViewCreated) {
             view!!.onSummonerNotFound(message)
         }
     }

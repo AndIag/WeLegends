@@ -15,6 +15,7 @@ import es.coru.andiag.welegends.models.Version
 import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 
 /**
@@ -26,6 +27,10 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
 
     override fun onCreate() {
         super.onCreate()
+        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Spiegel.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build())
 
         FlowManager.init(FlowConfig.Builder(this)
                 .openDatabasesOnInit(true).build())

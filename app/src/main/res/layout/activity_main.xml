@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 app:diagonal_angle="10"
-                app:diagonal_gravity="left|top">
+                app:diagonal_gravity="right|top">
 
                 <View
                     android:layout_width="match_parent"

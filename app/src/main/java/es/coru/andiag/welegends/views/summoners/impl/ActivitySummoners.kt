@@ -1,14 +1,15 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.graphics.ColorUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.bumptech.glide.Glide
+import com.hariofspades.gradientartist.GradientArtistBasic
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ActivityBase
 import es.coru.andiag.welegends.models.Version
@@ -20,7 +21,7 @@ class ActivitySummoners : ActivityBase() {
     private val TAG = ActivitySummoners::class.java.simpleName
 
     @BindView(R.id.imageBackground)
-    lateinit var imageBackground: ImageView
+    lateinit var imageBackground: GradientArtistBasic
 
     //region Activity Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +54,13 @@ class ActivitySummoners : ActivityBase() {
      * Load given image(champion splash) as activity background
      */
     fun setBackground(image: String) {
-        val endpoint: String = RestClient.loadingImgEndpoint + image
-        Glide.with(this).load(endpoint).dontAnimate()
-                .placeholder(R.drawable.background_default1).error(R.drawable.background_default1)
-                .into(imageBackground)
+        val endpoint: String = RestClient.splashImgEndpoint + image
+        imageBackground.setUrlImage(endpoint,R.drawable.background_default,R.drawable.background_default, ImageView.ScaleType.CENTER_CROP)
+        val gd = GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                intArrayOf(ColorUtils.setAlphaComponent(resolveColorAttribute(this,R.attr.colorPrimaryDark),0xD9),
+                        ColorUtils.setAlphaComponent(resolveColorAttribute(this,R.attr.colorAccent),0xB3)))
+        imageBackground.setGradient(gd)
     }
 
     /**

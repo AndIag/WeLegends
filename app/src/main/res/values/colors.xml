@@ -6,21 +6,18 @@
     <color name="lightPrimaryDark">#FF4527A0</color>
     <color name="lightAccent">#FF673AB7</color>
     <color name="lightBackground">@color/lightPrimary</color>
-    <color name="lightHighlight">#ff8800</color>
 
     <!-- Dark Theme Colors -->
     <color name="darkPrimary">#212121</color>
     <color name="darkPrimaryDark">#FF4527A0</color>
     <color name="darkAccent">#FF673AB7</color>
     <color name="darkBackground">@color/darkPrimary</color>
-    <color name="darkHighlight">@color/deepPurple500</color>
 
     <!-- Alternate Theme Colors -->
     <color name="alternatePrimary">#2e2d3d</color>
     <color name="alternatePrimaryDark">#21212e</color>
     <color name="alternateAccent">#FF673AB7</color>
     <color name="alternateBackground">#2e2d3d</color>
-    <color name="alternateHighlight">@color/deepPurple500</color>
 
     <!-- Components -->
     <item name="card_light" type="color">#FFFFFF</item>

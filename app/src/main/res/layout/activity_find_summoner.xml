@@ -3,16 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
     tools:context=".views.summoners.impl.ActivitySummoners">
 
-    <ImageView
+    <com.hariofspades.gradientartist.GradientArtistBasic
         android:id="@+id/imageBackground"
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@drawable/background_default1"
+        app:imagePlaceholder="@drawable/background_default1"
+        app:imageError="@drawable/background_default1"
+        app:gradient="@drawable/gradient_main"
         android:scaleType="centerCrop" />
 
     <FrameLayout

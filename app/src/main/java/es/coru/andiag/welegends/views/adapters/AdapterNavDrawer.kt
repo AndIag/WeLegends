@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import es.coru.andiag.welegends.R
+import es.coru.andiag.welegends.common.base.ActivityBase
 import es.coru.andiag.welegends.views.adapters.items.ItemNavDrawer
 
 /**
@@ -32,7 +33,7 @@ class AdapterNavDrawer(layoutResId: Int, data: List<ItemNavDrawer>) : BaseQuickA
 
     override fun convert(holder: BaseViewHolder, item: ItemNavDrawer) {
         if (firstTime) {
-            colorTextSelected = ContextCompat.getColor(mContext, R.color.lightHighlight)
+            colorTextSelected = ActivityBase.resolveColorAttribute(mContext,R.attr.mainColor)
             firstTime = false
         }
         holder.setImageResource(R.id.imageItem, item.imageId)

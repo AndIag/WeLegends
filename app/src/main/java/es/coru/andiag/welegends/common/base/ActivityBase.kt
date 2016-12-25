@@ -8,8 +8,12 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.util.TypedValue
 import android.view.WindowManager
 import es.coru.andiag.welegends.R
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+
+
 
 /**
  * Created by andyq on 24/12/2016.
@@ -20,6 +24,10 @@ abstract class ActivityBase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Updating theme from OnCreate")
         updateTheme()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private fun updateTheme() { //Change theme to all activities that extends BaseActivity
@@ -72,6 +80,12 @@ abstract class ActivityBase : AppCompatActivity() {
                 val name = fm.getBackStackEntryAt(i).name
                 Log.d("Backstack log", "entry $i: $name")
             }
+        }
+
+        fun resolveColorAttribute(context: Context, attribute: Int) : Int{
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(attribute, typedValue, true)
+            return typedValue.data
         }
     }
 }

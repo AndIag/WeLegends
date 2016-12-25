@@ -32,7 +32,7 @@
             android:layout_toRightOf="@+id/imageSummoner"
             android:layout_toEndOf="@+id/imageSummoner"
             android:layout_alignBottom="@+id/imageSummoner"
-            android:textColor="@color/lightHighlight"
+            android:textColor="?mainColor"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     </RelativeLayout>

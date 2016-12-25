@@ -2,24 +2,18 @@ package es.coru.andiag.welegends.views.summoners.impl
 
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import butterknife.BindArray
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
-import com.aigestudio.wheelpicker.WheelPicker
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.WeLegends
-import es.coru.andiag.welegends.common.utils.FontTextView
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
@@ -41,13 +35,13 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
     @BindView(R.id.buttonHistoric)
     lateinit var buttonHistoric: ImageButton
     @BindView(R.id.textVersion)
-    lateinit var textVersion: FontTextView
+    lateinit var textVersion: TextView
     @BindView(R.id.progressBar)
     lateinit var progressBar: ProgressBar
     @BindArray(R.array.region_array)
     lateinit var regions: Array<String>
-    @BindView(R.id.wheel_region_picker)
-    lateinit var wheelRegion: WheelPicker
+    @BindView(R.id.number_picker)
+    lateinit var numberPicker: NumberPicker
 
     var region: String = "EUW"
 
@@ -73,7 +67,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
         WeLegends.view = view
 
-        editSummonerName.typeface = Typeface.createFromAsset(mParentContext.assets, "Aller.ttf")
+//        editSummonerName.typeface = Typeface.createFromAsset(mParentContext.assets, "Aller.ttf")
 
         if (mPresenter.getServerVersion() == null) {
             showLoading()
@@ -81,13 +75,17 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
             textVersion.text = mPresenter.getServerVersion()
             hideLoading()
         }
+        setupRegionPicker()
+    }
 
-        wheelRegion.data = regions.asList()
-        wheelRegion.isCyclic = true
-        wheelRegion.setOnItemSelectedListener { wheelPicker, any, i ->
+    fun setupRegionPicker(){
+        numberPicker.minValue = 0
+        numberPicker.maxValue = regions.size-1
+        numberPicker.displayedValues = regions
+        numberPicker.wrapSelectorWheel = true
+        numberPicker.setOnValueChangedListener({ numberPicker, any, i ->
             region = regions[i]
-        }
-
+        })
     }
 
     override fun onDestroyView() {

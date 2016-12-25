@@ -9,10 +9,15 @@
         <item name="colorPrimaryDark">@color/lightPrimaryDark</item>
         <item name="colorAccent">@color/lightAccent</item>
 
+        <!--<item name="colorControlNormal">@color/lightHighlight</item>-->
+        <item name="colorControlActivated">?mainColor</item>
+        <item name="colorControlHighlight">?mainColor</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
         <item name="backgroundColor">@color/lightBackground</item>
+        <item name="mainColor">@color/darkorange</item>
 
         <item name="android:buttonStyle">@style/LightButton</item>
 
@@ -26,8 +31,6 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionOverflowButtonStyle">@style/OverFlow</item>
 
-        <!-- Color when clicking button -->
-        <item name="colorControlHighlight">@color/lightHighlight</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
@@ -35,10 +38,15 @@
         <item name="colorPrimaryDark">@color/darkPrimaryDark</item>
         <item name="colorAccent">@color/darkAccent</item>
 
+        <!--<item name="colorControlNormal">@color/lightHighlight</item>-->
+        <item name="colorControlActivated">?mainColor</item>
+        <item name="colorControlHighlight">?mainColor</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
         <item name="backgroundColor">@color/darkBackground</item>
+        <item name="mainColor">@color/orange500</item>
 
         <item name="android:buttonStyle">@style/DarkButton</item>
 
@@ -51,17 +59,22 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionOverflowButtonStyle">@style/OverFlow</item>
 
-        <item name="colorControlHighlight">@color/darkHighlight</item>
     </style>
 
     <style name="AppTheme.Alternate" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/alternatePrimary</item>
         <item name="colorPrimaryDark">@color/alternatePrimaryDark</item>
         <item name="colorAccent">@color/alternateAccent</item>
+
+        <!--<item name="colorControlNormal">@color/lightHighlight</item>-->
+        <item name="colorControlActivated">?mainColor</item>
+        <item name="colorControlHighlight">?mainColor</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
         <item name="backgroundColor">@color/alternateBackground</item>
+        <item name="mainColor">@color/darkorange</item>
 
         <item name="android:buttonStyle">@style/AlternateButton</item>
 
@@ -74,7 +87,6 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="actionOverflowButtonStyle">@style/OverFlow</item>
 
-        <item name="colorControlHighlight">@color/darkHighlight</item>
     </style>
 
     <!-- Toolbar Styles -->
@@ -94,13 +106,13 @@
 
     <!-- ActionBar Style -->
     <style name="AppTheme.Base.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" >
-        <item name="android:textColorPrimary">@color/lightHighlight</item>
-        <item name="android:textColorSecondary">@color/lightHighlight</item>
+        <item name="android:textColorPrimary">?mainColor</item>
+        <item name="android:textColorSecondary">?mainColor</item>
     </style>
 
     <style name="AppTheme.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
         <item name="android:colorBackground">@color/card_dark</item>
-        <item name="android:textColor">@color/lightHighlight</item>
+        <item name="android:textColor">?mainColor</item>
     </style>
 
     <style name="AppTheme.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -126,7 +138,6 @@
     </style>
 
     <!-- Cardviews Style -->
-    <attr name="cardStyle" format="reference" />
 
     <style name="CardViewStyle" parent="CardView">
         <item name="cardCornerRadius">4dp</item>

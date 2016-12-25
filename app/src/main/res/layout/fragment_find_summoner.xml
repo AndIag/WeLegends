@@ -1,95 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent"
+    tools:context=".views.summoners.impl.FragmentFindSummoner">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imageBackground"
-        android:layout_gravity="center"
-        android:src="@drawable/background_default1"
-        android:scaleType="centerCrop" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:indeterminate="true"
+        android:tint="@color/lightHighlight"/>
 
-    <RelativeLayout
+    <es.coru.andiag.welegends.common.utils.FontTextView
+        android:id="@+id/textVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/progressBar"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white" />
+
+    <ImageButton
+        android:id="@+id/buttonHistoric"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_above="@+id/input_layout_summoner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_historic"
+        android:text="Historic"
+        android:tint="@color/lightHighlight" />
+
+    <ImageButton
+        android:id="@+id/buttonGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/input_layout_summoner"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/input_layout_summoner"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:src="@drawable/ic_search"
+        android:background="?android:selectableItemBackground"
+        android:elevation="10dp"
+        android:tint="@color/lightHighlight" />
+    <!--android:text="@string/go"-->
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_summoner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toLeftOf="@+id/buttonGo"
+        android:layout_toStartOf="@+id/buttonGo">
 
         <EditText
             android:id="@+id/editTextSummoner"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:hint="@string/hint_summoner"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:textColor="?colorAccent"
-            android:textColorHint="@color/white"
-            android:layout_above="@+id/spinnerRegions"
-            android:layout_centerHorizontal="true" />
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/lightHighlight"
+            android:textSize="24sp" />
+    </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinnerRegions"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/region_array"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            android:paddingLeft="8dp"
-            android:prompt="@string/region_prompt"
-            android:spinnerMode="dialog"
-            android:textAlignment="center"
-            android:layout_above="@+id/buttonGo"
-            android:layout_alignLeft="@+id/editTextSummoner"
-            android:layout_alignStart="@+id/editTextSummoner" />
+    <com.aigestudio.wheelpicker.WheelPicker
+        android:id="@+id/wheel_region_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        app:wheel_selected_item_text_color="@color/lightHighlight"
+        app:wheel_item_text_color="@color/white"
+        app:wheel_item_text_size="15sp"
+        android:layout_below="@+id/progressBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/buttonGo" />
 
-        <Button
-            android:id="@+id/buttonGo"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:onClick="onClickFindSummoner"
-            android:text="@string/go"
-            android:textColor="?colorAccent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/spinnerRegions"
-            android:layout_alignStart="@+id/spinnerRegions"
-            android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
-        <andiag.coru.es.welegends.views.FontTextView
-            android:id="@+id/textVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Version 6.11.1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_below="@+id/progressBar"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:indeterminate="true"
-            android:progressTint="?colorPrimary"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
-
-        <ImageButton
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:text="Historic"
-            android:onClick="onClickSwapFragment"
-            android:id="@+id/buttonHistoric"
-            android:background="?android:selectableItemBackground"
-            android:src="@drawable/ic_historic"
-            android:layout_above="@+id/editTextSummoner"
-            android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
-            android:tint="?colorAccent" />
-
-    </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>

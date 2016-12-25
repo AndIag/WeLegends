@@ -118,5 +118,7 @@
     <string name="title_section_my_team">Mi Equipo</string>
     <string name="title_section_enemy_team">Equipo Enemigo</string>
     <string name="title_activity_current_info">Partida Actual</string>
+    <string name="change_app_long">Esta versión no recibira mas actualizaciones ya que estamos trabajando en una nueva app 1000% mejor. Os avisaremos en cuanto este lista. Gracias por la espera</string>
+    <string name="loadStaticData">Cargandos datos...</string>
 
 </resources>

@@ -98,4 +98,6 @@
     <string name="firstblood_game">Primo Sangue</string>
     <string name="custom_game">Personalizzata</string>
     <string name="title_activity_current_info">Partita Attuale</string>
+    <string name="change_app_long">This version will not be updated again because we are working in a brand new app 1000% times better. We will notify you soon. Thanks for waiting.</string>
+    <string name="loadStaticData">Loading Static Data....</string>
 </resources>

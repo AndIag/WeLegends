@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="andiag.coru.es.lolinfo.activities.ActivitySummoner">
+    tools:context=".activities.ActivitySummoner">
 
     <Spinner
         android:id="@+id/spinnerRegions"
@@ -48,6 +48,17 @@
         android:text="@string/go"
         android:textColor="@color/button_text" />
 
+    <TextView
+        android:id="@+id/notification1"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="@string/change_app_long"
+        android:layout_marginBottom="5dp" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="200dp"
@@ -81,6 +92,17 @@
         android:layout_toRightOf="@id/imageView2"
         android:src="@drawable/icon3" />
 
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="@string/change_app_long"
+        android:layout_marginBottom="5dp" />
+
     <ListView
         android:id="@+id/listViewSummHistory"
         android:layout_width="200dp"
@@ -88,6 +110,7 @@
         android:layout_alignLeft="@+id/buttonGo"
         android:layout_alignStart="@+id/buttonGo"
         android:layout_below="@+id/buttonGo"
+        android:layout_above="@id/notification"
         android:layout_marginTop="16dp"
         android:divider="@color/transparent"
         android:dividerHeight="2dp" />

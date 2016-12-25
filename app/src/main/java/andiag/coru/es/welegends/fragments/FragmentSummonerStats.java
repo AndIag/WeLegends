@@ -19,11 +19,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -325,7 +325,7 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
-                    if (networkResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
+                    if (networkResponse.statusCode == HttpURLConnection.HTTP_NOT_FOUND) {
                         setNotLVL30Info();
                         changeRefreshingValue(false);
                         return;
@@ -359,7 +359,7 @@ public class FragmentSummonerStats extends SwipeRefreshLayoutFragment {
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null) {
-                    if (networkResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
+                    if (networkResponse.statusCode == HttpURLConnection.HTTP_NOT_FOUND) {
                         isPlaying = false;
                         return;
                     }

@@ -128,5 +128,6 @@
     <string name="title_section_enemy_team">Enemy Team</string>
     <string name="title_activity_current_info">Current Game</string>
     <string name="loadStaticData">Loading Static Data....</string>
+    <string name="change_app_long">This version will not be updated again because we are working in a brand new app 1000% times better. We will notify you soon. Thanks for waiting.</string>
 
 </resources>

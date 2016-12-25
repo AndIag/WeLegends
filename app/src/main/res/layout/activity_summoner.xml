@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="andiag.coru.es.lolinfo.activities.ActivitySummoner">
+    tools:context=".activities.ActivitySummoner">
 
     <EditText
         android:id="@+id/editTextSummoner"
@@ -58,6 +58,15 @@
         android:elevation="10dp"
         android:src="@drawable/icon3" />
 
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/black"
+        android:text="@string/change_app_long"
+        android:layout_marginBottom="5dp" />
+
     <ListView
         android:id="@+id/listViewSummHistory"
         android:layout_width="200dp"
@@ -65,6 +74,7 @@
         android:layout_alignLeft="@+id/buttonGo"
         android:layout_alignStart="@+id/buttonGo"
         android:layout_below="@+id/buttonGo"
+        android:layout_above="@id/notification"
         android:layout_marginTop="16dp"
         android:divider="@color/transparent"
         android:dividerHeight="2dp" />

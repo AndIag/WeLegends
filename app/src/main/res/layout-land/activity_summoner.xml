@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="andiag.coru.es.lolinfo.activities.ActivitySummoner">
+    tools:context=".activities.ActivitySummoner">
 
     <EditText
         android:id="@+id/editTextSummoner"
@@ -48,6 +48,16 @@
         android:text="@string/go"
         android:textColor="@color/button_text" />
 
+
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/buttonGo"
+        android:textColor="@color/black"
+        android:text="@string/change_app_long"
+        android:layout_marginBottom="5dp" />
 
     <ImageView
         android:id="@+id/imageView2"

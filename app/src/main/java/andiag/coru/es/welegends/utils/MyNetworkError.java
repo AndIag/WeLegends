@@ -4,7 +4,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
-import org.apache.http.HttpStatus;
+import java.net.HttpURLConnection;
 
 import andiag.coru.es.welegends.R;
 
@@ -25,13 +25,13 @@ public abstract class MyNetworkError {
             networkResponse = error.networkResponse;
 
             switch (networkResponse.statusCode) {
-                case HttpStatus.SC_INTERNAL_SERVER_ERROR:
+                case HttpURLConnection.HTTP_INTERNAL_ERROR:
                     message = R.string.error500;
                     break;
-                case HttpStatus.SC_SERVICE_UNAVAILABLE:
+                case HttpURLConnection.HTTP_UNAVAILABLE:
                     message = R.string.error500;
                     break;
-                case HttpStatus.SC_NOT_FOUND:
+                case HttpURLConnection.HTTP_NOT_FOUND:
                     message = R.string.error404;
                     break;
                 default:

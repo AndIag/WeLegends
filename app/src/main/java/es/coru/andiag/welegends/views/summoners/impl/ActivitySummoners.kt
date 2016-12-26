@@ -1,9 +1,9 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.graphics.ColorUtils
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -14,10 +14,11 @@ import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ActivityBase
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
+import es.coru.andiag.welegends.models.wrapped.database.Summoner
+import es.coru.andiag.welegends.views.main.ActivityMain
 
 
 class ActivitySummoners : ActivityBase() {
-
     private val TAG = ActivitySummoners::class.java.simpleName
 
     @BindView(R.id.imageBackground)
@@ -39,16 +40,21 @@ class ActivitySummoners : ActivityBase() {
         super.onBackPressed()
         imageBackground.visibility = View.VISIBLE
     }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
     //endregion
+
+    /**
+     * Create a new [ActivityMain] [Intent]
+     * @param [summoner] found [Summoner]
+     * @param [isLocal] boolean indicating if the summoner was load from local database
+     */
+    fun createMainIntent(summoner: Summoner, isLocal: Boolean): Intent {
+        val intent: Intent = Intent(this, ActivityMain::class.java)
+        intent.putExtra(ActivityMain.VAL_SUMMONER_ID, summoner.mid)
+        intent.putExtra(ActivityMain.VAL_SUMMONER_RIOT_ID, summoner.riotId)
+        intent.putExtra(ActivityMain.VAL_SUMMONER_LVL, summoner.summonerLevel)
+        intent.putExtra(ActivityMain.CONF_SEARCH_REQUIRED, isLocal)
+        return intent
+    }
 
     /**
      * Load given image(champion splash) as activity background

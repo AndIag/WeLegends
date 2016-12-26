@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:imagePlaceholder="@drawable/background_default1"
-        app:imageError="@drawable/background_default1"
+        app:imagePlaceholder="@drawable/background_default"
+        app:imageError="@drawable/background_default"
         app:gradient="@drawable/gradient_main"
         android:scaleType="centerCrop" />
 

@@ -25,14 +25,21 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import es.coru.andiag.welegends.R
 import es.coru.andiag.welegends.common.base.ActivityBase
+import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.views.FragmentSettings
 import es.coru.andiag.welegends.views.adapters.AdapterNavDrawer
 import es.coru.andiag.welegends.views.adapters.items.ItemNavDrawer
 import java.util.*
 
 class ActivityMain : ActivityBase() {
+    private val TAG: String = ActivityMain::class.java.simpleName
 
-    val TAG = ActivityMain::class.java.simpleName
+    companion object {
+        val CONF_SEARCH_REQUIRED: String = "is_searched"
+        val VAL_SUMMONER_ID: String = "summoner_id"
+        val VAL_SUMMONER_RIOT_ID: String = "summoner_riot_id"
+        val VAL_SUMMONER_LVL: String = "summoner_lvl"
+    }
 
     private val BACK_STACK_ROOT_TAG = "ROOT_FRAGMENT"
 
@@ -50,16 +57,15 @@ class ActivityMain : ActivityBase() {
     lateinit var drawerLayout: DrawerLayout
     @BindView(R.id.nav_view)
     lateinit var navView: NavigationView
-
     @BindArray(R.array.DrawerItems)
     lateinit var drawerTitles: Array<String>
 
     internal var toggle: ActionBarDrawerToggle? = null
-
     internal var adapter: AdapterNavDrawer? = null
-
     internal var pendingRunnable: Runnable? = null
     internal var handler = Handler()
+
+    private var summoner: Summoner? = null
 
     private fun initializeViews() {
         setSupportActionBar(toolbar)
@@ -126,6 +132,12 @@ class ActivityMain : ActivityBase() {
         ButterKnife.bind(this)
         initializeViews()
 
+        if (intent != null) {
+            if (intent.getBooleanExtra(CONF_SEARCH_REQUIRED, true)) {
+                // TODO
+            }
+        }
+
         if (savedInstanceState == null) {
             pendingRunnable = Runnable {
 //                val fragment = FragmentBlank.newInstance("0")
@@ -133,7 +145,6 @@ class ActivityMain : ActivityBase() {
             }
             handler.post(pendingRunnable)
         }
-
 
     }
 
@@ -201,7 +212,6 @@ class ActivityMain : ActivityBase() {
     }
 
     private inner class SmoothActionBarDrawerToggle(activity: Activity, drawerLayout: DrawerLayout, toolbar: Toolbar, openDrawerContentDescRes: Int, closeDrawerContentDescRes: Int) : ActionBarDrawerToggle(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes) {
-
         private var runnable: Runnable? = null
 
         override fun onDrawerOpened(drawerView: View?) {

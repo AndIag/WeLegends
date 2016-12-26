@@ -1,9 +1,7 @@
 package es.coru.andiag.welegends.views.summoners.impl
 
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,7 +15,6 @@ import es.coru.andiag.welegends.WeLegends
 import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
-import es.coru.andiag.welegends.views.main.ActivityMain
 import es.coru.andiag.welegends.views.summoners.ViewFragmentFindSummoner
 import es.coru.andoiag.andiag_mvp_utils.fragments.AIButterFragment
 
@@ -78,9 +75,9 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
         setupRegionPicker()
     }
 
-    fun setupRegionPicker(){
+    fun setupRegionPicker() {
         numberPicker.minValue = 0
-        numberPicker.maxValue = regions.size-1
+        numberPicker.maxValue = regions.size - 1
         numberPicker.displayedValues = regions
         numberPicker.wrapSelectorWheel = true
         numberPicker.setOnValueChangedListener({ numberPicker, any, i ->
@@ -131,14 +128,11 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
 
     /**
      * Launch new activity with retrieved summoner
-     * @param [Summoner] retrieved summoner
+     * @param [summoner] retrieved summoner
      */
     override fun onSummonerFound(summoner: Summoner) {
         hideLoading()
-        Log.i(TAG, "Found summoner %s with id %d".format(summoner.name, summoner.riotId))
-        Toast.makeText(mParentContext, summoner.name + " " + summoner.mid, Toast.LENGTH_SHORT).show()
-        // TODO launch new activity
-        startActivity(Intent(mParentContext, ActivityMain::class.java))
+        startActivity((mParentContext as ActivitySummoners).createMainIntent(summoner, false))
     }
 
     /**

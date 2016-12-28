@@ -73,7 +73,7 @@ class CallbackStaticData<T : BaseModel>(
         Log.e(TAG, "ERROR: onFailure: %s".format(t!!.message))
         Log.i(TAG, "Semaphore released with errors")
         semaphore.release(1)
-        caller.onLoadError(t!!.message)
+        caller.onLoadError(t.message)
     }
 
 }

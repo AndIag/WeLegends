@@ -80,7 +80,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
 
         /**
          * Add a network listener for all application
-         * @param [Context] listener owner
+         * @param [context] listener owner
          */
         private fun initNetworkObserver(context: Context) {
             ReactiveNetwork.observeNetworkConnectivity(context)

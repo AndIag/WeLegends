@@ -62,7 +62,6 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), 
                 startActivity((mParentContext as ActivitySummoners)
                         .createMainIntent((adapter as AdapterSummonerList)
                                 .getItem(position), true))
-                (mParentContext as ActivitySummoners).onBackPressed()
             }
         })
         mPresenter.loadSummoners()

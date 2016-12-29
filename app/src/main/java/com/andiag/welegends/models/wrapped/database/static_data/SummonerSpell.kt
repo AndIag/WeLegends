@@ -1,6 +1,7 @@
 package com.andiag.welegends.models.wrapped.database.static_data
 
 import android.util.Log
+import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.models.utils.CallbackStaticData
@@ -10,7 +11,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import java.io.Serializable
 
 /**

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import butterknife.BindView
+import com.andiag.libraryutils.fragments.AIButterFragment
 import com.andiag.welegends.R
 import com.andiag.welegends.models.Version
 import com.andiag.welegends.models.wrapped.database.Summoner
@@ -15,7 +16,6 @@ import com.andiag.welegends.views.adapters.AdapterSummonerList
 import com.andiag.welegends.views.summoners.ViewFragmentSummonerList
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
-import es.coru.andoiag.andiag_mvp_utils.fragments.AIButterFragment
 import java.util.*
 
 
@@ -30,11 +30,11 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), 
     var adapter: AdapterSummonerList? = null
 
     //region Fragment Lifecycle
-    override fun initLayout() {
+    override fun onInitLayout() {
         mFragmentLayout = R.layout.fragment_summoner_list
     }
 
-    override fun initPresenter() {
+    override fun onInitPresenter() {
         mPresenter = PresenterFragmentSummonerList.getInstance()
     }
 

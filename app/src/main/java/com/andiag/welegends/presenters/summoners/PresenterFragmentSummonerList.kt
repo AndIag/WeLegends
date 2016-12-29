@@ -1,11 +1,11 @@
 package com.andiag.welegends.presenters.summoners
 
+import com.andiag.andiag_mvp.presenters.AIPresenter
+import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.wrapped.database.Summoner
 import com.andiag.welegends.views.summoners.impl.ActivitySummoners
 import com.andiag.welegends.views.summoners.impl.FragmentSummonerList
-import es.coru.andiag.andiag_mvp.presenters.AIPresenter
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.models.Summoner as SummonerWrapper
 
 /**

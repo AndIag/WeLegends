@@ -1,12 +1,12 @@
 package com.andiag.welegends.models.utils
 
 import android.util.Log
+import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.api.dto.GenericStaticData
 import com.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

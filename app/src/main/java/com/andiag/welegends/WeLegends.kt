@@ -7,12 +7,12 @@ import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.Version
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig

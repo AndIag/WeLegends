@@ -1,11 +1,11 @@
 package com.andiag.welegends.presenters.summoners
 
 import android.support.annotation.StringRes
+import com.andiag.andiag_mvp.presenters.AIPresenter
 import com.andiag.welegends.models.Summoner
 import com.andiag.welegends.models.Version
 import com.andiag.welegends.views.summoners.impl.ActivitySummoners
 import com.andiag.welegends.views.summoners.impl.FragmentFindSummoner
-import es.coru.andiag.andiag_mvp.presenters.AIPresenter
 import com.andiag.welegends.models.wrapped.database.Summoner as SummonerEntity
 
 

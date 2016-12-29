@@ -82,9 +82,7 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:$versions.dbflow"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$versions.dbflow@aar"
 
-    compile('com.github.iagocanalejas:andiag-mvp-utils:0.0.3', {
-        exclude group: 'com.jakewharton', module: 'butterknife'
-    })
+    compile 'com.github.iagocanalejas.andiag-mvp:library-utils:0.2'
 }
 
 kapt {

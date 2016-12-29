@@ -2,13 +2,13 @@ package com.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
+import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
+import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.database.static_data.*
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceErrorHandlerPresenter
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

@@ -10,13 +10,13 @@ import butterknife.BindArray
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
+import com.andiag.libraryutils.fragments.AIButterFragment
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegends
 import com.andiag.welegends.models.Version
 import com.andiag.welegends.models.wrapped.database.Summoner
 import com.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import com.andiag.welegends.views.summoners.ViewFragmentFindSummoner
-import es.coru.andoiag.andiag_mvp_utils.fragments.AIButterFragment
 
 
 /**
@@ -50,11 +50,11 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
         (mParentContext as ActivitySummoners).onClickSwapFragment()
     }
 
-    override fun initLayout() {
+    override fun onInitLayout() {
         mFragmentLayout = R.layout.fragment_find_summoner
     }
 
-    override fun initPresenter() {
+    override fun onInitPresenter() {
         mPresenter = PresenterFragmentFindSummoner.getInstance()
     }
 

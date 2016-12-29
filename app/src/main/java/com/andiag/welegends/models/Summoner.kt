@@ -1,6 +1,7 @@
 package com.andiag.welegends.models
 
 import android.util.Log
+import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.database.Summoner
@@ -8,7 +9,6 @@ import com.andiag.welegends.models.wrapped.database.Summoner_Table
 import com.andiag.welegends.presenters.summoners.PresenterSummonerLoader
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import es.coru.andoiag.andiag_mvp_utils.interfaces.AIInterfaceLoaderHandlerPresenter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call

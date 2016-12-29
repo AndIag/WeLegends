@@ -2,8 +2,8 @@ package com.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
-import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
-import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.utils.CallbackSemaphore

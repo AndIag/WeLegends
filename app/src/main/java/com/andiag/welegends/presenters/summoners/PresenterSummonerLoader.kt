@@ -1,6 +1,6 @@
 package com.andiag.welegends.presenters.summoners
 
-import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.models.wrapped.database.Summoner
 
 /**

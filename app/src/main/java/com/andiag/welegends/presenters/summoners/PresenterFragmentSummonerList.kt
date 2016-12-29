@@ -1,7 +1,7 @@
 package com.andiag.welegends.presenters.summoners
 
-import com.andiag.andiag_mvp.presenters.AIPresenter
-import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.wrapped.database.Summoner
 import com.andiag.welegends.views.summoners.impl.ActivitySummoners

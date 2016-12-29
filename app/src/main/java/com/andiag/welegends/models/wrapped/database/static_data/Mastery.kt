@@ -1,7 +1,7 @@
 package com.andiag.welegends.models.wrapped.database.static_data
 
 import android.util.Log
-import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.models.utils.CallbackStaticData

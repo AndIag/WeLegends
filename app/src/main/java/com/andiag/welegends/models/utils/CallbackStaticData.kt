@@ -1,7 +1,7 @@
 package com.andiag.welegends.models.utils
 
 import android.util.Log
-import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.api.dto.GenericStaticData
 import com.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter

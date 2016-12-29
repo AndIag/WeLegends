@@ -7,7 +7,7 @@ import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.andiag.libraryutils.interfaces.AIInterfaceErrorHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.Version
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork

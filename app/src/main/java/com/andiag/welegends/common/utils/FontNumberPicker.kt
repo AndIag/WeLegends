@@ -3,6 +3,7 @@ package com.andiag.welegends.common.utils
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
 import com.andiag.welegends.R
@@ -14,7 +15,11 @@ import com.andiag.welegends.common.base.ActivityBase
  */
 class FontNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(context, attrs) {
 
-//    var type: Typeface? = null
+    //    var type: Typeface? = null
+
+    init {
+        descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+    }
 
     override fun addView(child: View) {
         super.addView(child)
@@ -42,7 +47,7 @@ class FontNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(con
         if (view is EditText) {
             //view.typeface = type
             view.textSize = 25f
-            view.setTextColor(ActivityBase.resolveColorAttribute(context,R.attr.mainColor))
+            view.setTextColor(ActivityBase.resolveColorAttribute(context, R.attr.mainColor))
         }
 
     }

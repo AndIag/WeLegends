@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import butterknife.BindView
-import com.andiag.libraryutils.fragments.AIButterFragment
+import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.welegends.R
 import com.andiag.welegends.models.Version
 import com.andiag.welegends.models.wrapped.database.Summoner

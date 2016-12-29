@@ -1,7 +1,7 @@
 package com.andiag.welegends.models
 
 import android.util.Log
-import com.andiag.libraryutils.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.database.Summoner

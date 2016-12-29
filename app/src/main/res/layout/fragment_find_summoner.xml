@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    tools:context=".views.summoners.impl.FragmentFindSummoner">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                tools:context=".views.summoners.impl.FragmentFindSummoner">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:indeterminate="true"
-        android:tint="?mainColor" />
+        android:tint="?mainColor"/>
 
     <TextView
         android:id="@+id/textVersion"
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"/>
 
     <ImageButton
         android:id="@+id/buttonHistoric"
@@ -41,7 +41,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_historic"
         android:text="Historic"
-        android:tint="?mainColor" />
+        android:tint="?mainColor"/>
 
     <ImageButton
         android:id="@+id/buttonGo"
@@ -58,7 +58,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:src="@drawable/ic_search"
-        android:tint="?mainColor" />
+        android:tint="?mainColor"/>
     <!--android:text="@string/go"-->
     <EditText
         android:id="@+id/editTextSummoner"
@@ -77,13 +77,13 @@
         android:inputType="text"
         android:maxLines="1"
         android:textColor="?mainColor"
-        android:textSize="24sp" />
+        android:textSize="24sp"/>
 
     <com.andiag.welegends.common.utils.FontNumberPicker
         android:id="@+id/number_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonHistoric"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

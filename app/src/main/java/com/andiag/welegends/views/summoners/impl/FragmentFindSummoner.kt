@@ -1,16 +1,18 @@
 package com.andiag.welegends.views.summoners.impl
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import butterknife.BindArray
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
-import com.andiag.libraryutils.fragments.AIButterFragment
+import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegends
 import com.andiag.welegends.models.Version
@@ -48,6 +50,8 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
     @OnClick(R.id.buttonHistoric)
     fun showSummonerList() {
         (mParentContext as ActivitySummoners).onClickSwapFragment()
+        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(editSummonerName.windowToken, 0)
     }
 
     override fun onInitLayout() {
@@ -63,8 +67,6 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
         WeLegends.view = view
-
-//        editSummonerName.typeface = Typeface.createFromAsset(mParentContext.assets, "Aller.ttf")
 
         if (mPresenter.getServerVersion() == null) {
             showLoading()
@@ -107,6 +109,8 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
      */
     @OnClick(R.id.buttonGo)
     fun findSummoner() {
+        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(editSummonerName.windowToken, 0)
         if (!Version.isLoading()) {
             showLoading()
             mPresenter!!.getSummonerByName(editSummonerName.text.toString(), region)

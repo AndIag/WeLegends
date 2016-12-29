@@ -82,7 +82,7 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:$versions.dbflow"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$versions.dbflow@aar"
 
-    compile 'com.github.iagocanalejas.andiag-mvp:library-utils:0.2'
+    compile 'com.github.iagocanalejas.andiag-mvp:commons:0.2.1'
 }
 
 kapt {

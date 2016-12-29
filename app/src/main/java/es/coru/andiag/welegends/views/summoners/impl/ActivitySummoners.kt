@@ -16,6 +16,8 @@ import es.coru.andiag.welegends.models.Version
 import es.coru.andiag.welegends.models.wrapped.api.RestClient
 import es.coru.andiag.welegends.models.wrapped.database.Summoner
 import es.coru.andiag.welegends.views.main.ActivityMain
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.singleTop
 
 
 class ActivitySummoners : ActivityBase() {
@@ -48,12 +50,10 @@ class ActivitySummoners : ActivityBase() {
      * @param [isLocal] boolean indicating if the summoner was load from local database
      */
     fun createMainIntent(summoner: Summoner, isLocal: Boolean): Intent {
-        val intent: Intent = Intent(this, ActivityMain::class.java)
-        intent.putExtra(ActivityMain.VAL_SUMMONER_ID, summoner.mid)
-        intent.putExtra(ActivityMain.VAL_SUMMONER_RIOT_ID, summoner.riotId)
-        intent.putExtra(ActivityMain.VAL_SUMMONER_LVL, summoner.summonerLevel)
-        intent.putExtra(ActivityMain.CONF_SEARCH_REQUIRED, isLocal)
-        return intent
+        return intentFor<ActivityMain>(ActivityMain.VAL_SUMMONER_ID to summoner.mid,
+                ActivityMain.VAL_SUMMONER_RIOT_ID to summoner.riotId,
+                ActivityMain.VAL_SUMMONER_LVL to summoner.summonerLevel,
+                ActivityMain.CONF_SEARCH_REQUIRED to isLocal).singleTop()
     }
 
     /**
@@ -61,11 +61,11 @@ class ActivitySummoners : ActivityBase() {
      */
     fun setBackground(image: String) {
         val endpoint: String = RestClient.splashImgEndpoint + image
-        imageBackground.setUrlImage(endpoint,R.drawable.background_default,R.drawable.background_default, ImageView.ScaleType.CENTER_CROP)
+        imageBackground.setUrlImage(endpoint, R.drawable.background_default, R.drawable.background_default, ImageView.ScaleType.CENTER_CROP)
         val gd = GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                intArrayOf(ColorUtils.setAlphaComponent(resolveColorAttribute(this,R.attr.colorPrimaryDark),0xD9),
-                        ColorUtils.setAlphaComponent(resolveColorAttribute(this,R.attr.colorAccent),0xB3)))
+                intArrayOf(ColorUtils.setAlphaComponent(resolveColorAttribute(this, R.attr.colorPrimaryDark), 0xD9),
+                        ColorUtils.setAlphaComponent(resolveColorAttribute(this, R.attr.colorAccent), 0xB3)))
         imageBackground.setGradient(gd)
     }
 

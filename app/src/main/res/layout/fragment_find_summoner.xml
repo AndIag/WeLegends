@@ -79,7 +79,7 @@
         android:textColor="?mainColor"
         android:textSize="24sp" />
 
-    <es.coru.andiag.welegends.common.utils.FontNumberPicker
+    <com.andiag.welegends.common.utils.FontNumberPicker
         android:id="@+id/number_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

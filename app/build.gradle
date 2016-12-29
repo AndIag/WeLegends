@@ -6,7 +6,7 @@ android {
     compileSdkVersion versions.compiledSdk
     buildToolsVersion "$versions.buildTools"
     defaultConfig {
-        applicationId "es.coru.andiag.welegends"
+        applicationId "com.andiag.welegends"
         minSdkVersion 19
         targetSdkVersion versions.compiledSdk
         versionCode 1

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.graphics.ColorUtils
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.andiag.welegends.R
@@ -18,6 +17,7 @@ import com.andiag.welegends.views.main.ActivityMain
 import com.hariofspades.gradientartist.GradientArtistBasic
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.singleTop
+import org.jetbrains.anko.toast
 
 
 class ActivitySummoners : ActivityBase() {
@@ -84,7 +84,7 @@ class ActivitySummoners : ActivityBase() {
         }
         if (Version.isLoading()) {
             //Notify user data load should end
-            Toast.makeText(this, R.string.wait_static_data_end, Toast.LENGTH_SHORT).show()
+            toast(R.string.wait_static_data_end)
         }
     }
 

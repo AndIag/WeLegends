@@ -19,13 +19,14 @@ import com.andiag.welegends.models.Version
 import com.andiag.welegends.models.wrapped.database.Summoner
 import com.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import com.andiag.welegends.views.summoners.ViewFragmentFindSummoner
+import org.jetbrains.anko.toast
 
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
+class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -116,7 +117,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
             mPresenter!!.getSummonerByName(editSummonerName.text.toString(), region)
             return
         }
-        Toast.makeText(mParentContext, R.string.wait_static_data_end, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(R.string.wait_static_data_end)
     }
 
     /**
@@ -144,7 +145,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
      */
     override fun onSummonerNotFound(error: Int) {
         hideLoading()
-        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(error)
     }
 
     /**
@@ -152,7 +153,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
      */
     override fun onSummonerNotFound(message: String) {
         hideLoading()
-        Toast.makeText(mParentContext, message, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(message)
     }
     //endregion
 
@@ -170,7 +171,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
      */
     override fun onVersionLoadError(error: Int) {
         hideLoading()
-        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(error)
     }
 
     /**
@@ -178,7 +179,7 @@ class FragmentFindSummoner() : AIButterFragment<PresenterFragmentFindSummoner>()
      */
     override fun onVersionLoadError(error: String) {
         hideLoading()
-        Toast.makeText(mParentContext, error, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(error)
     }
     //endregion
 

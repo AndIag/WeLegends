@@ -6,13 +6,14 @@ import android.net.NetworkInfo
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.Version
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -60,7 +61,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
                     .setAction(R.string.retry, { Version.checkServerVersion(this) })
             return
         }
-        Toast.makeText(this, R.string.toast_error_loading_static_data, Toast.LENGTH_LONG).show()
+        longToast(R.string.toast_error_loading_static_data)
     }
 
     override fun onLoadError(resId: Int) {
@@ -70,7 +71,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
                     .setAction(R.string.retry, { Version.checkServerVersion(this) })
             return
         }
-        Toast.makeText(this, R.string.toast_error_loading_static_data, Toast.LENGTH_LONG).show()
+        longToast(R.string.toast_error_loading_static_data)
     }
     //endregion
 
@@ -89,7 +90,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
                     .subscribe { connectivity ->
                         WeLegends.connectivity = connectivity
                         if (connectivity.state != NetworkInfo.State.CONNECTED) {
-                            Toast.makeText(context, R.string.networkUnavailable, Toast.LENGTH_LONG).show()
+                            context.toast(R.string.networkUnavailable)
                         }
                     }
         }

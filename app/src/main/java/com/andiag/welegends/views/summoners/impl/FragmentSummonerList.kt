@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import butterknife.BindView
 import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.welegends.R
@@ -16,6 +15,7 @@ import com.andiag.welegends.views.adapters.AdapterSummonerList
 import com.andiag.welegends.views.summoners.ViewFragmentSummonerList
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import org.jetbrains.anko.toast
 import java.util.*
 
 
@@ -75,7 +75,7 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), 
 
     override fun onSummonersEmpty(error: Int?) {
         adapter!!.setNewData(null)
-        Toast.makeText(mParentContext, error!!, Toast.LENGTH_SHORT).show()
+        mParentContext.toast(error!!)
     }
     //endregion
 

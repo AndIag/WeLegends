@@ -15,10 +15,9 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     internal var sharedPreferences: SharedPreferences? = null
 
-    override fun onCreatePreferences(bundle: Bundle, s: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
     }
 
     override fun setDivider(divider: Drawable) {

@@ -25,7 +25,7 @@ import org.jetbrains.anko.toast
  * Created by Canalejas on 08/12/2016.
  */
 
-class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), ViewFragmentFindSummoner {
+class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -134,7 +134,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), 
      * Launch new activity with retrieved summoner
      * @param [summoner] retrieved summoner
      */
-    override fun onSummonerFound(summoner: Summoner) {
+    fun onSummonerFound(summoner: Summoner) {
         hideLoading()
         startActivity((mParentContext as ActivitySummoners).createMainIntent(summoner, false))
     }
@@ -142,7 +142,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), 
     /**
      * Handle find summoner errors
      */
-    override fun onSummonerNotFound(error: Int) {
+    fun onSummonerNotFound(error: Int) {
         hideLoading()
         mParentContext.toast(error)
     }
@@ -150,7 +150,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), 
     /**
      * Handle find summoner errors
      */
-    override fun onSummonerNotFound(message: String) {
+    fun onSummonerNotFound(message: String) {
         hideLoading()
         mParentContext.toast(message)
     }
@@ -160,32 +160,16 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>(), 
     /**
      * Update given version in view
      */
-    override fun onVersionLoaded(version: String) {
+    fun onVersionLoaded(version: String) {
         hideLoading()
         textVersion.text = version
-    }
-
-    /**
-     * Handle load version errors
-     */
-    override fun onVersionLoadError(error: Int) {
-        hideLoading()
-        mParentContext.toast(error)
-    }
-
-    /**
-     * Handle load version errors
-     */
-    override fun onVersionLoadError(error: String) {
-        hideLoading()
-        mParentContext.toast(error)
     }
     //endregion
 
     /**
      * Update view depending on message and loading state
      */
-    override fun onStaticDataLoadChange(message: String?) {
+    fun onStaticDataLoadChange(message: String?) {
         textVersion.text = message
     }
     //endregion

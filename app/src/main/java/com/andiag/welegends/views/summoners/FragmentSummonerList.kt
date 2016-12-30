@@ -21,7 +21,7 @@ import java.util.*
 /**
  * Created by andyq on 09/12/2016.
  */
-class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), ViewFragmentSummonerList {
+class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
 
     @BindView(R.id.recyclerSummoners)
     lateinit var recycler: RecyclerView
@@ -68,11 +68,11 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>(), 
     //endregion
 
     //region Callbacks
-    override fun onSummonersLoaded(summoners: List<Summoner>) {
+    fun onSummonersLoaded(summoners: List<Summoner>) {
         adapter!!.setNewData(summoners)
     }
 
-    override fun onSummonersEmpty(error: Int?) {
+    fun onSummonersEmpty(error: Int?) {
         adapter!!.setNewData(null)
         mParentContext.toast(error!!)
     }

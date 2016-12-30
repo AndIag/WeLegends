@@ -23,7 +23,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
-import com.andiag.welegends.models.entities.Summoner
 import com.andiag.welegends.views.FragmentSettings
 import com.andiag.welegends.views.adapters.AdapterNavDrawer
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -64,8 +63,6 @@ class ActivityMain : ActivityBase() {
     internal var adapter: AdapterNavDrawer? = null
     internal var pendingRunnable: Runnable? = null
     internal var handler = Handler()
-
-    private var summoner: Summoner? = null
 
     private fun initializeViews() {
         setSupportActionBar(toolbar)
@@ -133,14 +130,13 @@ class ActivityMain : ActivityBase() {
         initializeViews()
 
         if (intent != null) {
-            if (intent.getBooleanExtra(CONF_SEARCH_REQUIRED, true)) {
-                // TODO
-            }
+            // First activity load
+            addFragmentRoot(FragmentSummonerStats(), intent.extras)
         }
 
         if (savedInstanceState == null) {
             pendingRunnable = Runnable {
-//                val fragment = FragmentBlank.newInstance("0")
+                //                val fragment = FragmentBlank.newInstance("0")
 //                addFragmentRoot(fragment)
             }
             handler.post(pendingRunnable)
@@ -179,7 +175,7 @@ class ActivityMain : ActivityBase() {
 
 
         if (id == R.id.action_settings) {
-            addFragmentOnTop(FragmentSettings())
+            addFragmentOnTop(FragmentSettings(), FragmentSettings.TAG)
             title = getString(R.string.action_settings)
             return true
         }
@@ -187,8 +183,7 @@ class ActivityMain : ActivityBase() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun addFragmentOnTop(fragment: Fragment) {
-        val name: String? = null
+    fun addFragmentOnTop(fragment: Fragment, name: String) {
         displayBackStack(supportFragmentManager)
         supportFragmentManager
                 .beginTransaction()
@@ -200,10 +195,18 @@ class ActivityMain : ActivityBase() {
     }
 
     private fun addFragmentRoot(fragment: Fragment) {
+        addFragmentRoot(fragment, null)
+    }
+
+    private fun addFragmentRoot(fragment: Fragment, arguments: Bundle?) {
         val fragmentManager = supportFragmentManager
         displayBackStack(fragmentManager)
         // Empty the backstack
         fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        // Add arguments to the fragment if required
+        if (arguments != null) {
+            fragment.arguments = arguments
+        }
         // Add the new root fragment
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, fragment)

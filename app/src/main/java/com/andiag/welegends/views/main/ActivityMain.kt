@@ -1,6 +1,7 @@
 package com.andiag.welegends.views.main
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
@@ -21,16 +22,43 @@ import android.widget.TextView
 import butterknife.BindArray
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
 import com.andiag.welegends.models.wrapped.database.Summoner
+import com.andiag.welegends.models.wrapped.database.ranked.QueueStats
+import com.andiag.welegends.models.wrapped.database.ranked.QueueType
 import com.andiag.welegends.views.FragmentSettings
 import com.andiag.welegends.views.adapters.AdapterNavDrawer
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import java.util.*
 
-class ActivityMain : ActivityBase() {
+class ActivityMain : ActivityBase(), AIInterfaceLoaderHandlerPresenter<Map<QueueType, QueueStats>> {
+    override fun onLoadProgressChange(p0: String?) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onLoadProgressChange(p0: Int) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onLoadSuccess(p0: Map<QueueType, QueueStats>?) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onLoadError(p0: Int) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onLoadError(p0: String?) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getContext(): Context {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private val TAG: String = ActivityMain::class.java.simpleName
 
     companion object {
@@ -38,6 +66,7 @@ class ActivityMain : ActivityBase() {
         val VAL_SUMMONER_ID: String = "summoner_id"
         val VAL_SUMMONER_RIOT_ID: String = "summoner_riot_id"
         val VAL_SUMMONER_LVL: String = "summoner_lvl"
+        val VAL_REGION: String = "region"
     }
 
     private val BACK_STACK_ROOT_TAG = "ROOT_FRAGMENT"
@@ -134,6 +163,7 @@ class ActivityMain : ActivityBase() {
         if (intent != null) {
             if (intent.getBooleanExtra(CONF_SEARCH_REQUIRED, true)) {
                 // TODO
+                com.andiag.welegends.models.Summoner.getSummonerDetails(this, intent.getStringExtra(VAL_REGION), intent.getLongExtra(VAL_SUMMONER_RIOT_ID, -1))
             }
         }
 

@@ -6,6 +6,8 @@ import com.andiag.welegends.R
 import com.andiag.welegends.models.wrapped.api.RestClient
 import com.andiag.welegends.models.wrapped.database.Summoner
 import com.andiag.welegends.models.wrapped.database.Summoner_Table
+import com.andiag.welegends.models.wrapped.database.ranked.QueueStats
+import com.andiag.welegends.models.wrapped.database.ranked.QueueType
 import com.andiag.welegends.presenters.summoners.PresenterSummonerLoader
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
@@ -76,6 +78,27 @@ object Summoner {
         }
     }
 
+    fun getSummonerDetails(caller: AIInterfaceLoaderHandlerPresenter<Map<QueueType, QueueStats>>, region: String, id: Long) {
+        val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
+        call.enqueue(object : Callback<Map<QueueType, QueueStats>> {
+
+            override fun onResponse(call: Call<Map<QueueType, QueueStats>>?, response: Response<Map<QueueType, QueueStats>>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, response.body().toString())
+                    return
+                }
+                Log.e(TAG, "Error %s loading summoner detials".format(response.message()))
+                caller.onLoadError(response.message())
+            }
+
+            override fun onFailure(call: Call<Map<QueueType, QueueStats>>?, t: Throwable) {
+                Log.e(TAG, "Error %s loading summoner details".format(t.message))
+                caller.onLoadError(R.string.error404)
+            }
+
+        })
+    }
+
     /**
      * Return a list of summoners order by date DESC
      * @param [caller] contains error and success callbacks
@@ -83,7 +106,7 @@ object Summoner {
      * @return [MutableList] of [Summoner]
      */
     fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
-        return caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
+        caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
                 .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }
 

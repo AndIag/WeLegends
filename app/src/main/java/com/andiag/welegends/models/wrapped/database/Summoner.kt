@@ -15,7 +15,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-class Summoner() : BaseModel(), Serializable {
+class Summoner : BaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @SerializedName("id") @Unique @Column var riotId: Long? = null

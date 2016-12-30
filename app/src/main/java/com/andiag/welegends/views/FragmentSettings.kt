@@ -49,7 +49,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     companion object {
-
         val TAG = "FragmentSettings"
     }
 }

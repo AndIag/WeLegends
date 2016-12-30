@@ -2,9 +2,9 @@ package com.andiag.welegends.models.utils
 
 import android.util.Log
 import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
-import com.andiag.welegends.models.wrapped.api.RestClient
-import com.andiag.welegends.models.wrapped.api.dto.GenericStaticData
-import com.andiag.welegends.models.wrapped.database.static_data.generics.KeyInMapTypeAdapter
+import com.andiag.welegends.models.api.RestClient
+import com.andiag.welegends.models.entities.static_data.generics.KeyInMapTypeAdapter
+import com.andiag.welegends.models.utils.dto.GenericStaticData
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.structure.BaseModel
 import org.jetbrains.anko.doAsync

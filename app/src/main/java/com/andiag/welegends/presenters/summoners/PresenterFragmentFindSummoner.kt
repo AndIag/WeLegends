@@ -2,11 +2,11 @@ package com.andiag.welegends.presenters.summoners
 
 import android.support.annotation.StringRes
 import com.andiag.core.presenters.AIPresenter
-import com.andiag.welegends.models.Summoner
-import com.andiag.welegends.models.Version
-import com.andiag.welegends.views.summoners.impl.ActivitySummoners
-import com.andiag.welegends.views.summoners.impl.FragmentFindSummoner
-import com.andiag.welegends.models.wrapped.database.Summoner as SummonerEntity
+import com.andiag.welegends.models.EPSummoner
+import com.andiag.welegends.models.EPVersion
+import com.andiag.welegends.views.summoners.ActivitySummoners
+import com.andiag.welegends.views.summoners.FragmentFindSummoner
+import com.andiag.welegends.models.entities.Summoner as SummonerEntity
 
 
 /**
@@ -20,29 +20,29 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
     override fun onViewAttached() {
         /**
          * Try to retrieve server version.
-         * After Version.getVersion(this) execution 2 things could happen
+         * After EPVersion.getVersion(this) execution 2 things could happen
          *      - We have server version loaded
-         *      - We have null but a new callback was added to [Version]
+         *      - We have null but a new callback was added to [EPVersion]
          */
-        this.version = Version.getVersion(this)
+        this.version = EPVersion.getVersion(this)
     }
 
     /**
      * Try to find summoner in server
      */
     fun getSummonerByName(name: String, region: String) {
-        Summoner.getSummonerByName(this, name, region)
+        EPSummoner.getSummonerByName(this, name, region)
     }
 
     /**
      * Return server version or null if still loading
      */
     fun getServerVersion(): String? {
-        if (version == null && !Version.isLoading()) {
+        if (version == null && !EPVersion.isLoading()) {
             /**
              * See if static load has ended with null as param
              */
-            version = Version.getVersion(null)
+            version = EPVersion.getVersion(null)
         }
         return version
     }

@@ -3,10 +3,10 @@ package com.andiag.welegends.presenters.summoners
 import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
-import com.andiag.welegends.models.wrapped.database.Summoner
-import com.andiag.welegends.views.summoners.impl.ActivitySummoners
-import com.andiag.welegends.views.summoners.impl.FragmentSummonerList
-import com.andiag.welegends.models.Summoner as SummonerWrapper
+import com.andiag.welegends.models.entities.Summoner
+import com.andiag.welegends.views.summoners.ActivitySummoners
+import com.andiag.welegends.views.summoners.FragmentSummonerList
+import com.andiag.welegends.models.EPSummoner as SummonerWrapper
 
 /**
  * Created by andyq on 15/12/2016.

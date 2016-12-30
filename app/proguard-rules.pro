@@ -11,7 +11,7 @@
 
 
 # DBFlow
--keep class com.andiag.welegends.models.wrapped.database.** { *; }
+-keep class com.andiag.welegends.models.database.** { *; }
 -keep class com.andiag.welegends.WeLegendsDatabase { *; }
 -keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; }
 

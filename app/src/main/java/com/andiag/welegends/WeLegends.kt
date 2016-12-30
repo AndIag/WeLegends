@@ -7,7 +7,7 @@ import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
 import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
-import com.andiag.welegends.models.Version
+import com.andiag.welegends.models.EPVersion
 import com.github.pwittchen.reactivenetwork.library.Connectivity
 import com.github.pwittchen.reactivenetwork.library.ReactiveNetwork
 import com.raizlabs.android.dbflow.config.FlowConfig
@@ -40,8 +40,8 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
         initNetworkObserver(this)
 
         if (WeLegends.isNetworkAvailable()) {
-            Log.i(TAG, "Checking Server Version")
-            Version.checkServerVersion(this)
+            Log.i(TAG, "Checking Server EPVersion")
+            EPVersion.checkServerVersion(this)
         }
 
     }
@@ -51,14 +51,14 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
     }
 
     /**
-     * Required callbacks for [Version.checkServerVersion]
+     * Required callbacks for [EPVersion.checkServerVersion]
      */
     //region Callbacks
     override fun onLoadError(message: String?) {
         Log.e(TAG, message)
         if (view != null) {
             Snackbar.make(view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry, { Version.checkServerVersion(this) })
+                    .setAction(R.string.retry, { EPVersion.checkServerVersion(this) })
             return
         }
         longToast(R.string.toast_error_loading_static_data)
@@ -68,7 +68,7 @@ class WeLegends : Application(), AIInterfaceErrorHandlerPresenter {
         Log.e(TAG, getString(resId))
         if (view != null) {
             Snackbar.make(view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.retry, { Version.checkServerVersion(this) })
+                    .setAction(R.string.retry, { EPVersion.checkServerVersion(this) })
             return
         }
         longToast(R.string.toast_error_loading_static_data)

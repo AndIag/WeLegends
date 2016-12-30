@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:baselineAligned="false"
-    tools:context=".views.summoners.impl.ActivitySummoners">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:baselineAligned="false"
+                tools:context=".views.summoners.ActivitySummoners">
 
     <com.hariofspades.gradientartist.GradientArtistBasic
         android:id="@+id/imageBackground"

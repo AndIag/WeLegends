@@ -1,6 +1,6 @@
 package com.andiag.welegends.views.summoners
 
-import com.andiag.welegends.models.wrapped.database.Summoner
+import com.andiag.welegends.models.entities.Summoner
 
 /**
  * Created by andyq on 09/12/2016.

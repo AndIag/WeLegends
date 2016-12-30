@@ -20,7 +20,7 @@ class WeLegendsDatabase {
 
         fun recreateStaticTables(context: Context) {
             try {
-                Log.i(TAG, "Recreating Database 4new Version")
+                Log.i(TAG, "Recreating Database 4new EPVersion")
                 FlowManager.getDatabase(WeLegendsDatabase.NAME).reset(context.applicationContext)
                 // TODO make this recreate only static data
             } catch (e: InvalidDBConfiguration) {

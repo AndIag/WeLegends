@@ -9,8 +9,17 @@ import com.andiag.welegends.views.main.FragmentSummonerStats
  */
 
 class PresenterFragmentSummonerStats private constructor() : AIPresenter<ActivityMain, FragmentSummonerStats>() {
-    // TODO not implemented jet
+    private val TAG: String = PresenterFragmentSummonerStats::class.java.simpleName
 
+    private var mSummonerId: Long? = null
+    private var mSummonerRiotId: Long? = null
+    private var mRegion: String? = null
+    private var mLevel: Int? = null
+    private var mSearchRequired: Boolean? = null
+
+    fun prepareSummonerStats(summonerId: Long?, summonerRiotId: Long?, region: String?, level: Int?, searchRequired: Boolean?) {
+        // TODO
+    }
 
     companion object {
         private var presenter: PresenterFragmentSummonerStats? = null

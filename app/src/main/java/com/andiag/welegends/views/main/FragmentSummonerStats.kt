@@ -16,11 +16,11 @@ class FragmentSummonerStats : AIButterFragment<PresenterFragmentSummonerStats>()
         val CONF_SEARCH_REQUIRED: String = ActivityMain.CONF_SEARCH_REQUIRED
         val VAL_SUMMONER_ID: String = ActivityMain.VAL_SUMMONER_ID
         val VAL_SUMMONER_RIOT_ID: String = ActivityMain.VAL_SUMMONER_RIOT_ID
-        val VAL_SUMMONER_LVL: String = ActivityMain.VAL_SUMMONER_LVL
-        val VAL_REGION: String = ActivityMain.VAL_REGION
+        val VAL_SUMMONER_NAME: String = ActivityMain.VAL_SUMMONER_NAME
+        val VAL_SUMMONER_REGION: String = ActivityMain.VAL_SUMMONER_REGION
     }
 
-    private var mSummonerId: Long? = null
+    private var mSummonerId: Int? = null
     private var mSummonerRiotId: Long? = null
 
     override fun onInitLayout() {
@@ -33,7 +33,7 @@ class FragmentSummonerStats : AIButterFragment<PresenterFragmentSummonerStats>()
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState!!.putLong(VAL_SUMMONER_ID, mSummonerId!!)
+        outState!!.putInt(VAL_SUMMONER_ID, mSummonerId!!)
         outState.putLong(VAL_SUMMONER_RIOT_ID, mSummonerRiotId!!)
     }
 
@@ -49,24 +49,24 @@ class FragmentSummonerStats : AIButterFragment<PresenterFragmentSummonerStats>()
      */
     private fun prepareSummonerStats(args: Bundle?, savedInstanceState: Bundle?) {
         var region: String? = null
-        var level: Int? = null
+        var name: String? = null
         var searchRequired: Boolean? = null
 
         if (args != null) {
-            mSummonerId = args.getLong(VAL_SUMMONER_ID)
+            mSummonerId = args.getInt(VAL_SUMMONER_ID)
             mSummonerRiotId = args.getLong(VAL_SUMMONER_RIOT_ID)
-            region = args.getString(VAL_REGION)
-            level = args.getInt(VAL_SUMMONER_LVL)
+            name = args.getString(VAL_SUMMONER_NAME)
+            region = args.getString(VAL_SUMMONER_REGION)
             searchRequired = args.getBoolean(CONF_SEARCH_REQUIRED)
         }
 
         if (savedInstanceState != null) {
-            mSummonerId = savedInstanceState.getLong(VAL_SUMMONER_ID)
+            mSummonerId = savedInstanceState.getInt(VAL_SUMMONER_ID)
             mSummonerRiotId = savedInstanceState.getLong(VAL_SUMMONER_RIOT_ID)
             searchRequired = false
         }
 
-        mPresenter.prepareSummonerStats(mSummonerId, mSummonerRiotId, region, level, searchRequired)
+        mPresenter.prepareSummonerStats(mSummonerId!!, mSummonerRiotId!!, region, name, searchRequired!!)
     }
 
 }

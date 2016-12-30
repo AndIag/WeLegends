@@ -1,9 +1,11 @@
 package com.andiag.welegends.presenters.summoners
 
 import android.support.annotation.StringRes
+import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.models.EPSummoner
 import com.andiag.welegends.models.EPVersion
+import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import com.andiag.welegends.views.summoners.FragmentFindSummoner
 import com.andiag.welegends.models.entities.Summoner as SummonerEntity
@@ -12,7 +14,9 @@ import com.andiag.welegends.models.entities.Summoner as SummonerEntity
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner private constructor() : AIPresenter<ActivitySummoners, FragmentFindSummoner>(), PresenterSummonerLoader {
+class PresenterFragmentFindSummoner private constructor() : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
+        PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<String> {
+
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
 
     var version: String? = null

@@ -52,8 +52,8 @@ class ActivitySummoners : ActivityBase() {
     fun createMainIntent(summoner: Summoner, isLocal: Boolean): Intent {
         return intentFor<ActivityMain>(ActivityMain.VAL_SUMMONER_ID to summoner.mid,
                 ActivityMain.VAL_SUMMONER_RIOT_ID to summoner.riotId,
-                ActivityMain.VAL_SUMMONER_LVL to summoner.summonerLevel,
-                ActivityMain.VAL_REGION to summoner.region,
+                ActivityMain.VAL_SUMMONER_NAME to summoner.name,
+                ActivityMain.VAL_SUMMONER_REGION to summoner.region,
                 ActivityMain.CONF_SEARCH_REQUIRED to isLocal).singleTop()
     }
 

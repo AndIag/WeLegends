@@ -36,8 +36,8 @@ class ActivityMain : ActivityBase() {
         val CONF_SEARCH_REQUIRED: String = "is_searched"
         val VAL_SUMMONER_ID: String = "summoner_id"
         val VAL_SUMMONER_RIOT_ID: String = "summoner_riot_id"
-        val VAL_SUMMONER_LVL: String = "summoner_lvl"
-        val VAL_REGION: String = "region"
+        val VAL_SUMMONER_NAME: String = "summoner_name"
+        val VAL_SUMMONER_REGION: String = "region"
     }
 
     private val BACK_STACK_ROOT_TAG = "ROOT_FRAGMENT"

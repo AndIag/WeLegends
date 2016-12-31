@@ -16,8 +16,10 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.HttpURLConnection
 import java.net.URLEncoder
 import java.util.*
+import java.util.Map
 
 /**
  * Created by Canalejas on 14/12/2016.
@@ -27,6 +29,7 @@ object EPSummoner {
 
     /**
      * Try to find a [Summoner] in local database or in riot server
+     * @param [caller] handles request responses
      * @param [name]
      * @param [region]
      * @return [PresenterSummonerLoader.onSummonerFound] with [EPSummoner] data
@@ -52,20 +55,33 @@ object EPSummoner {
         }
     }
 
-    fun getSummonerDetails(caller: AIInterfaceLoaderHandlerPresenter<Map<QueueType, QueueStats>>, region: String, id: Long) {
+    /**
+     * Request summoner leagues
+     * @param [caller] handles request responses
+     * @param [region] summoner server region
+     * @param [id] summoner id
+     * @return [AIInterfaceLoaderHandlerPresenter.onLoadSuccess] with leagues in [Map] format
+     *      or call [AIInterfaceLoaderHandlerPresenter.onLoadError]
+     */
+    fun getSummonerLeagues(caller: AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
         val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
-        call.enqueue(object : Callback<Map<QueueType, QueueStats>> {
+        call.enqueue(object : Callback<MutableMap<QueueType, QueueStats>> {
 
-            override fun onResponse(call: Call<Map<QueueType, QueueStats>>?, response: Response<Map<QueueType, QueueStats>>) {
+            override fun onResponse(call: Call<MutableMap<QueueType, QueueStats>>?, response: Response<MutableMap<QueueType, QueueStats>>) {
                 if (response.isSuccessful) {
-                    Log.d(TAG, response.body().toString())
-                    return
+                    Log.i(TAG, "Leagues loaded for summoner %s".format(id))
+                    return caller.onLoadSuccess(response.body())
                 }
-                Log.e(TAG, "Error %s loading summoner detials".format(response.message()))
+                if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+                    // If summoner has no queue entries
+                    Log.i(TAG, "No leagues found for summoner %s".format(id))
+                    return caller.onLoadSuccess(HashMap<QueueType, QueueStats>())
+                }
+                Log.e(TAG, "Error %s loading summoner leagues".format(response.message()))
                 caller.onLoadError(response.message())
             }
 
-            override fun onFailure(call: Call<Map<QueueType, QueueStats>>?, t: Throwable) {
+            override fun onFailure(call: Call<MutableMap<QueueType, QueueStats>>?, t: Throwable) {
                 Log.e(TAG, "Error %s loading summoner details".format(t.message))
                 caller.onLoadError(R.string.error404)
             }
@@ -87,7 +103,8 @@ object EPSummoner {
     }
 
     /**
-     * Try to find a [Summoner] in riot database
+     * Request a [Summoner] from riot database
+     * @param [caller] handles request responses
      * @param [name]
      * @param [region]
      * @return [Summoner] or null

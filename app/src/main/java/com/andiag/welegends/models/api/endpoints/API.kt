@@ -18,6 +18,6 @@ interface API {
     fun getSummonerByName(@Query("region") region: String, @Query("summoner_name") name: String): Call<Summoner>
 
     @GET("summoners/{id}")
-    fun getSummonerDetails(@Path("id") id: Long, @Query("region") region: String): Call<Map<QueueType, QueueStats>>
+    fun getSummonerDetails(@Path("id") id: Long, @Query("region") region: String): Call<MutableMap<QueueType, QueueStats>>
 
 }

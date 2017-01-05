@@ -9,7 +9,7 @@ buildscript {
 
                     espresso   : "2.2.2",
 
-                    dbflow     : "4.0.0-beta3",
+                    dbflow     : "4.0.0-beta5",
                     retrofit   : "2.1.0",
                     butterknife: "8.4.0"
         ]

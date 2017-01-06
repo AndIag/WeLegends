@@ -83,6 +83,7 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$versions.dbflow@aar"
 
     compile 'com.github.iagocanalejas.andiag-mvp:commons:0.2.1'
+    compile 'com.github.andy135:StatedLayout:1.0.0'
 }
 
 kapt {

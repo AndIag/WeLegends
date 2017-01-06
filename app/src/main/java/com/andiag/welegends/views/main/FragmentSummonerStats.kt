@@ -2,19 +2,20 @@ package com.andiag.welegends.views.main
 
 import android.os.Bundle
 import android.view.View
-import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.welegends.R
+import com.andiag.welegends.common.base.FragmentBase
 import com.andiag.welegends.models.entities.Summoner
 import com.andiag.welegends.models.entities.league.QueueStats
 import com.andiag.welegends.models.entities.league.QueueType
 import com.andiag.welegends.presenters.main.PresenterFragmentSummonerStats
 import org.jetbrains.anko.toast
+import com.andiag.statedlayout.StatedLayout
 
 /**
  * Created by Canalejas on 30/12/2016.
  */
 
-class FragmentSummonerStats : AIButterFragment<PresenterFragmentSummonerStats>() {
+class FragmentSummonerStats : FragmentBase<PresenterFragmentSummonerStats>() {
 
     companion object {
         val TAG: String = FragmentSummonerStats::class.java.simpleName
@@ -54,6 +55,11 @@ class FragmentSummonerStats : AIButterFragment<PresenterFragmentSummonerStats>()
     fun notifyDataIsReady(summoner: Summoner, leagues: MutableMap<QueueType, QueueStats>?) {
         mParentContext.toast("Data Load Ends")
         // TODO
+        statedLayout.setContent()
+    }
+
+    fun notifyError(error:String?){
+        statedLayout.setError()
     }
 
     /**

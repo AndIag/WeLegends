@@ -86,7 +86,7 @@ class PresenterFragmentSummonerStats private constructor() : AIPresenter<Activit
     }
 
     override fun onLoadError(p0: String?) {
-
+        view.notifyError(p0)
     }
 
     override fun onLoadError(p0: Int) {

@@ -129,15 +129,15 @@ class ActivityMain : ActivityBase() {
         ButterKnife.bind(this)
         initializeViews()
 
-        if (intent != null) {
-            // First activity load
-            addFragmentRoot(FragmentSummonerStats(), intent.extras)
-        }
+//        if (intent != null) {
+//            // First activity load
+//            addFragmentRoot(FragmentSummonerStats(), intent.extras)
+//        }
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && intent != null) {
             pendingRunnable = Runnable {
                 //                val fragment = FragmentBlank.newInstance("0")
-//                addFragmentRoot(fragment)
+                addFragmentRoot(FragmentSummonerStats(), intent.extras)
             }
             handler.post(pendingRunnable)
         }

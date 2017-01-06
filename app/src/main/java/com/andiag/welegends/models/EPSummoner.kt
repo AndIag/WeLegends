@@ -43,7 +43,7 @@ object EPSummoner {
                 Log.i(TAG, "EPSummoner %s found in database".format(summoner.name))
                 // Update lastUpdate param
                 summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                summoner.save()
+                summoner.update()
                 caller.onSummonerFound(summoner)
                 return
             }

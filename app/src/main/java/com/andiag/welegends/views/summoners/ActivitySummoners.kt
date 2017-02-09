@@ -1,26 +1,29 @@
 package com.andiag.welegends.views.summoners
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.graphics.ColorUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
-import com.andiag.welegends.models.EPVersion
+import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.entities.Summoner
+import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.main.ActivityMain
 import com.hariofspades.gradientartist.GradientArtistBasic
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.singleTop
-import org.jetbrains.anko.toast
 
 
-class ActivitySummoners : ActivityBase() {
+class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
     private val TAG = ActivitySummoners::class.java.simpleName
 
     @BindView(R.id.imageBackground)
@@ -31,6 +34,9 @@ class ActivitySummoners : ActivityBase() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_summoner)
         ButterKnife.bind(this)
+
+        Log.i(TAG, "Checking Server EPVersion")
+        VersionRepository.checkServerVersion(this)
 
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)
@@ -74,7 +80,7 @@ class ActivitySummoners : ActivityBase() {
      * If container exist and version are loaded change fragment to summoner history
      */
     fun onClickSwapFragment() {
-        if (findViewById(R.id.fragmentContainer) != null && !EPVersion.isLoading()) {
+        if (findViewById(R.id.fragmentContainer) != null && !VersionRepository.isLoading()) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, FragmentSummonerList(), FragmentSummonerList.TAG)
                     .addToBackStack(null)
@@ -83,10 +89,28 @@ class ActivitySummoners : ActivityBase() {
             imageBackground.visibility = View.GONE
             return
         }
-        if (EPVersion.isLoading()) {
+        if (VersionRepository.isLoading()) {
             //Notify user data load should end
-            toast(R.string.wait_static_data_end)
+            Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_INDEFINITE)
         }
     }
+
+    override fun getContext(): Context {
+        return this
+    }
+
+    //region Callbacks
+    override fun onLoadError(message: String?) {
+        Log.e(TAG, message)
+        Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, { VersionRepository.checkServerVersion(this) })
+    }
+
+    override fun onLoadError(resId: Int) {
+        Log.e(TAG, getString(resId))
+        Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, { VersionRepository.checkServerVersion(this) })
+    }
+    //endregion*/
 
 }

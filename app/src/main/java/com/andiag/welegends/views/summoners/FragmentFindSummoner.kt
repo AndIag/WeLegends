@@ -13,10 +13,11 @@ import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
 import com.andiag.commons.fragments.AIButterFragment
+import com.andiag.commons.fragments.FragmentLayout
+import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
-import com.andiag.welegends.WeLegends
-import com.andiag.welegends.models.EPVersion
-import com.andiag.welegends.models.entities.Summoner
+import com.andiag.welegends.models.VersionRepository
+import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
 import org.jetbrains.anko.toast
 
@@ -24,7 +25,8 @@ import org.jetbrains.anko.toast
 /**
  * Created by Canalejas on 08/12/2016.
  */
-
+@Presenter(presenter = PresenterFragmentFindSummoner::class)
+@FragmentLayout(res = R.layout.fragment_find_summoner)
 class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
 
     @BindView(R.id.editTextSummoner)
@@ -54,19 +56,10 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
                 .hideSoftInputFromWindow(editSummonerName.windowToken, 0)
     }
 
-    override fun onInitLayout() {
-        mFragmentLayout = R.layout.fragment_find_summoner
-    }
-
-    override fun onInitPresenter() {
-        mPresenter = PresenterFragmentFindSummoner.getInstance()
-    }
-
     //region Fragment Lifecycle
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
-        WeLegends.view = view
 
         if (mPresenter.getServerVersion() == null) {
             showLoading()
@@ -89,7 +82,6 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        WeLegends.view = null
     }
 
     //endregion
@@ -111,7 +103,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
     fun findSummoner() {
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(editSummonerName.windowToken, 0)
-        if (!EPVersion.isLoading()) {
+        if (!VersionRepository.isLoading()) {
             showLoading()
             mPresenter!!.getSummonerByName(editSummonerName.text.toString(), region)
             return

@@ -1,6 +1,6 @@
 package com.andiag.welegends.models.api.endpoints
 
-import com.andiag.welegends.models.entities.static_data.*
+import com.andiag.welegends.models.database.static_data.*
 import com.andiag.welegends.models.utils.dto.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET

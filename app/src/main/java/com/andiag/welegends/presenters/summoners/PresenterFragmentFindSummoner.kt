@@ -1,20 +1,20 @@
 package com.andiag.welegends.presenters.summoners
 
 import android.support.annotation.StringRes
-import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
-import com.andiag.welegends.models.EPSummoner
-import com.andiag.welegends.models.EPVersion
+import com.andiag.welegends.models.SummonerRepository
+import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import com.andiag.welegends.views.summoners.FragmentFindSummoner
-import com.andiag.welegends.models.entities.Summoner as SummonerEntity
+import com.andiag.welegends.models.database.Summoner as SummonerEntity
 
 
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner private constructor() : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
+class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
         PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<String> {
 
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
@@ -28,25 +28,25 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
          *      - We have server version loaded
          *      - We have null but a new callback was added to [EPVersion]
          */
-        this.version = EPVersion.getVersion(this)
+        this.version = VersionRepository.getVersion(this)
     }
 
     /**
      * Try to find summoner in server
      */
     fun getSummonerByName(name: String, region: String) {
-        EPSummoner.getSummonerByName(this, name, region)
+        SummonerRepository.getSummonerByName(this, name, region)
     }
 
     /**
      * Return server version or null if still loading
      */
     fun getServerVersion(): String? {
-        if (version == null && !EPVersion.isLoading()) {
+        if (version == null && !VersionRepository.isLoading()) {
             /**
              * See if static load has ended with null as param
              */
-            version = EPVersion.getVersion(null)
+            version = VersionRepository.getVersion(null)
         }
         return version
     }
@@ -97,16 +97,5 @@ class PresenterFragmentFindSummoner private constructor() : AIPresenter<Activity
         }
     }
     //endregion
-
-    companion object {
-        private var presenter: PresenterFragmentFindSummoner? = null
-
-        fun getInstance(): PresenterFragmentFindSummoner {
-            if (presenter == null) {
-                presenter = PresenterFragmentFindSummoner()
-            }
-            return presenter!!
-        }
-    }
 
 }

@@ -2,19 +2,21 @@ package com.andiag.welegends.views.main
 
 import android.os.Bundle
 import android.view.View
+import com.andiag.commons.fragments.FragmentLayout
+import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.FragmentBase
-import com.andiag.welegends.models.entities.Summoner
-import com.andiag.welegends.models.entities.league.QueueStats
-import com.andiag.welegends.models.entities.league.QueueType
+import com.andiag.welegends.common.entities.league.QueueStats
+import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.main.PresenterFragmentSummonerStats
 import org.jetbrains.anko.toast
-import com.andiag.statedlayout.StatedLayout
 
 /**
  * Created by Canalejas on 30/12/2016.
  */
-
+@Presenter(presenter = PresenterFragmentSummonerStats::class)
+@FragmentLayout(res = R.layout.fragment_summoner_stats)
 class FragmentSummonerStats : FragmentBase<PresenterFragmentSummonerStats>() {
 
     companion object {
@@ -29,14 +31,6 @@ class FragmentSummonerStats : FragmentBase<PresenterFragmentSummonerStats>() {
     private var mSummonerId: Int? = null
     private var mSummonerRiotId: Long? = null
     private var mRegion: String? = null
-
-    override fun onInitLayout() {
-        mFragmentLayout = R.layout.fragment_summoner_stats
-    }
-
-    override fun onInitPresenter() {
-        mPresenter = PresenterFragmentSummonerStats.getInstance()
-    }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)

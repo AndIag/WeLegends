@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import butterknife.BindView
 import com.andiag.commons.fragments.AIButterFragment
+import com.andiag.commons.fragments.FragmentLayout
+import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
-import com.andiag.welegends.models.EPVersion
-import com.andiag.welegends.models.entities.Summoner
+import com.andiag.welegends.models.VersionRepository
+import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.summoners.PresenterFragmentSummonerList
 import com.andiag.welegends.views.adapters.AdapterSummonerList
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,6 +23,8 @@ import java.util.*
 /**
  * Created by andyq on 09/12/2016.
  */
+@Presenter(presenter = PresenterFragmentSummonerList::class)
+@FragmentLayout(res = R.layout.fragment_summoner_list)
 class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
 
     @BindView(R.id.recyclerSummoners)
@@ -29,14 +33,6 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
     var adapter: AdapterSummonerList? = null
 
     //region Fragment Lifecycle
-    override fun onInitLayout() {
-        mFragmentLayout = R.layout.fragment_summoner_list
-    }
-
-    override fun onInitPresenter() {
-        mPresenter = PresenterFragmentSummonerList.getInstance()
-    }
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,7 +45,7 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
 
     //region View Config
     private fun initAdapter() {
-        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), EPVersion.getVersion(null)!!)
+        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), VersionRepository.getVersion(null)!!)
         adapter!!.emptyView = LayoutInflater.from(mParentContext).inflate(R.layout.empty_summoner_view, null)
         adapter!!.openLoadAnimation()
         recycler.adapter = adapter

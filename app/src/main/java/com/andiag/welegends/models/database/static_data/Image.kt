@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.entities.static_data
+package com.andiag.welegends.models.database.static_data
 
 import com.andiag.welegends.WeLegendsDatabase
 import com.google.gson.annotations.Expose

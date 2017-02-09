@@ -1,8 +1,8 @@
 package com.andiag.welegends.models.api.endpoints
 
-import com.andiag.welegends.models.entities.Summoner
-import com.andiag.welegends.models.entities.league.QueueStats
-import com.andiag.welegends.models.entities.league.QueueType
+import com.andiag.welegends.common.entities.league.QueueStats
+import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.models.database.Summoner
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

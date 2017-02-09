@@ -1,13 +1,13 @@
 package com.andiag.welegends.models
 
 import android.util.Log
-import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
+import com.andiag.welegends.common.entities.league.QueueStats
+import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.entities.Summoner
-import com.andiag.welegends.models.entities.Summoner_Table
-import com.andiag.welegends.models.entities.league.QueueStats
-import com.andiag.welegends.models.entities.league.QueueType
+import com.andiag.welegends.models.database.Summoner
+import com.andiag.welegends.models.database.Summoner_Table
 import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
@@ -24,7 +24,7 @@ import java.util.Map
 /**
  * Created by Canalejas on 14/12/2016.
  */
-object EPSummoner {
+object SummonerRepository {
     private val TAG: String = Summoner::class.java.simpleName
 
     /**
@@ -32,7 +32,7 @@ object EPSummoner {
      * @param [caller] handles request responses
      * @param [name]
      * @param [region]
-     * @return [PresenterSummonerLoader.onSummonerFound] with [EPSummoner] data
+     * @return [PresenterSummonerLoader.onSummonerFound] with [SummonerRepository] data
      *      or call [PresenterSummonerLoader.onSummonerLoadError]
      */
     fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
@@ -153,7 +153,7 @@ object EPSummoner {
      * Return a list of summoners order by date DESC
      * @param [caller] contains error and success callbacks
      * @param [limit] max number of elements returned
-     * @return [MutableList] of [EPSummoner]
+     * @return [MutableList] of [SummonerRepository]
      */
     fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
         caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)

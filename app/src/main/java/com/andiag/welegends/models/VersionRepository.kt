@@ -2,12 +2,12 @@ package com.andiag.welegends.models
 
 import android.content.Context
 import android.util.Log
-import com.andiag.commons.interfaces.AIInterfaceErrorHandlerPresenter
-import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.entities.static_data.*
+import com.andiag.welegends.models.database.static_data.*
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -20,11 +20,11 @@ import java.util.concurrent.Callable
 /**
  * Created by Canalejas on 08/12/2016.
  */
-object EPVersion {
-    private val TAG = EPVersion::class.java.simpleName
+object VersionRepository {
+    private val TAG = VersionRepository::class.java.simpleName
 
     private val FILE_NAME = "VersionData"
-    private val ARG_VERSION = "EPVersion"
+    private val ARG_VERSION = "version"
     private var version: String? = null
 
     private var caller: AIInterfaceLoaderHandlerPresenter<String>? = null

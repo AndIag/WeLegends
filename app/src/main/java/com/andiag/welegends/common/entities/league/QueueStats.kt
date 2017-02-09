@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.entities.league
+package com.andiag.welegends.common.entities.league
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

@@ -2,7 +2,7 @@ package com.andiag.welegends.views.adapters
 
 import com.andiag.welegends.R
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.entities.Summoner
+import com.andiag.welegends.models.database.Summoner
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

@@ -3,15 +3,13 @@
 buildscript {
     ext.kotlin_version = '1.0.6'
     ext {
-        versions = [supportLib : "25.1.0",
+        versions = [supportLib : "25.1.1",
                     buildTools : "25.0.2",
                     compiledSdk: 25,
 
-                    espresso   : "2.2.2",
-
                     dbflow     : "4.0.0-beta5",
                     retrofit   : "2.1.0",
-                    butterknife: "8.4.0"
+                    butterknife: "8.5.1"
         ]
     }
     repositories {
@@ -19,7 +17,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

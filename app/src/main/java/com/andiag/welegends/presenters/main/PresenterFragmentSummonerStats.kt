@@ -1,12 +1,12 @@
 package com.andiag.welegends.presenters.main
 
 import android.util.Log
-import com.andiag.commons.interfaces.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
-import com.andiag.welegends.models.EPSummoner
-import com.andiag.welegends.models.entities.Summoner
-import com.andiag.welegends.models.entities.league.QueueStats
-import com.andiag.welegends.models.entities.league.QueueType
+import com.andiag.welegends.common.entities.league.QueueStats
+import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.models.SummonerRepository
+import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
 import com.andiag.welegends.views.main.ActivityMain
 import com.andiag.welegends.views.main.FragmentSummonerStats
@@ -15,7 +15,7 @@ import com.andiag.welegends.views.main.FragmentSummonerStats
  * Created by Canalejas on 30/12/2016.
  */
 
-class PresenterFragmentSummonerStats private constructor() : AIPresenter<ActivityMain, FragmentSummonerStats>(), PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
+class PresenterFragmentSummonerStats : AIPresenter<ActivityMain, FragmentSummonerStats>(), PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
     private val TAG: String = PresenterFragmentSummonerStats::class.java.simpleName
 
     private var mSummonerId: Int? = null
@@ -41,15 +41,15 @@ class PresenterFragmentSummonerStats private constructor() : AIPresenter<Activit
             mSummonerRiotId = summonerRiotId
             if (searchRequired) { // Should only happen in first load
                 Log.i(TAG, "Loading Summoner %s from server".format(summonerRiotId))
-                EPSummoner.getRiotSummonerByName(this, name!!, region!!)
+                SummonerRepository.getRiotSummonerByName(this, name!!, region!!)
             } else {
                 Log.i(TAG, "Loading Summoner %s from database".format(summonerRiotId))
-                onSummonerFound(EPSummoner.getLocalSummonerById(summonerId)!!)
+                onSummonerFound(SummonerRepository.getLocalSummonerById(summonerId)!!)
             }
         }
         if (mLeagues == null || mSummonerId != summonerId) {
             Log.i(TAG, "Loading leagues")
-            EPSummoner.getSummonerLeagues(this, region!!, summonerRiotId)
+            SummonerRepository.getSummonerLeagues(this, region!!, summonerRiotId)
         }
     }
 

@@ -1,17 +1,14 @@
 package com.andiag.welegends.views.summoners
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.graphics.ColorUtils
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
 import com.andiag.welegends.models.IVersionRepository
@@ -19,12 +16,14 @@ import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.main.ActivityMain
+import com.andiag.welegends.views.summoners.find.FragmentFindSummoner
+import com.andiag.welegends.views.summoners.historic.FragmentSummonerList
 import com.hariofspades.gradientartist.GradientArtistBasic
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.singleTop
 
 
-class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
+class ActivitySummoners : ActivityBase() {
     private val TAG = ActivitySummoners::class.java.simpleName
     private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
 
@@ -36,10 +35,6 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_summoner)
         ButterKnife.bind(this)
-
-        Log.i(TAG, "Checking Server Version")
-        // This activity works also as a presenter
-        VERSION_REPOSITORY.loadVersion(this)
 
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)
@@ -94,26 +89,8 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
         }
         if (VERSION_REPOSITORY.isLoading()) {
             //Notify user data load should end
-            Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_SHORT)
         }
     }
-
-    override fun getContext(): Context {
-        return this
-    }
-
-    //region Callbacks
-    override fun onLoadError(message: String?) {
-        Log.e(TAG, message)
-        Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(this) })
-    }
-
-    override fun onLoadError(resId: Int) {
-        Log.e(TAG, getString(resId))
-        Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(this) })
-    }
-    //endregion*/
 
 }

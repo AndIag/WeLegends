@@ -1,24 +1,15 @@
 package com.andiag.welegends.models
 
-import android.util.Log
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
-import com.andiag.welegends.R
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.Summoner_Table
-import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
-import java.net.HttpURLConnection
 import java.net.URLEncoder
-import java.util.*
 
 /**
  * Created by Canalejas on 14/12/2016.
@@ -51,83 +42,17 @@ class SummonerRepository private constructor() : ISummonerRepository {
                 .querySingle()
     }
 
-    override fun getSummoner(caller: PresenterSummonerLoader, name: String, region: String) {
-        if (!name.isEmpty()) {
-            // Try to find summoner in local database
-            val summoner: Summoner? = getSummoner(name, region)
-            if (summoner != null) {
-                Log.i(TAG, "EPSummoner %s found in database".format(summoner.name))
-                // Update lastUpdate param
-                summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                summoner.update()
-                caller.onSummonerFound(summoner)
-                return
-            }
-            // If summoner is not in local search it in server
-            loadSummoner(caller, name, region)
-        } else {
-            Log.e(TAG, "Empty summoner")
-            caller.onSummonerLoadError(R.string.voidSummonerError)
-        }
-    }
-
-    override fun loadSummoner(caller: PresenterSummonerLoader, name: String, region: String) {
+    override fun loadSummoner(name: String, region: String, callback: Callback<Summoner>) {
         val call = RestClient.getWeLegendsData().getSummonerByName(region, URLEncoder.encode(name, "UTF-8"))
-        call.enqueue(object : Callback<Summoner> {
-            override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                if (response.isSuccessful) {
-                    doAsync {
-                        Log.i(TAG, "EPSummoner %d found".format(response.body().riotId))
-                        val summoner: Summoner? = response.body()
-                        summoner!!.region = region
-                        summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                        summoner.save()
-                        Log.i(TAG, "Saving new summoner %s".format(summoner.name))
-                        uiThread {
-                            caller.onSummonerFound(summoner)
-                        }
-                    }
-                    return
-                }
-                Log.e(TAG, "Error %s loading summoner".format(response.message()))
-                caller.onSummonerLoadError(response.message())
-            }
-
-            override fun onFailure(call: Call<Summoner>, t: Throwable) {
-                Log.e(TAG, "Error %s loading summoner".format(t.message))
-                caller.onSummonerLoadError(R.string.error404)
-            }
-        })
+        call.enqueue(callback)
     }
 
-    override fun getSummonerLeagues(caller: AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
+    override fun getSummonerLeagues(callback: Callback<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
         val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
-        call.enqueue(object : Callback<MutableMap<QueueType, QueueStats>> {
-
-            override fun onResponse(call: Call<MutableMap<QueueType, QueueStats>>?, response: Response<MutableMap<QueueType, QueueStats>>) {
-                if (response.isSuccessful) {
-                    Log.i(TAG, "Leagues loaded for summoner %s".format(id))
-                    return caller.onLoadSuccess(response.body())
-                }
-                if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    // If summoner has no queue entries
-                    Log.i(TAG, "No leagues found for summoner %s".format(id))
-                    return caller.onLoadSuccess(HashMap<QueueType, QueueStats>())
-                }
-                Log.e(TAG, "Error %s loading summoner leagues".format(response.message()))
-                caller.onLoadError(response.message())
-            }
-
-            override fun onFailure(call: Call<MutableMap<QueueType, QueueStats>>?, t: Throwable) {
-                Log.e(TAG, "Error %s loading summoner details".format(t.message))
-                caller.onLoadError(R.string.error404)
-            }
-
-        })
+        call.enqueue(callback)
     }
 
     override fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
-        // TODO make this async?¿
         caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
                 .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }

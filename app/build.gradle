@@ -10,6 +10,7 @@ android {
         targetSdkVersion versions.compiledSdk
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
@@ -47,6 +48,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     kapt "com.jakewharton:butterknife-compiler:$versions.butterknife"
     kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$versions.dbflow"
+
+    androidTestCompile "junit:junit:4.12"
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile "org.mockito:mockito-core:$versions.mockito"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 

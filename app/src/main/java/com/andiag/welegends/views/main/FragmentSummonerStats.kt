@@ -9,15 +9,14 @@ import com.andiag.welegends.common.base.FragmentBase
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.presenters.main.PresenterFragmentSummonerStats
 import org.jetbrains.anko.toast
 
 /**
  * Created by Canalejas on 30/12/2016.
  */
-@Presenter(presenter = PresenterFragmentSummonerStats::class)
+@Presenter(presenter = PresenterSummonerStats::class)
 @FragmentLayout(res = R.layout.fragment_summoner_stats)
-class FragmentSummonerStats : FragmentBase<PresenterFragmentSummonerStats>() {
+class FragmentSummonerStats : FragmentBase<PresenterSummonerStats>(), IViewSummonerStats {
 
     companion object {
         val TAG: String = FragmentSummonerStats::class.java.simpleName
@@ -46,13 +45,13 @@ class FragmentSummonerStats : FragmentBase<PresenterFragmentSummonerStats>() {
         prepareSummonerStats(arguments, savedInstanceState)
     }
 
-    fun notifyDataIsReady(summoner: Summoner, leagues: MutableMap<QueueType, QueueStats>?) {
+    override fun notifyDataIsReady(summoner: Summoner, leagues: MutableMap<QueueType, QueueStats>?) {
         mParentContext.toast("Data Load Ends")
         // TODO
         statedLayout.setContent()
     }
 
-    fun notifyError(error:String?){
+    override fun notifyError(error: String?) {
         statedLayout.setError()
     }
 

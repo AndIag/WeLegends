@@ -1,11 +1,11 @@
-package com.andiag.welegends.presenters.commons
+package com.andiag.welegends.views
 
 import com.andiag.welegends.models.database.Summoner
 
 /**
  * Created by Canalejas on 14/12/2016.
  */
-interface PresenterSummonerLoader {
+interface IPresenterSummonerLoader {
     fun onSummonerFound(summoner: Summoner)
     fun onSummonerLoadError(message: String)
     fun onSummonerLoadError(resId: Int)

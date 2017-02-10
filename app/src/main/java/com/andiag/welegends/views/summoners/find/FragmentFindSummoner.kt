@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners
+package com.andiag.welegends.views.summoners.find
 
 
 import android.content.Context
@@ -17,16 +17,16 @@ import com.andiag.commons.fragments.FragmentLayout
 import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.presenters.summoners.PresenterFragmentFindSummoner
+import com.andiag.welegends.views.summoners.ActivitySummoners
 import org.jetbrains.anko.toast
 
 
 /**
  * Created by Canalejas on 08/12/2016.
  */
-@Presenter(presenter = PresenterFragmentFindSummoner::class)
+@Presenter(presenter = PresenterFindSummoner::class)
 @FragmentLayout(res = R.layout.fragment_find_summoner)
-class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
+class FragmentFindSummoner : AIButterFragment<PresenterFindSummoner>(), IViewFindSummoner {
 
     @BindView(R.id.editTextSummoner)
     lateinit var editSummonerName: EditText
@@ -44,6 +44,10 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
     lateinit var numberPicker: NumberPicker
 
     var region: String = "EUW"
+
+    companion object {
+        val TAG: String = FragmentFindSummoner::class.java.simpleName
+    }
 
     /**
      * Replace [FragmentSummonerList] in activity
@@ -94,7 +98,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
     }
 
     //region Callbacks
-    //region Find EPSummoner
+    //region Find Summoner
     /**
      * Try to find a [Summoner] using a name and a region
      */
@@ -125,7 +129,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
      * Launch new activity with retrieved summoner
      * @param [summoner] retrieved summoner
      */
-    fun onSummonerFound(summoner: Summoner) {
+    override fun onSummonerFound(summoner: Summoner) {
         hideLoading()
         startActivity((mParentContext as ActivitySummoners).createMainIntent(summoner, false))
     }
@@ -133,40 +137,21 @@ class FragmentFindSummoner : AIButterFragment<PresenterFragmentFindSummoner>() {
     /**
      * Handle find summoner errors
      */
-    fun onSummonerNotFound(error: Int) {
-        hideLoading()
-        mParentContext.toast(error)
-    }
-
-    /**
-     * Handle find summoner errors
-     */
-    fun onSummonerNotFound(message: String) {
+    override fun onSummonerNotFound(message: String) {
         hideLoading()
         mParentContext.toast(message)
     }
     //endregion
 
-    //region EPVersion Load
+    //region Version Load
     /**
      * Update given version in view
      */
-    fun onVersionLoaded(version: String) {
+    override fun onVersionLoaded(version: String) {
         hideLoading()
         textVersion.text = version
     }
     //endregion
-
-    /**
-     * Update view depending on message and loading state
-     */
-    fun onStaticDataLoadChange(message: String?) {
-        textVersion.text = message
-    }
     //endregion
-
-    companion object {
-        val TAG: String = FragmentFindSummoner::class.java.simpleName
-    }
 
 }

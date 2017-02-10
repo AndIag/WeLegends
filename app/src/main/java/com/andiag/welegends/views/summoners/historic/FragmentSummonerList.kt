@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners
+package com.andiag.welegends.views.summoners.historic
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -11,8 +11,8 @@ import com.andiag.commons.fragments.FragmentLayout
 import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.presenters.summoners.PresenterFragmentSummonerList
 import com.andiag.welegends.views.adapters.AdapterSummonerList
+import com.andiag.welegends.views.summoners.ActivitySummoners
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import org.jetbrains.anko.toast
@@ -22,14 +22,18 @@ import java.util.*
 /**
  * Created by andyq on 09/12/2016.
  */
-@Presenter(presenter = PresenterFragmentSummonerList::class)
+@Presenter(presenter = PresenterSummonerList::class)
 @FragmentLayout(res = R.layout.fragment_summoner_list)
-class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
+class FragmentSummonerList : AIButterFragment<PresenterSummonerList>(), IViewSummonerList {
 
     @BindView(R.id.recyclerSummoners)
     lateinit var recycler: RecyclerView
 
     var adapter: AdapterSummonerList? = null
+
+    companion object {
+        val TAG: String = FragmentSummonerList::class.java.simpleName
+    }
 
     //region Fragment Lifecycle
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -63,17 +67,14 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
     //endregion
 
     //region Callbacks
-    fun onSummonersLoaded(summoners: List<Summoner>) {
+    override fun onSummonersLoaded(summoners: List<Summoner>) {
         adapter!!.setNewData(summoners)
     }
 
-    fun onSummonersEmpty(error: Int?) {
+    override fun onSummonersEmpty(error: Int?) {
         adapter!!.setNewData(null)
         mParentContext.toast(error!!)
     }
     //endregion
 
-    companion object {
-        val TAG: String = FragmentSummonerList::class.java.simpleName
-    }
 }

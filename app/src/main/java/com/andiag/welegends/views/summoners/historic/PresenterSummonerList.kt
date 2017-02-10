@@ -1,4 +1,4 @@
-package com.andiag.welegends.presenters.summoners
+package com.andiag.welegends.views.summoners.historic
 
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
@@ -9,19 +9,23 @@ import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.summoners.ActivitySummoners
-import com.andiag.welegends.views.summoners.FragmentSummonerList
+import com.andiag.welegends.views.summoners.find.PresenterFindSummoner
 
 /**
  * Created by andyq on 15/12/2016.
  */
-class PresenterFragmentSummonerList(summonersRepository: ISummonerRepository) : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
-    private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
-    private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
+class PresenterSummonerList
+(summonersRepository: ISummonerRepository, versionRepository: IVersionRepository)
+    : AIPresenter<ActivitySummoners, FragmentSummonerList>(),
+        AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
+
+    private val TAG = PresenterFindSummoner::class.java.simpleName
+    private val VERSION_REPOSITORY: IVersionRepository = versionRepository
     private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
 
     var version: String? = null
 
-    constructor() : this(SummonerRepository.getInstance())
+    constructor() : this(SummonerRepository.getInstance(), VersionRepository.getInstance())
 
     override fun onViewAttached() {
     }
@@ -34,11 +38,8 @@ class PresenterFragmentSummonerList(summonersRepository: ISummonerRepository) : 
      * Return server version or null if still loading
      */
     fun getServerVersion(): String? {
-        if (version == null && !VERSION_REPOSITORY.isLoading()) {
-            /**
-             * See if static load has ended with null as param
-             */
-            version = VERSION_REPOSITORY.getVersion(null)
+        if (version == null) {
+            version = VERSION_REPOSITORY.getVersion()
         }
         return version
     }

@@ -55,7 +55,7 @@ class CallbackStaticData<T : BaseModel>(
                 } catch (e: Exception) {
                     Log.e(TAG, "Error saving %s".format(e.message))
                     uiThread {
-                        caller.onLoadError(null)
+                        caller.onLoadError(e.message)
                     }
                 } finally {
                     Log.i(TAG, "Semaphore released")

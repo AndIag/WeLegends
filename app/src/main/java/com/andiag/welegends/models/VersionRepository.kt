@@ -20,7 +20,7 @@ import java.util.concurrent.Callable
 /**
  * Created by Canalejas on 08/12/2016.
  */
-object VersionRepository {
+class VersionRepository private constructor() : IVersionRepository {
     private val TAG = VersionRepository::class.java.simpleName
 
     private val FILE_NAME = "VersionData"
@@ -29,6 +29,18 @@ object VersionRepository {
 
     private var caller: AIInterfaceLoaderHandlerPresenter<String>? = null
     private var isVersionLoading: Boolean = false
+
+    companion object {
+        private var REPOSITORY: IVersionRepository? = null
+
+        fun getInstance(): IVersionRepository {
+            if (REPOSITORY == null) {
+                REPOSITORY = VersionRepository()
+            }
+            return REPOSITORY!!
+        }
+
+    }
 
     /**
      * Set new version to local properties
@@ -58,12 +70,7 @@ object VersionRepository {
         return version!!
     }
 
-    /**
-     * Get loaded version or set a callback.
-     * Use null as callback if we just want to check the version
-     * @param [caller] callback required if version are not loaded
-     */
-    fun getVersion(caller: AIInterfaceLoaderHandlerPresenter<String>?): String? {
+    override fun getVersion(caller: AIInterfaceLoaderHandlerPresenter<String>?): String? {
         if (version == null && caller != null) {
             this.caller = caller
             if (isVersionLoading) {
@@ -73,19 +80,12 @@ object VersionRepository {
         return version
     }
 
-    /**
-     * Ask if app is loading static data
-     * @return [Boolean] true if loading false otherwise
-     */
-    fun isLoading(): Boolean {
+    override fun isLoading(): Boolean {
         return isVersionLoading
     }
 
-    /**
-     * Check if our local version correspond to server version. If not, call all static data loaders
-     * @return [AIInterfaceLoaderPresenter.onLoadSuccess] or [AIInterfaceLoaderPresenter.onLoadError]
-     */
-    fun checkServerVersion(caller: AIInterfaceErrorHandlerPresenter) {
+    // TODO clean this method, too long
+    override fun loadVersion(caller: AIInterfaceErrorHandlerPresenter) {
         isVersionLoading = true
         val call: Call<List<String>> = RestClient.getVersion().versions()
         call.enqueue(object : Callback<List<String>> {
@@ -93,11 +93,11 @@ object VersionRepository {
                 if (response.isSuccessful) {
                     doAsync {
                         val newVersion: String = response.body()[0]
-                        Log.i(TAG, "Server EPVersion: %s".format(newVersion))
+                        Log.i(TAG, "Server Version: %s".format(newVersion))
                         if (newVersion != getSavedVersion(caller.context)) {
                             val locale = Locale.getDefault().toString()
 
-                            Log.i(TAG, "Updated Server EPVersion To: %s".format(newVersion))
+                            Log.i(TAG, "Updated Server Version To: %s".format(newVersion))
                             Log.i(TAG, "Mobile Locale: %s".format(locale))
 
                             //Init semaphore with number of methods to load and callback method

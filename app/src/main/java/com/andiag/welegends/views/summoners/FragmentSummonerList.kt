@@ -10,7 +10,6 @@ import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.commons.fragments.FragmentLayout
 import com.andiag.core.presenters.Presenter
 import com.andiag.welegends.R
-import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.summoners.PresenterFragmentSummonerList
 import com.andiag.welegends.views.adapters.AdapterSummonerList
@@ -45,7 +44,7 @@ class FragmentSummonerList : AIButterFragment<PresenterFragmentSummonerList>() {
 
     //region View Config
     private fun initAdapter() {
-        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), VersionRepository.getVersion(null)!!)
+        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), mPresenter.getServerVersion()!!)
         adapter!!.emptyView = LayoutInflater.from(mParentContext).inflate(R.layout.empty_summoner_view, null)
         adapter!!.openLoadAnimation()
         recycler.adapter = adapter

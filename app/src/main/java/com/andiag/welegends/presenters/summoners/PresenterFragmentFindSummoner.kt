@@ -3,6 +3,7 @@ package com.andiag.welegends.presenters.summoners
 import android.support.annotation.StringRes
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
+import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
@@ -18,6 +19,7 @@ class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFin
         PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<String> {
 
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
+    private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
 
     var version: String? = null
 
@@ -28,7 +30,7 @@ class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFin
          *      - We have server version loaded
          *      - We have null but a new callback was added to [EPVersion]
          */
-        this.version = VersionRepository.getVersion(this)
+        this.version = VERSION_REPOSITORY.getVersion(this)
     }
 
     /**
@@ -42,13 +44,17 @@ class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFin
      * Return server version or null if still loading
      */
     fun getServerVersion(): String? {
-        if (version == null && !VersionRepository.isLoading()) {
+        if (version == null && !VERSION_REPOSITORY.isLoading()) {
             /**
              * See if static load has ended with null as param
              */
-            version = VersionRepository.getVersion(null)
+            version = VERSION_REPOSITORY.getVersion(null)
         }
         return version
+    }
+
+    fun isLoadingVersion(): Boolean {
+        return VERSION_REPOSITORY.isLoading()
     }
 
     //region AIInterfaceLoaderPresenter

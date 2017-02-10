@@ -14,6 +14,7 @@ import butterknife.ButterKnife
 import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
+import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.Summoner
@@ -25,6 +26,7 @@ import org.jetbrains.anko.singleTop
 
 class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
     private val TAG = ActivitySummoners::class.java.simpleName
+    private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
 
     @BindView(R.id.imageBackground)
     lateinit var imageBackground: GradientArtistBasic
@@ -35,8 +37,9 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
         setContentView(R.layout.activity_find_summoner)
         ButterKnife.bind(this)
 
-        Log.i(TAG, "Checking Server EPVersion")
-        VersionRepository.checkServerVersion(this)
+        Log.i(TAG, "Checking Server Version")
+        // This activity works also as a presenter
+        VERSION_REPOSITORY.loadVersion(this)
 
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
                 FragmentFindSummoner(), FragmentFindSummoner.TAG)
@@ -80,7 +83,7 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
      * If container exist and version are loaded change fragment to summoner history
      */
     fun onClickSwapFragment() {
-        if (findViewById(R.id.fragmentContainer) != null && !VersionRepository.isLoading()) {
+        if (findViewById(R.id.fragmentContainer) != null && !VERSION_REPOSITORY.isLoading()) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, FragmentSummonerList(), FragmentSummonerList.TAG)
                     .addToBackStack(null)
@@ -89,7 +92,7 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
             imageBackground.visibility = View.GONE
             return
         }
-        if (VersionRepository.isLoading()) {
+        if (VERSION_REPOSITORY.isLoading()) {
             //Notify user data load should end
             Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_INDEFINITE)
         }
@@ -103,13 +106,13 @@ class ActivitySummoners : ActivityBase(), AIInterfaceErrorHandlerPresenter {
     override fun onLoadError(message: String?) {
         Log.e(TAG, message)
         Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, { VersionRepository.checkServerVersion(this) })
+                .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(this) })
     }
 
     override fun onLoadError(resId: Int) {
         Log.e(TAG, getString(resId))
         Snackbar.make(findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.retry, { VersionRepository.checkServerVersion(this) })
+                .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(this) })
     }
     //endregion*/
 

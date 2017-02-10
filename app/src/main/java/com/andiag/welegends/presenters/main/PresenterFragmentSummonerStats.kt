@@ -5,6 +5,7 @@ import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresente
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.presenters.commons.PresenterSummonerLoader
@@ -15,8 +16,9 @@ import com.andiag.welegends.views.main.FragmentSummonerStats
  * Created by Canalejas on 30/12/2016.
  */
 
-class PresenterFragmentSummonerStats : AIPresenter<ActivityMain, FragmentSummonerStats>(), PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
+class PresenterFragmentSummonerStats(summonersRepository: ISummonerRepository) : AIPresenter<ActivityMain, FragmentSummonerStats>(), PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
     private val TAG: String = PresenterFragmentSummonerStats::class.java.simpleName
+    private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
 
     private var mSummonerId: Int? = null
     private var mSummonerRiotId: Long? = null
@@ -24,6 +26,8 @@ class PresenterFragmentSummonerStats : AIPresenter<ActivityMain, FragmentSummone
     private var mSummoner: Summoner? = null
     private var mLeagues: MutableMap<QueueType, QueueStats>? = null
     private var leaguesLoaded: Boolean = false
+
+    constructor() : this(SummonerRepository.getInstance())
 
     /**
      * Prepare required data to show in summoner stats.
@@ -41,15 +45,15 @@ class PresenterFragmentSummonerStats : AIPresenter<ActivityMain, FragmentSummone
             mSummonerRiotId = summonerRiotId
             if (searchRequired) { // Should only happen in first load
                 Log.i(TAG, "Loading Summoner %s from server".format(summonerRiotId))
-                SummonerRepository.getRiotSummonerByName(this, name!!, region!!)
+                SUMMONER_REPOSITORY.loadSummoner(this, name!!, region!!)
             } else {
                 Log.i(TAG, "Loading Summoner %s from database".format(summonerRiotId))
-                onSummonerFound(SummonerRepository.getLocalSummonerById(summonerId)!!)
+                onSummonerFound(SUMMONER_REPOSITORY.getSummoner(summonerId)!!)
             }
         }
         if (mLeagues == null || mSummonerId != summonerId) {
             Log.i(TAG, "Loading leagues")
-            SummonerRepository.getSummonerLeagues(this, region!!, summonerRiotId)
+            SUMMONER_REPOSITORY.getSummonerLeagues(this, region!!, summonerRiotId)
         }
     }
 
@@ -93,16 +97,5 @@ class PresenterFragmentSummonerStats : AIPresenter<ActivityMain, FragmentSummone
 
     }
     //endregion
-
-    companion object {
-        private var presenter: PresenterFragmentSummonerStats? = null
-
-        fun getInstance(): PresenterFragmentSummonerStats {
-            if (presenter == null) {
-                presenter = PresenterFragmentSummonerStats()
-            }
-            return presenter!!
-        }
-    }
 
 }

@@ -19,26 +19,42 @@ import retrofit2.Response
 import java.net.HttpURLConnection
 import java.net.URLEncoder
 import java.util.*
-import java.util.Map
 
 /**
  * Created by Canalejas on 14/12/2016.
  */
-object SummonerRepository {
+class SummonerRepository private constructor() : ISummonerRepository {
     private val TAG: String = Summoner::class.java.simpleName
 
-    /**
-     * Try to find a [Summoner] in local database or in riot server
-     * @param [caller] handles request responses
-     * @param [name]
-     * @param [region]
-     * @return [PresenterSummonerLoader.onSummonerFound] with [SummonerRepository] data
-     *      or call [PresenterSummonerLoader.onSummonerLoadError]
-     */
-    fun getSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
+    companion object {
+        private var REPOSITORY: ISummonerRepository? = null
+
+        fun getInstance(): ISummonerRepository {
+            if (REPOSITORY == null) {
+                REPOSITORY = SummonerRepository()
+            }
+            return REPOSITORY!!
+        }
+
+    }
+
+    override fun getSummoner(id: Int): Summoner? {
+        return SQLite.select().from<Summoner>(Summoner::class.java)
+                .where(Summoner_Table.mid.eq(id))
+                .querySingle()
+    }
+
+    override fun getSummoner(name: String, region: String): Summoner? {
+        return SQLite.select().from<Summoner>(Summoner::class.java)
+                .where(Summoner_Table.name.eq(name).collate(Collate.NOCASE))
+                .and(Summoner_Table.region.eq(region))
+                .querySingle()
+    }
+
+    override fun getSummoner(caller: PresenterSummonerLoader, name: String, region: String) {
         if (!name.isEmpty()) {
             // Try to find summoner in local database
-            val summoner: Summoner? = getLocalSummonerByName(name, region)
+            val summoner: Summoner? = getSummoner(name, region)
             if (summoner != null) {
                 Log.i(TAG, "EPSummoner %s found in database".format(summoner.name))
                 // Update lastUpdate param
@@ -48,68 +64,14 @@ object SummonerRepository {
                 return
             }
             // If summoner is not in local search it in server
-            getRiotSummonerByName(caller, name, region)
+            loadSummoner(caller, name, region)
         } else {
             Log.e(TAG, "Empty summoner")
             caller.onSummonerLoadError(R.string.voidSummonerError)
         }
     }
 
-    /**
-     * Request summoner leagues
-     * @param [caller] handles request responses
-     * @param [region] summoner server region
-     * @param [id] summoner id
-     * @return [AIInterfaceLoaderHandlerPresenter.onLoadSuccess] with leagues in [Map] format
-     *      or call [AIInterfaceLoaderHandlerPresenter.onLoadError]
-     */
-    fun getSummonerLeagues(caller: AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
-        val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
-        call.enqueue(object : Callback<MutableMap<QueueType, QueueStats>> {
-
-            override fun onResponse(call: Call<MutableMap<QueueType, QueueStats>>?, response: Response<MutableMap<QueueType, QueueStats>>) {
-                if (response.isSuccessful) {
-                    Log.i(TAG, "Leagues loaded for summoner %s".format(id))
-                    return caller.onLoadSuccess(response.body())
-                }
-                if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    // If summoner has no queue entries
-                    Log.i(TAG, "No leagues found for summoner %s".format(id))
-                    return caller.onLoadSuccess(HashMap<QueueType, QueueStats>())
-                }
-                Log.e(TAG, "Error %s loading summoner leagues".format(response.message()))
-                caller.onLoadError(response.message())
-            }
-
-            override fun onFailure(call: Call<MutableMap<QueueType, QueueStats>>?, t: Throwable) {
-                Log.e(TAG, "Error %s loading summoner details".format(t.message))
-                caller.onLoadError(R.string.error404)
-            }
-
-        })
-    }
-
-    /**
-     * Try to find a [Summoner] in local database
-     * @param [name]
-     * @param [region]
-     * @return [Summoner] or null
-     */
-    fun getLocalSummonerByName(name: String, region: String): Summoner? {
-        return SQLite.select().from<Summoner>(Summoner::class.java)
-                .where(Summoner_Table.name.eq(name).collate(Collate.NOCASE))
-                .and(Summoner_Table.region.eq(region))
-                .querySingle()
-    }
-
-    /**
-     * Request a [Summoner] from riot database
-     * @param [caller] handles request responses
-     * @param [name]
-     * @param [region]
-     * @return [Summoner] or null
-     */
-    fun getRiotSummonerByName(caller: PresenterSummonerLoader, name: String, region: String) {
+    override fun loadSummoner(caller: PresenterSummonerLoader, name: String, region: String) {
         val call = RestClient.getWeLegendsData().getSummonerByName(region, URLEncoder.encode(name, "UTF-8"))
         call.enqueue(object : Callback<Summoner> {
             override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
@@ -138,24 +100,34 @@ object SummonerRepository {
         })
     }
 
-    /**
-     * Try to find a summoner in local database
-     * @param [id] summoner id
-     * @return [Summoner] or null
-     */
-    fun getLocalSummonerById(id: Int): Summoner? {
-        return SQLite.select().from<Summoner>(Summoner::class.java)
-                .where(Summoner_Table.mid.eq(id))
-                .querySingle()
+    override fun getSummonerLeagues(caller: AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
+        val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
+        call.enqueue(object : Callback<MutableMap<QueueType, QueueStats>> {
+
+            override fun onResponse(call: Call<MutableMap<QueueType, QueueStats>>?, response: Response<MutableMap<QueueType, QueueStats>>) {
+                if (response.isSuccessful) {
+                    Log.i(TAG, "Leagues loaded for summoner %s".format(id))
+                    return caller.onLoadSuccess(response.body())
+                }
+                if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+                    // If summoner has no queue entries
+                    Log.i(TAG, "No leagues found for summoner %s".format(id))
+                    return caller.onLoadSuccess(HashMap<QueueType, QueueStats>())
+                }
+                Log.e(TAG, "Error %s loading summoner leagues".format(response.message()))
+                caller.onLoadError(response.message())
+            }
+
+            override fun onFailure(call: Call<MutableMap<QueueType, QueueStats>>?, t: Throwable) {
+                Log.e(TAG, "Error %s loading summoner details".format(t.message))
+                caller.onLoadError(R.string.error404)
+            }
+
+        })
     }
 
-    /**
-     * Return a list of summoners order by date DESC
-     * @param [caller] contains error and success callbacks
-     * @param [limit] max number of elements returned
-     * @return [MutableList] of [SummonerRepository]
-     */
-    fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
+    override fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
+        // TODO make this async?¿
         caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
                 .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }

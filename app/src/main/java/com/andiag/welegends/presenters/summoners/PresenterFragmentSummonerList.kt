@@ -3,6 +3,7 @@ package com.andiag.welegends.presenters.summoners
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
+import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
@@ -13,17 +14,20 @@ import com.andiag.welegends.views.summoners.FragmentSummonerList
 /**
  * Created by andyq on 15/12/2016.
  */
-class PresenterFragmentSummonerList : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
+class PresenterFragmentSummonerList(summonersRepository: ISummonerRepository) : AIPresenter<ActivitySummoners, FragmentSummonerList>(), AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
     private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
+    private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
 
     var version: String? = null
+
+    constructor() : this(SummonerRepository.getInstance())
 
     override fun onViewAttached() {
     }
 
     fun loadSummoners() {
-        SummonerRepository.getSummonerHistoric(this, 20)
+        SUMMONER_REPOSITORY.getSummonerHistoric(this, 20)
     }
 
     /**

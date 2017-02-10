@@ -3,6 +3,7 @@ package com.andiag.welegends.presenters.summoners
 import android.support.annotation.StringRes
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
+import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
@@ -15,13 +16,16 @@ import com.andiag.welegends.models.database.Summoner as SummonerEntity
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
+class PresenterFragmentFindSummoner(summonersRepository: ISummonerRepository) : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
         PresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<String> {
 
     private val TAG = PresenterFragmentFindSummoner::class.java.simpleName
     private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
+    private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
 
     var version: String? = null
+
+    constructor() : this(SummonerRepository.getInstance())
 
     override fun onViewAttached() {
         /**
@@ -37,7 +41,7 @@ class PresenterFragmentFindSummoner : AIPresenter<ActivitySummoners, FragmentFin
      * Try to find summoner in server
      */
     fun getSummonerByName(name: String, region: String) {
-        SummonerRepository.getSummonerByName(this, name, region)
+        SUMMONER_REPOSITORY.getSummoner(this, name, region)
     }
 
     /**

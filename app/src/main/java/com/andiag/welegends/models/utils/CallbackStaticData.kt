@@ -4,9 +4,9 @@ import android.util.Log
 import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.static_data.generics.KeyInMapTypeAdapter
+import com.andiag.welegends.models.utils.converters.OrmBaseModel
 import com.andiag.welegends.models.utils.dto.GenericStaticData
 import com.raizlabs.android.dbflow.config.FlowManager
-import com.raizlabs.android.dbflow.structure.BaseModel
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -22,7 +22,7 @@ import retrofit2.Response
  * @constructor [caller] called when callback process ends
  * @constructor [runnable] method to run when reload is required
  */
-class CallbackStaticData<T : BaseModel>(
+class CallbackStaticData<T : OrmBaseModel>(
         private var locale: String,
         private var semaphore: CallbackSemaphore,
         private var caller: AIInterfaceErrorHandlerPresenter,

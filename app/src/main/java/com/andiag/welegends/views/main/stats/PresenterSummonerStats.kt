@@ -45,7 +45,7 @@ class PresenterSummonerStats(summonersRepository: ISummonerRepository)
                 val summoner: Summoner = response.body()
                 summoner.region = region
                 summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                summoner.save()
+                summoner.saveOrUpdate()
                 Log.i(TAG, "Saving new summoner %s".format(summoner.name))
                 uiThread {
                     onSummonerFound(summoner, false)

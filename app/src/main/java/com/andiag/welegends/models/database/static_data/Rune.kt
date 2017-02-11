@@ -9,18 +9,18 @@ import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.models.utils.CallbackStaticData
 import com.andiag.welegends.models.utils.converters.ConverterJsonArray
 import com.andiag.welegends.models.utils.converters.ConverterJsonObject
+import com.andiag.welegends.models.utils.converters.OrmBaseModel
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.*
-import com.raizlabs.android.dbflow.structure.BaseModel
 import java.io.Serializable
 
 /**
  * Created by Canalejas on 13/12/2016.
  */
 @Table(database = WeLegendsDatabase::class)
-class Rune : BaseModel(), Serializable, KeyInMapTypeAdapter {
+class Rune : OrmBaseModel(), Serializable, KeyInMapTypeAdapter {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @Expose(serialize = false, deserialize = false) @Unique @Column var riotId: Long? = null

@@ -4,6 +4,7 @@ import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresente
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.database.Summoner
+import com.andiag.welegends.models.utils.CallbackData
 import retrofit2.Callback
 
 /**
@@ -35,6 +36,15 @@ interface ISummonerRepository {
     fun loadSummoner(name: String, region: String, callback: Callback<Summoner>)
 
     /**
+     * Request a [Summoner] from local or riot database.
+     * @param [name]
+     * @param [region]
+     * @param [callback]
+     * @return [Summoner] or null
+     */
+    fun getSummoner(name:String, region:String, callback: CallbackData<Summoner>)
+
+    /**
      * Request summoner leagues
      * @param [callback] handles request responses
      * @param [region] summoner server region
@@ -51,4 +61,7 @@ interface ISummonerRepository {
      * @return [MutableList] of [SummonerRepository]
      */
     fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int)
+
+
+    fun getSummonerHistoric(limit: Int, callback: CallbackData<List<Summoner>?>)
 }

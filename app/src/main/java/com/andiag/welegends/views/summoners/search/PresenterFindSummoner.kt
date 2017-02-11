@@ -13,6 +13,7 @@ import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.static_data.*
+import com.andiag.welegends.models.utils.CallbackData
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import org.jetbrains.anko.doAsync
@@ -132,45 +133,16 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository, versionRep
     //endregion
 
     //region Summoner
-    private fun handleResponse(response: Response<Summoner>, region: String) {
-        if (response.isSuccessful) {
-            doAsync {
-                Log.i(TAG, "EPSummoner %d found".format(response.body().riotId))
-                val summoner: Summoner = response.body()
-                summoner.region = region
-                summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                summoner.save()
-                Log.i(TAG, "Saving new summoner %s".format(summoner.name))
-                uiThread {
-                    onSummonerFound(summoner, false)
-                }
-            }
-            return
-        }
-        Log.e(TAG, "Error %s loading summoner".format(response.message()))
-        onSummonerLoadError(response.message())
-    }
 
     fun getSummonerByName(name: String, region: String) {
         if (!name.isEmpty()) {
-            // Try to find summoner in local database
-            val summoner: Summoner? = SUMMONER_REPOSITORY.getSummoner(name, region)
-            if (summoner != null) {
-                Log.i(TAG, "Summoner %s found in database".format(summoner.name))
-                // Update lastUpdate param
-                summoner.lastUpdate = Calendar.getInstance().timeInMillis
-                summoner.update()
-                onSummonerFound(summoner, true)
-                return
-            }
-            // If summoner is not in local search it in server
-            SUMMONER_REPOSITORY.loadSummoner(name, region, object : Callback<Summoner> {
-                override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                    handleResponse(response, region)
+            // Try to find summoner
+            SUMMONER_REPOSITORY.getSummoner(name,region,object : CallbackData<Summoner>{
+                override fun onSuccess(data: Summoner) {
+                    onSummonerFound(data,true)
                 }
 
-                override fun onFailure(call: Call<Summoner>, t: Throwable) {
-                    Log.e(TAG, "Error %s loading summoner".format(t.message))
+                override fun onError(t: Throwable?) {
                     onSummonerLoadError(R.string.error404)
                 }
             })

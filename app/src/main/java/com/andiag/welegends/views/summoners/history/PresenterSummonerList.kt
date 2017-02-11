@@ -8,6 +8,7 @@ import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
+import com.andiag.welegends.models.utils.CallbackData
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import com.andiag.welegends.views.summoners.search.PresenterFindSummoner
 
@@ -31,7 +32,14 @@ class PresenterSummonerList
     }
 
     fun loadSummoners() {
-        SUMMONER_REPOSITORY.getSummonerHistoric(this, 20)
+        SUMMONER_REPOSITORY.getSummonerHistoric(20,object : CallbackData<List<Summoner>?> {
+            override fun onSuccess(data: List<Summoner>?) {
+                onLoadSuccess(data)
+            }
+            override fun onError(t: Throwable?) {
+                onLoadError(R.string.error404)
+            }
+        })
     }
 
     /**

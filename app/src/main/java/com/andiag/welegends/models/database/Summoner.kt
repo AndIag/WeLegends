@@ -1,6 +1,7 @@
 package com.andiag.welegends.models.database
 
 import com.andiag.welegends.WeLegendsDatabase
+import com.andiag.welegends.models.utils.converters.OrmBaseModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.Column
@@ -15,7 +16,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-class Summoner : BaseModel(), Serializable {
+class Summoner : OrmBaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @SerializedName("id") @Unique @Column var riotId: Long? = null

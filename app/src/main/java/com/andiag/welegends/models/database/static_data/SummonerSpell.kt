@@ -6,11 +6,11 @@ import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.utils.CallbackSemaphore
 import com.andiag.welegends.models.utils.CallbackStaticData
+import com.andiag.welegends.models.utils.converters.OrmBaseModel
 import com.google.gson.JsonArray
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
-import com.raizlabs.android.dbflow.structure.BaseModel
 import java.io.Serializable
 
 /**
@@ -18,7 +18,7 @@ import java.io.Serializable
  */
 
 @Table(database = WeLegendsDatabase::class)
-class SummonerSpell : BaseModel(), Serializable {
+class SummonerSpell : OrmBaseModel(), Serializable {
 
     @Expose(serialize = false, deserialize = false) @PrimaryKey(autoincrement = true) var mid: Int = 0
     @SerializedName("id") @Unique @Column var riotId: String? = null

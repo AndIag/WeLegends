@@ -7,14 +7,14 @@ import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.common.base.ActivityBase
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.static_data.*
-import com.andiag.welegends.models.utils.CallbackData
-import com.andiag.welegends.models.utils.CallbackSemaphore
+import com.andiag.welegends.models.database.static_data.utils.CallbackSemaphore
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -137,7 +137,7 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository, versionRep
     fun getSummonerByName(name: String, region: String) {
         if (!name.isEmpty()) {
             // Try to find summoner
-            SUMMONER_REPOSITORY.getSummoner(name,region,object : CallbackData<Summoner>{
+            SUMMONER_REPOSITORY.getSummoner(name, region, object : CallbackData<Summoner> {
                 override fun onSuccess(data: Summoner) {
                     onSummonerFound(data,true)
                 }

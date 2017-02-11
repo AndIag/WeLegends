@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.utils.dto
+package com.andiag.welegends.models.database.static_data.generics
 
 import java.io.Serializable
 

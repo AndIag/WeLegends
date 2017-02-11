@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.utils.converters
+package com.andiag.welegends.models.database.converters
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray

@@ -1,13 +1,12 @@
 package com.andiag.welegends.models
 
 import android.util.Log
-import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.Summoner_Table
-import com.andiag.welegends.models.utils.CallbackData
 import com.raizlabs.android.dbflow.annotation.Collate
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import org.jetbrains.anko.doAsync
@@ -57,11 +56,6 @@ class SummonerRepository private constructor() : ISummonerRepository {
     override fun getSummonerLeagues(callback: Callback<MutableMap<QueueType, QueueStats>>, region: String, id: Long) {
         val call = RestClient.getWeLegendsData().getSummonerDetails(id, region)
         call.enqueue(callback)
-    }
-
-    override fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int) {
-        caller.onLoadSuccess(SQLite.select().from<Summoner>(Summoner::class.java)
-                .orderBy(Summoner_Table.lastUpdate, false).limit(limit).queryList())
     }
 
     override fun getSummonerHistoric(limit: Int, callback: CallbackData<List<Summoner>?>) {

@@ -1,11 +1,10 @@
-package com.andiag.welegends.models.utils
+package com.andiag.welegends.models.database.static_data.utils
 
 import android.util.Log
 import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.database.static_data.generics.KeyInMapTypeAdapter
-import com.andiag.welegends.models.utils.converters.OrmBaseModel
-import com.andiag.welegends.models.utils.dto.GenericStaticData
+import com.andiag.welegends.models.database.static_data.generics.GenericStaticData
+import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
 import com.raizlabs.android.dbflow.config.FlowManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

@@ -1,14 +1,13 @@
 package com.andiag.welegends.models.database
 
 import com.andiag.welegends.WeLegendsDatabase
-import com.andiag.welegends.models.utils.converters.OrmBaseModel
+import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.annotation.Unique
-import com.raizlabs.android.dbflow.structure.BaseModel
 import java.io.Serializable
 
 /**

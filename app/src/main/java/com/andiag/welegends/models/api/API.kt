@@ -4,7 +4,7 @@ import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.static_data.*
-import com.andiag.welegends.models.utils.dto.GenericStaticData
+import com.andiag.welegends.models.database.static_data.generics.GenericStaticData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

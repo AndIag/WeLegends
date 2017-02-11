@@ -3,8 +3,8 @@ package com.andiag.welegends.models
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.models.utils.CallbackData
 import retrofit2.Callback
 
 /**
@@ -53,14 +53,6 @@ interface ISummonerRepository {
      *      or call [AIInterfaceLoaderHandlerPresenter.onLoadError]
      */
     fun getSummonerLeagues(callback: Callback<MutableMap<QueueType, QueueStats>>, region: String, id: Long)
-
-    /**
-     * Return a list of summoners order by date DESC
-     * @param [caller] contains error and success callbacks
-     * @param [limit] max number of elements returned
-     * @return [MutableList] of [SummonerRepository]
-     */
-    fun getSummonerHistoric(caller: AIInterfaceLoaderHandlerPresenter<List<Summoner>>, limit: Int)
 
 
     fun getSummonerHistoric(limit: Int, callback: CallbackData<List<Summoner>?>)

@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.utils
+package com.andiag.welegends.models.database.static_data.utils
 
 import android.util.Log
 import java.util.concurrent.Callable

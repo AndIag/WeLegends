@@ -1,7 +1,7 @@
 package com.andiag.welegends.models.database.static_data
 
 import com.andiag.welegends.WeLegendsDatabase
-import com.andiag.welegends.models.utils.converters.OrmBaseModel
+import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
 import com.google.gson.annotations.Expose
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey

@@ -4,9 +4,9 @@ import android.util.Log
 import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.WeLegendsDatabase
 import com.andiag.welegends.models.api.RestClient
-import com.andiag.welegends.models.utils.CallbackSemaphore
-import com.andiag.welegends.models.utils.CallbackStaticData
-import com.andiag.welegends.models.utils.converters.OrmBaseModel
+import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
+import com.andiag.welegends.models.database.static_data.utils.CallbackSemaphore
+import com.andiag.welegends.models.database.static_data.utils.CallbackStaticData
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*

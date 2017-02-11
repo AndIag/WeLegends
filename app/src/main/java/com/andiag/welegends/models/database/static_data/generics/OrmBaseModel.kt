@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.utils.converters
+package com.andiag.welegends.models.database.static_data.generics
 
 import com.raizlabs.android.dbflow.structure.BaseModel
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper

@@ -1,4 +1,4 @@
-package com.andiag.welegends.models.database.static_data.generics
+package com.andiag.welegends.models.database.static_data.utils
 
 /**
  * Created by Canalejas on 12/12/2016.

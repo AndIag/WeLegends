@@ -3,12 +3,12 @@ package com.andiag.welegends.views.summoners.history
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.models.utils.CallbackData
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import com.andiag.welegends.views.summoners.search.PresenterFindSummoner
 

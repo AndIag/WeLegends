@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.main
+package com.andiag.welegends.views.main.stats
 
 import android.util.Log
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
@@ -9,7 +9,7 @@ import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.database.Summoner
-import com.andiag.welegends.views.IPresenterSummonerLoader
+import com.andiag.welegends.views.main.ActivityMain
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -22,7 +22,10 @@ import java.util.*
  * Created by Canalejas on 30/12/2016.
  */
 
-class PresenterSummonerStats(summonersRepository: ISummonerRepository) : AIPresenter<ActivityMain, FragmentSummonerStats>(), IPresenterSummonerLoader, AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
+class PresenterSummonerStats(summonersRepository: ISummonerRepository)
+    : AIPresenter<ActivityMain, FragmentSummonerStats>(),
+        AIInterfaceLoaderHandlerPresenter<MutableMap<QueueType, QueueStats>> {
+
     private val TAG: String = PresenterSummonerStats::class.java.simpleName
     private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
 
@@ -122,18 +125,18 @@ class PresenterSummonerStats(summonersRepository: ISummonerRepository) : AIPrese
     }
 
     //region Callbacks
-    override fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
+    fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
         mSummoner = summoner
         if (leaguesLoaded) {
             view.notifyDataIsReady(mSummoner!!, mLeagues)
         }
     }
 
-    override fun onSummonerLoadError(message: String) {
+    fun onSummonerLoadError(message: String) {
 
     }
 
-    override fun onSummonerLoadError(resId: Int) {
+    fun onSummonerLoadError(resId: Int) {
 
     }
 

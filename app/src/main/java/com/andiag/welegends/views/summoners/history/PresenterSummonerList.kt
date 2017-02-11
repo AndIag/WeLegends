@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners.historic
+package com.andiag.welegends.views.summoners.history
 
 import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
@@ -9,7 +9,7 @@ import com.andiag.welegends.models.SummonerRepository
 import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.summoners.ActivitySummoners
-import com.andiag.welegends.views.summoners.find.PresenterFindSummoner
+import com.andiag.welegends.views.summoners.search.PresenterFindSummoner
 
 /**
  * Created by andyq on 15/12/2016.

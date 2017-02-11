@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.main
+package com.andiag.welegends.views.main.stats
 
 import android.os.Bundle
 import android.view.View
@@ -9,6 +9,7 @@ import com.andiag.welegends.common.base.FragmentBase
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType
 import com.andiag.welegends.models.database.Summoner
+import com.andiag.welegends.views.main.ActivityMain
 import org.jetbrains.anko.toast
 
 /**

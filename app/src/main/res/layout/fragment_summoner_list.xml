@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:background="@android:color/transparent"
               android:orientation="vertical"
-    tools:context=".views.summoners.historic.FragmentSummonerList">
+    tools:context=".views.summoners.history.FragmentSummonerList">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSummoners"

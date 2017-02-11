@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners.find
+package com.andiag.welegends.views.summoners.search
 
 import android.support.design.widget.Snackbar
 import android.util.Log
@@ -14,7 +14,6 @@ import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.models.database.static_data.*
 import com.andiag.welegends.models.utils.CallbackSemaphore
-import com.andiag.welegends.views.IPresenterSummonerLoader
 import com.andiag.welegends.views.summoners.ActivitySummoners
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -28,10 +27,8 @@ import java.util.concurrent.Callable
 /**
  * Created by andyq on 09/12/2016.
  */
-class PresenterFindSummoner
-(summonersRepository: ISummonerRepository, versionRepository: IVersionRepository)
-    : AIPresenter<ActivitySummoners, FragmentFindSummoner>(),
-        IPresenterSummonerLoader, AIInterfaceErrorHandlerPresenter {
+class PresenterFindSummoner(summonersRepository: ISummonerRepository, versionRepository: IVersionRepository)
+    : AIPresenter<ActivitySummoners, FragmentFindSummoner>(), AIInterfaceErrorHandlerPresenter {
 
     private val TAG = PresenterFindSummoner::class.java.simpleName
     private val VERSION_REPOSITORY: IVersionRepository = versionRepository
@@ -183,19 +180,19 @@ class PresenterFindSummoner
         }
     }
 
-    override fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
+    fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
         if (isViewCreated) {
             view!!.onSummonerFound(summoner, isLocal)
         }
     }
 
-    override fun onSummonerLoadError(resId: Int) {
+    fun onSummonerLoadError(resId: Int) {
         if (isViewCreated) {
             view!!.onSummonerNotFound(view!!.getString(resId))
         }
     }
 
-    override fun onSummonerLoadError(message: String) {
+    fun onSummonerLoadError(message: String) {
         if (isViewCreated) {
             view!!.onSummonerNotFound(message)
         }

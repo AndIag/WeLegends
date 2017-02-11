@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners.historic
+package com.andiag.welegends.views.summoners.history
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager

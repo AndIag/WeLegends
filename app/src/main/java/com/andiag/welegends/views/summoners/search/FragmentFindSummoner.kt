@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners.find
+package com.andiag.welegends.views.summoners.search
 
 
 import android.content.Context

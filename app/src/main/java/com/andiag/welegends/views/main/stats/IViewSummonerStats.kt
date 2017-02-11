@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.main
+package com.andiag.welegends.views.main.stats
 
 import com.andiag.welegends.common.entities.league.QueueStats
 import com.andiag.welegends.common.entities.league.QueueType

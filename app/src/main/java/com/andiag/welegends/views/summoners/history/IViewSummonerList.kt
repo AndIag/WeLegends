@@ -1,4 +1,4 @@
-package com.andiag.welegends.views.summoners.historic
+package com.andiag.welegends.views.summoners.history
 
 import com.andiag.welegends.models.database.Summoner
 

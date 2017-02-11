@@ -16,8 +16,8 @@ import com.andiag.welegends.models.VersionRepository
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.main.ActivityMain
-import com.andiag.welegends.views.summoners.find.FragmentFindSummoner
-import com.andiag.welegends.views.summoners.historic.FragmentSummonerList
+import com.andiag.welegends.views.summoners.history.FragmentSummonerList
+import com.andiag.welegends.views.summoners.search.FragmentFindSummoner
 import com.hariofspades.gradientartist.GradientArtistBasic
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.singleTop

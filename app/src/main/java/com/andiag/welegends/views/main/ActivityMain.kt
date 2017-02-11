@@ -25,6 +25,7 @@ import com.andiag.welegends.R
 import com.andiag.welegends.common.base.ActivityBase
 import com.andiag.welegends.views.FragmentSettings
 import com.andiag.welegends.views.adapters.AdapterNavDrawer
+import com.andiag.welegends.views.main.stats.FragmentSummonerStats
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import java.util.*

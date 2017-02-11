@@ -1,9 +1,6 @@
 package com.andiag.welegends.models.api
 
 import com.andiag.welegends.BuildConfig
-import com.andiag.welegends.models.api.endpoints.API
-import com.andiag.welegends.models.api.endpoints.StaticAPI
-import com.andiag.welegends.models.api.endpoints.VersionAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,10 +19,10 @@ object RestClient {
     private val WELEGENDS_PROXY_ENDPOINT = BuildConfig.AndIagApi
     private val DDRAGON_DATA_ENDPOINT = "http://ddragon.leagueoflegends.com/cdn/"
 
-    private var REST_CLIENT: API? = null
-    private var VERSION_CLIENT: VersionAPI? = null
+    private var REST_CLIENT: API.Riot? = null
+    private var VERSION_CLIENT: API.Version? = null
 
-    private var STATIC_CLIENT: StaticAPI? = null
+    private var STATIC_CLIENT: API.Static? = null
     private var staticEndpoint: String? = null
 
     private fun getLoggingLevel(): HttpLoggingInterceptor {
@@ -50,7 +47,7 @@ object RestClient {
         return httpLoggingInterceptor
     }
 
-    fun getWeLegendsData(): API {
+    fun getWeLegendsData(): API.Riot {
         if (REST_CLIENT == null) {
             val okHttpClient = OkHttpClient.Builder()
                     .connectTimeout(12, TimeUnit.SECONDS)
@@ -74,12 +71,12 @@ object RestClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
 
-            REST_CLIENT = retrofit.create(API::class.java)
+            REST_CLIENT = retrofit.create(API.Riot::class.java)
         }
         return REST_CLIENT!!
     }
 
-    fun getDdragonStaticData(version: String, locale: String): StaticAPI {
+    fun getDdragonStaticData(version: String, locale: String): API.Static {
         val endpoint = "$DDRAGON_DATA_ENDPOINT$version/data/$locale/"
         if (STATIC_CLIENT == null) {
             staticEndpoint = endpoint
@@ -87,25 +84,25 @@ object RestClient {
                     .baseUrl(endpoint)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            STATIC_CLIENT = retrofit.create(StaticAPI::class.java)
+            STATIC_CLIENT = retrofit.create(API.Static::class.java)
         } else if (endpoint != staticEndpoint) {
             val retrofit = Retrofit.Builder()
                     .baseUrl(endpoint)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            STATIC_CLIENT = retrofit.create(StaticAPI::class.java)
+            STATIC_CLIENT = retrofit.create(API.Static::class.java)
         }
 
         return STATIC_CLIENT!!
     }
 
-    fun getVersion(): VersionAPI {
+    fun getVersion(): API.Version {
         if (VERSION_CLIENT == null) {
             val retrofit = Retrofit.Builder()
                     .baseUrl("http://ddragon.leagueoflegends.com/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            VERSION_CLIENT = retrofit.create(VersionAPI::class.java)
+            VERSION_CLIENT = retrofit.create(API.Version::class.java)
         }
         return VERSION_CLIENT!!
     }

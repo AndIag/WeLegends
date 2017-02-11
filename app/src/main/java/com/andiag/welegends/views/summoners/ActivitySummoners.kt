@@ -78,7 +78,7 @@ class ActivitySummoners : ActivityBase() {
      * If container exist and version are loaded change fragment to summoner history
      */
     fun onClickSwapFragment() {
-        if (findViewById(R.id.fragmentContainer) != null && !VERSION_REPOSITORY.isLoading()) {
+        if (findViewById(R.id.fragmentContainer) != null && VERSION_REPOSITORY.getVersion() != null) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, FragmentSummonerList(), FragmentSummonerList.TAG)
                     .addToBackStack(null)
@@ -87,7 +87,7 @@ class ActivitySummoners : ActivityBase() {
             imageBackground.visibility = View.GONE
             return
         }
-        if (VERSION_REPOSITORY.isLoading()) {
+        if (VERSION_REPOSITORY.getVersion() == null) {
             //Notify user data load should end
             Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_SHORT)
         }

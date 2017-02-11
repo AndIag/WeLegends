@@ -45,7 +45,7 @@ class PresenterSummonerStats(summonersRepository: ISummonerRepository) : AIPrese
                 summoner.save()
                 Log.i(TAG, "Saving new summoner %s".format(summoner.name))
                 uiThread {
-                    onSummonerFound(summoner)
+                    onSummonerFound(summoner, false)
                 }
             }
             return
@@ -113,7 +113,7 @@ class PresenterSummonerStats(summonersRepository: ISummonerRepository) : AIPrese
                 loadSummoner(summonerRiotId, region, name)
             } else {
                 Log.i(TAG, "Loading Summoner %s from database".format(summonerRiotId))
-                onSummonerFound(SUMMONER_REPOSITORY.getSummoner(summonerId)!!)
+                onSummonerFound(SUMMONER_REPOSITORY.getSummoner(summonerId)!!, true)
             }
         }
         if (mLeagues == null || mSummonerId != summonerId) {
@@ -122,7 +122,7 @@ class PresenterSummonerStats(summonersRepository: ISummonerRepository) : AIPrese
     }
 
     //region Callbacks
-    override fun onSummonerFound(summoner: Summoner) {
+    override fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
         mSummoner = summoner
         if (leaguesLoaded) {
             view.notifyDataIsReady(mSummoner!!, mLeagues)

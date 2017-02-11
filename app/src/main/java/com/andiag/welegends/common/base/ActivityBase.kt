@@ -82,6 +82,7 @@ abstract class ActivityBase : AppCompatActivity() {
             }
         }
 
+        //TODO This method should not be here
         fun resolveColorAttribute(context: Context, attribute: Int) : Int{
             val typedValue = TypedValue()
             context.theme.resolveAttribute(attribute, typedValue, true)

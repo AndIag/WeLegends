@@ -6,6 +6,7 @@ import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.WeLegendsDatabase
+import com.andiag.welegends.common.base.ActivityBase
 import com.andiag.welegends.models.ISummonerRepository
 import com.andiag.welegends.models.IVersionRepository
 import com.andiag.welegends.models.SummonerRepository
@@ -117,14 +118,18 @@ class PresenterFindSummoner
     //region AIInterfaceLoaderPresenter
     override fun onLoadError(message: String?) {
         Log.e(TAG, message)
-        Snackbar.make(context.findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(view.view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(VERSION_CALLBACK) })
+                .setActionTextColor(ActivityBase.resolveColorAttribute(context, R.attr.mainColor))
+                .show()
     }
 
     override fun onLoadError(resId: Int) {
         Log.e(TAG, context.getString(resId))
-        Snackbar.make(context.findViewById(android.R.id.content), R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(view.view!!, R.string.error_loading_static_data, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.retry, { VERSION_REPOSITORY.loadVersion(VERSION_CALLBACK) })
+                .setActionTextColor(ActivityBase.resolveColorAttribute(context, R.attr.mainColor))
+                .show()
     }
     //endregion
     //endregion
@@ -140,7 +145,7 @@ class PresenterFindSummoner
                 summoner.save()
                 Log.i(TAG, "Saving new summoner %s".format(summoner.name))
                 uiThread {
-                    onSummonerFound(summoner)
+                    onSummonerFound(summoner, false)
                 }
             }
             return
@@ -154,11 +159,11 @@ class PresenterFindSummoner
             // Try to find summoner in local database
             val summoner: Summoner? = SUMMONER_REPOSITORY.getSummoner(name, region)
             if (summoner != null) {
-                Log.i(TAG, "EPSummoner %s found in database".format(summoner.name))
+                Log.i(TAG, "Summoner %s found in database".format(summoner.name))
                 // Update lastUpdate param
                 summoner.lastUpdate = Calendar.getInstance().timeInMillis
                 summoner.update()
-                onSummonerFound(summoner)
+                onSummonerFound(summoner, true)
                 return
             }
             // If summoner is not in local search it in server
@@ -178,9 +183,9 @@ class PresenterFindSummoner
         }
     }
 
-    override fun onSummonerFound(summoner: Summoner) {
+    override fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
         if (isViewCreated) {
-            view!!.onSummonerFound(summoner)
+            view!!.onSummonerFound(summoner, isLocal)
         }
     }
 

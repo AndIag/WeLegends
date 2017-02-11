@@ -129,9 +129,9 @@ class FragmentFindSummoner : AIButterFragment<PresenterFindSummoner>(), IViewFin
      * Launch new activity with retrieved summoner
      * @param [summoner] retrieved summoner
      */
-    override fun onSummonerFound(summoner: Summoner) {
+    override fun onSummonerFound(summoner: Summoner, isLocal: Boolean) {
         hideLoading()
-        startActivity((mParentContext as ActivitySummoners).createMainIntent(summoner, false))
+        startActivity((mParentContext as ActivitySummoners).createMainIntent(summoner, isLocal))
     }
 
     /**

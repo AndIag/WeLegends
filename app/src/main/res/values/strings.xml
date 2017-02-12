@@ -134,7 +134,7 @@
     <string name="title_section_my_team">My Team</string>
     <string name="title_section_enemy_team">Enemy Team</string>
     <string name="title_activity_current_info">Current Game</string>
-    <string name="loadStaticData">Loading Static Data....</string>
+    <string name="loadStatics">Loading Static Data....</string>
     <string name="allsummoners">Historic</string>
     <string name="empty">No Summoners Found. :(</string>
 

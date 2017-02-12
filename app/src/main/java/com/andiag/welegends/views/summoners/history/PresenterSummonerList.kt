@@ -16,26 +16,26 @@ import com.andiag.welegends.views.summoners.search.PresenterFindSummoner
  * Created by andyq on 15/12/2016.
  */
 class PresenterSummonerList
-(summonersRepository: ISummonerRepository, versionRepository: IVersionRepository)
+(summonersRepository: ISummonerRepository)
     : AIPresenter<ActivitySummoners, FragmentSummonerList>(),
         AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
 
     private val TAG = PresenterFindSummoner::class.java.simpleName
-    private val VERSION_REPOSITORY: IVersionRepository = versionRepository
-    private val SUMMONER_REPOSITORY: ISummonerRepository = summonersRepository
+    private lateinit var mVersionRepository: IVersionRepository
+    private val mSummonerRepository: ISummonerRepository = summonersRepository
 
-    var version: String? = null
-
-    constructor() : this(SummonerRepository.getInstance(), VersionRepository.getInstance())
+    constructor() : this(SummonerRepository.getInstance())
 
     override fun onViewAttached() {
+        mVersionRepository = VersionRepository.getInstance(context)
     }
 
     fun loadSummoners() {
-        SUMMONER_REPOSITORY.getSummonerHistoric(20,object : CallbackData<List<Summoner>?> {
+        mSummonerRepository.getSummonerHistoric(20, object : CallbackData<List<Summoner>?> {
             override fun onSuccess(data: List<Summoner>?) {
                 onLoadSuccess(data)
             }
+
             override fun onError(t: Throwable?) {
                 onLoadError(R.string.error404)
             }
@@ -45,11 +45,8 @@ class PresenterSummonerList
     /**
      * Return server version or null if still loading
      */
-    fun getServerVersion(): String? {
-        if (version == null) {
-            version = VERSION_REPOSITORY.getVersion()
-        }
-        return version
+    fun getVersion(): String {
+        return mVersionRepository.syncRead()!!
     }
 
     //region AIInterfaceLoaderPresenter

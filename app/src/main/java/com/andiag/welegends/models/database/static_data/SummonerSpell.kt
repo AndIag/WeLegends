@@ -1,8 +1,8 @@
 package com.andiag.welegends.models.database.static_data
 
 import android.util.Log
-import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
 import com.andiag.welegends.WeLegendsDatabase
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
 import com.andiag.welegends.models.database.static_data.utils.CallbackSemaphore
@@ -43,11 +43,11 @@ class SummonerSpell : OrmBaseModel(), Serializable {
     companion object {
         private val TAG: String = SummonerSpell::class.java.simpleName
 
-        fun loadFromServer(caller: AIInterfaceErrorHandlerPresenter, semaphore: CallbackSemaphore, version: String, locale: String) {
+        fun loadFromServer(callback: CallbackData<*>, semaphore: CallbackSemaphore, version: String, locale: String) {
             val call = RestClient.getDdragonStaticData(version, locale).summonerSpells()
-            call.enqueue(CallbackStaticData<SummonerSpell>(locale, semaphore, caller, Runnable {
+            call.enqueue(CallbackStaticData<SummonerSpell>(locale, semaphore, callback, Runnable {
                 Log.i(TAG, "Reloading %s Locale From onResponse To: %s".format(SummonerSpell::class.java.simpleName, RestClient.DEFAULT_LOCALE))
-                loadFromServer(caller, semaphore, version, RestClient.DEFAULT_LOCALE)
+                loadFromServer(callback, semaphore, version, RestClient.DEFAULT_LOCALE)
             }))
         }
 

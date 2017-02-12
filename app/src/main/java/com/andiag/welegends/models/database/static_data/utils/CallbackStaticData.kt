@@ -1,11 +1,10 @@
 package com.andiag.welegends.models.database.static_data.utils
 
 import android.util.Log
-import com.andiag.commons.interfaces.presenters.AIInterfaceErrorHandlerPresenter
+import com.andiag.welegends.common.utils.CallbackData
 import com.andiag.welegends.models.api.RestClient
 import com.andiag.welegends.models.database.static_data.generics.GenericStaticData
 import com.andiag.welegends.models.database.static_data.generics.OrmBaseModel
-import com.raizlabs.android.dbflow.config.FlowManager
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
@@ -18,13 +17,13 @@ import retrofit2.Response
  * Generic callback to simplify all StaticData Requests
  * @constructor [semaphore] used to allow concurrency
  * @constructor [locale] needed to know if a reload to {@link RestClient.DEFAULT_LOCALE} is required
- * @constructor [caller] called when callback process ends
+ * @constructor [callback] called when callback process ends
  * @constructor [runnable] method to run when reload is required
  */
 class CallbackStaticData<T : OrmBaseModel>(
         private var locale: String,
         private var semaphore: CallbackSemaphore,
-        private var caller: AIInterfaceErrorHandlerPresenter,
+        private var callback: CallbackData<*>,
         private var runnable: Runnable)
     : Callback<GenericStaticData<String, T>> {
 
@@ -39,7 +38,7 @@ class CallbackStaticData<T : OrmBaseModel>(
             Log.e(TAG, "ERROR: onResponse: %s".format(response.errorBody().string()))
             Log.i(TAG, "Semaphore released with errors")
             semaphore.release(1)
-            caller.onLoadError(null)
+            callback.onError(Throwable(response.message()))
         } else {
             doAsync {
                 try {
@@ -48,16 +47,21 @@ class CallbackStaticData<T : OrmBaseModel>(
                     if (clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
                         for ((k, v) in response.body().data!!) {
                             (v as KeyInMapTypeAdapter).setKey(k)
+                            v.saveOrUpdate()
                         }
                     }
-                    FlowManager.getModelAdapter(clazz).saveAll(response.body().data!!.values)
+                    if (!clazz.interfaces.contains(KeyInMapTypeAdapter::class.java)) {
+                        for (v in response.body().data!!.values) {
+                            v.saveOrUpdate()
+                        }
+                    }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error saving %s".format(e.message))
                     uiThread {
-                        caller.onLoadError(e.message)
+                        callback.onError(e)
                     }
                 } finally {
-                    Log.i(TAG, "Semaphore released")
+                    Log.i(TAG, "Semaphore released %s")
                     semaphore.release(1)
                 }
             }
@@ -72,7 +76,7 @@ class CallbackStaticData<T : OrmBaseModel>(
         Log.e(TAG, "ERROR: onFailure: %s".format(t!!.message))
         Log.i(TAG, "Semaphore released with errors")
         semaphore.release(1)
-        caller.onLoadError(t.message)
+        callback.onError(t)
     }
 
 }

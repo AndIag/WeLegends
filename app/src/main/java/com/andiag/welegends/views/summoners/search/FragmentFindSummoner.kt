@@ -64,11 +64,8 @@ class FragmentFindSummoner : AIButterFragment<PresenterFindSummoner>(), IViewFin
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
 
-        if (mPresenter.getServerVersion() == null) {
+        if (mPresenter.isLoadingVersion()) {
             showLoading()
-        } else {
-            textVersion.text = mPresenter.getServerVersion()
-            hideLoading()
         }
         setupRegionPicker()
     }

@@ -48,7 +48,7 @@ class FragmentSummonerList : AIButterFragment<PresenterSummonerList>(), IViewSum
 
     //region View Config
     private fun initAdapter() {
-        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), mPresenter.getServerVersion()!!)
+        adapter = AdapterSummonerList(R.layout.item_summoner_list, ArrayList<Summoner>(), mPresenter.getVersion())
         adapter!!.emptyView = LayoutInflater.from(mParentContext).inflate(R.layout.empty_summoner_view, null)
         adapter!!.openLoadAnimation()
         recycler.adapter = adapter

@@ -25,7 +25,7 @@ import org.jetbrains.anko.singleTop
 
 class ActivitySummoners : ActivityBase() {
     private val TAG = ActivitySummoners::class.java.simpleName
-    private val VERSION_REPOSITORY: IVersionRepository = VersionRepository.getInstance()
+    private val mVersionRepository: IVersionRepository = VersionRepository.getInstance(this)
 
     @BindView(R.id.imageBackground)
     lateinit var imageBackground: GradientArtistBasic
@@ -78,7 +78,7 @@ class ActivitySummoners : ActivityBase() {
      * If container exist and version are loaded change fragment to summoner history
      */
     fun onClickSwapFragment() {
-        if (findViewById(R.id.fragmentContainer) != null && VERSION_REPOSITORY.getVersion() != null) {
+        if (findViewById(R.id.fragmentContainer) != null && !mVersionRepository.isLoading()) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, FragmentSummonerList(), FragmentSummonerList.TAG)
                     .addToBackStack(null)
@@ -87,7 +87,7 @@ class ActivitySummoners : ActivityBase() {
             imageBackground.visibility = View.GONE
             return
         }
-        if (VERSION_REPOSITORY.getVersion() == null) {
+        if (mVersionRepository.isLoading()) {
             //Notify user data load should end
             Snackbar.make(findViewById(android.R.id.content), R.string.wait_static_data_end, Snackbar.LENGTH_SHORT)
         }

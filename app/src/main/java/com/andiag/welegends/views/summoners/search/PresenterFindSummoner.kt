@@ -45,6 +45,22 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository)
         })
     }
 
+    override fun onViewCreated() {
+        super.onViewCreated()
+        mVersionRepository.read(LoadingType.NO_LOAD, object : CallbackData<String> {
+            override fun onSuccess(data: String?) {
+                if (data != null) {
+                    view!!.onVersionLoaded(data)
+                }
+            }
+
+            override fun onError(t: Throwable?) {
+                Log.wtf(TAG, "Should never happen %s".format(t!!.message))
+            }
+
+        })
+    }
+
     fun isLoadingVersion(): Boolean {
         return mVersionRepository.isLoading()
     }

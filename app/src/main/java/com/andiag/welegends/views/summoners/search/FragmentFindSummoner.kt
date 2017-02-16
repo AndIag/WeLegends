@@ -63,10 +63,6 @@ class FragmentFindSummoner : AIButterFragment<PresenterFindSummoner>(), IViewFin
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (mParentContext as ActivitySummoners).setBackground("Morgana_3.jpg")
-
-        if (mPresenter.isLoadingVersion()) {
-            showLoading()
-        }
         setupRegionPicker()
     }
 
@@ -103,6 +99,7 @@ class FragmentFindSummoner : AIButterFragment<PresenterFindSummoner>(), IViewFin
     fun findSummoner() {
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(editSummonerName.windowToken, 0)
+
         if (!mPresenter.isLoadingVersion()) {
             showLoading()
             mPresenter!!.getSummonerByName(editSummonerName.text.toString(), region)

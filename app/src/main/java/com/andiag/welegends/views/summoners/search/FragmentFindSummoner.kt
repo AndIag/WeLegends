@@ -14,7 +14,7 @@ import butterknife.OnClick
 import butterknife.OnEditorAction
 import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.commons.fragments.FragmentLayout
-import com.andiag.core.presenters.Presenter
+import com.andiag.core.annotations.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.summoners.ActivitySummoners

@@ -45,21 +45,6 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository)
         })
     }
 
-    fun getVersion() {
-        mVersionRepository.read(LoadingType.NO_LOAD, object : CallbackData<String> {
-            override fun onSuccess(data: String?) {
-                if (isViewCreated) {
-                    view!!.onVersionLoaded(data!!)
-                }
-            }
-
-            override fun onError(t: Throwable?) {
-                Log.wtf(TAG, t!!.message)
-            }
-
-        })
-    }
-
     fun isLoadingVersion(): Boolean {
         return mVersionRepository.isLoading()
     }
@@ -69,7 +54,7 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository)
     fun getSummonerByName(name: String, region: String) {
         if (!name.isEmpty()) {
             // Try to find summoner
-            mSummonerRepository.getSummoner(name, region, object : CallbackData<Summoner> {
+            mSummonerRepository.read(name, region, LoadingType.REMOTE_LOAD, object : CallbackData<Summoner> {
                 override fun onSuccess(data: Summoner?) {
                     onSummonerFound(data!!, true)
                 }
@@ -93,12 +78,6 @@ class PresenterFindSummoner(summonersRepository: ISummonerRepository)
     fun onSummonerLoadError(resId: Int) {
         if (isViewCreated) {
             view!!.onSummonerNotFound(view!!.getString(resId))
-        }
-    }
-
-    fun onSummonerLoadError(message: String) {
-        if (isViewCreated) {
-            view!!.onSummonerNotFound(message)
         }
     }
     //endregion

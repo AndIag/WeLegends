@@ -3,7 +3,7 @@ package com.andiag.welegends.views.main.stats
 import android.os.Bundle
 import android.view.View
 import com.andiag.commons.fragments.FragmentLayout
-import com.andiag.core.presenters.Presenter
+import com.andiag.core.annotations.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.base.FragmentBase
 import com.andiag.welegends.common.entities.league.QueueStats

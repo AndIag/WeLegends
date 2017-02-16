@@ -7,5 +7,5 @@ import com.andiag.welegends.models.database.Summoner
  */
 interface IViewSummonerList {
     fun onSummonersLoaded(summoners: List<Summoner>)
-    fun onSummonersEmpty(error: Int?)
+    fun onSummonersEmpty(error: String?)
 }

@@ -1,6 +1,7 @@
 package com.andiag.welegends.views.summoners.history
 
-import com.andiag.commons.interfaces.presenters.AIInterfaceLoaderHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AIErrorHandlerPresenter
+import com.andiag.commons.interfaces.presenters.AISuccessHandlerPresenter
 import com.andiag.core.presenters.AIPresenter
 import com.andiag.welegends.R
 import com.andiag.welegends.common.utils.CallbackData
@@ -18,7 +19,7 @@ import com.andiag.welegends.views.summoners.search.PresenterFindSummoner
 class PresenterSummonerList
 (summonersRepository: ISummonerRepository)
     : AIPresenter<ActivitySummoners, FragmentSummonerList>(),
-        AIInterfaceLoaderHandlerPresenter<List<Summoner>> {
+        AISuccessHandlerPresenter<List<Summoner>>, AIErrorHandlerPresenter {
 
     private val TAG = PresenterFindSummoner::class.java.simpleName
     private lateinit var mVersionRepository: IVersionRepository
@@ -33,11 +34,11 @@ class PresenterSummonerList
     fun loadSummoners() {
         mSummonerRepository.getSummonerHistoric(20, object : CallbackData<List<Summoner>?> {
             override fun onSuccess(data: List<Summoner>?) {
-                onLoadSuccess(data)
+                this@PresenterSummonerList.onSuccess(data!!)
             }
 
             override fun onError(t: Throwable?) {
-                onLoadError(R.string.error404)
+                this@PresenterSummonerList.onError(R.string.error404)
             }
         })
     }
@@ -50,26 +51,18 @@ class PresenterSummonerList
     }
 
     //region AIInterfaceLoaderPresenter
-    override fun onLoadSuccess(data: List<Summoner>?) {
-        view!!.onSummonersLoaded(data!!)
+    override fun onSuccess(data: List<Summoner>) {
+        view!!.onSummonersLoaded(data)
     }
 
-    override fun onLoadError(message: String?) {
+    override fun onError(resId: Int) {
+        onError(context.getString(resId))
+    }
+
+    override fun onError(error: String?) {
         if (isViewAttached) {
-            view!!.onSummonersEmpty(R.string.error404)
+            view!!.onSummonersEmpty(error)
         }
-    }
-
-    override fun onLoadError(resId: Int) {
-        if (isViewAttached) {
-            view!!.onSummonersEmpty(resId)
-        }
-    }
-
-    override fun onLoadProgressChange(p0: String?) {
-    }
-
-    override fun onLoadProgressChange(p0: Int) {
     }
 
     //endregion

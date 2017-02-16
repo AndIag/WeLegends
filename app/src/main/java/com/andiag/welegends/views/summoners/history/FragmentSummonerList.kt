@@ -8,7 +8,7 @@ import android.view.View
 import butterknife.BindView
 import com.andiag.commons.fragments.AIButterFragment
 import com.andiag.commons.fragments.FragmentLayout
-import com.andiag.core.presenters.Presenter
+import com.andiag.core.annotations.Presenter
 import com.andiag.welegends.R
 import com.andiag.welegends.models.database.Summoner
 import com.andiag.welegends.views.adapters.AdapterSummonerList
@@ -35,6 +35,10 @@ class FragmentSummonerList : AIButterFragment<PresenterSummonerList>(), IViewSum
         val TAG: String = FragmentSummonerList::class.java.simpleName
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     //region Fragment Lifecycle
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,9 +58,6 @@ class FragmentSummonerList : AIButterFragment<PresenterSummonerList>(), IViewSum
         recycler.adapter = adapter
         recycler.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View?, position: Int) {
-                /**
-                 * Launch [ActivityMain] on list element click
-                 */
                 startActivity((mParentContext as ActivitySummoners)
                         .createMainIntent((adapter as AdapterSummonerList)
                                 .getItem(position), true))
@@ -68,11 +69,10 @@ class FragmentSummonerList : AIButterFragment<PresenterSummonerList>(), IViewSum
 
     //region Callbacks
     override fun onSummonersLoaded(summoners: List<Summoner>) {
-        adapter!!.setNewData(summoners)
+        adapter!!.addData(summoners)
     }
 
-    override fun onSummonersEmpty(error: Int?) {
-        adapter!!.setNewData(null)
+    override fun onSummonersEmpty(error: String?) {
         mParentContext.toast(error!!)
     }
     //endregion

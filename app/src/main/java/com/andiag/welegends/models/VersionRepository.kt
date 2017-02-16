@@ -34,7 +34,6 @@ class VersionRepository private constructor(context: Context) : IVersionReposito
             if (REPOSITORY == null) {
                 REPOSITORY = VersionRepository(context)
             }
-            (REPOSITORY as VersionRepository).mContext = context
             return REPOSITORY!!
         }
 
@@ -65,13 +64,20 @@ class VersionRepository private constructor(context: Context) : IVersionReposito
             }
             LoadingType.LOCAL_LOAD -> {
                 mLoading = true
-                mVersion = onLocalLoad()
-                if (mVersion != null) {
-                    callback.onSuccess(mVersion)
-                } else {
-                    callback.onError(Throwable("Unable to load local version"))
+                doAsync {
+                    mVersion = onLocalLoad()
+                    if (mVersion != null) {
+                        uiThread {
+                            mLoading = false
+                            callback.onSuccess(mVersion)
+                        }
+                    } else {
+                        uiThread {
+                            mLoading = false
+                            callback.onError(Throwable("Unable to load local version"))
+                        }
+                    }
                 }
-                mLoading = false
             }
             LoadingType.REMOTE_LOAD -> {
                 mLoading = true

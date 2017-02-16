@@ -3,6 +3,7 @@ package com.andiag.welegends
 import android.app.Application
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
+import com.squareup.leakcanary.LeakCanary
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 
@@ -15,6 +16,11 @@ class WeLegends : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return
+        }
+        LeakCanary.install(this)
+
         CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Spiegel.otf")
                 .setFontAttrId(R.attr.fontPath)

@@ -81,8 +81,12 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:$versions.dbflow"
     compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$versions.dbflow@aar"
 
-    compile 'com.github.iagocanalejas.andiag-mvp:commons:0.3'
+    compile 'com.github.iagocanalejas.andiag-mvp:commons:0.4'
     compile 'com.github.andy135:StatedLayout:1.0.0'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }
 
 kapt {
